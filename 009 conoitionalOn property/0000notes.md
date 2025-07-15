@@ -1,0 +1,2 @@
+# Notes
+![alt text](<009conditional On property_250202_213507_250716_002317_1.jpg>) ![alt text](<009conditional On property_250202_213507_250716_002317_2.jpg>) ![alt text](<009conditional On property_250202_213507_250716_002317_3.jpg>) ![alt text](<009conditional On property_250202_213507_250716_002317_4.jpg>)
