@@ -1,1 +1,2 @@
 # Notes
+![alt text](033_spring_security_architecture_250716_003028_1.jpg) ![alt text](033_spring_security_architecture_250716_003028_2.jpg) ![alt text](033_spring_security_architecture_250716_003028_3.jpg) ![alt text](033_spring_security_architecture_250716_003028_4.jpg)

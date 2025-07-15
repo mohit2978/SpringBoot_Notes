@@ -1,0 +1,3 @@
+# Notes 
+
+![alt text](<036 spring security-4 basic auth_250716_001652_1.jpg>) ![alt text](<036 spring security-4 basic auth_250716_001652_2.jpg>) ![alt text](<036 spring security-4 basic auth_250716_001652_3.jpg>) ![alt text](<036 spring security-4 basic auth_250716_001652_4.jpg>) ![alt text](<036 spring security-4 basic auth_250716_001652_5.jpg>) ![alt text](<036 spring security-4 basic auth_250716_001652_6.jpg>) ![alt text](<036 spring security-4 basic auth_250716_001652_7.jpg>)

@@ -1,1 +1,2 @@
 # Notes
+![alt text](<031 specification API_250716_003029_1.jpg>) ![alt text](<031 specification API_250716_003029_2.jpg>) ![alt text](<031 specification API_250716_003029_3.jpg>) ![alt text](<031 specification API_250716_003029_4.jpg>) ![alt text](<031 specification API_250716_003029_5.jpg>) ![alt text](<031 specification API_250716_003029_6.jpg>) ![alt text](<031 specification API_250716_003029_7.jpg>)
