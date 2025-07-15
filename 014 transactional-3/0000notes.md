@@ -1,0 +1,2 @@
+# Notes
+![alt text](014_transaction_3_250716_001939_1.jpg) ![alt text](014_transaction_3_250716_001939_2.jpg) ![alt text](014_transaction_3_250716_001939_3.jpg) ![alt text](014_transaction_3_250716_001939_4.jpg) ![alt text](014_transaction_3_250716_001939_5.jpg) ![alt text](014_transaction_3_250716_001939_6.jpg) ![alt text](014_transaction_3_250716_001939_7.jpg)
