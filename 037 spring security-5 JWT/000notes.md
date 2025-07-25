@@ -136,14 +136,29 @@ So we need to create filter again!!
 
 ![alt text](image-27.png)
 
+After validation of JWT token ,we storing Authentication object in SecurityContext.`filterChain.doFilter()` makes sure SecurityChain goes on and not end!!
+
+If token is not null then we ceating `JWtAuthenticationToken` which is child of `AbstractAuthenticationToken` which is child of `Authentication`!! And initially we have put `Authenticated` as false!!
+
 ![alt text](image-28.png)
+
+Now `DAOAutheticatorProvider` do not understand JWT Authentication so we create another `AuthenticatorProvider`!!
 
 ![alt text](image-29.png)
 
 
 ![alt text](image-30.png)
 
+We added `JWTAuthenticationProvider` in List!!
+
 ![alt text](image-31.png)
+
+This is where validation is done !and from here we returining userName which we have put in subject!!
+
+And In AuthenticationProvider we are checking if this username is null that means Bad credentials!!
+
+
+and then we returing `Authentication` Object of type `UserNamePasswordAutthenticationToken` which is further passed to controller!!
 
 ![alt text](image-32.png)
 
@@ -155,7 +170,14 @@ So we need to create filter again!!
 
 ![alt text](image-36.png)
 
+403 forbidden is given!!
+
 ## Step-4 Refresh Token
+
+After 15 min again provide username-password ,so instead increase the time for JWT like 1 day or 2 day , then their might be case where JWT is compromised ,so it is recommended JWT to be short-lived so insted we use `refresh-token`!!
+
+Refresh token is used to get new token without putting credentails again and again so need to add filter here too!!
+
 
 ![alt text](image-37.png)
 
@@ -163,6 +185,8 @@ So we need to create filter again!!
 ![alt text](image-38.png)
 
 ![alt text](image-39.png)
+
+We putting RefreshToken in Cookie !!We put `setHttpOnly(true)` so no JS code can access it!! Also put `setSecure(true)` so only Https can access it!! We also put `setPath()` so for only this path ,Cookie is sent else browser will send for all request!!
 
 ---
 
@@ -200,6 +224,8 @@ So we need to create filter again!!
 
 ![alt text](image-51.png)
 
+This is very simple!!
+
 ---
 
 ## Authorization
@@ -209,6 +235,8 @@ So we need to create filter again!!
 
 ![alt text](image-53.png)
 
+Api will be accessed by Specific role only!!
+
 ![alt text](image-54.png)
 
 
@@ -217,7 +245,7 @@ So we need to create filter again!!
 
 ![alt text](image-56.png)
 
-
+So will not able to access!!
 
 
 
