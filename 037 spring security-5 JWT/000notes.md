@@ -248,6 +248,278 @@ Api will be accessed by Specific role only!!
 So will not able to access!!
 
 
+## JWT in Spring Security
+
+### How JWT Works (the flow)
+
+```
+Client                          Server
+  |                               |
+  |-- POST /login {user, pass} -->|
+  |<--------- JWT Token ----------|
+  |                               |
+  |-- GET /api/data               |
+  |   Authorization: Bearer <JWT>-|
+  |<-------- Response ------------|
+```
+
+JWT is **stateless** — the server doesn't store sessions. Instead, every request carries a self-contained token the server just verifies.
+
+### JWT Structure
+
+A JWT is three Base64-encoded parts separated by dots:
+
+```
+header.payload.signature
+eyJhbGci...  .  eyJ1c2VyI...  .  SflKxwRJ...
+```
+
+- **Header** — algorithm used (e.g. HS256)
+- **Payload** — claims: username, roles, expiry (`exp`), issued-at (`iat`)
+- **Signature** — `HMAC(header + payload, secretKey)` — proves it wasn't tampered with
+
+---
+
+### Implementation Step-by-Step
+
+#### 1. Add Dependencies (`pom.xml`)
+
+```xml
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.5</version>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.11.5</version>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.11.5</version>
+</dependency>
+```
+
+---
+
+#### 2. JwtService — Token Generation & Validation
+
+```java
+@Service
+public class JwtService {
+
+    private static final String SECRET_KEY = "your-256-bit-secret-here";
+
+    // Generate token for a user
+    public String generateToken(UserDetails userDetails) {
+        return Jwts.builder()
+            .setSubject(userDetails.getUsername())
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
+            .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+            .compact();
+    }
+
+    // Extract username from token
+    public String extractUsername(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(getSigningKey())
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
+
+    // Validate token
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(getSigningKey())
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getExpiration();
+    }
+
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+}
+```
+
+---
+
+#### 3. JwtAuthFilter — Intercepts Every Request
+
+This is the heart of JWT in Spring Security. It runs **before** the standard auth filter:
+
+```java
+@Component
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    @Autowired private JwtService jwtService;
+    @Autowired private UserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
+
+        // 1. Extract the Authorization header
+        final String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response); // no token, skip
+            return;
+        }
+
+        // 2. Pull the token out
+        final String jwt = authHeader.substring(7);
+        final String username = jwtService.extractUsername(jwt);
+
+        // 3. If user not yet authenticated in this request
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+            // 4. Validate token
+            if (jwtService.isTokenValid(jwt, userDetails)) {
+
+                // 5. Create auth token and set it in SecurityContext
+                UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities()
+                    );
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    }
+}
+```
+
+---
+
+#### 4. AuthController — Login Endpoint
+
+```java
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+    @Autowired private AuthenticationManager authManager;
+    @Autowired private JwtService jwtService;
+    @Autowired private UserDetailsService userDetailsService;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+
+        // Throws exception if credentials are wrong
+        authManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                request.getUsername(), request.getPassword()
+            )
+        );
+
+        UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
+        String token = jwtService.generateToken(user);
+
+        return ResponseEntity.ok(token);
+    }
+}
+```
+
+---
+
+#### 5. SecurityConfig — Wire Everything Together
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Autowired private JwtAuthFilter jwtAuthFilter;
+    @Autowired private UserDetailsService userDetailsService;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())               // JWT is stateless, no CSRF needed
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // no sessions
+            )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/**").permitAll() // login is public
+                .anyRequest().authenticated()
+            )
+            // Add our JWT filter BEFORE the default username/password filter
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+            throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+
+---
+
+### The Full Request Lifecycle
+
+```
+Request with JWT
+       |
+       ▼
+ JwtAuthFilter
+  ├── Extract token from "Authorization: Bearer <token>"
+  ├── Decode & validate signature + expiry
+  ├── Load UserDetails from DB
+  └── Set Authentication in SecurityContextHolder
+       |
+       ▼
+ Spring's AuthorizationFilter
+  └── Checks roles/permissions against your rules
+       |
+       ▼
+ Your Controller (if allowed)
+```
+
+---
+
+### Key Security Considerations
+
+| Concern | Best Practice |
+|---|---|
+| Secret key | Store in env variables, min 256-bit |
+| Token expiry | Keep short (15–60 min), use refresh tokens |
+| HTTPS | Always — JWT in plaintext is readable |
+| Token storage (client) | `HttpOnly` cookie > `localStorage` (XSS safe) |
+| Revocation | Maintain a token denylist in Redis/DB if needed |
+
+---
+
 
 
 
