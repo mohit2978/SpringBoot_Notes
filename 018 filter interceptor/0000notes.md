@@ -346,12 +346,40 @@ Filter 1 — doFilter() after chain.doFilter()
 HTTP Response
 ```
 
-Interceptors run in registration order for `preHandle` and `postHandle`, then in **reverse** order for `afterCompletion`. Filters run in `@Order` order before and in reverse after.
+Interceptors run in registration order for `preHandle` , then in **reverse** order for `afterCompletion`and `postHandle`. Filters run in `@Order` order before and in reverse after.
 
 ---
-
+![alt text](image-2.png)
 ### The one-line decision rule
 
 > Use a **Filter** when you need to work with the raw HTTP request/response, before Spring is involved — security, CORS, body caching, compression.
 > Use an **Interceptor** when you need to work with Spring MVC specifics — which controller ran, which annotations it has, the model data, per-handler timing or logging.
+
+
+
+
+
+
+---
+
+### Why both run in reverse order — the "stack unwinding" reason
+
+Think of interceptors like a stack. When the request comes in, Spring pushes interceptors onto the stack in registration order (1 → 2). When the request unwinds, the stack pops in reverse (2 → 1). This is intentional and mirrors how filters work with `chain.doFilter()`.
+
+**`postHandle()` — reverse order**
+Runs after the controller but *before* the response is written. Since Interceptor 2 was the last to enter, it gets first access to modify the model/view on the way back out. Think of it like closing parentheses — the innermost closes first.
+
+**`afterCompletion()` — also reverse order**
+Runs after the response is fully written, used for cleanup (releasing resources, logging, etc.). Same rule: the last interceptor to enter is the first to clean up.
+
+---
+
+### Quick summary table
+
+| Phase | Order | Runs when |
+|---|---|---|
+| `preHandle()` | 1 → 2 (forward) | Before controller |
+| `postHandle()` | 2 → 1 (reverse) | After controller, before response |
+| `afterCompletion()` | 2 → 1 (reverse) | After response is written |
+| Filter after | 2 → 1 (reverse) | After `chain.doFilter()` returns |
 
