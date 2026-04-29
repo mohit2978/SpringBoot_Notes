@@ -355,4 +355,3 @@ Interceptors run in registration order for `preHandle` and `postHandle`, then in
 > Use a **Filter** when you need to work with the raw HTTP request/response, before Spring is involved — security, CORS, body caching, compression.
 > Use an **Interceptor** when you need to work with Spring MVC specifics — which controller ran, which annotations it has, the model data, per-handler timing or logging.
 
-Want me to go deeper on anything — like how `OncePerRequestFilter` works, how to build a rate limiter with an interceptor, or how Spring Security's filter chain integrates with all of this?
