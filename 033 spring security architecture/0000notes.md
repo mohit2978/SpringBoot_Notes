@@ -113,6 +113,42 @@ You then override this by defining your own `SecurityFilterChain` bean.
 
 ---
 
+## Context
+
+The word "context" is one of those terms that confuses a lot of people. Let me break it down from the ground up — what "context" means in general programming, then specifically in Spring Security.---
+
+![alt text](image-1.png)
+
+### What "context" actually means
+
+In plain terms, a **context** is just a *container of information relevant to the current situation*. Think of it like a room — whoever is in that room can see everything inside it, without anyone outside needing to pass it around manually.
+
+In Spring Security specifically, the context answers the question: **"Who is the person making this request right now, and what are they allowed to do?"**
+
+---
+
+### The three layers explained
+
+`SecurityContextHolder` is the outermost shell — a global static class you can call from anywhere in your app. It uses `ThreadLocal` internally, which means every thread gets its own private slot of memory.
+
+`SecurityContext` is what lives inside that slot — one per thread. It's like a backpack tied to the current request. It holds exactly one thing: the `Authentication` object.
+
+`Authentication` is the ID card inside the backpack. It contains three key pieces: the **principal** (who the user is — usually a `UserDetails` object), their **authorities** (roles like `ROLE_USER`, `ROLE_ADMIN`), and a flag `isAuthenticated()` (true/false).
+
+---
+
+### Why ThreadLocal matters
+
+When your server handles 100 simultaneous requests, each one runs on its own thread. `ThreadLocal` ensures thread 1 (Alice's request) and thread 2 (Bob's request) each get their own isolated context — they can never see each other's data. This is how Spring Security stays stateless and thread-safe without you passing the user around manually everywhere.
+
+---
+
+### The lifecycle in one sentence
+
+> `JwtFilter` validates the token → creates an `Authentication` object → puts it in the `SecurityContext` → your controller can read it freely → after the response, Spring clears it automatically.
+
+This is why you can call `SecurityContextHolder.getContext().getAuthentication()` from any service or controller and always get the currently logged-in user — no method parameters needed. The context acts as an invisible carrier for that request's lifetime.
+
 
 
 ![alt text](033_spring_security_architecture_250716_003028_1.jpg) ![alt text](033_spring_security_architecture_250716_003028_2.jpg) ![alt text](033_spring_security_architecture_250716_003028_3.jpg) ![alt text](033_spring_security_architecture_250716_003028_4.jpg)
