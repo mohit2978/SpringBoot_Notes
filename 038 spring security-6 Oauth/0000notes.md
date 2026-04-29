@@ -1,4 +1,4 @@
-# Notes
+# Oauth-2
 
 >Note: First Authentication happens and then authorization!!
 
@@ -7,6 +7,51 @@
 ![alt text](image-1.png)
 
 Already seen in Oauth in HLD!!In 8th step we can have JWT or Opaque token or any other type of token!!
+
+## Entities 
+
+![alt text](image-54.png)
+
+ Let me clear this up completely — this is where most people get confused.Now the most important question you asked — **is the Resource Server part of the Client App?** Let me show both real scenarios.
+ 
+ ![alt text](image-55.png)
+ 
+ Now let me answer each of your questions directly.
+
+---
+
+### Your question 1: "Auth Server — do we not write it?"
+
+Correct, in 99% of projects you do NOT write the Auth Server. You use one of these:
+
+**Use theirs (social login):** Google, GitHub, Facebook — you just register your app on their developer console, get a `client_id` and `client_secret`, and you're done. They run the entire Auth Server.
+
+**Host your own (enterprise):** Tools like Keycloak, Auth0, or Okta — you deploy and configure them, but you do not write the code from scratch. Keycloak for example is a full Auth Server you install like a Docker container.
+
+**Write your own (rare):** Spring has a library called Spring Authorization Server for this. Only large companies building identity platforms do this.
+
+---
+
+### Your question 2: "Is the Resource Server part of the Client App?"
+
+It depends on your architecture, and both are valid:
+
+**Same app** — your Spring Boot app handles login (Client role) AND protects `/api/*` endpoints (Resource Server role). You add both `oauth2-client` and `oauth2-resource-server` dependencies. Common in small projects.
+
+**Separate apps** — your frontend or BFF handles login and gets the token (Client). Then it sends that token to your backend microservices. Each microservice is a standalone Resource Server — it just validates the token on every request and does not care about login at all. This is the standard in microservices architecture.
+
+---
+
+### The one-line rule to remember each role
+
+| Entity | One job | You write it? |
+|---|---|---|
+| Resource Owner | owns the data, approves access | no — it's the user |
+| Client App | gets the token | yes |
+| Auth Server | issues the token | no — Google/Keycloak etc. |
+| Resource Server | validates the token | yes — your API |
+
+Think of it as: the Client App is the **front door** of your building that checks people in. The Resource Server is the **room** that checks key cards. The Auth Server is the **government** that issued the key cards. You build the building — the government is already there.
 
 ![alt text](image-2.png)
 
@@ -259,7 +304,168 @@ Utility Class, just to validate the token
 
 
 
+ OAuth2 is often misunderstood. Let me build it up from the concept, then show the full flow with code.Now let's look at the actual Spring Boot code for both sides — the Client and the Resource Server.
 
+ ![alt text](image-56.png)
+
+---
+
+### The key mental model before diving into code
+
+OAuth2 is a **delegation protocol** — you are letting your app act on your behalf with another service, without giving it your password. JWT is just the *format* the token might use. OAuth2 itself doesn't care — the token could be opaque (a random string) or a JWT. Google and GitHub use JWTs.
+
+---
+
+### Part 1 — Spring Boot as OAuth2 Client (Login with Google)
+
+**`pom.xml`**
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-oauth2-client</artifactId>
+</dependency>
+```
+
+**`application.yml`**
+```yaml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: YOUR_GOOGLE_CLIENT_ID
+            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+            scope: openid, email, profile
+```
+
+That's it for the client side — Spring auto-configures the entire redirect → consent → callback → token exchange flow.
+
+**`SecurityConfig.java`**
+```java
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/").permitAll()
+                .anyRequest().authenticated()
+            )
+            .oauth2Login(oauth2 -> oauth2
+                .defaultSuccessUrl("/dashboard", true)
+            );
+        return http.build();
+    }
+}
+```
+
+**Reading user info after login**
+```java
+@GetMapping("/dashboard")
+public String dashboard(@AuthenticationPrincipal OAuth2User principal) {
+    String email = principal.getAttribute("email");
+    String name  = principal.getAttribute("name");
+    return "Welcome " + name + " (" + email + ")";
+}
+```
+
+---
+
+### Part 2 — Spring Boot as OAuth2 Resource Server (protecting your API)
+
+This is when *your own API* accepts tokens issued by an Auth Server (like Keycloak, Auth0, or Google).
+
+**`pom.xml`**
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+</dependency>
+```
+
+**`application.yml`**
+```yaml
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Spring fetches the public key automatically from here
+          issuer-uri: https://accounts.google.com
+          # OR provide the JWKS URI directly:
+          # jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+```
+
+**`SecurityConfig.java`**
+```java
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/public/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(Customizer.withDefaults()) // validates JWT automatically
+            );
+        return http.build();
+    }
+}
+```
+
+**Accessing claims in controller**
+```java
+@GetMapping("/api/profile")
+public Map<String, Object> profile(@AuthenticationPrincipal Jwt jwt) {
+    return Map.of(
+        "subject",  jwt.getSubject(),
+        "email",    jwt.getClaimAsString("email"),
+        "roles",    jwt.getClaimAsStringList("roles"),
+        "expires",  jwt.getExpiresAt()
+    );
+}
+```
+
+---
+
+### How validation actually works (the JWKS magic)
+
+When a request hits your Resource Server with `Bearer <token>`:
+
+1. Spring's `JwtDecoder` decodes the token header to find which key ID (`kid`) was used to sign it
+2. It calls the Auth Server's `/.well-known/jwks.json` endpoint **once** to fetch the public key, then **caches it**
+3. It verifies the signature locally using that public key — no Auth Server call on every request
+4. It checks `exp` (expiry), `iss` (issuer), `aud` (audience)
+5. It builds a `JwtAuthenticationToken` and puts it in the `SecurityContextHolder`
+
+```
+Token header:  { "alg": "RS256", "kid": "key-id-123" }
+               ↓
+Spring fetches: GET https://accounts.google.com/.well-known/jwks.json
+               ↓
+Finds the public key matching kid="key-id-123"
+               ↓
+Verifies RSA signature locally → sets Authentication
+```
+
+---
+
+### OAuth2 vs plain JWT — the one-line distinction
+
+| | Plain JWT (custom) | OAuth2 + JWT |
+|---|---|---|
+| Who issues the token | Your own app | A dedicated Auth Server (Google, Keycloak) |
+| Key management | You manage the secret | Auth Server publishes public key via JWKS |
+| User consent flow | None | Full redirect + consent screen |
+| Token types | Just access token | access + refresh + id_token |
+| Standard | No | Yes (RFC 6749) |
+
+OAuth2 is the **protocol**. JWT is one possible **token format** within it. You can have OAuth2 without JWT, and JWT without OAuth2 — but together they're the industry standard.
 
 
 
