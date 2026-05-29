@@ -53,6 +53,423 @@ It depends on your architecture, and both are valid:
 
 Think of it as: the Client App is the **front door** of your building that checks people in. The Resource Server is the **room** that checks key cards. The Auth Server is the **government** that issued the key cards. You build the building — the government is already there.
 
+
+Perfect question. Let me explain all 4 roles in OAuth2 with complete clarity.
+
+---
+
+## The Real World Analogy First
+
+Think of **logging into a hotel with your driving licence**:
+
+```
+You          → Resource Owner  (you own your identity data)
+Hotel        → Client          (wants to verify who you are)
+Govt/DVLA    → Authorization Server (issued your licence, confirms identity)
+Hotel System → Resource Server (holds your room, services — protected resources)
+```
+
+---
+
+## The 4 OAuth2 Roles
+
+### 1. Resource Owner
+
+```
+The USER who owns the data and grants permission to access it.
+
+Example:
+- You logging into "Spotify" using Google
+- YOU are the resource owner
+- You own your Google profile data
+- You GRANT permission to Spotify to read it
+
+Real code example — this is just the person clicking
+"Allow" on the consent screen. No code represents them.
+They are a human being.
+```
+
+### 2. Authorization Server
+
+```
+Issues tokens. Verifies identity. NOT your code.
+
+Examples of Authorization Servers:
+- Google        (accounts.google.com)
+- GitHub        (github.com/login/oauth)
+- Facebook      (facebook.com/dialog/oauth)
+- Okta
+- Auth0
+- Keycloak      ← open source, you can HOST this yourself
+- AWS Cognito
+
+What it does:
+1. Shows login page to user
+2. Verifies username/password
+3. Shows consent screen ("Allow Spotify to read your profile?")
+4. Issues Access Token + Refresh Token
+5. Provides public keys so Resource Server can verify tokens
+
+YOU DO NOT WRITE THIS.
+```
+
+### 3. Client
+
+```
+YES — your frontend IS the client.
+But also your backend can be the client in some flows.
+
+The CLIENT is whatever application WANTS to access
+protected resources on behalf of the user.
+
+Examples:
+┌─────────────────────────────────────────────────────┐
+│  Your React/Angular frontend  ← Client (most common)│
+│  Your mobile app              ← Client              │
+│  Your Spring Boot backend     ← Client (server-side)│
+│  Postman                      ← Client (testing)    │
+└─────────────────────────────────────────────────────┘
+
+The Client:
+1. Redirects user to Authorization Server login page
+2. Receives Authorization Code after login
+3. Exchanges code for Access Token
+4. Uses Access Token to call Resource Server
+
+In React (YOU write this):
+const loginWithGoogle = () => {
+    // Redirect to Google's authorization server
+    window.location.href =
+        "https://accounts.google.com/o/oauth2/auth" +
+        "?client_id=YOUR_CLIENT_ID" +
+        "&redirect_uri=http://localhost:3000/callback" +
+        "&response_type=code" +
+        "&scope=openid profile email";
+};
+```
+
+### 4. Resource Server
+
+```
+YES — your Spring Boot backend IS the Resource Server.
+
+The Resource Server:
+- Holds the PROTECTED RESOURCES (your API endpoints, data)
+- Accepts requests WITH Access Tokens
+- Validates the Access Token
+- Returns data if token is valid
+
+THIS IS YOUR SPRING BOOT CODE.
+```
+
+---
+
+## Visual of all 4 roles together
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                     OAUTH2 FLOW                              │
+│                                                              │
+│  ┌─────────────┐          ┌──────────────────────────────┐  │
+│  │  Resource   │          │    Authorization Server      │  │
+│  │   Owner     │─────────▶│  (Google / GitHub / Keycloak)│  │
+│  │  (User)     │  logs in │                              │  │
+│  └─────────────┘          │  1. verifies identity        │  │
+│         │                 │  2. shows consent screen     │  │
+│         │                 │  3. issues Access Token      │  │
+│         │                 │  4. issues Refresh Token     │  │
+│         │                 └──────────────────────────────┘  │
+│         │                             │                      │
+│         │                    Access Token issued             │
+│         │                             │                      │
+│         ▼                             ▼                      │
+│  ┌─────────────┐          ┌──────────────────────────────┐  │
+│  │   Client    │          │      Resource Server         │  │
+│  │  (React /   │─────────▶│   (YOUR Spring Boot App)     │  │
+│  │  Frontend)  │  calls   │                              │  │
+│  │             │  with    │  1. receives request         │  │
+│  └─────────────┘  token   │  2. validates Access Token   │  │
+│                            │  3. returns protected data   │  │
+│                            └──────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Concrete Example — Login with Google
+
+```
+Step 1: User clicks "Login with Google" on your React app
+─────────────────────────────────────────────────────────
+CLIENT (React) redirects user to:
+https://accounts.google.com/o/oauth2/auth
+    ?client_id=abc123
+    &redirect_uri=http://localhost:3000/callback
+    &response_type=code
+    &scope=openid profile email
+
+Step 2: User logs into Google
+─────────────────────────────────────────────────────────
+AUTHORIZATION SERVER (Google) shows login page
+RESOURCE OWNER (User) enters Google credentials
+Google verifies them internally
+
+Step 3: User grants permission
+─────────────────────────────────────────────────────────
+AUTHORIZATION SERVER shows consent screen:
+"Your App wants to access your profile and email. Allow?"
+RESOURCE OWNER clicks Allow
+
+Step 4: Authorization Server redirects back with code
+─────────────────────────────────────────────────────────
+AUTHORIZATION SERVER redirects to:
+http://localhost:3000/callback?code=AUTHORIZATION_CODE
+
+Step 5: Client exchanges code for token
+─────────────────────────────────────────────────────────
+CLIENT (React or Spring Boot) sends POST to Google:
+POST https://oauth2.googleapis.com/token
+{
+    code: "AUTHORIZATION_CODE",
+    client_id: "abc123",
+    client_secret: "secret",
+    redirect_uri: "http://localhost:3000/callback",
+    grant_type: "authorization_code"
+}
+
+AUTHORIZATION SERVER responds:
+{
+    "access_token": "ya29.a0AfB...",
+    "refresh_token": "1//0eXYZ...",
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "id_token": "eyJhbGci..."  ← contains user info
+}
+
+Step 6: Client calls Resource Server with token
+─────────────────────────────────────────────────────────
+CLIENT (React) calls YOUR Spring Boot API:
+GET http://localhost:8080/api/profile
+Authorization: Bearer ya29.a0AfB...
+
+Step 7: Resource Server validates token
+─────────────────────────────────────────────────────────
+YOUR SPRING BOOT APP:
+1. Receives the request
+2. Extracts Bearer token
+3. Validates token with Google's public keys
+4. Extracts user info from token
+5. Returns protected data
+```
+
+---
+
+## YOUR Spring Boot as Resource Server — the code
+
+```java
+// ════════════════════════════════════════
+// pom.xml — add this dependency
+// ════════════════════════════════════════
+
+// <dependency>
+//     <groupId>org.springframework.boot</groupId>
+//     <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+// </dependency>
+
+
+// ════════════════════════════════════════
+// application.properties
+// ════════════════════════════════════════
+
+// Tell Spring where to get Google's public keys
+// Spring uses these to VALIDATE incoming tokens
+// spring.security.oauth2.resourceserver.jwt.issuer-uri=
+//     https://accounts.google.com
+
+
+// ════════════════════════════════════════
+// SecurityConfig.java — YOU write this
+// Makes your Spring Boot a Resource Server
+// ════════════════════════════════════════
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http)
+            throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+
+            // Tell Spring this app is a Resource Server
+            // It will automatically validate JWT tokens
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt
+                    .jwtAuthenticationConverter(
+                        jwtAuthenticationConverter())
+                )
+            )
+
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            );
+
+        return http.build();
+    }
+
+    // Converts JWT claims into Spring Security roles
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter authoritiesConverter =
+            new JwtGrantedAuthoritiesConverter();
+
+        // Google puts roles in "authorities" claim
+        authoritiesConverter.setAuthoritiesClaimName("authorities");
+        authoritiesConverter.setAuthorityPrefix("ROLE_");
+
+        JwtAuthenticationConverter converter =
+            new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
+        return converter;
+    }
+}
+
+
+// ════════════════════════════════════════
+// Your Controller — protected resource
+// ════════════════════════════════════════
+@RestController
+public class ProfileController {
+
+    // This endpoint IS the protected resource
+    // Resource Server protects it
+    @GetMapping("/api/profile")
+    public Map<String, Object> getProfile(
+            @AuthenticationPrincipal Jwt jwt) {
+
+        // jwt contains claims from the token
+        // Spring Resource Server already validated the token
+        // by this point — if invalid, request never reaches here
+
+        Map<String, Object> profile = new HashMap<>();
+        profile.put("username", jwt.getSubject());
+        profile.put("email", jwt.getClaim("email"));
+        profile.put("name", jwt.getClaim("name"));
+        return profile;
+    }
+
+    // Role-based access
+    @GetMapping("/admin/dashboard")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminOnly() {
+        return "Admin dashboard data";
+    }
+}
+```
+
+---
+
+## What Resource Server does internally
+
+```
+Incoming Request:
+GET /api/profile
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9...
+        │
+        ↓
+BearerTokenAuthenticationFilter  (Spring provides automatically)
+        │
+        │  extracts token from header
+        │
+        ↓
+JwtDecoder  (Spring provides automatically)
+        │
+        │  fetches Google's public keys from:
+        │  https://accounts.google.com/.well-known/openid-configuration
+        │
+        │  validates:
+        │  ✓ signature (was this token really issued by Google?)
+        │  ✓ expiry    (is it still valid?)
+        │  ✓ issuer    (did it come from accounts.google.com?)
+        │  ✓ audience  (was it issued for YOUR app?)
+        │
+        ↓
+JwtAuthenticationConverter
+        │
+        │  converts JWT claims into Authentication object:
+        │  principal   = Jwt object (contains all claims)
+        │  authorities = [ROLE_USER] or [ROLE_ADMIN]
+        │  authenticated = true
+        │
+        ↓
+SecurityContextHolder.setAuthentication(auth)
+        │
+        ↓
+AuthorizationFilter
+        │  checks user has permission for /api/profile
+        │
+        ↓
+Your Controller executes
+        │
+        ↓
+Returns protected data to Client
+```
+
+---
+
+## Your Spring Boot can be BOTH Client AND Resource Server
+
+```
+┌────────────────────────────────────────────────────────────┐
+│                                                            │
+│  Scenario 1: Frontend is Client                            │
+│  ─────────────────────────────                             │
+│  React App          →  Client                              │
+│  Google             →  Authorization Server                │
+│  Spring Boot API    →  Resource Server                     │
+│                                                            │
+│  Scenario 2: Spring Boot is Client (server-side flow)      │
+│  ─────────────────────────────────────────────────────     │
+│  Spring Boot App    →  Client                              │
+│  Google             →  Authorization Server                │
+│  Google APIs        →  Resource Server                     │
+│  (Calendar/Gmail)                                          │
+│                                                            │
+│  Scenario 3: Spring Boot is BOTH                           │
+│  ───────────────────────────────                           │
+│  Spring Boot        →  Client (calls another service)      │
+│  Spring Boot        →  Resource Server (serves your API)   │
+│  Keycloak           →  Authorization Server                │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Summary — your exact questions answered
+
+| Role | Is it your code? | What is it? |
+|---|---|---|
+| **Resource Owner** | No — human user | The person who owns the data and grants access |
+| **Client** | YES — your React frontend | The app that requests access on behalf of user |
+| **Authorization Server** | NO — Google/GitHub/Keycloak | Issues tokens, verifies identity |
+| **Resource Server** | YES — your Spring Boot API | Holds protected data, validates tokens |
+
+```
+Resource Owner  = User who clicks "Login with Google"
+Client          = Your React app (requests the token)
+Auth Server     = Google (issues the token) ← NOT your code
+Resource Server = Your Spring Boot API      ← YES your code
+                  protects endpoints
+                  validates tokens
+                  returns protected data
+```
+
 ![alt text](image-2.png)
 
 OAuth is used to acess protected data!! OIDC can be used to veryify the user too!!

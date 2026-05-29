@@ -1253,3 +1253,755 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 | `@AuthenticationPrincipal UserDetails user` | Controller method — cleanest |
 | `auth instanceof AnonymousAuthenticationToken` | Check if real user vs guest |
 
+
+Great question. Let me explain the exact relationship between the `Authentication` object and `UserDetailsService` in complete depth.
+
+---
+
+## The Core Relationship in One Line
+
+`UserDetailsService` **feeds data INTO** the `Authentication` object. It is the bridge between your database and the `Authentication` object that Spring Security uses.
+
+```
+Your Database
+      ↓
+UserDetailsService.loadUserByUsername()
+      ↓
+UserDetails object
+      ↓
+Becomes the PRINCIPAL inside Authentication object
+      ↓
+Authentication stored in SecurityContext
+```
+
+---
+
+## Before and After UserDetailsService is called
+
+```java
+// BEFORE UserDetailsService is called
+// Authentication looks like this (created by filter):
+Authentication before = new UsernamePasswordAuthenticationToken(
+    "alice",     // principal = just a plain string (username)
+    "abc123"     // credentials = raw password
+);
+// principal     → "alice"        (String)
+// credentials   → "abc123"       (String)
+// authorities   → []             (empty)
+// authenticated → false
+
+//---------------------------------------------------
+
+// AFTER UserDetailsService loads the user
+// Authentication looks like this (created by DaoAuthenticationProvider):
+Authentication after = new UsernamePasswordAuthenticationToken(
+    userDetails,                     // principal = full UserDetails object
+    null,                            // credentials = null (cleared)
+    userDetails.getAuthorities()     // authorities = [ROLE_USER]
+);
+// principal     → UserAuthEntity { username="alice", role="ROLE_USER" }
+// credentials   → null            (cleared for safety)
+// authorities   → [ROLE_USER]
+// authenticated → true
+```
+
+---
+
+## The Exact Flow — Step by Step with Code
+
+### Step 1: Filter creates Authentication with just a string
+
+```java
+// Inside UsernamePasswordAuthenticationFilter — Spring writes this
+// YOU never write this
+
+String username = request.getParameter("username"); // "alice"
+String password = request.getParameter("password"); // "abc123"
+
+// Creates Authentication with just strings — no DB call yet
+UsernamePasswordAuthenticationToken authRequest =
+    new UsernamePasswordAuthenticationToken(username, password);
+
+// principal = "alice"  ← just a String, NOT a UserDetails object yet
+// UserDetailsService has NOT been called yet at this point
+```
+
+### Step 2: DaoAuthenticationProvider calls UserDetailsService
+
+```java
+// Inside DaoAuthenticationProvider — Spring writes this
+// YOU never write this — but YOU provide the UserDetailsService bean
+
+public class DaoAuthenticationProvider {
+
+    private UserDetailsService userDetailsService; // YOUR implementation injected here
+    private PasswordEncoder passwordEncoder;       // YOUR bean injected here
+
+    @Override
+    public Authentication authenticate(Authentication authentication) {
+
+        // Extract the plain username string from Authentication
+        String username = authentication.getName(); // "alice"
+
+        // THIS IS WHERE UserDetailsService is called
+        // Spring calls YOUR loadUserByUsername() method here
+        UserDetails userDetails =
+            userDetailsService.loadUserByUsername(username);
+        //    ↑
+        //    YOUR code runs here
+        //    fetches from DB, returns UserAuthEntity
+
+        // Now verify password
+        String rawPassword = authentication.getCredentials().toString();
+        // "abc123" (what user typed)
+
+        if (!passwordEncoder.matches(rawPassword, userDetails.getPassword())) {
+            // userDetails.getPassword() = "$2a$10$hash..." (from DB)
+            throw new BadCredentialsException("Wrong password");
+        }
+
+        // Password matched — build fully authenticated token
+        // NOW the principal becomes the UserDetails object
+        return new UsernamePasswordAuthenticationToken(
+            userDetails,                    // principal = YOUR UserAuthEntity
+            null,                           // credentials cleared
+            userDetails.getAuthorities()    // from YOUR getAuthorities() method
+        );
+    }
+}
+```
+
+### Step 3: YOUR UserDetailsService runs
+
+```java
+// YOU write this
+@Service
+public class UserAuthEntityService implements UserDetailsService {
+
+    @Autowired
+    private UserAuthEntityRepository repository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+
+        // Called by DaoAuthenticationProvider with "alice"
+        // Fetches from DB → returns UserAuthEntity
+
+        return repository.findByUsername(username)
+            .orElseThrow(() ->
+                new UsernameNotFoundException("User not found: " + username));
+
+        // Returns UserAuthEntity which implements UserDetails
+        // This object becomes the PRINCIPAL in Authentication
+    }
+}
+```
+
+### Step 4: UserDetails becomes the Principal in Authentication
+
+```java
+// After loadUserByUsername() returns, the Authentication object transforms:
+
+// BEFORE loadUserByUsername():
+authentication.getPrincipal()  →  "alice"  (String)
+
+// AFTER loadUserByUsername() + password check:
+authentication.getPrincipal()  →  UserAuthEntity {
+                                      id       = 1,
+                                      username = "alice",
+                                      password = "$2a$10$hash...",
+                                      role     = "ROLE_USER",
+                                      // + all UserDetails methods
+                                      isEnabled()              = true,
+                                      isAccountNonExpired()    = true,
+                                      isAccountNonLocked()     = true,
+                                      isCredentialsNonExpired()= true
+                                  }
+```
+
+---
+
+## What UserDetails provides to Authentication
+
+`UserDetails` is an interface — YOUR entity implements it. Each method it provides feeds a specific part of the `Authentication` object:
+
+```java
+// YOU implement this in UserAuthEntity.java
+public class UserAuthEntity implements UserDetails {
+
+    // ─── feeds Authentication.getPrincipal().getUsername() ───
+    @Override
+    public String getUsername() {
+        return username; // "alice"
+    }
+
+    // ─── used by DaoAuthenticationProvider for password check ───
+    // NOT stored in Authentication after auth (credentials cleared)
+    @Override
+    public String getPassword() {
+        return password; // "$2a$10$hash..."
+    }
+
+    // ─── feeds Authentication.getAuthorities() ───
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+        // ["ROLE_USER"] or ["ROLE_ADMIN"]
+    }
+
+    // ─── used by DaoAuthenticationProvider to validate account ───
+    // if any returns false → AuthenticationException thrown
+    // Authentication object never gets created
+    @Override
+    public boolean isAccountNonExpired()     { return true; }
+
+    @Override
+    public boolean isAccountNonLocked()      { return true; }
+
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+
+    @Override
+    public boolean isEnabled()               { return true; }
+}
+```
+
+### How each UserDetails method affects Authentication
+
+```
+UserDetails method           →   Effect on Authentication
+─────────────────────────────────────────────────────────────────────
+getUsername()                →   auth.getName() returns this
+getPassword()                →   used for password check ONLY
+                                 then DISCARDED (not in Authentication)
+getAuthorities()             →   auth.getAuthorities() returns this
+isEnabled() = false          →   DisabledException thrown
+                                 Authentication NEVER created
+isAccountNonLocked() = false →   LockedException thrown
+                                 Authentication NEVER created
+isAccountNonExpired() = false→   AccountExpiredException thrown
+                                 Authentication NEVER created
+isCredentialsNonExpired()    →   CredentialsExpiredException thrown
+= false                          Authentication NEVER created
+```
+
+---
+
+## The complete picture — full code together
+
+```java
+// ════════════════════════════════════════
+// 1. YOUR entity — becomes the principal
+// ════════════════════════════════════════
+@Entity
+@Table(name = "user_auth")
+public class UserAuthEntity implements UserDetails {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password; // BCrypt hash
+
+    private String role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override public String getUsername()              { return username; }
+    @Override public String getPassword()              { return password; }
+    @Override public boolean isEnabled()               { return true; }
+    @Override public boolean isAccountNonExpired()     { return true; }
+    @Override public boolean isAccountNonLocked()      { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+}
+
+// ════════════════════════════════════════
+// 2. YOUR UserDetailsService — loads from DB
+// ════════════════════════════════════════
+@Service
+public class UserAuthEntityService implements UserDetailsService {
+
+    @Autowired
+    private UserAuthEntityRepository repository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+        return repository.findByUsername(username)
+            .orElseThrow(() ->
+                new UsernameNotFoundException("User not found"));
+    }
+}
+
+// ════════════════════════════════════════
+// 3. YOUR SecurityConfig — wires everything
+// ════════════════════════════════════════
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Autowired
+    private UserAuthEntityService userAuthEntityService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // Spring Security automatically detects your UserDetailsService bean
+    // and wires it into DaoAuthenticationProvider
+    // You do NOT need to manually wire them in modern Spring Security
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http)
+            throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/register").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf.disable())
+            .httpBasic(Customizer.withDefaults());
+        return http.build();
+    }
+}
+
+// ════════════════════════════════════════
+// 4. HOW YOU READ the Authentication object
+// ════════════════════════════════════════
+@RestController
+public class ProfileController {
+
+    // Way 1 — full Authentication object
+    @GetMapping("/profile")
+    public String profile(Authentication auth) {
+
+        // principal is YOUR UserAuthEntity object
+        UserAuthEntity user = (UserAuthEntity) auth.getPrincipal();
+
+        return "Username : " + user.getUsername()    // "alice"
+             + " Role    : " + user.getRole()        // "ROLE_USER"
+             + " Enabled : " + user.isEnabled();     // true
+    }
+
+    // Way 2 — just the principal directly (cleanest)
+    @GetMapping("/me")
+    public String me(@AuthenticationPrincipal UserAuthEntity user) {
+        // Spring casts getPrincipal() to UserAuthEntity for you
+        return "Hello " + user.getUsername();
+    }
+
+    // Way 3 — from SecurityContextHolder (useful in services)
+    @GetMapping("/check")
+    public String check() {
+        Authentication auth =
+            SecurityContextHolder.getContext().getAuthentication();
+
+        // Check roles
+        boolean isAdmin = auth.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        return isAdmin ? "You are admin" : "You are user";
+    }
+}
+```
+
+---
+
+## Visual relationship map
+
+```
+  UserDetailsService (interface)
+          │
+          │ YOU implement
+          ↓
+  UserAuthEntityService
+          │
+          │ overrides loadUserByUsername(username)
+          │ → queries DB via repository
+          │ → returns UserAuthEntity
+          ↓
+  UserAuthEntity (implements UserDetails)
+          │
+          ├── getUsername()        ──→  auth.getName()
+          ├── getPassword()        ──→  used for check ONLY → discarded
+          ├── getAuthorities()     ──→  auth.getAuthorities()
+          ├── isEnabled()          ──→  checked before auth created
+          ├── isAccountNonLocked() ──→  checked before auth created
+          └── (other booleans)     ──→  checked before auth created
+          │
+          │ becomes the PRINCIPAL
+          ↓
+  Authentication object (UsernamePasswordAuthenticationToken)
+          │
+          ├── getPrincipal()   →  UserAuthEntity object  (YOUR entity)
+          ├── getCredentials() →  null (cleared)
+          ├── getAuthorities() →  [ROLE_USER]            (from YOUR entity)
+          ├── getName()        →  "alice"                (from YOUR entity)
+          └── isAuthenticated()→  true
+          │
+          │ stored inside
+          ↓
+  SecurityContext
+          │
+          │ stored inside
+          ↓
+  SecurityContextHolder (thread-local)
+          │
+          │ persisted to
+          ↓
+  HTTP Session (across requests)
+```
+
+---
+
+## Summary
+
+| | UserDetailsService | Authentication |
+|---|---|---|
+| **What it is** | Interface YOU implement | Interface Spring provides |
+| **Job** | Load user from your storage | Hold verified identity for request |
+| **Who calls it** | `DaoAuthenticationProvider` | Stored in `SecurityContextHolder` |
+| **What it returns** | `UserDetails` object | Stored until session expires |
+| **When it runs** | Once per login attempt | Lives for entire session |
+| **Your code** | `loadUserByUsername()` | Read via `getPrincipal()` |
+| **Relationship** | Feeds the principal INTO Authentication | Contains UserDetails as principal |
+
+The bottom line: **`UserDetailsService` is called once at login time to load your user from the DB. That user object becomes the `principal` inside `Authentication`, which then lives in the session for all future requests — so `UserDetailsService` is NOT called on every request, only on login.**
+
+
+## So we need userDetailsService as only Authentication object needs it?
+
+Exactly right — but let me explain the **complete picture** of why, when, and who needs `UserDetailsService`.
+
+---
+
+## The short answer
+
+`UserDetailsService` has **exactly one job**:
+
+```
+Given a username string → return a UserDetails object from your storage
+```
+
+That is it. Nothing else.
+
+---
+
+## Who actually calls UserDetailsService?
+
+It is NOT the `Authentication` object that calls it. The `Authentication` object is just a data holder — it holds data, it calls nothing.
+
+The caller is always `DaoAuthenticationProvider`:
+
+```java
+// Inside DaoAuthenticationProvider — Spring writes this
+// This is the ONLY place loadUserByUsername() is called
+
+public Authentication authenticate(Authentication authentication) {
+
+    // Step 1: extract username string from Authentication
+    String username = authentication.getName(); // "alice"
+
+    // Step 2: call YOUR UserDetailsService
+    UserDetails userDetails =
+        userDetailsService.loadUserByUsername(username);
+    //  ↑
+    //  This is the ONLY caller of your UserDetailsService
+    //  It happens ONCE — at login time
+
+    // Step 3: verify password
+    passwordEncoder.matches(
+        authentication.getCredentials().toString(), // raw "abc123"
+        userDetails.getPassword()                   // "$2a$10$hash..."
+    );
+
+    // Step 4: build authenticated Authentication object
+    return new UsernamePasswordAuthenticationToken(
+        userDetails,                  // UserDetails becomes principal
+        null,
+        userDetails.getAuthorities()
+    );
+}
+```
+
+So the relationship is:
+
+```
+DaoAuthenticationProvider
+        │
+        │ calls
+        ↓
+UserDetailsService.loadUserByUsername()
+        │
+        │ returns UserDetails
+        ↓
+UserDetails becomes principal inside Authentication object
+```
+
+---
+
+## When is UserDetailsService called vs NOT called?
+
+This is the most important thing to understand:
+
+```
+Request 1: POST /login (first login)
+─────────────────────────────────────────────────────
+Filter → AuthenticationManager → DaoAuthenticationProvider
+    → UserDetailsService.loadUserByUsername() ← CALLED ✓
+    → password verified
+    → Authentication created
+    → stored in HTTP session
+
+Request 2: GET /api/data (subsequent request with session cookie)
+─────────────────────────────────────────────────────
+SecurityContextHolderFilter
+    → loads Authentication from HTTP session directly
+    → UserDetailsService.loadUserByUsername() ← NOT CALLED ✗
+    → Authentication already exists in session
+    → no DB call needed
+
+Request 3: GET /api/data (JWT token — stateless)
+─────────────────────────────────────────────────────
+JwtAuthFilter
+    → extracts username from JWT
+    → UserDetailsService.loadUserByUsername() ← CALLED ✓ (every request)
+    → because JWT is stateless — no session — must load user every time
+```
+
+---
+
+## Do we ONLY need UserDetailsService for Authentication?
+
+**No.** There are actually 3 situations where `UserDetailsService` is needed:
+
+### Situation 1 — Login authentication (most common)
+
+```java
+// DaoAuthenticationProvider calls it during login
+// Already explained above
+userDetailsService.loadUserByUsername("alice");
+// → verifies user exists
+// → provides password hash for comparison
+// → provides authorities for Authentication object
+```
+
+### Situation 2 — JWT filter (stateless auth)
+
+```java
+// YOU call it yourself in your custom JWT filter
+@Component
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    @Autowired private UserDetailsService userDetailsService;
+    @Autowired private JwtService jwtService;
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+
+        String token = extractToken(request);
+        if (token == null) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String username = jwtService.extractUsername(token);
+
+        if (username != null &&
+                SecurityContextHolder.getContext()
+                    .getAuthentication() == null) {
+
+            // YOU manually call UserDetailsService here
+            // Because JWT is stateless — no session to restore from
+            UserDetails userDetails =
+                userDetailsService.loadUserByUsername(username);
+            //  ↑
+            //  Called on EVERY request when using JWT
+            //  Needed to build Authentication object manually
+
+            if (jwtService.isTokenValid(token, userDetails)) {
+
+                // Manually build Authentication object
+                UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                    );
+
+                // Manually set in SecurityContext
+                SecurityContextHolder.getContext()
+                    .setAuthentication(authToken);
+            }
+        }
+        chain.doFilter(request, response);
+    }
+}
+```
+
+### Situation 3 — Remember-Me authentication
+
+```java
+// Spring Security's RememberMeAuthenticationFilter calls it
+// When user returns with a remember-me cookie but no session
+
+// Spring Security does this internally:
+String username = extractUsernameFromCookie(rememberMeCookie);
+
+// Calls YOUR UserDetailsService to reload the user
+UserDetails userDetails =
+    userDetailsService.loadUserByUsername(username);
+
+// Rebuilds Authentication from the reloaded UserDetails
+Authentication auth = new RememberMeAuthenticationToken(
+    key,
+    userDetails,
+    userDetails.getAuthorities()
+);
+```
+
+---
+
+## What happens if you do NOT provide UserDetailsService?
+
+```java
+// If you don't provide a UserDetailsService bean:
+
+// Case 1: No UserDetailsService at all
+// Spring Boot auto-configures InMemoryUserDetailsManager
+// with a random password printed in console logs:
+
+// Using generated security password: 3a4b5c6d-...
+// (only for development — useless for production)
+
+
+// Case 2: You provide UserDetailsService but wrong bean name
+// DaoAuthenticationProvider cannot find it
+// → NoSuchBeanDefinitionException at startup
+
+
+// Case 3: loadUserByUsername() throws UsernameNotFoundException
+// DaoAuthenticationProvider catches it
+// → throws BadCredentialsException to the filter
+// → filter sends 401 Unauthorized to the client
+// (Spring hides the real reason — security best practice
+//  so attackers can't tell if username or password was wrong)
+```
+
+---
+
+## The exact wiring — how Spring connects everything
+
+```java
+// YOU write these two beans:
+
+// Bean 1
+@Service
+public class UserAuthEntityService implements UserDetailsService {
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return repository.findByUsername(username)
+            .orElseThrow(() ->
+                new UsernameNotFoundException("Not found"));
+    }
+}
+
+// Bean 2
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
+
+// Spring Security AUTOMATICALLY:
+// 1. Detects your UserDetailsService bean
+// 2. Detects your PasswordEncoder bean
+// 3. Creates DaoAuthenticationProvider
+// 4. Injects both beans into it
+// 5. Creates ProviderManager with DaoAuthenticationProvider
+// 6. Wires ProviderManager as the AuthenticationManager
+// 7. Injects AuthenticationManager into UsernamePasswordAuthenticationFilter
+
+// You write 2 beans. Spring wires all 6 components automatically.
+```
+
+The auto-wiring inside Spring Security:
+
+```
+YOUR UserDetailsService bean
+            +
+YOUR PasswordEncoder bean
+            │
+            │ Spring auto-injects into
+            ↓
+DaoAuthenticationProvider  (Spring creates this)
+            │
+            │ Spring puts inside
+            ↓
+ProviderManager  (Spring creates this)
+            │
+            │ Spring injects into
+            ↓
+UsernamePasswordAuthenticationFilter  (Spring creates this)
+            │
+            │ Spring registers in
+            ↓
+Security Filter Chain  (Spring creates this)
+```
+
+---
+
+## Complete summary
+
+```
+                    WHO CALLS IT?
+                         │
+              ┌──────────┼──────────────┐
+              │          │              │
+              ↓          ↓              ↓
+    DaoAuthentication  JwtAuthFilter  RememberMe
+       Provider        (YOU call it)   AuthFilter
+    (login flow)      (JWT flow)      (cookie flow)
+              │          │              │
+              └──────────┼──────────────┘
+                         │
+                         ↓
+            loadUserByUsername(username)
+                         │
+                         ↓
+                 UserDetails object
+                         │
+              ┌──────────┼──────────────┐
+              │          │              │
+              ↓          ↓              ↓
+         password    authorities    account
+          check      → go into      status
+         (then        Auth obj      checks
+        discarded)
+                         │
+                         ↓
+              Authentication object
+              principal = UserDetails
+              credentials = null
+              authenticated = true
+```
+
+| | Session-based login | JWT stateless |
+|---|---|---|
+| **UserDetailsService called** | Once at login | Every request |
+| **Who calls it** | `DaoAuthenticationProvider` | Your `JwtAuthFilter` |
+| **Why** | To verify password + load roles | To rebuild Authentication each request |
+| **After that** | Stored in HTTP session | Not stored — JWT carries identity |
+| **Subsequent requests** | Loaded from session — no DB call | DB called every time |
+
+**Bottom line: `UserDetailsService` is not needed by the `Authentication` object — it is needed by whatever component has to BUILD the `Authentication` object. In session-based auth that is `DaoAuthenticationProvider` at login time only. In JWT that is your custom filter on every request.**
