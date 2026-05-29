@@ -164,6 +164,299 @@ When your server handles 100 simultaneous requests, each one runs on its own thr
 
 This is why you can call `SecurityContextHolder.getContext().getAuthentication()` from any service or controller and always get the currently logged-in user — no method parameters needed. The context acts as an invisible carrier for that request's lifetime.
 
+
+---
+
+## There is NOT just one filter — ALL filters run on every request
+
+This is the most common misconception. The Security Filter Chain runs **every registered filter on every request**, one by one in a fixed order. It does not pick just one.
+
+---
+
+## How the chain works internally
+
+Think of it like a pipeline:
+
+```
+Request comes in
+      ↓
+Filter 1 runs  → calls chain.doFilter() → passes to next
+      ↓
+Filter 2 runs  → calls chain.doFilter() → passes to next
+      ↓
+Filter 3 runs  → calls chain.doFilter() → passes to next
+      ↓
+      ... (15+ filters)
+      ↓
+Your Controller finally executes
+      ↓
+Response travels back UP through each filter in reverse
+```
+
+Every filter has this same structure:
+
+```java
+// This is the pattern EVERY filter follows internally
+public class SomeSecurityFilter extends OncePerRequestFilter {
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain) throws ServletException, IOException {
+
+        // 1. Do its own work BEFORE passing on
+        doSomethingBefore(request);
+
+        // 2. THIS LINE passes control to the next filter
+        //    If this line is NOT called → chain stops here → request blocked
+        chain.doFilter(request, response);
+
+        // 3. Do work AFTER the rest of the chain finishes (on the way back)
+        doSomethingAfter(response);
+    }
+}
+```
+
+The key is `chain.doFilter()` — calling it moves to the next filter. Not calling it **stops the chain** (blocks the request).
+
+---
+
+## How does Spring Security know which filter to actually do work?
+
+Each filter checks the request itself and decides whether to act or skip. Here are the real examples:
+
+### `UsernamePasswordAuthenticationFilter`
+
+```java
+// Spring Security source (simplified)
+public class UsernamePasswordAuthenticationFilter {
+
+    // Only triggers on POST /login
+    private AntPathRequestMatcher requiresAuthenticationRequestMatcher
+        = new AntPathRequestMatcher("/login", "POST");
+
+    @Override
+    public void doFilter(request, response, chain) {
+
+        // CHECK: is this a login request?
+        if (!requiresAuthenticationRequestMatcher.matches(request)) {
+            // NOT a login request → skip my logic, just pass it on
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // YES it's a login request → do authentication work
+        Authentication authResult = attemptAuthentication(request, response);
+        successfulAuthentication(request, response, chain, authResult);
+    }
+}
+```
+
+### `BasicAuthenticationFilter`
+
+```java
+// Spring Security source (simplified)
+public class BasicAuthenticationFilter {
+
+    @Override
+    protected void doFilterInternal(request, response, chain) {
+
+        // CHECK: does this request have a Basic Auth header?
+        String header = request.getHeader("Authorization");
+
+        if (header == null || !header.startsWith("Basic ")) {
+            // No Basic Auth header → skip, pass to next filter
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // YES has Basic Auth → decode and authenticate
+        String[] credentials = extractCredentials(header);
+        attemptAuthentication(credentials[0], credentials[1]);
+
+        chain.doFilter(request, response); // then pass on
+    }
+}
+```
+
+### `BearerTokenAuthenticationFilter` (JWT)
+
+```java
+// Spring Security source (simplified)
+public class BearerTokenAuthenticationFilter {
+
+    @Override
+    protected void doFilterInternal(request, response, chain) {
+
+        // CHECK: does this request have a Bearer token?
+        String header = request.getHeader("Authorization");
+
+        if (header == null || !header.startsWith("Bearer ")) {
+            // No JWT token → skip, pass to next filter
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // YES has JWT → validate token, set authentication
+        String token = header.substring(7);
+        validateAndSetAuthentication(token);
+
+        chain.doFilter(request, response);
+    }
+}
+```
+
+---
+
+## The full default filter order
+
+Spring Security registers these filters in this exact order — all of them run, most just pass through:
+
+```
+1.  DisableEncodeUrlFilter
+        ↓
+2.  WebAsyncManagerIntegrationFilter
+        ↓
+3.  SecurityContextHolderFilter         ← loads SecurityContext from session
+        ↓
+4.  HeaderWriterFilter                  ← adds security headers (X-Frame-Options etc)
+        ↓
+5.  CsrfFilter                          ← checks CSRF token (if enabled)
+        ↓
+6.  LogoutFilter                        ← checks if this is POST /logout
+        ↓
+7.  UsernamePasswordAuthenticationFilter ← checks if this is POST /login
+        ↓
+8.  DefaultLoginPageGeneratingFilter    ← generates login page HTML if needed
+        ↓
+9.  DefaultLogoutPageGeneratingFilter
+        ↓
+10. BasicAuthenticationFilter           ← checks for Authorization: Basic header
+        ↓
+11. RequestCacheAwareFilter
+        ↓
+12. SecurityContextHolderAwareRequestFilter
+        ↓
+13. AnonymousAuthenticationFilter       ← sets anonymous user if no auth yet
+        ↓
+14. ExceptionTranslationFilter          ← catches auth exceptions → 401/403
+        ↓
+15. AuthorizationFilter                 ← checks if user has permission for this URL
+        ↓
+    Your Controller
+```
+
+---
+
+## Concrete walkthrough: POST /login with username+password
+
+```
+Request: POST /login  { username:"alice", password:"123" }
+
+Filter 3  - SecurityContextHolderFilter
+          → checks session → no existing auth found
+          → calls chain.doFilter() ✓ passes on
+
+Filter 4  - HeaderWriterFilter
+          → adds security response headers
+          → calls chain.doFilter() ✓ passes on
+
+Filter 5  - CsrfFilter
+          → CSRF disabled in our config → skip
+          → calls chain.doFilter() ✓ passes on
+
+Filter 6  - LogoutFilter
+          → is this POST /logout? NO
+          → calls chain.doFilter() ✓ passes on
+
+Filter 7  - UsernamePasswordAuthenticationFilter
+          → is this POST /login? YES ✓
+          → extracts username + password
+          → calls AuthenticationManager
+          → authentication succeeds
+          → stores in SecurityContext
+          → sends redirect response (302)
+          → does NOT call chain.doFilter() ← CHAIN STOPS HERE
+             (request handled, no need to go to controller)
+```
+
+---
+
+## Concrete walkthrough: GET /api/data with valid session
+
+```
+Request: GET /api/data  (with JSESSIONID cookie)
+
+Filter 3  - SecurityContextHolderFilter
+          → finds existing SecurityContext in session
+          → loads Authentication into SecurityContextHolder
+          → calls chain.doFilter() ✓
+
+Filter 7  - UsernamePasswordAuthenticationFilter
+          → is this POST /login? NO → skip
+          → calls chain.doFilter() ✓
+
+Filter 10 - BasicAuthenticationFilter
+          → Authorization: Basic header present? NO → skip
+          → calls chain.doFilter() ✓
+
+Filter 13 - AnonymousAuthenticationFilter
+          → is Authentication already set? YES → skip
+          → calls chain.doFilter() ✓
+
+Filter 14 - ExceptionTranslationFilter
+          → wraps the rest in try/catch for auth errors
+          → calls chain.doFilter() ✓
+
+Filter 15 - AuthorizationFilter
+          → does this user have permission for GET /api/data? YES ✓
+          → calls chain.doFilter() ✓
+
+→ Your Controller executes → returns response
+```
+
+---
+
+## Concrete walkthrough: GET /api/data with NO session (unauthenticated)
+
+```
+Request: GET /api/data  (no session, no token)
+
+Filter 3  - SecurityContextHolderFilter → no session → passes on
+Filter 7  - UsernamePasswordAuthFilter  → not /login → passes on
+Filter 10 - BasicAuthenticationFilter   → no header → passes on
+
+Filter 13 - AnonymousAuthenticationFilter
+          → no Authentication set yet
+          → sets AnonymousAuthenticationToken (guest user)
+          → calls chain.doFilter() ✓
+
+Filter 14 - ExceptionTranslationFilter
+          → wraps in try/catch
+          → calls chain.doFilter() ✓
+
+Filter 15 - AuthorizationFilter
+          → does anonymous user have permission? NO ✗
+          → throws AccessDeniedException
+
+Filter 14 - ExceptionTranslationFilter catches it
+          → sends 401 Unauthorized response
+          → CHAIN STOPS — controller never reached
+```
+
+---
+
+## Summary of the 3 things that control the chain
+
+| Mechanism | What it does |
+|---|---|
+| `chain.doFilter()` called | Moves to next filter — request continues |
+| `chain.doFilter()` NOT called | Chain stops — request is handled (blocked or redirected) |
+| Each filter's own condition check | Filter decides to act or silently skip |
+
+So the answer to your question: **every filter runs, but most silently skip by checking the request. The right filter acts when its condition matches. The chain ends when a filter handles the response without calling `chain.doFilter()`, or when the controller is finally reached.**
+
 ## Principal
 
 In Spring Security, a **principal** is simply the identity of the currently authenticated entity — usually a logged-in user.
