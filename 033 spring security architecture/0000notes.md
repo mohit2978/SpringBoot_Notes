@@ -109,6 +109,23 @@ If you add `spring-boot-starter-security` to your project, Spring Boot automatic
 
 You then override this by defining your own `SecurityFilterChain` bean.
 
+
+![alt text](image-3.png)
+
+Here's the flow broken down step by step:
+
+**Steps 1–2 — Credential capture:** The user submits credentials (1), and the Spring Security filter chain intercepts the request and wraps the credentials into an `Authentication` object (2).
+
+**Steps 3–4 — Delegation:** The filter passes the `Authentication` object to the `AuthenticationManager` (3), which delegates to one or more `AuthenticationProvider` implementations (4).
+
+**Steps 5–6 — Validation:** Each provider calls `UserDetailsManager/Service` to load the user record (5) and `PasswordEncoder` to verify the submitted password against the stored hash (6).
+
+**Steps 7–8 — Result propagation:** The provider returns a fully populated `Authentication` back to the `AuthenticationManager` (7), which passes it up to the filters (8).
+
+**Steps 9–10 — Completion:** On success, the filters store the authenticated `Authentication` in the `SecurityContext` (9) so it's available thread-locally. The response is then returned to the user (10). On failure, an exception is thrown and the user gets an error response instead.
+
+
+
 ---
 
 ## Context
@@ -147,9 +164,82 @@ When your server handles 100 simultaneous requests, each one runs on its own thr
 
 This is why you can call `SecurityContextHolder.getContext().getAuthentication()` from any service or controller and always get the currently logged-in user — no method parameters needed. The context acts as an invisible carrier for that request's lifetime.
 
+## Principal
+
+In Spring Security, a **principal** is simply the identity of the currently authenticated entity — usually a logged-in user.
+
+More concretely, it answers the question: *"Who is this?"*
+
+### What it contains
+
+The principal is stored inside the `Authentication` object (step 2 in the diagram) and typically holds:
+
+- **Username** — the unique identifier (e.g. `"alice@example.com"`)
+- **UserDetails object** — the full user record loaded by `UserDetailsService`, which includes roles, authorities, account status (locked, expired, etc.)
+
+### In code
+
+```java
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+Object principal = auth.getPrincipal();
+
+// When using UserDetailsService, it's a UserDetails instance
+if (principal instanceof UserDetails userDetails) {
+    String username = userDetails.getUsername();
+    // → "alice@example.com"
+}
+
+// For unauthenticated requests, it's just the string "anonymousUser"
+```
+
+### How it fits in the flow
+
+```
+Authentication object
+├── principal   ← who they are (UserDetails)
+├── credentials ← what they proved it with (password — cleared after auth)
+└── authorities ← what they're allowed to do (ROLE_USER, ROLE_ADMIN, etc.)
+```
+
+### A simple analogy
+
+Think of it like an ID card check at a building entrance:
+
+| Concept | Analogy |
+|---|---|
+| **Principal** | Your name on the ID card |
+| **Credentials** | The ID card itself (shown once, then put away) |
+| **Authorities** | Which floors/rooms you're allowed to enter |
+
+So the principal is *not* the password, and it's *not* the permissions — it's purely the **identity** of whoever is authenticated.
+
+![alt text](033_spring_security_architecture_250716_003028_1.jpg) 
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
+This diagram zooms in on the internal structure of the components from the first diagram. Here's a cleaner version you can interact with:Here's what the diagram adds beyond the high-level flow:
+
+**Security Filter Chain** — not a single filter but a chain of them. Each filter has a specific responsibility. `UsernamePasswordAuthenticationFilter` handles form login, `BasicAuthenticationFilter` handles HTTP Basic, etc. You can add your own custom filters anywhere in the chain.
+
+**AuthenticationManager is an interface** — its default implementation is `ProviderManager`. The `ProviderManager` holds a list of `AuthenticationProvider` beans and tries each one until one succeeds or all fail.
+
+**AuthenticationProvider implementations:**
+- `DaoAuthenticationProvider` — the most common one, handles username/password login using `UserDetailsService`
+- `JWTAuthenticationProvider` — validates JWT tokens
+- `OAuth2LoginAuthenticationProvider` — handles OAuth2/social login
+- You can write your own by implementing the `AuthenticationProvider` interface
+
+**UserDetailsService is also an interface** with two built-in implementations:
+- `InMemoryUserDetailsManager` — stores users in memory (good for testing/dev)
+- `JdbcUserDetailsManager` — loads users from a database
+
+**PasswordEncoder** — used by `DaoAuthenticationProvider` to hash the incoming raw password and compare it against the stored hash. It never stores or compares plain text passwords.
 
 
-![alt text](033_spring_security_architecture_250716_003028_1.jpg) ![alt text](033_spring_security_architecture_250716_003028_2.jpg) ![alt text](033_spring_security_architecture_250716_003028_3.jpg) ![alt text](033_spring_security_architecture_250716_003028_4.jpg)
+![alt text](033_spring_security_architecture_250716_003028_2.jpg) ![alt text](033_spring_security_architecture_250716_003028_3.jpg) ![alt text](033_spring_security_architecture_250716_003028_4.jpg)
 
 
 

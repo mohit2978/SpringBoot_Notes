@@ -1,6 +1,349 @@
 # Notes 
 
-![alt text](<035 spring security -3_250716_003026_1.jpg>) ![alt text](<035 spring security -3_250716_003026_2.jpg>) ![alt text](<035 spring security -3_250716_003026_3.jpg>) ![alt text](<035 spring security -3_250716_003026_4.jpg>) ![alt text](<035 spring security -3_250716_003026_5.jpg>) ![alt text](<035 spring security -3_250716_003026_6.jpg>) ![alt text](<035 spring security -3_250716_003026_7.jpg>) ![alt text](<035 spring security -3_250716_003026_8.jpg>) ![alt text](<035 spring security -3_250716_003026_9.jpg>) ![alt text](<035 spring security -3_250716_003026_10.jpg>) ![alt text](<035 spring security -3_250716_003026_11.jpg>) ![alt text](<035 spring security -3_250716_003026_12.jpg>) ![alt text](<035 spring security -3_250716_003026_13.jpg>) ![alt text](<035 spring security -3_250716_003026_14.jpg>) ![alt text](<035 spring security -3_250716_003026_15.jpg>) ![alt text](<035 spring security -3_250716_003026_16.jpg>) ![alt text](<035 spring security -3_250716_003026_17.jpg>) ![alt text](<035 spring security -3_250716_003026_18.jpg>) ![alt text](<035 spring security -3_250716_003026_19.jpg>) ![alt text](<035 spring security -3_250716_003026_20.jpg>) ![alt text](<035 spring security -3_250716_003026_21.jpg>)
+![alt text](<035 spring security -3_250716_003026_1.jpg>)
+ ![alt text](<035 spring security -3_250716_003026_2.jpg>) 
+ ![alt text](<035 spring security -3_250716_003026_3.jpg>)
+  ![alt text](<035 spring security -3_250716_003026_4.jpg>) 
+  ![alt text](<035 spring security -3_250716_003026_5.jpg>)
+   ![alt text](<035 spring security -3_250716_003026_6.jpg>) 
+![alt text](<035 spring security -3_250716_003026_7.jpg>) 
+![alt text](<035 spring security -3_250716_003026_8.jpg>)
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
+This is a detailed diagram showing the full Spring Security flow from the servlet container all the way down to session storage. I'll break it into two clean diagrams — the top half (servlet container + filter chain + authentication) and the bottom half (SecurityContext + session persistence).The diagram above covers steps 1–7: from the request entering Tomcat, through the filter chain, into AuthenticationManager → ProviderManager → DaoAuthenticationProvider → UserDetailsService + PasswordEncoder, and back. Now here is the second half — what happens after the authenticated object is returned to the filter chain:Here is the full 12-step explanation matching every numbered step in your image:
+
+**Steps 1–2** — `UsernamePasswordAuthenticationFilter` intercepts the login request and creates an `Authentication` object with `authenticated=false`, wrapping the raw username and password.
+
+**Step 2** — The filter calls `AuthenticationManager.authenticate()`, which is implemented by `ProviderManager`.
+
+**Step 3** — `ProviderManager` delegates to `DaoAuthenticationProvider`, which immediately hashes the incoming raw password via `PasswordEncoder`.
+
+**Step 4** — `DaoAuthenticationProvider` calls `UserDetailsService.loadUserByUsername()` to fetch the full user record (username, stored hash, roles) from either `InMemoryUserDetailsManager` or `JdbcUserDetailsManager` (→ DB).
+
+**Step 5** — The provider compares the hashed incoming password with the stored hash. If they match, authentication succeeds.
+
+**Step 6** — A new `Authentication` object is built with `authenticated=true`, the `UserDetails` as principal, credentials cleared to `null`, and `GrantedAuthority` list populated.
+
+**Step 7** — This fully authenticated object is returned back up to the filter.
+
+**Step 8** — The next filter in the chain, `SecurityContextHolderFilter`, is invoked.
+
+**Step 9** — `SecurityContextHolderFilter` saves the `Authentication` object into the `SecurityContext`, which lives in a thread-local `SecurityContextHolder`.
+
+**Step 10** — The `SecurityContext` is passed to `HttpSessionSecurityContextRepository`.
+
+**Step 11** — A new HTTP session object is created.
+
+**Step 12** — The `SecurityContext` is stored inside the HTTP session. On every subsequent request, the session cookie is sent by the browser and Spring restores the `SecurityContext` automatically — so the user doesn't have to log in again.
+
+Here is the complete breakdown — what Spring Security gives you automatically vs what you must write yourself, with code for every step.
+
+---
+
+## Step 1–2: Filter intercepts request → creates Authentication object
+
+**Who writes this:** Spring Security gives you this automatically. You write nothing.
+
+`UsernamePasswordAuthenticationFilter` is built into Spring Security. When you hit `POST /login`, it automatically reads the `username` and `password` from the request and creates this object internally:
+
+```java
+// Spring Security creates this INTERNALLY — you never write this
+UsernamePasswordAuthenticationToken authToken =
+    new UsernamePasswordAuthenticationToken(
+        username,       // principal (just a string at this point)
+        password        // credentials (raw password)
+    );
+// At this stage:
+// authenticated = false
+// authorities   = [] (empty)
+// credentials   = "111abc" (raw, not yet hashed)
+```
+
+The only thing you configure is which URL triggers this filter, done in your `SecurityConfig`:
+
+```java
+// YOU write this in SecurityConfig.java
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/auth/register").permitAll()
+            .anyRequest().authenticated()
+        )
+        .csrf(csrf -> csrf.disable())
+        .httpBasic(Customizer.withDefaults()); // enables the filter
+    return http.build();
+}
+```
+
+---
+
+## Step 2: Filter → AuthenticationManager (ProviderManager)
+
+**Who writes this:** Spring Security gives you this automatically.
+
+The filter internally calls `authenticationManager.authenticate(authToken)`. The default implementation of `AuthenticationManager` is `ProviderManager` — Spring wires this up automatically. You don't write any of this logic.
+
+However, if you want to expose `AuthenticationManager` as a bean (needed for manual auth like JWT), you write this:
+
+```java
+// YOU write this ONLY if you need AuthenticationManager as a bean
+// (e.g. for custom JWT login endpoint)
+@Bean
+public AuthenticationManager authenticationManager(
+        AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+}
+```
+
+---
+
+## Step 3: PasswordEncoder hashes the incoming password
+
+**Who writes this:** You register the bean. Spring Security uses it automatically.
+
+You must declare which `PasswordEncoder` to use. Without this bean, Spring Security throws an error.
+
+```java
+// YOU write this in SecurityConfig.java
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+    // BCrypt automatically salts + hashes
+    // "111abc" → "$2a$10$euzihUhyp4exMejDky..."
+}
+```
+
+Spring Security's `DaoAuthenticationProvider` picks up this bean automatically and uses it internally to hash the incoming password before comparing.
+
+---
+
+## Step 4: DaoAuthenticationProvider → calls UserDetailsService
+
+**Who writes this:** You write `UserDetailsService`. Spring Security calls it automatically.
+
+`DaoAuthenticationProvider` is provided by Spring Security. But it needs to know how to load your user — so it calls `loadUserByUsername()` on whichever `UserDetailsService` bean you registered.
+
+```java
+// YOU write this — UserAuthEntityService.java
+@Service
+public class UserAuthEntityService implements UserDetailsService {
+
+    @Autowired
+    private UserAuthEntityRepository userAuthEntityRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+        // Spring Security calls this method automatically
+        // YOUR job: fetch the user from wherever they are stored
+        return userAuthEntityRepository.findByUsername(username)
+                .orElseThrow(() ->
+                    new UsernameNotFoundException("User not found"));
+    }
+}
+```
+
+And your entity must implement `UserDetails` so Spring Security can read it:
+
+```java
+// YOU write this — UserAuthEntity.java
+@Entity
+@Table(name = "user_auth")
+public class UserAuthEntity implements UserDetails {  // <-- YOU implement this
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;  // stored as BCrypt hash
+
+    private String role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Spring Security reads this to know the user's roles
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    // Spring Security reads these to check account status
+    @Override public boolean isAccountNonExpired()     { return true; }
+    @Override public boolean isAccountNonLocked()      { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled()               { return true; }
+
+    @Override public String getPassword() { return password; }
+    @Override public String getUsername() { return username; }
+}
+```
+
+And the repository Spring Data generates for you:
+
+```java
+// YOU write this interface — Spring Data generates the SQL automatically
+@Repository
+public interface UserAuthEntityRepository
+        extends JpaRepository<UserAuthEntity, Long> {
+
+    // Spring Data generates: SELECT * FROM user_auth WHERE username = ?
+    Optional<UserAuthEntity> findByUsername(String username);
+}
+```
+
+---
+
+## Step 5: Provider validates password
+
+**Who writes this:** Spring Security does this automatically using your `PasswordEncoder` bean.
+
+`DaoAuthenticationProvider` internally does this — you never write it:
+
+```java
+// Spring Security does this INTERNALLY — you never write this
+boolean matches = passwordEncoder.matches(
+    rawPasswordFromRequest,      // "111abc"
+    userDetails.getPassword()    // "$2a$10$euzihUhyp4exMejDky..."
+);
+
+if (!matches) {
+    throw new BadCredentialsException("Wrong password");
+}
+```
+
+---
+
+## Step 6: Provider returns fully authenticated object
+
+**Who writes this:** Spring Security does this automatically.
+
+After successful validation, `DaoAuthenticationProvider` internally builds a new token — you never write this:
+
+```java
+// Spring Security does this INTERNALLY
+UsernamePasswordAuthenticationToken authenticated =
+    new UsernamePasswordAuthenticationToken(
+        userDetails,                    // principal = full UserDetails object
+        null,                           // credentials = null (cleared for safety)
+        userDetails.getAuthorities()    // [ROLE_USER]
+    );
+// authenticated = true now
+```
+
+---
+
+## Step 7: Result returns to filter
+
+**Who writes this:** Spring Security does this automatically.
+
+The authenticated token bubbles back through `ProviderManager` → filter. No code from you needed.
+
+---
+
+## Steps 8–9: SecurityContextHolderFilter saves to SecurityContext
+
+**Who writes this:** Spring Security does this automatically.
+
+`SecurityContextHolderFilter` is built-in. After the previous filter completes, it stores the result:
+
+```java
+// Spring Security does this INTERNALLY
+SecurityContext context = SecurityContextHolder.createEmptyContext();
+context.setAuthentication(authentication);
+SecurityContextHolder.setContext(context);
+```
+
+You can read it anywhere in your application though:
+
+```java
+// YOU can read it anywhere — in any controller or service
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String username = auth.getName();                    // "my_username"
+Object principal = auth.getPrincipal();             // UserAuthEntity object
+Collection<?> roles = auth.getAuthorities();        // [ROLE_USER]
+boolean isAuth = auth.isAuthenticated();            // true
+```
+
+---
+
+## Steps 10–12: HttpSessionSecurityContextRepository → HTTP Session
+
+**Who writes this:** Spring Security does this automatically.
+
+Spring Security automatically persists the `SecurityContext` into the HTTP session. On every subsequent request, `SecurityContextPersistenceFilter` (or `SecurityContextHolderFilter` in newer versions) restores it automatically from the session cookie.
+
+```java
+// Spring Security does this INTERNALLY on every request:
+// 1. Read JSESSIONID cookie from request
+// 2. Load SecurityContext from session
+// 3. Put it into SecurityContextHolder
+// 4. After request completes → save updated SecurityContext back to session
+```
+
+You only configure session behaviour if you want to customise it:
+
+```java
+// YOU write this ONLY if you want to customise session behaviour
+http.sessionManagement(session -> session
+    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // for JWT — no session
+    // OR
+    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // default — create if needed
+);
+```
+
+---
+
+## Registration: the one flow you fully own
+
+The `/auth/register` endpoint is entirely your code — Spring Security has no built-in registration:
+
+```java
+// YOU write all of this — UserAuthController.java
+@RestController
+@RequestMapping("/auth")
+public class UserAuthController {
+
+    @Autowired private UserAuthEntityService userAuthEntityService;
+    @Autowired private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(
+            @RequestBody UserAuthEntity userAuthDetails) {
+
+        // Hash password BEFORE saving — never store plain text
+        userAuthDetails.setPassword(
+            passwordEncoder.encode(userAuthDetails.getPassword())
+        );
+
+        userAuthEntityService.save(userAuthDetails);
+        return ResponseEntity.ok("User registered successfully!");
+    }
+}
+```
+
+---
+
+## Summary table
+
+| Step | What happens | Who writes it |
+|---|---|---|
+| Filter intercepts login | Creates unauthenticated token | Spring Security (automatic) |
+| Calls AuthenticationManager | Delegates to ProviderManager | Spring Security (automatic) |
+| PasswordEncoder hashes | BCrypt hashes incoming password | You declare the `@Bean`, Spring uses it |
+| Loads user from DB | Calls `loadUserByUsername()` | **You write** `UserDetailsService` |
+| UserDetails entity | Provides username/password/roles | **You write** `UserAuthEntity implements UserDetails` |
+| Repository queries DB | `findByUsername()` | **You write** the interface, Spring Data generates SQL |
+| Validates password | `passwordEncoder.matches()` | Spring Security (automatic) |
+| Returns authenticated token | `authenticated=true`, credentials cleared | Spring Security (automatic) |
+| Saves to SecurityContext | Thread-local storage | Spring Security (automatic) |
+| Persists to HTTP session | `HttpSessionSecurityContextRepository` | Spring Security (automatic) |
+| Security config | Which URLs need auth, which encoder to use | **You write** `SecurityConfig` |
+| Registration endpoint | Hash + save new user | **You write** entirely |
+
+
+ ![alt text](<035 spring security -3_250716_003026_9.jpg>) ![alt text](<035 spring security -3_250716_003026_10.jpg>) ![alt text](<035 spring security -3_250716_003026_11.jpg>) ![alt text](<035 spring security -3_250716_003026_12.jpg>) ![alt text](<035 spring security -3_250716_003026_13.jpg>) ![alt text](<035 spring security -3_250716_003026_14.jpg>) ![alt text](<035 spring security -3_250716_003026_15.jpg>) ![alt text](<035 spring security -3_250716_003026_16.jpg>) ![alt text](<035 spring security -3_250716_003026_17.jpg>) ![alt text](<035 spring security -3_250716_003026_18.jpg>) ![alt text](<035 spring security -3_250716_003026_19.jpg>) ![alt text](<035 spring security -3_250716_003026_20.jpg>) ![alt text](<035 spring security -3_250716_003026_21.jpg>)
 
 
 
