@@ -536,37 +536,10 @@ This diagram zooms in on the internal structure of the components from the first
 
 
 
-![alt text](image.png)
 
 
-Here's the general Spring Security architecture — no JWT-specific pieces, just the core framework components and how they relate to each other.Here's what each layer does:
 
----
-
-### 1. `DelegatingFilterProxy`
-
-A standard servlet filter registered with the servlet container (Tomcat). Its only job is to look up Spring's `FilterChainProxy` bean from the `ApplicationContext` and delegate to it. This is the seam between the Java EE world and the Spring world.
-
----
-
-### 2. `FilterChainProxy`
-
-The central entry point for Spring Security. It holds a list of `SecurityFilterChain` instances and picks the right one based on the request URL. For example, `/api/**` might use a stateless chain, while `/admin/**` uses a different one with stricter rules.
-
----
-
-### 3. `SecurityFilterChain`
-
-An ordered list of filters that every matched request passes through. The key built-in ones are:
-
-- `SecurityContextPersistenceFilter` — restores or creates a `SecurityContext` at the start of the request, and saves it at the end
-- `Authentication filters` — a family of filters depending on your mechanism: `UsernamePasswordAuthenticationFilter` for form login, `BasicAuthenticationFilter` for HTTP Basic, `OAuth2LoginAuthenticationFilter` for OAuth2, etc. Only one typically activates per request
-- `ExceptionTranslationFilter` — catches `AuthenticationException` (→ 401) and `AccessDeniedException` (→ 403) thrown by downstream filters and translates them into proper HTTP responses
-- `AuthorizationFilter` — the final check before your controller is reached; enforces `.authorizeHttpRequests()` rules
-
----
-
-### 3 supporting components
+### supporting components
 
 `AuthenticationManager` — receives an `Authentication` token (e.g. username + password) and delegates to one or more `AuthenticationProvider` implementations that know how to verify it (against a DB, LDAP, in-memory, etc.).
 
@@ -863,5 +836,420 @@ So even in a stateless JWT setup, `UserDetailsService` acts as a **real-time che
 `UserDetailsService` is the plugin point that lets Spring Security stay completely storage-agnostic — you own the data layer, Spring Security owns the security logic.
 
 
+# Authentication object
 
+
+
+---
+
+## What is the Authentication object?
+
+`Authentication` is a **Java interface** provided by Spring Security. It represents the "who is this person and are they verified?" information for the current request.
+
+```java
+// Spring Security provides this interface — you never modify it
+public interface Authentication extends Principal, Serializable {
+
+    // WHO they are (UserDetails object after auth, just username string before)
+    Object getPrincipal();
+
+    // WHAT they used to prove identity (raw password — cleared after auth)
+    Object getCredentials();
+
+    // WHAT they are allowed to do (list of roles/permissions)
+    Collection<? extends GrantedAuthority> getAuthorities();
+
+    // IS the authentication verified?
+    boolean isAuthenticated();
+
+    // Additional request details (IP address, session ID etc)
+    Object getDetails();
+
+    // Set authenticated flag (Spring uses this internally)
+    void setAuthenticated(boolean isAuthenticated);
+}
+```
+
+It extends `Principal` which just means it has a `getName()` method — returns the username.
+
+---
+
+## The class hierarchy — all subclasses
+
+```
+Authentication (interface)
+        │
+        ├── AbstractAuthenticationToken (abstract class — base for all)
+        │           │
+        │           ├── UsernamePasswordAuthenticationToken  ← most common
+        │           │        (form login, Basic Auth)
+        │           │
+        │           ├── BearerTokenAuthenticationToken
+        │           │        (JWT / OAuth2 Bearer tokens)
+        │           │
+        │           ├── AnonymousAuthenticationToken
+        │           │        (unauthenticated users)
+        │           │
+        │           ├── RememberMeAuthenticationToken
+        │           │        (remember-me cookie)
+        │           │
+        │           ├── OAuth2AuthenticationToken
+        │           │        (OAuth2 / social login)
+        │           │
+        │           └── JaasAuthenticationToken
+        │                    (JAAS authentication)
+        │
+        └── PreAuthenticatedAuthenticationToken
+                 (when auth done externally e.g. SSO)
+```
+
+---
+
+## The most important one: `UsernamePasswordAuthenticationToken`
+
+This is used in almost every Spring Security project. It has **two constructors** — this is the most important thing to understand:
+
+### Constructor 1 — UNAUTHENTICATED (before verification)
+
+```java
+// Used to CARRY credentials TO the AuthenticationManager
+// authenticated = false
+public UsernamePasswordAuthenticationToken(
+    Object principal,     // just the username string
+    Object credentials    // raw password string
+)
+
+// Example — inside UsernamePasswordAuthenticationFilter:
+UsernamePasswordAuthenticationToken unauthenticated =
+    new UsernamePasswordAuthenticationToken(
+        "alice",    // principal = just the username string
+        "abc123"    // credentials = raw password
+    );
+
+// State at this point:
+// principal     = "alice"
+// credentials   = "abc123"
+// authorities   = [] (empty)
+// authenticated = false  ← NOT verified yet
+```
+
+### Constructor 2 — AUTHENTICATED (after verification)
+
+```java
+// Used to RETURN the result AFTER successful authentication
+// authenticated = true
+public UsernamePasswordAuthenticationToken(
+    Object principal,                              // UserDetails object
+    Object credentials,                            // null (cleared for safety)
+    Collection<? extends GrantedAuthority> authorities  // roles
+)
+
+// Example — inside DaoAuthenticationProvider after password matches:
+UsernamePasswordAuthenticationToken authenticated =
+    new UsernamePasswordAuthenticationToken(
+        userDetails,                        // principal = full UserDetails object
+        null,                               // credentials = null (cleared)
+        userDetails.getAuthorities()        // [ROLE_USER] or [ROLE_ADMIN]
+    );
+
+// State at this point:
+// principal     = UserAuthEntity object (has username, roles, etc.)
+// credentials   = null
+// authorities   = [ROLE_USER]
+// authenticated = true  ← VERIFIED
+```
+
+---
+
+## Why two constructors? The lifecycle
+
+```
+STAGE 1: User submits login form
+──────────────────────────────────────────────────────
+new UsernamePasswordAuthenticationToken("alice", "abc123")
+   principal     = "alice"       ← just a string
+   credentials   = "abc123"      ← raw password
+   authorities   = []
+   authenticated = false
+   purpose: carry credentials to AuthenticationManager
+
+         ↓  passed to AuthenticationManager.authenticate()
+
+STAGE 2: DaoAuthenticationProvider verifies
+──────────────────────────────────────────────────────
+   loadUserByUsername("alice")   → fetches UserDetails from DB
+   passwordEncoder.matches(
+       "abc123",                 → raw
+       "$2a$10$hash..."          → stored hash
+   )                             → true ✓
+
+         ↓  builds new token
+
+STAGE 3: Returns fully authenticated token
+──────────────────────────────────────────────────────
+new UsernamePasswordAuthenticationToken(userDetails, null, authorities)
+   principal     = UserAuthEntity object  ← full object
+   credentials   = null                   ← cleared for safety
+   authorities   = [ROLE_USER]
+   authenticated = true
+   purpose: stored in SecurityContext for the rest of the request
+```
+
+---
+
+## Where is Authentication used and stored?
+
+### 1. Inside SecurityContextHolder (thread-local storage)
+
+```java
+// Spring Security stores it here after successful auth
+// Available for the ENTIRE duration of the request thread
+
+SecurityContext context = SecurityContextHolder.getContext();
+Authentication auth = context.getAuthentication();
+
+// auth is the fully populated UsernamePasswordAuthenticationToken
+```
+
+### 2. Inside the HTTP Session
+
+```java
+// HttpSessionSecurityContextRepository saves the SecurityContext
+// to the HTTP session automatically after each request.
+// On next request it restores it — so user stays logged in.
+
+// Session key: "SPRING_SECURITY_CONTEXT"
+// Value: SecurityContext containing the Authentication object
+```
+
+### 3. In HTTP session — what it looks like
+
+```
+HTTP Session
+└── SPRING_SECURITY_CONTEXT
+        └── SecurityContext
+                └── Authentication (UsernamePasswordAuthenticationToken)
+                        ├── principal = UserAuthEntity { username="alice", role="ROLE_USER" }
+                        ├── credentials = null
+                        ├── authorities = [ROLE_USER]
+                        └── authenticated = true
+```
+
+---
+
+## How to GET the Authentication object — all ways
+
+### Way 1 — SecurityContextHolder (anywhere in code)
+
+```java
+// Works in any class — @Service, @Repository, anywhere
+// No injection needed
+
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+// Get username
+String username = auth.getName(); // "alice"
+
+// Get principal (cast to your UserDetails class)
+UserAuthEntity user = (UserAuthEntity) auth.getPrincipal();
+String role = user.getRole(); // "ROLE_USER"
+
+// Get authorities
+Collection<? extends GrantedAuthority> roles = auth.getAuthorities();
+// [SimpleGrantedAuthority("ROLE_USER")]
+
+// Check if authenticated
+boolean isAuth = auth.isAuthenticated(); // true
+```
+
+### Way 2 — Inject directly in Controller method
+
+```java
+// Spring MVC automatically injects the current Authentication
+// into controller method parameters
+
+@RestController
+public class MyController {
+
+    @GetMapping("/profile")
+    public String getProfile(Authentication authentication) {
+        // Spring injects it automatically — no extra code needed
+        String username = authentication.getName();
+
+        UserAuthEntity user = (UserAuthEntity) authentication.getPrincipal();
+        return "Hello " + username + ", role: " + user.getRole();
+    }
+}
+```
+
+### Way 3 — @AuthenticationPrincipal (cleanest way)
+
+```java
+// Injects just the principal (UserDetails) directly
+// No need to cast from Authentication manually
+
+@RestController
+public class MyController {
+
+    @GetMapping("/profile")
+    public String getProfile(
+            @AuthenticationPrincipal UserAuthEntity currentUser) {
+        // Spring injects the principal directly — already cast
+        return "Hello " + currentUser.getUsername()
+             + ", role: " + currentUser.getRole();
+    }
+}
+```
+
+### Way 4 — SecurityContextHolder in a Service
+
+```java
+// When you need authentication in a @Service (not a controller)
+
+@Service
+public class SomeService {
+
+    public String getCurrentUsername() {
+        Authentication auth =
+            SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()) {
+            return "anonymous";
+        }
+
+        return auth.getName(); // "alice"
+    }
+
+    public boolean isCurrentUserAdmin() {
+        Authentication auth =
+            SecurityContextHolder.getContext().getAuthentication();
+
+        return auth.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+}
+```
+
+---
+
+## AnonymousAuthenticationToken — the special case
+
+When a request comes in with NO credentials at all, Spring Security does NOT set `Authentication` to null. Instead it sets an `AnonymousAuthenticationToken`:
+
+```java
+// Spring Security sets this AUTOMATICALLY for unauthenticated requests
+AnonymousAuthenticationToken anonymous =
+    new AnonymousAuthenticationToken(
+        "anonymous-key",          // key
+        "anonymousUser",          // principal (just a string)
+        List.of(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))
+    );
+
+// So auth is NEVER null — always safe to call:
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+// Check if real user vs anonymous:
+if (auth instanceof AnonymousAuthenticationToken) {
+    System.out.println("Not logged in");
+} else {
+    System.out.println("Logged in as: " + auth.getName());
+}
+
+// OR simpler check:
+if (auth != null && auth.isAuthenticated()
+        && !(auth instanceof AnonymousAuthenticationToken)) {
+    // real authenticated user
+}
+```
+
+---
+
+## How to use Authentication in your own custom filter
+
+If you write a custom JWT filter, here is exactly how you create and set the `Authentication` object yourself:
+
+```java
+// YOU write this for JWT authentication
+@Component
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    @Autowired private JwtService jwtService;
+    @Autowired private UserAuthEntityService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain) throws ServletException, IOException {
+
+        // 1. Extract JWT from header
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            chain.doFilter(request, response); // no token → skip
+            return;
+        }
+
+        String token = authHeader.substring(7);
+
+        // 2. Extract username from token
+        String username = jwtService.extractUsername(token);
+
+        // 3. Only proceed if username found and not already authenticated
+        if (username != null &&
+                SecurityContextHolder.getContext()
+                    .getAuthentication() == null) {
+
+            // 4. Load user from DB
+            UserDetails userDetails =
+                userDetailsService.loadUserByUsername(username);
+
+            // 5. Validate token
+            if (jwtService.isTokenValid(token, userDetails)) {
+
+                // 6. Create AUTHENTICATED token (3-arg constructor)
+                UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                        userDetails,                    // principal
+                        null,                           // credentials = null
+                        userDetails.getAuthorities()    // roles
+                    );
+
+                // 7. Add request details (IP, session ID etc)
+                authToken.setDetails(
+                    new WebAuthenticationDetailsSource()
+                        .buildDetails(request)
+                );
+
+                // 8. Set in SecurityContext — marks user as authenticated
+                SecurityContextHolder.getContext()
+                    .setAuthentication(authToken);
+            }
+        }
+
+        // 9. Pass to next filter
+        chain.doFilter(request, response);
+    }
+}
+```
+
+---
+
+## Complete summary table
+
+| | Constructor 1 (2 args) | Constructor 2 (3 args) |
+|---|---|---|
+| **Purpose** | Carry credentials for verification | Represent verified identity |
+| **authenticated** | `false` | `true` |
+| **principal** | Username string | Full `UserDetails` object |
+| **credentials** | Raw password | `null` (cleared) |
+| **authorities** | `[]` empty | `[ROLE_USER]` etc. |
+| **Used by** | Filter → AuthenticationManager | AuthenticationProvider → SecurityContext |
+| **Who creates it** | `UsernamePasswordAuthenticationFilter` | `DaoAuthenticationProvider` |
+
+| How to get Authentication | Where to use |
+|---|---|
+| `SecurityContextHolder.getContext().getAuthentication()` | Any class — service, repository, component |
+| `Authentication auth` parameter | Controller method parameter |
+| `@AuthenticationPrincipal UserDetails user` | Controller method — cleanest |
+| `auth instanceof AnonymousAuthenticationToken` | Check if real user vs guest |
 
