@@ -1,5 +1,7 @@
 # JPA @OneToOne Mapping
 
+![alt text](image-31.png)
+
 ## Unidirectional Mapping
 
 One entity (A) references only one instance of another entity (B), but the reference exists only in one direction — from Parent (A) to Child (B). Example: `UserDetails` (parent) has a `UserAddress` (child). One user can have one address, but from address you cannot get back to userDetails — hence unidirectional.
@@ -148,6 +150,8 @@ Inserting a `UserDetails` object that contains a nested `userAddress` object sav
 Existence of the child depends on the parent: if the parent is created, the child should be created; if the parent is updated, the child should be updated; if the parent is deleted, the child should be deleted. Without a CascadeType, any operation on the parent does not affect the child entity — managing child entities explicitly this way is error-prone. CascadeType tells JPA how operations on the parent should propagate to the child. Options: `ALL`, `PERSIST`, `MERGE`, `REMOVE`, `REFRESH`, `DETACH`.
 
 ![alt text](image-4.png)
+
+![alt text](image-32.png)
 
 ### CascadeType.PERSIST
 
