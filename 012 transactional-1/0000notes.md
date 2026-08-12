@@ -1,4 +1,7 @@
-![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+
 ![alt text](<012transactional 1_241231_132930_250716_002319_1.jpg>) ![alt text](<012transactional 1_241231_132930_250716_002319_2.jpg>) ![alt text](<012transactional 1_241231_132930_250716_002319_3.jpg>) ![alt text](<012transactional 1_241231_132930_250716_002319_4.jpg>) ![alt text](<012transactional 1_241231_132930_250716_002319_5.jpg>)
 
 
@@ -178,3 +181,4 @@ public class MyService {
 > *"`@Transactional` uses Spring AOP proxy to wrap methods in a DB transaction. Rolls back on RuntimeException by default. REQUIRED propagation reuses existing transaction, REQUIRES_NEW creates independent one. Private methods and self-invocation won't work because they bypass the proxy."*
 
 ---
+![alt text](image.png)

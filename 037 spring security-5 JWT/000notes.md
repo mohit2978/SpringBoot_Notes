@@ -1,5 +1,5 @@
 # Basic JWT structure
-
+![alt text](image-58.png)
 ![alt text](image.png)
 
 ![alt text](image-57.png)
