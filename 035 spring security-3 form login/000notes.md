@@ -1,592 +1,361 @@
-# Notes 
 
-![alt text](<035 spring security -3_250716_003026_1.jpg>)
- ![alt text](<035 spring security -3_250716_003026_2.jpg>) 
- ![alt text](<035 spring security -3_250716_003026_3.jpg>)
-  ![alt text](<035 spring security -3_250716_003026_4.jpg>) 
-  ![alt text](<035 spring security -3_250716_003026_5.jpg>)
-   ![alt text](<035 spring security -3_250716_003026_6.jpg>) 
-![alt text](<035 spring security -3_250716_003026_7.jpg>) 
-![alt text](<035 spring security -3_250716_003026_8.jpg>)
+## Form Login Authentication
 
-![alt text](image-4.png)
+It's a stateful authentication method.
 
-![alt text](image-5.png)
+Stateful authentication means, server maintains the user authentication state (aka Session).
 
-This is a detailed diagram showing the full Spring Security flow from the servlet container all the way down to session storage. I'll break it into two clean diagrams — the top half (servlet container + filter chain + authentication) and the bottom half (SecurityContext + session persistence).The diagram above covers steps 1–7: from the request entering Tomcat, through the filter chain, into AuthenticationManager → ProviderManager → DaoAuthenticationProvider → UserDetailsService + PasswordEncoder, and back. Now here is the second half — what happens after the authenticated object is returned to the filter chain:Here is the full 12-step explanation matching every numbered step in your image:
+So that user don't have to provide username/password every time with each request.
 
-**Steps 1–2** — `UsernamePasswordAuthenticationFilter` intercepts the login request and creates an `Authentication` object with `authenticated=false`, wrapping the raw username and password.
+User enters their credentials (i.e. username/password) in an HTML login form.
 
-**Step 2** — The filter calls `AuthenticationManager.authenticate()`, which is implemented by `ProviderManager`.
+On successful authentication, a session (JSESSIONID) is created to maintain the user authentication state across different requests.
 
-**Step 3** — `ProviderManager` delegates to `DaoAuthenticationProvider`, which immediately hashes the incoming raw password via `PasswordEncoder`.
+Now, with subsequent request, client only passes JSESSIONID and not username/password. And server validates it with stored JSESSIONID.
 
-**Step 4** — `DaoAuthenticationProvider` calls `UserDetailsService.loadUserByUsername()` to fetch the full user record (username, stored hash, roles) from either `InMemoryUserDetailsManager` or `JdbcUserDetailsManager` (→ DB).
+It's a Default Authentication Method of Springboot Security.
 
-**Step 5** — The provider compares the hashed incoming password with the stored hash. If they match, authentication succeeds.
+Default Login URL: `/login`
+Default Logout URL: `/logout`
 
-**Step 6** — A new `Authentication` object is built with `authenticated=true`, the `UserDetails` as principal, credentials cleared to `null`, and `GrantedAuthority` list populated.
+H2 console — `user_auth` table (user already exists, from previous "User Creation" video), password stored hashed:
 
-**Step 7** — This fully authenticated object is returned back up to the filter.
+![alt text](035-h2-console-user-auth-table.png)
 
-**Step 8** — The next filter in the chain, `SecurityContextHolderFilter`, is invoked.
+By default, Time to live for the HTTP Session is 30mins (depends on servlet container). But we can configure it too.
 
-**Step 9** — `SecurityContextHolderFilter` saves the `Authentication` object into the `SecurityContext`, which lives in a thread-local `SecurityContextHolder`.
+Yes, we can store the HTTP Session in DB too.
 
-**Step 10** — The `SecurityContext` is passed to `HttpSessionSecurityContextRepository`.
+**application.properties**
 
-**Step 11** — A new HTTP session object is created.
-
-**Step 12** — The `SecurityContext` is stored inside the HTTP session. On every subsequent request, the session cookie is sent by the browser and Spring restores the `SecurityContext` automatically — so the user doesn't have to log in again.
-
-Here is the complete breakdown — what Spring Security gives you automatically vs what you must write yourself, with code for every step.
-
----
-
-## Step 1–2: Filter intercepts request → creates Authentication object
-
-**Who writes this:** Spring Security gives you this automatically. You write nothing.
-
-`UsernamePasswordAuthenticationFilter` is built into Spring Security. When you hit `POST /login`, it automatically reads the `username` and `password` from the request and creates this object internally:
-
-```java
-// Spring Security creates this INTERNALLY — you never write this
-UsernamePasswordAuthenticationToken authToken =
-    new UsernamePasswordAuthenticationToken(
-        username,       // principal (just a string at this point)
-        password        // credentials (raw password)
-    );
-// At this stage:
-// authenticated = false
-// authorities   = [] (empty)
-// credentials   = "111abc" (raw, not yet hashed)
+```properties
+server.servlet.session.timeout=1m
 ```
 
-The only thing you configure is which URL triggers this filter, done in your `SecurityConfig`:
+Now, after 1 minute of inactivity, makes the session expires.
+
+Note: if user activity keeps on happening, it will keep on re-authenticating and after 1 min session will not get expired.
+
+We can also store the session in the DB.
+
+Add below dependency in Pom.xml
+
+```xml
+<dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-jdbc</artifactId>
+</dependency>
+```
+
+Add below config in application.properties
+
+```properties
+spring.session.store-type=jdbc
+spring.session.jdbc.initialize-schema=always
+server.servlet.session.timeout=5m
+```
+
+SpringBoot, will automatically create and manage "SPRING_SESSION" table for us.
+
+This expiry time, will keep on increasing, if user keep on sending request.
+
+![alt text](035-h2-console-spring-session-table.png)
+
+### Flow diagram for Form based Authentication Method
+
+**1. User is log-in for the first time**, means Session does not exist at this point of time, only user exists. "/login" api is invoked.
+
+![alt text](035-login-form-and-payload.png)
+
+The general Client ↔ Server JSESSIONID exchange:
+
+![alt text](035-jsessionid-sequence-diagram.png)
+
+Within Security Filter Chain, the flow is:
+
+![alt text](035-filters-chain-security-filter-chain.png)
+
+![alt text](image.png)
+
+
+**After successful authentication:**
+- If `/login` endpoint was used, then it will try to hit default endpoint.
+- If any specific endpoint was used, then after successful authentication, that specific endpoint will only get invoked.
+
+`/login` → hits default endpoint (`/`):
+
+![alt text](035-login-default-endpoint-hello.png)
+
+Accessing `/users` first redirects to login page; after successful authentication, redirected back to `/users`:
+
+![alt text](035-login-specific-endpoint-users.png)
+
+**2. After Authentication, User is invoking any subsequent APIs**
+
+Within Security Filter Chain, the flow is:
+
+![alt text](035-filters-chain-security-filter-chain-2.png)
+
+![alt text](035-security-filter-chain-subsequent-request-flow.png)
+
+If we just see, we don't have to write a single line of code, its all handled via framework only. As it's a default authentication method of Springboot security.
+
+**SpringBootWebSecurityConfiguration**
 
 ```java
-// YOU write this in SecurityConfig.java
 @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/auth/register").permitAll()
-            .anyRequest().authenticated()
-        )
-        .csrf(csrf -> csrf.disable())
-        .httpBasic(Customizer.withDefaults()); // enables the filter
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
+SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+
+    http.authorizeHttpRequests((requests) ->
+        requests.anyRequest().authenticated()
+    );
+    http.formLogin(withDefaults());
+    http.httpBasic(withDefaults());
+
     return http.build();
 }
 ```
 
----
+All I have added is dependency and config.
 
-## Step 2: Filter → AuthenticationManager (ProviderManager)
+**Pom.xml**
 
-**Who writes this:** Spring Security gives you this automatically.
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
 
-The filter internally calls `authenticationManager.authenticate(authToken)`. The default implementation of `AuthenticationManager` is `ProviderManager` — Spring wires this up automatically. You don't write any of this logic.
-
-However, if you want to expose `AuthenticationManager` as a bean (needed for manual auth like JWT), you write this:
-
-```java
-// YOU write this ONLY if you need AuthenticationManager as a bean
-// (e.g. for custom JWT login endpoint)
-@Bean
-public AuthenticationManager authenticationManager(
-        AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-}
+<dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-jdbc</artifactId>
+</dependency>
 ```
 
----
+**Application.properties**
 
-## Step 3: PasswordEncoder hashes the incoming password
-
-**Who writes this:** You register the bean. Spring Security uses it automatically.
-
-You must declare which `PasswordEncoder` to use. Without this bean, Spring Security throws an error.
-
-```java
-// YOU write this in SecurityConfig.java
-@Bean
-public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-    // BCrypt automatically salts + hashes
-    // "111abc" → "$2a$10$euzihUhyp4exMejDky..."
-}
+```properties
+spring.security.user.name=user
+spring.security.user.password=pass
+spring.session.store-type=jdbc
+spring.session.jdbc.initialize-schema=always
+server.servlet.session.timeout=5m
 ```
 
-Spring Security's `DaoAuthenticationProvider` picks up this bean automatically and uses it internally to hash the incoming password before comparing.
+![alt text](035-default-login-page.png)
 
----
+Since `spring.session.store-type=jdbc` is used, the cookie is named `SESSION` (not `JSESSIONID`):
 
-## Step 4: DaoAuthenticationProvider → calls UserDetailsService
+![alt text](035-network-set-cookie-session.png)
 
-**Who writes this:** You write `UserDetailsService`. Spring Security calls it automatically.
+Subsequent request to `/users`, cookie automatically sent by browser:
 
-`DaoAuthenticationProvider` is provided by Spring Security. But it needs to know how to load your user — so it calls `loadUserByUsername()` on whichever `UserDetailsService` bean you registered.
+![alt text](035-network-users-request-with-cookie.png)
 
-```java
-// YOU write this — UserAuthEntityService.java
-@Service
-public class UserAuthEntityService implements UserDetailsService {
+Now, lets say, I want to change few things like:
+- Default login and logout page
+- Need to relax authentication on few endpoints
+- Etc..
 
-    @Autowired
-    private UserAuthEntityRepository userAuthEntityRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-        // Spring Security calls this method automatically
-        // YOUR job: fetch the user from wherever they are stored
-        return userAuthEntityRepository.findByUsername(username)
-                .orElseThrow(() ->
-                    new UsernameNotFoundException("User not found"));
-    }
-}
-```
-
-And your entity must implement `UserDetails` so Spring Security can read it:
-
-```java
-// YOU write this — UserAuthEntity.java
-@Entity
-@Table(name = "user_auth")
-public class UserAuthEntity implements UserDetails {  // <-- YOU implement this
-
-    @Column(unique = true, nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;  // stored as BCrypt hash
-
-    private String role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Spring Security reads this to know the user's roles
-        return List.of(new SimpleGrantedAuthority(role));
-    }
-
-    // Spring Security reads these to check account status
-    @Override public boolean isAccountNonExpired()     { return true; }
-    @Override public boolean isAccountNonLocked()      { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled()               { return true; }
-
-    @Override public String getPassword() { return password; }
-    @Override public String getUsername() { return username; }
-}
-```
-
-And the repository Spring Data generates for you:
-
-```java
-// YOU write this interface — Spring Data generates the SQL automatically
-@Repository
-public interface UserAuthEntityRepository
-        extends JpaRepository<UserAuthEntity, Long> {
-
-    // Spring Data generates: SELECT * FROM user_auth WHERE username = ?
-    Optional<UserAuthEntity> findByUsername(String username);
-}
-```
-
----
-
-## Step 5: Provider validates password
-
-**Who writes this:** Spring Security does this automatically using your `PasswordEncoder` bean.
-
-`DaoAuthenticationProvider` internally does this — you never write it:
-
-```java
-// Spring Security does this INTERNALLY — you never write this
-boolean matches = passwordEncoder.matches(
-    rawPasswordFromRequest,      // "111abc"
-    userDetails.getPassword()    // "$2a$10$euzihUhyp4exMejDky..."
-);
-
-if (!matches) {
-    throw new BadCredentialsException("Wrong password");
-}
-```
-
----
-
-## Step 6: Provider returns fully authenticated object
-
-**Who writes this:** Spring Security does this automatically.
-
-After successful validation, `DaoAuthenticationProvider` internally builds a new token — you never write this:
-
-```java
-// Spring Security does this INTERNALLY
-UsernamePasswordAuthenticationToken authenticated =
-    new UsernamePasswordAuthenticationToken(
-        userDetails,                    // principal = full UserDetails object
-        null,                           // credentials = null (cleared for safety)
-        userDetails.getAuthorities()    // [ROLE_USER]
-    );
-// authenticated = true now
-```
-
----
-
-## Step 7: Result returns to filter
-
-**Who writes this:** Spring Security does this automatically.
-
-The authenticated token bubbles back through `ProviderManager` → filter. No code from you needed.
-
----
-
-## Steps 8–9: SecurityContextHolderFilter saves to SecurityContext
-
-**Who writes this:** Spring Security does this automatically.
-
-`SecurityContextHolderFilter` is built-in. After the previous filter completes, it stores the result:
-
-```java
-// Spring Security does this INTERNALLY
-SecurityContext context = SecurityContextHolder.createEmptyContext();
-context.setAuthentication(authentication);
-SecurityContextHolder.setContext(context);
-```
-
-You can read it anywhere in your application though:
-
-```java
-// YOU can read it anywhere — in any controller or service
-Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-String username = auth.getName();                    // "my_username"
-Object principal = auth.getPrincipal();             // UserAuthEntity object
-Collection<?> roles = auth.getAuthorities();        // [ROLE_USER]
-boolean isAuth = auth.isAuthenticated();            // true
-```
-
----
-
-## Steps 10–12: HttpSessionSecurityContextRepository → HTTP Session
-
-**Who writes this:** Spring Security does this automatically.
-
-Spring Security automatically persists the `SecurityContext` into the HTTP session. On every subsequent request, `SecurityContextPersistenceFilter` (or `SecurityContextHolderFilter` in newer versions) restores it automatically from the session cookie.
-
-```java
-// Spring Security does this INTERNALLY on every request:
-// 1. Read JSESSIONID cookie from request
-// 2. Load SecurityContext from session
-// 3. Put it into SecurityContextHolder
-// 4. After request completes → save updated SecurityContext back to session
-```
-
-You only configure session behaviour if you want to customise it:
-
-```java
-// YOU write this ONLY if you want to customise session behaviour
-http.sessionManagement(session -> session
-    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // for JWT — no session
-    // OR
-    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // default — create if needed
-);
-```
-
----
-
-## Registration: the one flow you fully own
-
-The `/auth/register` endpoint is entirely your code — Spring Security has no built-in registration:
-
-```java
-// YOU write all of this — UserAuthController.java
-@RestController
-@RequestMapping("/auth")
-public class UserAuthController {
-
-    @Autowired private UserAuthEntityService userAuthEntityService;
-    @Autowired private PasswordEncoder passwordEncoder;
-
-    @PostMapping("/register")
-    public ResponseEntity<String> register(
-            @RequestBody UserAuthEntity userAuthDetails) {
-
-        // Hash password BEFORE saving — never store plain text
-        userAuthDetails.setPassword(
-            passwordEncoder.encode(userAuthDetails.getPassword())
-        );
-
-        userAuthEntityService.save(userAuthDetails);
-        return ResponseEntity.ok("User registered successfully!");
-    }
-}
-```
-
----
-
-## Summary table
-
-| Step | What happens | Who writes it |
-|---|---|---|
-| Filter intercepts login | Creates unauthenticated token | Spring Security (automatic) |
-| Calls AuthenticationManager | Delegates to ProviderManager | Spring Security (automatic) |
-| PasswordEncoder hashes | BCrypt hashes incoming password | You declare the `@Bean`, Spring uses it |
-| Loads user from DB | Calls `loadUserByUsername()` | **You write** `UserDetailsService` |
-| UserDetails entity | Provides username/password/roles | **You write** `UserAuthEntity implements UserDetails` |
-| Repository queries DB | `findByUsername()` | **You write** the interface, Spring Data generates SQL |
-| Validates password | `passwordEncoder.matches()` | Spring Security (automatic) |
-| Returns authenticated token | `authenticated=true`, credentials cleared | Spring Security (automatic) |
-| Saves to SecurityContext | Thread-local storage | Spring Security (automatic) |
-| Persists to HTTP session | `HttpSessionSecurityContextRepository` | Spring Security (automatic) |
-| Security config | Which URLs need auth, which encoder to use | **You write** `SecurityConfig` |
-| Registration endpoint | Hash + save new user | **You write** entirely |
-
-
- ![alt text](<035 spring security -3_250716_003026_9.jpg>) ![alt text](<035 spring security -3_250716_003026_10.jpg>) ![alt text](<035 spring security -3_250716_003026_11.jpg>) ![alt text](<035 spring security -3_250716_003026_12.jpg>) ![alt text](<035 spring security -3_250716_003026_13.jpg>) ![alt text](<035 spring security -3_250716_003026_14.jpg>) ![alt text](<035 spring security -3_250716_003026_15.jpg>) ![alt text](<035 spring security -3_250716_003026_16.jpg>) ![alt text](<035 spring security -3_250716_003026_17.jpg>) ![alt text](<035 spring security -3_250716_003026_18.jpg>) ![alt text](<035 spring security -3_250716_003026_19.jpg>) ![alt text](<035 spring security -3_250716_003026_20.jpg>) ![alt text](<035 spring security -3_250716_003026_21.jpg>)
-
-
-
-## Form-Based Login Architecture in Spring SecurityI'll break this into three diagrams — the big picture login flow, the internal component pipeline, and the session-based subsequent request flow.
-
-### Diagram 1 — Login request flow (first visit)The key thing form login adds that Basic Auth doesn't have is the **redirect dance** — save where you were trying to go, redirect to `/login`, then after success send you back to the original URL. That's `SavedRequestAwareAuthenticationSuccessHandler` doing its job.
-
-![alt text](image.png)
-
-Now let's look inside the authentication pipeline — what happens between "POST /login received" and "user is authenticated."
-
-### Diagram 2 — Internal authentication pipelineAfter a successful login, Spring creates a session and stores the `SecurityContext` in it. Every subsequent request uses that session — no re-authentication needed. Here's how that looks.
-
-![alt text](image-1.png)
-
-### Diagram 3 — Subsequent request flow (already logged in)No DB call, no password check — just a session lookup. This is the fundamental difference between form login and Basic Auth: form login is **stateful**, Basic Auth is **stateless**.
-
-![alt text](image-2.png)
-
-Great question — this is a really common point of confusion. Let me clear it up precisely.
-
----
-
-### The confusion: "stateless" doesn't mean "no DB call"
-
-You're right that Basic Auth **does** hit the DB on every request. The word **stateless** refers to something different — it refers to **where the server stores knowledge about you between requests.**
-
-![alt text](image-3.png)
----
-
-### What "state" actually means here
-
-Think of it this way:
-
-> **Stateful** = the server remembers you between requests (via a session)
-> **Stateless** = the server remembers nothing — you prove yourself fresh every single time
-
-
----
-
-### Full implementation
-
-#### 1. `SecurityConfig`
+Then we can override above default SecurityFilterChain method
 
 ```java
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/css/**", "/js/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/users").permitAll()
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form
-                .loginPage("/login")                      // custom login page URL
-                .loginProcessingUrl("/login")             // POST target Spring intercepts
-                .defaultSuccessUrl("/dashboard", false)   // false = use SavedRequest if exists
-                .failureUrl("/login?error=true")
-                .usernameParameter("username")            // matches your HTML <input name="">
-                .passwordParameter("password")
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true)              // kills the session
-                .deleteCookies("JSESSIONID")
-            )
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .maximumSessions(1)                       // one session per user
-                .maxSessionsPreventsLogin(false)          // new login kicks out old session
-            );
+            .formLogin(Customizer.withDefaults());
 
         return http.build();
     }
+}
+```
+
+### Authorization
+
+Now, form based Authentication is clear, but still one thing is left i.e. AuthorizationFilter.
+
+Once the user is Authenticated, and when user is trying to access any resource, authorization check is mandatory. It is done to make sure, User has the permission to access it.
+
+By-default, SpringBoot Security do not put any restriction on any resource, we have to do it manually.
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/users").hasRole("USER")
+                .anyRequest().authenticated()
+            )
+            .formLogin(Customizer.withDefaults());
+
+        return http.build();
     }
 }
 ```
 
----
+**Application.properties**
 
-#### 2. Login page controller + Thymeleaf template
+```properties
+#creating username and password and assigning the ROLE to the user
+spring.security.user.name=user
+spring.security.user.password=pass
+spring.security.user.roles=USER
+
+#just for storing the session details in DB
+spring.session.store-type=jdbc
+spring.session.jdbc.initialize-schema=always
+server.servlet.session.timeout=5m
+```
+
+Now I am manually restricting that any user trying to access "/users" endpoint, should have "ROLE_USER" role.
+
+While using `hasRole`, we don't need to add "ROLE_" — it get appended automatically.
+
+Now in AuthenticationFilter, it will validate does endpoint has any restriction (i.e. user should have any specific role), if Yes, then it matches the role present in SecurityContext and what is required for the endpoint.
+
+If required role is missing, it will throw FORBIDDEN exception.
+
+![alt text](035-forbidden-403-error.png)
+
+Generally, we can give any name to the Role like ADMIN, USER, ANONYMOUS etc.. As its just a String. But should follow the proper meaning.
+
+Also more than 1 roles can be assigned to a User.
 
 ```java
-@Controller
-public class LoginController {
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";   // renders login.html
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/users").hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(Customizer.withDefaults());
+
+        return http.build();
     }
 }
 ```
 
-```html
-<!-- templates/login.html -->
-<form th:action="@{/login}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}"
-                         th:value="${_csrf.token}"/>
+```properties
+#creating username and password and assigning the ROLE to the user
+spring.security.user.name=user
+spring.security.user.password=pass
+spring.security.user.roles=USER,ADMIN
 
-    <input type="text"     name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Password"/>
-
-    <div th:if="${param.error}">
-        Invalid username or password.
-    </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
-
-    <button type="submit">Log In</button>
-</form>
+#just for storing the session details in DB
+spring.session.store-type=jdbc
+spring.session.jdbc.initialize-schema=always
+server.servlet.session.timeout=5m
 ```
 
-The CSRF token is critical — Spring Security blocks any POST without it by default.
+Authorization actually has 2 phases:
 
----
+![alt text](035-authorization-two-phases-diagram.png)
 
-#### 3. `UserDetailsService`
+### How to control the Sessions per user?
+
+1 user can keep on login in different browsers, so how to restrict per user session limit.
 
 ```java
-@Service
-public class MyUserDetailsService implements UserDetailsService {
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
-    @Autowired
-    private UserRepository userRepo;
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/users").hasRole("USER")
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session -> session
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+            )
+            .formLogin(Customizer.withDefaults());
 
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException(username));
-
-        return org.springframework.security.core.userdetails.User
-            .withUsername(user.getUsername())
-            .password(user.getPassword())   // BCrypt hash
-            .roles(user.getRole())
-            .build();
+        return http.build();
     }
 }
 ```
 
----
+Already logged in on 1 browser, trying to log in via a different browser for the same user:
 
-#### 4. Protected controller
+![alt text](035-max-sessions-exceeded.png)
+
+### What are Session Creation Policies?
 
 ```java
-@Controller
-public class DashboardController {
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        Authentication auth = SecurityContextHolder
-            .getContext().getAuthentication();
-        model.addAttribute("user", auth.getName());
-        return "dashboard";
-    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/users").hasRole("USER")
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            )
+            .formLogin(Customizer.withDefaults());
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String admin() {
-        return "admin";
+        return http.build();
     }
 }
 ```
 
----
-
-### The complete step-by-step sequence
-
-```
-1. GET /dashboard (no session)
-   └── ExceptionTranslationFilter detects unauthenticated
-   └── LoginUrlAuthenticationEntryPoint → 302 redirect /login
-   └── RequestCache saves /dashboard as the target URL
-
-2. GET /login
-   └── Spring serves your login.html template
-
-3. POST /login {username, password, _csrf}
-   └── UsernamePasswordAuthenticationFilter intercepts
-   └── Creates UsernamePasswordAuthenticationToken (unauthenticated)
-   └── Calls ProviderManager.authenticate(token)
-       └── DaoAuthenticationProvider
-           ├── UserDetailsService.loadUserByUsername("alice")  → DB lookup
-           └── BCrypt.matches("raw_pass", "$2a$10$...")        → true/false
-
-4a. Failure:
-    └── AuthenticationFailureHandler → redirect /login?error
-
-4b. Success:
-    └── SecurityContextHolder.getContext().setAuthentication(authToken)
-    └── HttpSession created, SecurityContext saved as SPRING_SECURITY_CONTEXT
-    └── JSESSIONID cookie sent to browser
-    └── SavedRequestAwareAuthenticationSuccessHandler → redirect /dashboard
-
-5. GET /dashboard (with JSESSIONID cookie)
-   └── SecurityContextPersistenceFilter restores SecurityContext from session
-   └── No DB call, no password check
-   └── AuthorizationFilter checks roles → allowed
-   └── Controller executes
-   └── At end of request: SecurityContext saved back to session
-```
-
----
-
-### Key components and their responsibilities
-
-| Component | What it does |
+| Policy | Description |
 |---|---|
-| `UsernamePasswordAuthenticationFilter` | Intercepts `POST /login`, extracts credentials |
-| `LoginUrlAuthenticationEntryPoint` | Redirects unauthenticated users to `/login` |
-| `RequestCache` | Remembers the original URL before the redirect |
-| `DaoAuthenticationProvider` | Verifies credentials using `UserDetailsService` + `PasswordEncoder` |
-| `AuthenticationSuccessHandler` | Redirects to original URL after success |
-| `AuthenticationFailureHandler` | Redirects to `/login?error` on failure |
-| `SecurityContextPersistenceFilter` | Loads/saves `SecurityContext` from/to `HttpSession` |
-| `SessionManagementFilter` | Handles concurrent sessions, session fixation protection |
-| `LogoutFilter` | Intercepts `/logout`, invalidates session, clears context |
+| `IF_REQUIRED` | HttpSession is only created when needed (**DEFAULT**). For example: public api for which authentication is not required, HTTPSession will not be created if this policy will be chosen. |
+| `ALWAYS` | HttpSession is always created. If already present then use it. For example: even for public api for which authentication is not required, HTTPSession will be created if this policy will be chosen. |
+| `NEVER` | Do not creates a Session, but use if present. |
+| `STATELESS` | No Session is created, used for Stateless applications. |
 
----
+### Disadvantages of Form based authentication
 
-### Form login vs Basic Auth — key differences
+1. **Vulnerable to Security issues like CSRF and Session hijacking**: By default, CSRF is enabled for form based login and we should not disable it.
 
-| | Form login | Basic Auth |
-|---|---|---|
-| State | Stateful — uses `HttpSession` | Stateless — credentials every request |
-| Credentials sent | Once (POST /login) | Every single request |
-| Token | `JSESSIONID` cookie | `Authorization: Basic` header |
-| Login page | Custom HTML form | Browser native popup |
-| Logout | Explicit `/logout` endpoint | No real logout mechanism |
-| CSRF protection | Needed (POST form) | Not needed (no session) |
-| Best for | Web apps with browsers | APIs, service-to-service |
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf.disable()) // we should not do this for form based authentication
+            .formLogin(Customizer.withDefaults());
+
+        return http.build();
+    }
+}
+```
+
+2. **Session Management is big overhead** and in case of distributed system it can lead to scalability issue.
+
+3. **Database load**: if there are multiple servers then we might need to store the session in DB or Cache, which again required memory and lookup time. Which can cause latency issue.
+
 
