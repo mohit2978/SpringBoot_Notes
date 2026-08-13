@@ -1,15 +1,229 @@
-# Notes 
-
-![alt text](034_spring_security_2_250716_003027_1.jpg) ![alt text](034_spring_security_2_250716_003027_2.jpg) ![alt text](034_spring_security_2_250716_003027_3.jpg) ![alt text](034_spring_security_2_250716_003027_4.jpg) ![alt text](034_spring_security_2_250716_003027_5.jpg) ![alt text](034_spring_security_2_250716_003027_6.jpg) ![alt text](034_spring_security_2_250716_003027_7.jpg) ![alt text](034_spring_security_2_250716_003027_8.jpg) ![alt text](034_spring_security_2_250716_003027_9.jpg) ![alt text](034_spring_security_2_250716_003027_10.jpg) ![alt text](034_spring_security_2_250716_003027_11.jpg)
-
-
-
- ![alt text](034_spring_security_2_250716_003027_12.jpg)
-  ![alt text](034_spring_security_2_250716_003027_13.jpg) 
-
 ![alt text](image.png)
 
 ![alt text](userdetails_skip_example.png)
+
+
+
+---
+
+## SpringBoot Security - Part 2: User Creation
+
+Before, we proceed with User Authentication and Authorization methods, we first need to see, User creation process because that's the first step.
+
+Authentication and Authorization of User will happen only after User is created.
+
+Lets see, what will happen when we add below security dependency, as seen in previous Architecture video and starts the server:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+**Logs when server is started:**
+
+![alt text](034-startup-log-generated-password.png)
+
+![alt text](034-startup-log-inmemoryuserdetailsmanager.png)
+
+So, what exactly happened here?
+
+During server startup, user is created automatically with default username: "user"
+
+Random password is generated for testing.
+
+Each time, server is restarted, new random password will get generated.
+
+**SecurityProperties.java**
+
+```java
+public static class User {
+
+    /** Default user name */
+    private String name = "user";
+
+    /** Password for the default username */
+    private String password = UUID.randomUUID().toString();
+
+    /** Granted roles for the default username */
+    private List<String> roles = new ArrayList<>();
+
+    private boolean passwordGenerated = true;
+
+    // getters and setters
+}
+```
+
+**@AutoConfiguration — UserDetailsServiceAutoConfiguration.java**
+
+```java
+@Bean
+public InMemoryUserDetailsManager inMemoryUserDetailsManager(
+        SecurityProperties properties,
+        ObjectProvider<PasswordEncoder> passwordEncoder) {
+
+    SecurityProperties.User user = properties.getUser();
+    List<String> roles = user.getRoles();
+
+    return new InMemoryUserDetailsManager(
+        User.withUsername(user.getName())
+            .password(getOrDeducePassword(user, passwordEncoder.getIfAvailable()))
+            .roles(StringUtils.toStringArray(roles))
+            .build()
+    );
+}
+```
+
+`UserDetailsService` → `UserDetailsManager` → `InMemoryUserDetailsManager`:
+
+![alt text](034-userdetailsservice-hierarchy-diagram.png)
+
+**InMemoryUserDetailsManager.java**
+
+```java
+private final Map<String, MutableUserDetails> users = new HashMap<>();
+
+public InMemoryUserDetailsManager(UserDetails... users) {
+    for (UserDetails user : users) {
+        createUser(user);
+    }
+}
+
+@Override
+public void createUser(UserDetails user) {
+    Assert.isTrue(!userExists(user.getUsername()), "user should not exist");
+    this.users.put(user.getUsername().toLowerCase(), new MutableUser(user));
+}
+```
+
+### How we can control the user creation logic?
+
+**1st: Using application.properties**
+(not recommended, only for development and testing)
+
+```properties
+spring.security.user.name=my_username
+spring.security.user.password=my_password
+spring.security.user.roles=ADMIN
+```
+
+Internally, it uses reflection and calls `setUserName()` and `setPassword()` method of `SecurityProperties.java` and overrides the default values.
+
+Now, during application startup, no default username and default password is created.
+
+**2nd: By creating custom InMemoryUserDetailsManager Bean**
+(not recommended, only for development and testing)
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+
+        UserDetails user1 = User.withUsername("my_username_1")
+                .password("{noop}my_password_1") // {noop} means no encoding or hashing
+                .roles("ADMIN")
+                .build();
+
+        UserDetails user2 = User.withUsername("my_username_2")
+                .password("{noop}1234") // {noop} means no encoding or hashing
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1, user2);
+    }
+}
+```
+
+Why we are appending `{noop}` here?
+
+The default format for storing the password is: `{id}encodedpassword`
+
+`{id}` can be either:
+- `{noop}`
+- `{bcrypt}`
+- `{sha256}`
+- Etc..
+
+During User password storing step, if we want to store user password without any encoding or hashing, then we store `"{noop}plain_password"`
+
+Now, during authentication process:
+1. 1st, it will fetch the user password from inMemory.
+2. 2nd, it goes for comparing logic, inMemory password and password provided for authentication.
+3. 3rd, it will take out the `{noop}` or `{bcrypt}` etc. from inMemory password.
+4. 4th, Then if its `{noop}`, it will directly compare the remaining inMemory password and provided password for authentication.
+5. 5th, if say its `{bcrypt}`, it first do hashing of provided password using `BCryptPasswordEncoder` and then match it with remaining inMemory Password.
+
+Lets say, if we want to store the hashed password (hashed using bcrypt algorithm)
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+
+        UserDetails user1 = User.withUsername("my_username_1")
+                .password("{bcrypt}" + new BCryptPasswordEncoder().encode("my_password_1"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1);
+    }
+}
+```
+
+InMemory, password is stored as: `{bcrypt}hashed_password`
+
+and during authentication, I am providing "my_password_1"
+
+But still I am able to successfully authenticate because of `DelegatingPasswordEncoder`, it first checks the format of stored password `{id}` i.e. `{bcrypt}`, so it passes the incoming password to `BcryptPasswordEncoder`, and after hashing, it has done the matching.
+
+`PasswordEncoder` hierarchy:
+
+![alt text](034-passwordencoder-hierarchy-diagram.png)
+
+Testing login with this in-memory user:
+
+![alt text](034-login-form-signin.png)
+
+![alt text](034-login-form-data-payload.png)
+
+![alt text](034-hello-page-after-login.png)
+
+If, we don't want to store `{bcrypt}` or any other hashing algo `{id}` in front of password, then we can define which PasswordEncoder to use.
+
+Now, since we are always using 1 encoding/hashing algorithm, and control will not goes to `DelegatingPasswordEncoder`, and it will directly goes to specific Password Encoder, so now no need to put `{id}` in front of password.
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+
+        UserDetails user1 = User.withUsername("my_username_1")
+                .password(new BCryptPasswordEncoder().encode("my_password_1"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1);
+    }
+}
+```
+
+**3rd: Storing UserName and Password (after hashed) in DB**
+(recommended for production)
 
 ---
 
@@ -136,37 +350,10 @@ public class UserAuthController {
 }
 ```
 
----
+Output:
 
-## `SecurityConfig.java`
+![alt text](034-postman-register-user.png)
 
-```java
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/register").permitAll()
-                .anyRequest().authenticated()
-            )
-            .csrf(csrf -> csrf.disable())
-            .httpBasic(Customizer.withDefaults());
-
-        return http.build();
-    }
-}
-```
-
-
-
-  ![alt text](034_spring_security_2_250716_003027_14.jpg) ![alt text](034_spring_security_2_250716_003027_15.jpg) ![alt text](034_spring_security_2_250716_003027_16.jpg) ![alt text](034_spring_security_2_250716_003027_17.jpg)
+Now, by-default in spring boot security, all the endpoints are AUTHENTICATED, means we have to authenticate ourself by either username/password or JWT etc. to access any API, so how we will access "/auth/register" API, which is just a first step to create user.
 
 
