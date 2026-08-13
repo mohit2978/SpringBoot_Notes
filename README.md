@@ -1,6 +1,6 @@
 # 🍃 Spring Boot — Deep Dive Notes
 
-Personal study notes covering **41 Spring Boot topics** with hands-on code examples.
+Personal study notes covering **40 Spring Boot topics** with hands-on code examples.
 Built while working as a Software Engineer at Samsung SDS to strengthen core framework internals.
 
 ---
@@ -20,6 +20,7 @@ Built while working as a Software Engineer at Samsung SDS to strengthen core fra
 | 008 | Dynamically Initialized Beans |
 | 009 | @ConditionalOnProperty |
 | 010 | Profiles |
+| 040 | @ConfigurationProperties |
 
 ### ✂️ AOP & Async
 | # | Topic |
@@ -31,9 +32,9 @@ Built while working as a Software Engineer at Samsung SDS to strengthen core fra
 ### 💾 Transactions
 | # | Topic |
 |---|-------|
-| 012 | Transactional — Part 1 (Propagation) |
-| 013 | Transactional — Part 2 (Isolation) |
-| 014 | Transactional — Part 3 (Rollback) |
+| 012 | Transactional — Part 1 |
+| 013 | Transactional — Part 2 (Propagation) |
+| 014 | Transactional — Part 3 (Isolation Levels) |
 
 ### 🌐 REST & Web
 | # | Topic |
@@ -43,34 +44,36 @@ Built while working as a Software Engineer at Samsung SDS to strengthen core fra
 | 019 | HATEOAS |
 | 020 | ResponseEntity & HTTP Codes |
 | 021 | Exception Handling |
-| 040 | RestTemplate |
-| 041 | RestClient |
 
-### 🗄️ JPA & Database (10 Parts)
+### 🗄️ JPA & Database (9 Parts)
 | # | Topic |
 |---|-------|
-| 022 | JPA — Part 1 Basics |
-| 023 | JPA — Part 2 Repositories |
+| 022 | JPA — Part 1 Basic Definitions & Flows |
+| 023 | JPA — Part 2 Basic Definitions & Flows |
 | 024 | JPA — Part 3 First Level Caching |
 | 025 | JPA — Part 4 Second Level Caching |
 | 026 | JPA — Part 5 DTO Mapping |
-| 027 | JPA — Part 6 One-to-One Mapping |
+| 027 | JPA — Part 6 One-to-One Mapping & Cascade Type |
 | 028 | JPA — Part 7 One-to-Many & Many-to-Many |
-| 029 | JPQL & Derived Queries |
-| 030 | Native Query & Criteria API |
-| 031 | Specification API |
+| 029 | JPA — Part 8 JPQL & Derived Queries |
+| 030 | JPA — Part 9 & 10 Native Query, Specification & Criteria API |
+
+### 📊 Monitoring
+| # | Topic |
+|---|-------|
+| 031 | Actuator |
 
 ### 🔐 Spring Security (7 Parts)
 | # | Topic |
 |---|-------|
 | 032 | Common Security Attacks |
 | 033 | Spring Security Architecture |
-| 034 | User Creation |
-| 035 | Form Login |
-| 036 | Basic Auth |
-| 037 | JWT Authentication |
-| 038 | OAuth2 |
-| 039 | Method Security & Role-Based Auth |
+| 034 | Spring Security — Part 2 User Creation |
+| 035 | Spring Security — Part 3 Form Login |
+| 036 | Spring Security — Part 4 Basic Auth |
+| 037 | Spring Security — Part 5 JWT |
+| 038 | Spring Security — Part 6 OAuth2 |
+| 039 | Spring Security — Part 7 Method Security & Role-Based Auth |
 
 ---
 

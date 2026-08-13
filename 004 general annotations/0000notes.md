@@ -2,104 +2,13 @@
 
 
 
-![alt text](<004general annotations_250201_134500_250716_002311_1.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_2.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_3.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_4.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_5.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_6.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_7.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_8.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_9.jpg>)
+![alt text](<004general annotations_250201_134500_250716_002311_1.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_2.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_3.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_4.jpg>) ![alt text](<004general annotations_250201_134500_250716_002311_5.jpg>)
+![alt text](image-2.png)
+![alt text](image-1.png)
 
-To exclude a field from JSON output in a Java REST response, you'll typically use **Jackson annotations** (Jackson is the JSON library Spring Boot uses by default).
+![alt text](image-3.png)
 
-## `@JsonIgnore` — the main one
-
-Place it directly on the field, getter, or setter you want to exclude:
-
-```java
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public class User {
-    private Long id;
-    private String username;
-
-    @JsonIgnore
-    private String password;
-
-    // getters and setters
-}
-```
-
-**Output:**
-```json
-{
-  "id": 1,
-  "username": "john_doe"
-}
-```
-
-`password` is completely excluded — never serialized (Java → JSON) or deserialized (JSON → Java).
-
-## Other useful variations
-
-### `@JsonIgnoreProperties` — ignore multiple fields at the class level
-Useful when you don't want to annotate each field individually, or need to ignore fields not directly declared in the class (e.g., inherited or dynamically added).
-
-```java
-@JsonIgnoreProperties({"password", "internalNotes"})
-public class User {
-    private Long id;
-    private String username;
-    private String password;
-    private String internalNotes;
-}
-```
-
-### `@JsonProperty(access = Access.WRITE_ONLY)` — accept on input, hide on output
-This is the **right choice for passwords** — you want the client to be able to *send* a password when creating a user, but never *receive* it back in a response.
-
-```java
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class User {
-    private Long id;
-    private String username;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-}
-```
-
-- Incoming JSON (POST request body) → `password` is accepted and deserialized ✅
-- Outgoing JSON (response) → `password` is hidden ❌
-
-There's also the reverse, `Access.READ_ONLY`, for fields that should appear in output but never be accepted as input (like a server-generated `id` or `createdAt`).
-
-### `@JsonIgnoreType` — ignore an entire type wherever it's used
-```java
-@JsonIgnoreType
-public class InternalMetadata { ... }
-```
-Any field of this type is ignored automatically, everywhere it appears.
-
-## Quick comparison
-
-| Annotation | Behavior |
-|---|---|
-| `@JsonIgnore` | Field excluded in **both** directions (serialize + deserialize) |
-| `@JsonProperty(access = WRITE_ONLY)` | Field accepted on input, hidden on output |
-| `@JsonProperty(access = READ_ONLY)` | Field shown on output, ignored on input |
-| `@JsonIgnoreProperties({"a","b"})` | Class-level, ignore multiple named fields |
-
-## Example in a Spring Boot controller
-
-```java
-@RestController
-public class UserController {
-
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.findById(id); // password field auto-excluded from JSON
-    }
-}
-```
-
-You don't need to do anything extra in the controller — Jackson (via Spring's `HttpMessageConverter`) automatically applies these annotations when serializing the object to JSON.
-
+![alt text](image-4.png)
 ## One caveat
 
 These are **Jackson** annotations (`com.fasterxml.jackson.annotation.*`), which is the default in Spring Boot. If your project is using a different JSON library (like Gson), the annotation would be different (`@Expose` / `transient` for Gson). Since Spring Boot uses Jackson by default (via `spring-boot-starter-web`), `@JsonIgnore` is almost always the right answer.
