@@ -1,11 +1,3 @@
-![alt text](image.png)
-
-![alt text](userdetails_skip_example.png)
-
-
-
----
-
 ## SpringBoot Security - Part 2: User Creation
 
 Before, we proceed with User Authentication and Authorization methods, we first need to see, User creation process because that's the first step.
@@ -57,6 +49,8 @@ public static class User {
 
 **@AutoConfiguration — UserDetailsServiceAutoConfiguration.java**
 
+creates bean of  `InMemoryUserDetailsManager` which stores user details created above in memory.It get user from Security Properties.
+
 ```java
 @Bean
 public InMemoryUserDetailsManager inMemoryUserDetailsManager(
@@ -80,6 +74,7 @@ public InMemoryUserDetailsManager inMemoryUserDetailsManager(
 ![alt text](034-userdetailsservice-hierarchy-diagram.png)
 
 **InMemoryUserDetailsManager.java**
+ This is InMemoryUserDetailsManager in which we put user . see here in `UserDetails` we put the data ,`UserDetails` is interface and `User` is the implementation.
 
 ```java
 private final Map<String, MutableUserDetails> users = new HashMap<>();
@@ -96,6 +91,10 @@ public void createUser(UserDetails user) {
     this.users.put(user.getUsername().toLowerCase(), new MutableUser(user));
 }
 ```
+see we know every class is singleton and in that we have `final` Map so that makes it a single map for no matter how many user comes.
+
+
+now i want custom user and custom password.
 
 ### How we can control the user creation logic?
 
@@ -222,10 +221,17 @@ public class SecurityConfig {
 }
 ```
 
+we do not want in  memory we want to have UserDetails stored in DB
+
 **3rd: Storing UserName and Password (after hashed) in DB**
 (recommended for production)
 
 ---
+![alt text](image.png)
+
+![alt text](userdetails_skip_example.png)
+
+for each authentication we need to go and fetch the user. The return type after fetching from DB is `UserDetails` ,so springSecurity recognize only `UserDetails` object .We do not need to do mapping of UserAuthEntity
 
 ## `UserAuthEntity.java`
 
@@ -296,13 +302,15 @@ public class UserAuthEntity implements UserDetails {
 @Repository
 public interface UserAuthEntityRepository extends JpaRepository<UserAuthEntity, Long> {
 
-    Optional<UserAuthEntity> findByUsername(String username);
+    Optional<UserAuthEntity> findByUsername(String username);//springboot automatically creates query for this
 }
 ```
 
 ---
 
 ## `UserAuthEntityService.java`
+
+here we tell which table and which method to use to get UserDetails.
 
 ```java
 @Service
@@ -314,7 +322,7 @@ public class UserAuthEntityService implements UserDetailsService {
     public UserAuthEntity save(UserAuthEntity userAuth) {
         return userAuthEntityRepository.save(userAuth);
     }
-
+//see we returning UserAuthEntity not UserDetails
     @Override
     public UserAuthEntity loadUserByUsername(String username) throws UsernameNotFoundException {
         return userAuthEntityRepository.findByUsername(username)
@@ -322,6 +330,7 @@ public class UserAuthEntityService implements UserDetailsService {
     }
 }
 ```
+`UserDetailsService` has method `loadUserByUsername` retuning `UserDetails`,So if `UserAuthEnity` has not extended `UserDetails` then here `loadUserByUsername`  cannot return `UserAuthEntity`
 
 ---
 
@@ -357,3 +366,7 @@ Output:
 Now, by-default in spring boot security, all the endpoints are AUTHENTICATED, means we have to authenticate ourself by either username/password or JWT etc. to access any API, so how we will access "/auth/register" API, which is just a first step to create user.
 
 
+
+![alt text](image-1.png)
+
+here we are saying `/auth/register` no auth is needed ,it is public.

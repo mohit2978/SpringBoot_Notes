@@ -42,7 +42,24 @@ Now, lets enhance it for understanding Spring Security:
 Within Security Filter Chain, the flow is:
 
 ![alt text](033-security-filter-chain-architecture.png)
-![alt text](033_spring_security_architecture_250716_003028_2.jpg) ![alt text](033_spring_security_architecture_250716_003028_3.jpg) 
+
+for each authentixation method ,there is different filter involved ,form based uses different filter ,jwt uses different , a request pass through filter chain ,if filter suppports the request then only filter is applied to that request.
+![alt text](image-3.png)
+
+filter creates AUthentication object and pass to AuthneticationManager which checks returns same Authentication object but with check if it is authenticated or not.true??
+
+Almost true. The key correction is: AuthenticationManager is not guaranteed to return the exact same object instance. It receives an unauthenticated Authentication and, after successful authentication, usually returns a new or richer authenticated Authentication object.
+
+The authentication filter creates an unauthenticated Authentication object containing the credentials and passes it to AuthenticationManager. AuthenticationManager delegates to an appropriate AuthenticationProvider. If verification succeeds, it returns an authenticated Authentication object, usually containing the UserDetails principal and authorities. The filter then stores that returned object in the SecurityContext.
+
+![alt text](image-4.png)
+
+After successful authnetication we need to put this authentication object in security context.
+
+![alt text](image-8.png)
+
+now this security contexct is added to your request and reach to your controller. so now controller can access secuirty context too
+
 If spring boot project is already present, add below dependencies:
 
 ```xml
@@ -61,7 +78,7 @@ If spring boot project is already present, add below dependencies:
     <groupId>org.springframework.session</groupId>
     <!--
     Enable persistent session management
-    Using relational DB
+    Using relational DB only then add it else no need
     -->
     <artifactId>spring-session-jdbc</artifactId>
 </dependency>
@@ -96,3 +113,4 @@ Now, lets understand the end to end flow with an example for each individual Aut
 Etc..
 
 
+![alt text](image-5.png)
