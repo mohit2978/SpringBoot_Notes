@@ -1,6 +1,8 @@
 
 ## Form Login Authentication
 
+![alt text](<Codex Image Aug 14, 2026, 10_17_09 PM.png>)
+
 It's a stateful authentication method.
 
 Stateful authentication means, server maintains the user authentication state (aka Session).
@@ -34,6 +36,8 @@ server.servlet.session.timeout=1m
 
 Now, after 1 minute of inactivity, makes the session expires.
 
+If user keep doing activity then it will not be expired . It will expire only after 1m of in activity.
+
 Note: if user activity keeps on happening, it will keep on re-authenticating and after 1 min session will not get expired.
 
 We can also store the session in the DB.
@@ -51,7 +55,10 @@ Add below config in application.properties
 
 ```properties
 spring.session.store-type=jdbc
-spring.session.jdbc.initialize-schema=always
+
+## create session table for me
+spring.session.jdbc.initialize-schema=always 
+
 server.servlet.session.timeout=5m
 ```
 
@@ -71,15 +78,21 @@ The general Client ↔ Server JSESSIONID exchange:
 
 ![alt text](035-jsessionid-sequence-diagram.png)
 
+see after 5th step in diagram session id is invalid or already expired so it is redirected to login page.
+
+Generally we store session on servers
+
+It has problem if we have multiple servers,then we do not store session in server we store in db.as same user having acting sesssion who logged in by server1 can give request to server2
+
 Within Security Filter Chain, the flow is:
 
 ![alt text](035-filters-chain-security-filter-chain.png)
 
 ![alt text](image.png)
 
-
+![alt text](image-1.png)
 **After successful authentication:**
-- If `/login` endpoint was used, then it will try to hit default endpoint.
+- If `/login` endpoint was used, then it will try to hit default endpoint by providing username and password.
 - If any specific endpoint was used, then after successful authentication, that specific endpoint will only get invoked.
 
 `/login` → hits default endpoint (`/`):
@@ -98,7 +111,14 @@ Within Security Filter Chain, the flow is:
 
 ![alt text](035-security-filter-chain-subsequent-request-flow.png)
 
+
+![alt text](image-2.png)
+
 If we just see, we don't have to write a single line of code, its all handled via framework only. As it's a default authentication method of Springboot security.
+
+see here we are using `SecurityContextHolderFilter` not `UserNamePasswordAuthenticationFilter` ,for every subsequent seesion we passing sessionid to server.
+
+
 
 **SpringBootWebSecurityConfiguration**
 
@@ -116,8 +136,10 @@ SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Excepti
     return http.build();
 }
 ```
+see here above we have basic and formLogin as defaulyt set up in `defaultSecurityFilterChain`
 
-All I have added is dependency and config.
+
+Now All we have added is dependency and config.
 
 **Pom.xml**
 
@@ -139,6 +161,7 @@ All I have added is dependency and config.
 spring.security.user.name=user
 spring.security.user.password=pass
 spring.session.store-type=jdbc
+# spring create db for me
 spring.session.jdbc.initialize-schema=always
 server.servlet.session.timeout=5m
 ```
@@ -155,7 +178,7 @@ Subsequent request to `/users`, cookie automatically sent by browser:
 
 Now, lets say, I want to change few things like:
 - Default login and logout page
-- Need to relax authentication on few endpoints
+- Need to relax authentication on few endpoints for public apis 
 - Etc..
 
 Then we can override above default SecurityFilterChain method
@@ -169,7 +192,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/users").permitAll()
+                .requestMatchers("/users").permitAll()//users api is public api else all request be authenticated
                 .anyRequest().authenticated()
             )
             .formLogin(Customizer.withDefaults());
