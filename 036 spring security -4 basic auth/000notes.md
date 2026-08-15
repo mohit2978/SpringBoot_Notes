@@ -21,7 +21,7 @@ In this, client has to pass the username and password with every request using A
 Authorization: Basic <base64(username:password)>
 ```
 
-These Credentials are encoded using Base64 (not encrypted), making it insecure over HTTP.
+These Credentials are encoded using Base64 (not encrypted), making it insecure over HTTP.So Always use Https.
 
 Let's go step by step:
 
@@ -51,6 +51,8 @@ Sending the request with Basic Auth credentials in Postman:
 Postman automatically generates the `Authorization: Basic <base64>` header:
 
 ![alt text](036-postman-authorization-header.png)
+
+ request goes to
 
 **BasicAuthenticationFilter.java**
 
@@ -113,6 +115,8 @@ Within Security Filter Chain, the flow is:
 
 ![alt text](image-2.png)
 
+![alt text](image-3.png)
+
 ### So, what we need to implement it?
 
 **Pom.xml**
@@ -123,16 +127,13 @@ Within Security Filter Chain, the flow is:
     <artifactId>spring-boot-starter-security</artifactId>
 </dependency>
 
-<dependency>
-    <groupId>org.springframework.session</groupId>
-    <artifactId>spring-session-jdbc</artifactId>
-</dependency>
+
 ```
 
 **Application.properties**
 
 ```properties
-#creating username and password and assigning the ROLE to the user
+#creating username and password and assigning the ROLE to the user or create dynamically your chouce
 spring.security.user.name=user
 spring.security.user.password=pass
 spring.security.user.roles=ADMIN,USER
@@ -153,15 +154,15 @@ public class SecurityConfig {
                 .anyRequest().authenticated())
             .sessionManagement(session -> session
                 /*
-                Its a stateless method
+                Its a stateless method in forms we have it as TF_REQUIRED as create session if required
                 */
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             /*
-            Since its stateless, CSRF is not required
+            Since its stateless, CSRF is not required,CSRF is required where we have session
             */
             .csrf(csrf -> csrf.disable())
             /*
-            Basic authentication method to be used
+            Basic authentication method to be used overriding default form one
             */
             .httpBasic(Customizer.withDefaults());
 
@@ -173,7 +174,7 @@ public class SecurityConfig {
 ### Disadvantages of Basic Authentication
 
 1. Credentials sent in every request, if HTTPS is not enforced, then it can be intercepted and then decoded.
-2. If Credentials are compromised, then only way is to change the credentials.
+2. If Credentials are compromised, then only way is to change the credentials.NO invalidate session or token.
 3. Not suitable for large scale application, as sending credentials with every request is an extra overhead.
    - a. As request size increases because of authorization header.
    - b. Extra work like decoding, hashing of incoming password, fetching username and password from DB, comparing etc..

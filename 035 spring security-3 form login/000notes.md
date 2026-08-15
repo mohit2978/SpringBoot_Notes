@@ -247,7 +247,7 @@ Now I am manually restricting that any user trying to access "/users" endpoint, 
 
 While using `hasRole`, we don't need to add "ROLE_" — it get appended automatically.
 
-Now in AuthenticationFilter, it will validate does endpoint has any restriction (i.e. user should have any specific role), if Yes, then it matches the role present in SecurityContext and what is required for the endpoint.
+Now in AuthorizationFilter, it will validate does endpoint has any restriction (i.e. user should have any specific role), if Yes, then it matches the role present in SecurityContext and what is required for the endpoint.
 
 If required role is missing, it will throw FORBIDDEN exception.
 
