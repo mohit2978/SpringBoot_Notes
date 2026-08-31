@@ -338,7 +338,7 @@ Output:
 
 And that DefaultErrorAttribute put that in responseEntity!! For huge application we do not want to put every time try catch!!
 
-Viewed 0000notes.md:180-250
+
 
 ### What is `DefaultErrorAttributes`?
 
@@ -352,16 +352,16 @@ It is responsible for **extracting, collecting, and assembling error details int
 
 ```mermaid
 flowchart TD
-    A[Client Request] --> B[Controller]
-    B -->|Throws Exception| C[HandlerExceptionResolver Chain]
-    C -->|1. @ExceptionHandler / @ControllerAdvice| D{Handled?}
-    D -- Yes --> E[Custom Error Response]
-    D -- No --> F[2. @ResponseStatus / ResponseStatusExceptionResolver]
-    F -->|Not Handled| G[3. DefaultHandlerExceptionResolver]
-    G -->|Still Unhandled / Forwarded to /error| H[BasicErrorController]
-    H -->|Calls getErrorAttributes| I[DefaultErrorAttributes]
-    I -->|Returns Map of Error Details| H
-    H --> J[JSON / HTML Error Response to Client]
+    A["Client Request"] --> B["Controller"]
+    B -->|"Throws Exception"| C["HandlerExceptionResolver Chain"]
+    C -->|"1. @ExceptionHandler / @ControllerAdvice"| D{"Handled?"}
+    D -- "Yes" --> E["Custom Error Response"]
+    D -- "No" --> F["2. @ResponseStatus / ResponseStatusExceptionResolver"]
+    F -->|"Not Handled"| G["3. DefaultHandlerExceptionResolver"]
+    G -->|"Still Unhandled / Forwarded to /error"| H["BasicErrorController"]
+    H -->|"Calls getErrorAttributes"| I["DefaultErrorAttributes"]
+    I -->|"Returns Map of Error Details"| H
+    H --> J["JSON / HTML Error Response to Client"]
 ```
 
 1. If an exception isn't intercepted by `@ExceptionHandler` / `@ControllerAdvice`, Spring forwards the request to the global error mapping (`/error`).
