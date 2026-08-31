@@ -732,7 +732,7 @@ Output:
 }
 ```
 
-**Use-case2: Used above on an @ExceptionHandler method**
+Use-case2: Used above on an @ExceptionHandler method**
 
 Again *ResponseStatusExceptionResolver* handles Uncaught exception annotated with **@ResponseStatus** annotation but if used with **@ExceptionHandler** then it will not be handled by "*ResponseStatusExceptionResolver*", it will be handled by Spring request handling mechanism itself.
 
@@ -780,7 +780,7 @@ Output:
 
 Using both in handler!! see we are setting 3 different status!! But it will be resolved by resolver we think so at last resolver will handle ResponseStatus!! So bad_request and Invalid Request sent will be sent!!
 
-But see if it goes to 1st handler it creates ResponseEntity and send that back, it will not go to the 2nd handler!! But then how the output is coming as 400 why??
+But see if it goes to 1st handler it creates ResponseEntity and send that back, it will not go to the 2nd handler!! But then how the output is coming as 400 why??**
 
 This is handled by spring flow!! see how!!
 
@@ -865,6 +865,141 @@ So whatever you have set (`@ResponseStatus` on the handler method) is handled by
 
 One resolver is involved then other resolver will not be involved!!
 
+
+Here is the step-by-step breakdown of why you get **`400 Bad Request`** instead of `403 Forbidden` or going to the second resolver.
+
+---
+
+### 1. Why does it NOT go to the 2nd Resolver (`ResponseStatusExceptionResolver`)?
+
+Remember the chain sequence in `HandlerExceptionResolverComposite`:
+1. **1st:** `ExceptionHandlerExceptionResolver`
+2. **2nd:** `ResponseStatusExceptionResolver`
+3. **3rd:** `DefaultHandlerExceptionResolver`
+
+Because `CustomException.class` matched the `@ExceptionHandler(CustomException.class)` method, **Resolver #1 successfully claimed and handled the exception**. 
+
+Once a resolver successfully processes an exception, the composite stops. **It will never pass control to Resolver #2.**
+
+---
+
+### 2. So why did `ResponseEntity` (403 Forbidden) get ignored?
+
+Here is what is happening inside the method execution:
+
+```java
+@ExceptionHandler(CustomException.class)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid Request Sent")
+public ResponseEntity<Object> handleCustomException(CustomException e) {
+    return new ResponseEntity<>("you are not authorized", HttpStatus.FORBIDDEN);
+}
+```
+
+When `ExceptionHandlerExceptionResolver` invokes this handler, it delegates to **`ServletInvocableHandlerMethod.java`**'s method `invokeAndHandle(...)`.
+
+Let’s look at the exact Spring internal code:
+
+```java
+// Inside ServletInvocableHandlerMethod.java
+public void invokeAndHandle(ServletWebRequest webRequest, ModelAndViewContainer mavContainer,
+        Object... providedArgs) throws Exception {
+
+    // 1. Invokes your method: returns ResponseEntity with 403 FORBIDDEN
+    Object returnValue = invokeForRequest(webRequest, mavContainer, providedArgs);
+
+    // 2. Checks @ResponseStatus annotation present on the method!
+    setResponseStatus(webRequest);
+
+    if (returnValue == null) {
+        if (isRequestNotModified(webRequest) || getResponseStatus() != null || mavContainer.isRequestHandled()) {
+            disableContentCachingIfNecessary(webRequest);
+            mavContainer.setRequestHandled(true);
+            return;
+        }
+    }
+    // 3. THIS IS THE KEY CONDITION:
+    else if (StringUtils.hasText(getResponseStatusReason())) {
+        mavContainer.setRequestHandled(true);
+        return; // <--- EXITS EARLY! Bypasses returnValueHandlers!
+    }
+
+    mavContainer.setRequestHandled(false);
+    // 4. This writes the ResponseEntity to the HTTP response
+    this.returnValueHandlers.handleReturnValue(
+            returnValue, getReturnValueType(returnValue), mavContainer, webRequest);
+}
+```
+
+---
+
+### 3. Step-by-Step Internal Execution Trace
+
+#### Step 1: `invokeForRequest(...)`
+Spring executes your method:
+```java
+return new ResponseEntity<>("you are not authorized", HttpStatus.FORBIDDEN);
+```
+`returnValue` now holds the `ResponseEntity` object (`403 FORBIDDEN`).
+
+---
+
+#### Step 2: `setResponseStatus(webRequest)`
+Spring inspects the `@ResponseStatus` annotation on the method:
+- Since **`reason = "Invalid Request Sent"`** is present (not empty), `setResponseStatus` calls the Servlet API directly:
+  ```java
+  response.sendError(HttpStatus.BAD_REQUEST.value(), "Invalid Request Sent");
+  ```
+- This sets the HTTP status to **`400`** and commits an error state on the response.
+- It also stores the string `"Invalid Request Sent"` in `this.responseStatusReason`.
+
+---
+
+#### Step 3: The Short-Circuit (`StringUtils.hasText(getResponseStatusReason())`)
+Spring checks:
+```java
+else if (StringUtils.hasText(getResponseStatusReason())) {
+    mavContainer.setRequestHandled(true);
+    return;
+}
+```
+Because `reason` is `"Invalid Request Sent"`, this condition evaluates to **`true`**!
+
+- It marks the request as handled: `mavContainer.setRequestHandled(true)`.
+- It executes **`return;`** immediately.
+
+---
+
+#### Step 4: `handleReturnValue(...)` is SKIPPED!
+Because of that early `return;`, Spring **never executes** `this.returnValueHandlers.handleReturnValue(...)`. 
+
+Your returned `ResponseEntity("you are not authorized", HttpStatus.FORBIDDEN)` is **completely dropped and ignored**.
+
+---
+
+#### Step 5: Spring Boot Default Error Handling takes over
+Because `response.sendError(400, "Invalid Request Sent")` was called in Step 2, the servlet container forwards the request to `/error`, where `DefaultErrorAttributes` produces the final output:
+
+```json
+{
+  "timestamp": "2024-10-25T14:05:53.089+00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Invalid Request Sent",
+  "path": "/api/get-user"
+}
+```
+
+---
+
+### 🔍 Summary Table: With `reason` vs Without `reason`
+
+| Case | Annotation on `@ExceptionHandler` | Return Value | Result | Why? |
+| :--- | :--- | :--- | :--- | :--- |
+| **With `reason`** | `@ResponseStatus(HttpStatus.BAD_REQUEST, reason = "Invalid...")` | `ResponseEntity(403)` | **`400 Bad Request`** | `reason` triggers `response.sendError(...)` & early `return`, skipping `ResponseEntity`. |
+| **Without `reason`** | `@ResponseStatus(HttpStatus.BAD_REQUEST)` *(no reason)* | `ResponseEntity(403)` | **`403 Forbidden`** | No early return occurs; `returnValueHandlers` writes the `ResponseEntity`, overriding the status to `403`. |
+
+> **Best Practice Rule:** Never mix `@ResponseStatus(reason = "...")` with a returned `ResponseEntity` in an `@ExceptionHandler` method. Return a `ResponseEntity` directly or use `@ResponseStatus` on a `void` method, not both.
+
 **What if @ExceptionHandler method set Response status and message itself instead of returning the response entity:**
 
 ```java
@@ -944,3 +1079,189 @@ Either handler set responseStatus or the Annotation, not both!! 3rd is default o
 ## 3. DefaultHandlerExceptionResolver
 
 Handles Spring framework related exceptions only like MethodNotFound, NoResourceFound etc..
+
+### 📌 What is `DefaultHandlerExceptionResolver`?
+`DefaultHandlerExceptionResolver` is the **3rd and final built-in resolver** in the Spring MVC exception resolution chain executed by `HandlerExceptionResolverComposite`.
+
+If an exception occurs and:
+1. `ExceptionHandlerExceptionResolver` cannot resolve it (no `@ExceptionHandler` defined).
+2. `ResponseStatusExceptionResolver` cannot resolve it (no `@ResponseStatus` / `ResponseStatusException`).
+3. ➡️ Then **`DefaultHandlerExceptionResolver`** takes over.
+
+Its primary responsibility is to catch **Spring MVC framework-level standard exceptions** (such as routing issues, HTTP method mismatch, missing parameters, validation errors, malformed request bodies, etc.) and convert them into the appropriate **HTTP Status Codes** (RFC standards).
+
+---
+
+### ⚙️ How it Works Internally
+
+`DefaultHandlerExceptionResolver` extends `AbstractHandlerExceptionResolver` and implements `doResolveException(...)`:
+
+```java
+// Inside DefaultHandlerExceptionResolver.java (Spring Framework)
+@Override
+@Nullable
+protected ModelAndView doResolveException(
+        HttpServletRequest request, HttpServletResponse response, 
+        @Nullable Object handler, Exception ex) {
+
+    try {
+        if (ex instanceof HttpRequestMethodNotSupportedException subEx) {
+            return handleHttpRequestMethodNotSupported(subEx, request, response, handler);
+        }
+        else if (ex instanceof HttpMediaTypeNotSupportedException subEx) {
+            return handleHttpMediaTypeNotSupported(subEx, request, response, handler);
+        }
+        else if (ex instanceof HttpMediaTypeNotAcceptableException subEx) {
+            return handleHttpMediaTypeNotAcceptable(subEx, request, response, handler);
+        }
+        else if (ex instanceof MissingPathVariableException subEx) {
+            return handleMissingPathVariable(subEx, request, response, handler);
+        }
+        else if (ex instanceof MissingServletRequestParameterException subEx) {
+            return handleMissingServletRequestParameter(subEx, request, response, handler);
+        }
+        else if (ex instanceof HttpMessageNotReadableException subEx) {
+            return handleHttpMessageNotReadable(subEx, request, response, handler);
+        }
+        else if (ex instanceof MethodArgumentNotValidException subEx) {
+            return handleMethodArgumentNotValidException(subEx, request, response, handler);
+        }
+        else if (ex instanceof NoResourceFoundException subEx) { // Spring Boot 3 / Spring 6+
+            return handleNoResourceFoundException(subEx, request, response, handler);
+        }
+        // ... other spring exceptions ...
+    }
+    catch (Exception handlerEx) {
+        logger.warn("Handling of [" + ex.getClass().getName() + "] resulted in Exception", handlerEx);
+    }
+    return null; // Returns null if exception is not a standard Spring MVC exception
+}
+```
+
+#### Key Highlights of its Execution:
+1. **`response.sendError(statusCode, message)`**: Inside handler methods, it calls `response.sendError(...)` setting the HTTP status (e.g., `405`, `400`, `415`, `404`).
+2. **Returns empty `new ModelAndView()`**: Returning an empty `ModelAndView` tells Spring: *"This exception has been handled; do not forward it to subsequent resolvers or treat it as an unhandled 500 server error."*
+3. **Sets Required Headers**: For example, on a `405 Method Not Allowed`, it automatically sets the `Allow` header with the supported HTTP methods (e.g., `Allow: GET, HEAD`).
+
+---
+
+### 📋 Standard Exceptions Handled & Mapped Status Codes
+
+| Standard Spring Exception | HTTP Status Code | Reason / When it occurs |
+| :--- | :--- | :--- |
+| `HttpRequestMethodNotSupportedException` | **405 Method Not Allowed** | When a `POST` request is sent to a `@GetMapping` endpoint. |
+| `HttpMediaTypeNotSupportedException` | **415 Unsupported Media Type** | When sending `Content-Type: text/plain` to an endpoint expecting `application/json`. |
+| `HttpMediaTypeNotAcceptableException` | **406 Not Acceptable** | When client requests `Accept: application/xml` but the controller can only produce JSON. |
+| `MissingPathVariableException` | **500 Internal Server Error** | Missing URI template variable in `@PathVariable`. |
+| `MissingServletRequestParameterException` | **400 Bad Request** | Required `@RequestParam` is missing in the query parameters. |
+| `TypeMismatchException` / `MethodArgumentTypeMismatchException` | **400 Bad Request** | Path variable / param type mismatch (e.g., sending `"abc"` for `int id`). |
+| `HttpMessageNotReadableException` | **400 Bad Request** | Request body JSON is invalid / malformed JSON syntax. |
+| `MethodArgumentNotValidException` | **400 Bad Request** | Validation failed on `@Valid` / `@Validated` payload. |
+| `NoHandlerFoundException` / `NoResourceFoundException` | **404 Not Found** | No controller mapped to the requested URL path or static resource not found. |
+| `AsyncRequestTimeoutException` | **503 Service Unavailable** | Asynchronous request processing timed out. |
+
+---
+
+### 🧪 Practical Examples
+
+#### Example 1: `HttpRequestMethodNotSupportedException` (405 Method Not Allowed)
+
+```java
+@RestController
+@RequestMapping("/api")
+public class UserController {
+
+    @GetMapping("/users")
+    public String getUser() {
+        return "User details";
+    }
+}
+```
+
+**Client Request:**
+```http
+POST http://localhost:8080/api/users
+```
+
+**Output Handled by `DefaultHandlerExceptionResolver`:**
+```http
+HTTP/1.1 405 Method Not Allowed
+Allow: GET
+Content-Type: application/json
+
+{
+  "timestamp": "2024-10-25T15:20:10.123+00:00",
+  "status": 405,
+  "error": "Method Not Allowed",
+  "message": "Request method 'POST' is not supported",
+  "path": "/api/users"
+}
+```
+
+---
+
+#### Example 2: `HttpMessageNotReadableException` (400 Bad Request)
+
+```java
+@RestController
+@RequestMapping("/api")
+public class UserController {
+
+    @PostMapping("/users")
+    public String createUser(@RequestBody UserDTO user) {
+        return "User created";
+    }
+}
+```
+
+**Client Request (Malformed JSON syntax - missing closing bracket):**
+```http
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "name": "John"
+```
+
+**Output Handled by `DefaultHandlerExceptionResolver`:**
+```http
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+  "timestamp": "2024-10-25T15:25:40.456+00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "JSON parse error: Unexpected end-of-input...",
+  "path": "/api/users"
+}
+```
+
+---
+
+### 💡 Customizing `DefaultHandlerExceptionResolver` with `ResponseEntityExceptionHandler`
+
+When using `@ControllerAdvice`, Spring provides an abstract helper base class called **`ResponseEntityExceptionHandler`**.
+
+It contains pre-built `@ExceptionHandler` methods for all the exceptions handled by `DefaultHandlerExceptionResolver`, allowing you to override specific methods and customize the JSON error response body without re-writing boilerplate code:
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    // Overriding standard Spring MVC exception handling
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex, 
+            HttpHeaders headers, 
+            HttpStatusCode status, 
+            WebRequest request) {
+        
+        CustomErrorResponse customError = new CustomErrorResponse(
+                HttpStatus.METHOD_NOT_ALLOWED.value(),
+                "This HTTP method is not allowed on this endpoint. Supported: " + ex.getSupportedHttpMethods()
+        );
+        return new ResponseEntity<>(customError, headers, status);
+    }
+}
+```
