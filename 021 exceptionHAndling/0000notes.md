@@ -338,6 +338,129 @@ Output:
 
 And that DefaultErrorAttribute put that in responseEntity!! For huge application we do not want to put every time try catch!!
 
+Viewed 0000notes.md:180-250
+
+### What is `DefaultErrorAttributes`?
+
+In Spring Boot, **`DefaultErrorAttributes`** is the default implementation of the **`ErrorAttributes`** interface. 
+
+It is responsible for **extracting, collecting, and assembling error details into a `Map<String, Object>`** that is returned in the response body whenever an unhandled exception or error occurs (typically rendered by `BasicErrorController` at the `/error` endpoint).
+
+---
+
+### Where Does It Fit in the Error Handling Flow?
+
+```mermaid
+flowchart TD
+    A[Client Request] --> B[Controller]
+    B -->|Throws Exception| C[HandlerExceptionResolver Chain]
+    C -->|1. @ExceptionHandler / @ControllerAdvice| D{Handled?}
+    D -- Yes --> E[Custom Error Response]
+    D -- No --> F[2. @ResponseStatus / ResponseStatusExceptionResolver]
+    F -->|Not Handled| G[3. DefaultHandlerExceptionResolver]
+    G -->|Still Unhandled / Forwarded to /error| H[BasicErrorController]
+    H -->|Calls getErrorAttributes| I[DefaultErrorAttributes]
+    I -->|Returns Map of Error Details| H
+    H --> J[JSON / HTML Error Response to Client]
+```
+
+1. If an exception isn't intercepted by `@ExceptionHandler` / `@ControllerAdvice`, Spring forwards the request to the global error mapping (`/error`).
+2. Spring Boot's **`BasicErrorController`** handles this `/error` endpoint.
+3. Instead of hardcoding what fields to send back, `BasicErrorController` asks **`ErrorAttributes`** (implemented by **`DefaultErrorAttributes`**) to extract all metadata from the request.
+
+---
+
+### What Attributes Does It Provide?
+
+By default, `DefaultErrorAttributes` constructs a map containing the following keys:
+
+| Field | Description | Example |
+| :--- | :--- | :--- |
+| `timestamp` | Time when the error occurred | `2026-08-31T05:57:06.318+00:00` |
+| `status` | HTTP status code | `404`, `500`, `400` |
+| `error` | Reason phrase for the HTTP status | `"Not Found"`, `"Internal Server Error"` |
+| `message` | Exception message or validation summary *(optional/configurable)* | `"User not found with id 10"` |
+| `path` | The URL path that caused the error | `"/api/users/10"` |
+| `errors` | List of field validation errors (if `BindingResult` exists) | `[ ... ]` |
+| `trace` | Stack trace *(disabled by default in production)* | `"java.lang.NullPointerException..."` |
+| `exception` | The class name of the root exception *(optional/configurable)* | `"com.example.UserNotFoundException"` |
+
+---
+
+### Key Methods in `DefaultErrorAttributes`
+
+- **`getError(WebRequest webRequest)`**: Retrieves the actual `Throwable` stored as a request attribute.
+- **`getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options)`**: The main entry point that builds the `Map<String, Object>` containing all error details based on what options (e.g., stack trace, message, binding errors) are enabled.
+
+---
+
+### 1. Customizing via `application.properties` / `application.yml`
+
+You can control what `DefaultErrorAttributes` includes without writing any Java code:
+
+```properties
+# Control what is included in the error map
+server.error.include-message=always          # never, always, on_param
+server.error.include-binding-errors=always   # never, always, on_param
+server.error.include-stacktrace=never        # never, always, on_param
+server.error.include-exception=false         # true, false
+```
+
+---
+
+### 2. Customizing via Java (Extending `DefaultErrorAttributes`)
+
+If you want to add custom fields (e.g., `company`, `traceId`, `serviceName`) to the default error response, you can extend `DefaultErrorAttributes` and register it as a `@Component`:
+
+```java
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.Map;
+
+@Component
+public class CustomErrorAttributes extends DefaultErrorAttributes {
+
+    @Override
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
+        // 1. Get default attributes from parent
+        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
+
+        // 2. Add custom fields
+        errorAttributes.put("company", "MyCompany");
+        errorAttributes.put("supportEmail", "support@mycompany.com");
+
+        // 3. (Optional) Remove or modify existing fields
+        errorAttributes.remove("trace");
+
+        return errorAttributes;
+    }
+}
+```
+
+#### Sample Custom Response:
+```json
+{
+  "timestamp": "2026-08-31T05:57:06.318+00:00",
+  "status": 404,
+  "error": "Not Found",
+  "message": "No static resource api/test.",
+  "path": "/api/test",
+  "company": "MyCompany",
+  "supportEmail": "support@mycompany.com"
+}
+```
+
+---
+
+### Summary
+
+- **Role**: Extracting error metadata into a key-value map.
+- **Used by**: `BasicErrorController` to build the fallback `/error` JSON response.
+- **Extensible**: You can tweak it via `server.error.*` properties or override it by extending `DefaultErrorAttributes`.
+
 ### So, now question is: what exception does "ExceptionHandlerExceptionResolver", "ResponseStatusExceptionResolver" and "DefaultHandlerExceptionResolver" handles?
 
 ## 1. ExceptionHandlerExceptionResolver
