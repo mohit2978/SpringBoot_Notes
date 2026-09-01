@@ -1,0 +1,264 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 730" width="1000" height="730" style="border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="card2xxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="card3xxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#075985" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0c4a6e" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="card4xxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#451a03" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="card5xxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#881337" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#4c0519" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Filter Shadows -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="730" rx="14" fill="url(#bgGrad)"/>
+  <rect width="998" height="728" x="1" y="1" rx="13" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Decorative Header -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="36" height="36" rx="8" fill="#3b82f6" fill-opacity="0.2" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="18" y="24" font-size="18" text-anchor="middle" fill="#60a5fa" font-weight="bold">⚡</text>
+    <text x="48" y="22" font-size="22" font-weight="800" fill="#f8fafc" letter-spacing="0.5">HTTP Status Codes Cheat Sheet</text>
+    <text x="48" y="42" font-size="13" fill="#94a3b8" font-weight="400">Essential HTTP response status codes for REST APIs &amp; Spring Boot Exception Handling</text>
+  </g>
+
+  <!-- ==================== 2xx SUCCESS ==================== -->
+  <g transform="translate(35, 85)" filter="url(#shadow)">
+    <!-- Card Frame -->
+    <rect width="450" height="260" rx="10" fill="url(#card2xxGrad)" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <!-- Badge -->
+    <rect x="16" y="14" width="135" height="26" rx="6" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+    <circle cx="28" cy="27" r="4" fill="#34d399"/>
+    <text x="38" y="32" font-size="12" font-weight="700" fill="#34d399">2xx SUCCESS</text>
+
+    <!-- Item 200 -->
+    <g transform="translate(16, 52)">
+      <rect width="65" height="22" rx="4" fill="#059669" fill-opacity="0.3"/>
+      <text x="32.5" y="15.5" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">200 OK</text>
+      <text x="78" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">Standard successful response (GET, PUT)</text>
+    </g>
+
+    <!-- Item 201 -->
+    <g transform="translate(16, 82)">
+      <rect width="90" height="22" rx="4" fill="#059669" fill-opacity="0.3"/>
+      <text x="45" y="15.5" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">201 Created</text>
+      <text x="102" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">New resource created successfully (POST)</text>
+    </g>
+
+    <!-- Item 202 -->
+    <g transform="translate(16, 112)">
+      <rect width="102" height="22" rx="4" fill="#059669" fill-opacity="0.3"/>
+      <text x="51" y="15.5" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">202 Accepted</text>
+      <text x="114" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">Request accepted for async batch processing</text>
+    </g>
+
+    <!-- Item 204 -->
+    <g transform="translate(16, 142)">
+      <rect width="112" height="22" rx="4" fill="#059669" fill-opacity="0.3"/>
+      <text x="56" y="15.5" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">204 No Content</text>
+      <text x="124" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">Success, no response body sent (DELETE)</text>
+    </g>
+
+    <!-- Spring Note -->
+    <rect x="16" y="180" width="418" height="66" rx="6" fill="#064e3b" fill-opacity="0.4" stroke="#047857" stroke-width="1"/>
+    <text x="26" y="200" font-size="11" font-weight="700" fill="#34d399">Spring Boot Usage:</text>
+    <text x="26" y="218" font-size="11" fill="#a7f3d0">ResponseEntity.ok(body) • ResponseEntity.status(HttpStatus.CREATED)</text>
+    <text x="26" y="234" font-size="11" fill="#a7f3d0">@ResponseStatus(HttpStatus.NO_CONTENT)</text>
+  </g>
+
+  <!-- ==================== 3xx REDIRECTION ==================== -->
+  <g transform="translate(515, 85)" filter="url(#shadow)">
+    <!-- Card Frame -->
+    <rect width="450" height="260" rx="10" fill="url(#card3xxGrad)" stroke="#0284c7" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <!-- Badge -->
+    <rect x="16" y="14" width="160" height="26" rx="6" fill="#0284c7" fill-opacity="0.2" stroke="#0284c7" stroke-width="1"/>
+    <circle cx="28" cy="27" r="4" fill="#38bdf8"/>
+    <text x="38" y="32" font-size="12" font-weight="700" fill="#38bdf8">3xx REDIRECTION</text>
+
+    <!-- Item 301 -->
+    <g transform="translate(16, 52)">
+      <rect width="80" height="22" rx="4" fill="#0284c7" fill-opacity="0.3"/>
+      <text x="40" y="15.5" font-size="12" font-weight="700" fill="#7dd3fc" text-anchor="middle">301 Moved</text>
+      <text x="92" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">Resource permanently moved to new URL</text>
+    </g>
+
+    <!-- Item 302 -->
+    <g transform="translate(16, 82)">
+      <rect width="80" height="22" rx="4" fill="#0284c7" fill-opacity="0.3"/>
+      <text x="40" y="15.5" font-size="12" font-weight="700" fill="#7dd3fc" text-anchor="middle">302 Found</text>
+      <text x="92" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">Temporary redirection to another URL</text>
+    </g>
+
+    <!-- Item 304 -->
+    <g transform="translate(16, 112)">
+      <rect width="125" height="22" rx="4" fill="#0284c7" fill-opacity="0.3"/>
+      <text x="62.5" y="15.5" font-size="12" font-weight="700" fill="#7dd3fc" text-anchor="middle">304 Not Modified</text>
+      <text x="137" y="15.5" font-size="12" fill="#e2e8f0" font-weight="500">Use cached client copy (ETag / If-None-Match)</text>
+    </g>
+
+    <!-- Item 307 / 308 -->
+    <g transform="translate(16, 142)">
+      <rect width="88" height="22" rx="4" fill="#0284c7" fill-opacity="0.3"/>
+      <text x="44" y="15.5" font-size="12" font-weight="700" fill="#7dd3fc" text-anchor="middle">307 / 308</text>
+      <text x="100" y="15.5" fill="#e2e8f0" font-weight="500">Temp / Permanent redirect keeping HTTP Method</text>
+    </g>
+
+    <!-- Spring Note -->
+    <rect x="16" y="180" width="418" height="66" rx="6" fill="#0c4a6e" fill-opacity="0.4" stroke="#0369a1" stroke-width="1"/>
+    <text x="26" y="200" font-size="11" font-weight="700" fill="#38bdf8">Spring Boot Usage:</text>
+    <text x="26" y="218" font-size="11" fill="#bae6fd">RedirectView / "redirect:/targetUrl" • HttpStatus.SEE_OTHER</text>
+    <text x="26" y="234" font-size="11" fill="#bae6fd">ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(...)</text>
+  </g>
+
+  <!-- ==================== 4xx CLIENT ERROR ==================== -->
+  <g transform="translate(35, 360)" filter="url(#shadow)">
+    <!-- Card Frame -->
+    <rect width="450" height="300" rx="10" fill="url(#card4xxGrad)" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <!-- Badge -->
+    <rect x="16" y="14" width="165" height="26" rx="6" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+    <circle cx="28" cy="27" r="4" fill="#fbbf24"/>
+    <text x="38" y="32" font-size="12" font-weight="700" fill="#fbbf24">4xx CLIENT ERRORS</text>
+
+    <!-- Item 400 -->
+    <g transform="translate(16, 48)">
+      <rect width="118" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="59" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">400 Bad Request</text>
+      <text x="128" y="15" font-size="11.5" fill="#e2e8f0">Malformed syntax, invalid body, missing args</text>
+    </g>
+
+    <!-- Item 401 -->
+    <g transform="translate(16, 75)">
+      <rect width="125" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="62.5" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">401 Unauthorized</text>
+      <text x="135" y="15" font-size="11.5" fill="#e2e8f0">Missing / invalid authentication token (JWT)</text>
+    </g>
+
+    <!-- Item 403 -->
+    <g transform="translate(16, 102)">
+      <rect width="110" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="55" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">403 Forbidden</text>
+      <text x="120" y="15" font-size="11.5" fill="#e2e8f0">Authenticated but lacking roles/permissions</text>
+    </g>
+
+    <!-- Item 404 -->
+    <g transform="translate(16, 129)">
+      <rect width="112" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="56" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">404 Not Found</text>
+      <text x="122" y="15" font-size="11.5" fill="#e2e8f0">Target endpoint or DB resource doesn't exist</text>
+    </g>
+
+    <!-- Item 405 -->
+    <g transform="translate(16, 156)">
+      <rect width="145" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="72.5" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">405 Method Not Allowed</text>
+      <text x="155" y="15" font-size="11.5" fill="#e2e8f0">e.g. POST sent to a @GetMapping</text>
+    </g>
+
+    <!-- Item 409 -->
+    <g transform="translate(16, 183)">
+      <rect width="98" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="49" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">409 Conflict</text>
+      <text x="108" y="15" font-size="11.5" fill="#e2e8f0">Duplicate key, DB unique constraint conflict</text>
+    </g>
+
+    <!-- Item 422 -->
+    <g transform="translate(16, 210)">
+      <rect width="170" height="21" rx="4" fill="#b45309" fill-opacity="0.3"/>
+      <text x="85" y="15" font-size="11.5" font-weight="700" fill="#fde68a" text-anchor="middle">422 Unprocessable Entity</text>
+      <text x="180" y="15" font-size="11.5" fill="#e2e8f0">Bean validation failure (@Valid)</text>
+    </g>
+
+    <!-- Spring Note -->
+    <rect x="16" y="238" width="418" height="50" rx="6" fill="#78350f" fill-opacity="0.4" stroke="#92400e" stroke-width="1"/>
+    <text x="26" y="256" font-size="11" font-weight="700" fill="#fbbf24">Spring Handlers:</text>
+    <text x="26" y="274" font-size="11" fill="#fef3c7">MethodArgumentNotValidException (400) • AccessDeniedException (403)</text>
+  </g>
+
+  <!-- ==================== 5xx SERVER ERROR ==================== -->
+  <g transform="translate(515, 360)" filter="url(#shadow)">
+    <!-- Card Frame -->
+    <rect width="450" height="300" rx="10" fill="url(#card5xxGrad)" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <!-- Badge -->
+    <rect x="16" y="14" width="168" height="26" rx="6" fill="#f43f5e" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1"/>
+    <circle cx="28" cy="27" r="4" fill="#fb7185"/>
+    <text x="38" y="32" font-size="12" font-weight="700" fill="#fb7185">5xx SERVER ERRORS</text>
+
+    <!-- Item 500 -->
+    <g transform="translate(16, 48)">
+      <rect width="138" height="21" rx="4" fill="#be123c" fill-opacity="0.3"/>
+      <text x="69" y="15" font-size="11.5" font-weight="700" fill="#fecdd3" text-anchor="middle">500 Internal Error</text>
+      <text x="148" y="15" font-size="11.5" fill="#e2e8f0">Unhandled Exception (NullPointer, DB down)</text>
+    </g>
+
+    <!-- Item 501 -->
+    <g transform="translate(16, 75)">
+      <rect width="145" height="21" rx="4" fill="#be123c" fill-opacity="0.3"/>
+      <text x="72.5" y="15" font-size="11.5" font-weight="700" fill="#fecdd3" text-anchor="middle">501 Not Implemented</text>
+      <text x="155" y="15" font-size="11.5" fill="#e2e8f0">Server doesn't support the functionality</text>
+    </g>
+
+    <!-- Item 502 -->
+    <g transform="translate(16, 102)">
+      <rect width="122" height="21" rx="4" fill="#be123c" fill-opacity="0.3"/>
+      <text x="61" y="15" font-size="11.5" font-weight="700" fill="#fecdd3" text-anchor="middle">502 Bad Gateway</text>
+      <text x="132" y="15" font-size="11.5" fill="#e2e8f0">Invalid response received from upstream server</text>
+    </g>
+
+    <!-- Item 503 -->
+    <g transform="translate(16, 129)">
+      <rect width="162" height="21" rx="4" fill="#be123c" fill-opacity="0.3"/>
+      <text x="81" y="15" font-size="11.5" font-weight="700" fill="#fecdd3" text-anchor="middle">503 Service Unavailable</text>
+      <text x="172" y="15" font-size="11.5" fill="#e2e8f0">Server overloaded, rate limit or maintenance</text>
+    </g>
+
+    <!-- Item 504 -->
+    <g transform="translate(16, 156)">
+      <rect width="148" height="21" rx="4" fill="#be123c" fill-opacity="0.3"/>
+      <text x="74" y="15" font-size="11.5" font-weight="700" fill="#fecdd3" text-anchor="middle">504 Gateway Timeout</text>
+      <text x="158" y="15" font-size="11.5" fill="#e2e8f0">Upstream proxy / microservice request timed out</text>
+    </g>
+
+    <!-- Item 508 -->
+    <g transform="translate(16, 183)">
+      <rect width="168" height="21" rx="4" fill="#be123c" fill-opacity="0.3"/>
+      <text x="84" y="15" font-size="11.5" font-weight="700" fill="#fecdd3" text-anchor="middle">508 Loop Detected</text>
+      <text x="178" y="15" font-size="11.5" fill="#e2e8f0">Infinite loop detected while processing request</text>
+    </g>
+
+    <!-- Spring Note -->
+    <rect x="16" y="214" width="418" height="74" rx="6" fill="#881337" fill-opacity="0.4" stroke="#9f1239" stroke-width="1"/>
+    <text x="26" y="232" font-size="11" font-weight="700" fill="#fb7185">Spring Handling Best Practice:</text>
+    <text x="26" y="250" font-size="11" fill="#ffe4e6">Use @RestControllerAdvice + @ExceptionHandler(Exception.class)</text>
+    <text x="26" y="268" font-size="11" fill="#ffe4e6">to mask raw 500 stack traces and return clean ErrorResponse JSON</text>
+  </g>
+
+  <!-- Footer Tip -->
+  <g transform="translate(40, 680)">
+    <text x="460" y="26" font-size="12" fill="#64748b" text-anchor="middle" font-weight="500">🎯 REST API Design: Always return appropriate status codes matching the HTTP specification</text>
+  </g>
+</svg>

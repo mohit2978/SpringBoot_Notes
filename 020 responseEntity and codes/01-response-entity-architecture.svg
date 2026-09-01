@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 820" width="1000" height="820" style="border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#701a75" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="110%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="820" rx="14" fill="url(#bgGrad)"/>
+  <rect width="998" height="818" x="1" y="1" rx="13" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Header Section -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="36" height="36" rx="8" fill="#6366f1" fill-opacity="0.2" stroke="#818cf8" stroke-width="1.5"/>
+    <text x="18" y="24" font-size="18" text-anchor="middle" fill="#818cf8" font-weight="bold">📦</text>
+    <text x="48" y="22" font-size="22" font-weight="800" fill="#f8fafc" letter-spacing="0.5">Part 1: ResponseEntity &amp; Controller Architecture</text>
+    <text x="48" y="42" font-size="13" fill="#94a3b8" font-weight="400">Complete summary of HTTP Response structure, Builder Pattern, and @RestController vs @Controller</text>
+  </g>
+
+  <!-- Section 1: Anatomy of an HTTP Response -->
+  <g transform="translate(35, 85)" filter="url(#shadow)">
+    <rect width="930" height="185" rx="10" fill="url(#cardGrad1)" stroke="#6366f1" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <rect x="16" y="14" width="220" height="26" rx="6" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-width="1"/>
+    <text x="26" y="31" font-size="12" font-weight="700" fill="#a5b4fc">1. HTTP RESPONSE 3 CORE PARTS</text>
+
+    <!-- 3 parts horizontal boxes -->
+    <!-- Status Code Box -->
+    <g transform="translate(16, 50)">
+      <rect width="285" height="115" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <rect x="12" y="12" width="100" height="22" rx="4" fill="#3b82f6" fill-opacity="0.2"/>
+      <text x="62" y="27" font-size="11" font-weight="700" fill="#60a5fa" text-anchor="middle">1. Status Code</text>
+      <text x="12" y="52" font-size="11.5" font-weight="600" fill="#e2e8f0">HTTP Return Code</text>
+      <text x="12" y="70" font-size="11" fill="#94a3b8">• 200 OK, 201 CREATED</text>
+      <text x="12" y="86" font-size="11" fill="#94a3b8">• 400 BAD_REQUEST, 500 ERROR</text>
+      <text x="12" y="102" font-size="10.5" fill="#38bdf8">Tells client outcome status</text>
+    </g>
+
+    <!-- Headers Box -->
+    <g transform="translate(322, 50)">
+      <rect width="285" height="115" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <rect x="12" y="12" width="120" height="22" rx="4" fill="#a855f7" fill-opacity="0.2"/>
+      <text x="72" y="27" font-size="11" font-weight="700" fill="#c084fc" text-anchor="middle">2. Headers (Optional)</text>
+      <text x="12" y="52" font-size="11.5" font-weight="600" fill="#e2e8f0">Metadata Key-Value Pairs</text>
+      <text x="12" y="70" font-size="11" fill="#94a3b8">• HttpHeaders headers = new ...</text>
+      <text x="12" y="86" font-size="11" fill="#94a3b8">• headers.add("Key", "Value")</text>
+      <text x="12" y="102" font-size="10.5" fill="#c084fc">Location, Content-Type, Auth, etc.</text>
+    </g>
+
+    <!-- Body Box -->
+    <g transform="translate(628, 50)">
+      <rect width="285" height="115" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <rect x="12" y="12" width="105" height="22" rx="4" fill="#10b981" fill-opacity="0.2"/>
+      <text x="64.5" y="27" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">3. Body (Payload)</text>
+      <text x="12" y="52" font-size="11.5" font-weight="600" fill="#e2e8f0">Data Sent to Client</text>
+      <text x="12" y="70" font-size="11" fill="#94a3b8">• Generic Type 'T' in ResponseEntity&lt;T&gt;</text>
+      <text x="12" y="86" font-size="11" fill="#94a3b8">• String, POJO/DTO, List, Map</text>
+      <text x="12" y="102" font-size="10.5" fill="#34d399">Can be null (e.g. 204 or Void)</text>
+    </g>
+  </g>
+
+  <!-- Section 2: ResponseEntity Builder Pattern -->
+  <g transform="translate(35, 285)" filter="url(#shadow)">
+    <rect width="930" height="245" rx="10" fill="url(#cardGrad2)" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <rect x="16" y="14" width="280" height="26" rx="6" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+    <text x="26" y="31" font-size="12" font-weight="700" fill="#34d399">2. CREATING RESPONSEENTITY (BUILDER PATTERN)</text>
+
+    <!-- Left Code: Standard with Body -->
+    <g transform="translate(16, 50)">
+      <rect width="438" height="175" rx="8" fill="#022c22" stroke="#047857" stroke-width="1"/>
+      <text x="14" y="22" font-size="11.5" font-weight="700" fill="#6ee7b7">Pattern A: With Response Body &amp; Headers</text>
+      
+      <rect x="14" y="32" width="410" height="98" rx="6" fill="#0f172a"/>
+      <text x="24" y="50" font-size="10.5" font-family="monospace" fill="#94a3b8">HttpHeaders headers = new HttpHeaders();</text>
+      <text x="24" y="66" font-size="10.5" font-family="monospace" fill="#94a3b8">headers.add("Custom-Header", "Value");</text>
+      <text x="24" y="86" font-size="10.5" font-family="monospace" fill="#f8fafc"><tspan fill="#38bdf8">return</tspan> ResponseEntity.<tspan fill="#f59e0b">status</tspan>(HttpStatus.OK)</text>
+      <text x="40" y="102" font-size="10.5" font-family="monospace" fill="#f8fafc">.<tspan fill="#f59e0b">headers</tspan>(headers)</text>
+      <text x="40" y="118" font-size="10.5" font-family="monospace" fill="#f8fafc">.<tspan fill="#4ade80">body</tspan>("My Response Object");</text>
+
+      <text x="14" y="145" font-size="10.5" fill="#a7f3d0">💡 <tspan font-weight="700">status()</tspan> &amp; <tspan font-weight="700">headers()</tspan> return <tspan fill="#fde047" font-weight="700">BodyBuilder</tspan></text>
+      <text x="14" y="162" font-size="10.5" fill="#a7f3d0">💡 <tspan font-weight="700">.body(T)</tspan> MUST be called last → returns <tspan fill="#6ee7b7" font-weight="700">ResponseEntity&lt;T&gt;</tspan></text>
+    </g>
+
+    <!-- Right Code: Without Body (Void / build()) -->
+    <g transform="translate(476, 50)">
+      <rect width="438" height="175" rx="8" fill="#022c22" stroke="#047857" stroke-width="1"/>
+      <text x="14" y="22" font-size="11.5" font-weight="700" fill="#6ee7b7">Pattern B: Without Body (e.g. 204 No Content / Void)</text>
+      
+      <rect x="14" y="32" width="410" height="98" rx="6" fill="#0f172a"/>
+      <text x="24" y="50" font-size="10.5" font-family="monospace" fill="#94a3b8">public ResponseEntity&lt;Void&gt; deleteUser() {</text>
+      <text x="24" y="68" font-size="10.5" font-family="monospace" fill="#94a3b8">  // ... business logic</text>
+      <text x="24" y="88" font-size="10.5" font-family="monospace" fill="#f8fafc">  <tspan fill="#38bdf8">return</tspan> ResponseEntity.<tspan fill="#f59e0b">status</tspan>(HttpStatus.NO_CONTENT)</text>
+      <text x="40" y="104" font-size="10.5" font-family="monospace" fill="#f8fafc">  .<tspan fill="#f59e0b">headers</tspan>(headers)</text>
+      <text x="40" y="120" font-size="10.5" font-family="monospace" fill="#f8fafc">  .<tspan fill="#f43f5e">build</tspan>(); <tspan fill="#64748b">// body is null</tspan></text>
+
+      <text x="14" y="145" font-size="10.5" fill="#a7f3d0">💡 When response has no body, use <tspan fill="#fde047" font-weight="700">build()</tspan></text>
+      <text x="14" y="162" font-size="10.5" fill="#a7f3d0">💡 <tspan font-weight="700">build()</tspan> returns <tspan fill="#6ee7b7" font-weight="700">ResponseEntity&lt;T&gt;</tspan> with body set to <tspan font-weight="700">null</tspan></text>
+    </g>
+  </g>
+
+  <!-- Section 3: @RestController vs @Controller -->
+  <g transform="translate(35, 545)" filter="url(#shadow)">
+    <rect width="930" height="235" rx="10" fill="url(#cardGrad3)" stroke="#c084fc" stroke-width="1.5" stroke-opacity="0.6"/>
+    
+    <rect x="16" y="14" width="310" height="26" rx="6" fill="#c084fc" fill-opacity="0.2" stroke="#c084fc" stroke-width="1"/>
+    <text x="26" y="31" font-size="12" font-weight="700" fill="#e9d5ff">3. @RESTCONTROLLER VS @CONTROLLER (UNDER THE HOOD)</text>
+
+    <!-- Left Box: @RestController -->
+    <g transform="translate(16, 50)">
+      <rect width="438" height="165" rx="8" fill="#1e1b4b" stroke="#7e22ce" stroke-width="1"/>
+      <rect x="12" y="10" width="130" height="20" rx="4" fill="#a855f7" fill-opacity="0.3"/>
+      <text x="77" y="24" font-size="11" font-weight="700" fill="#e9d5ff" text-anchor="middle">@RestController (APIs)</text>
+      
+      <text x="14" y="48" font-size="11" font-weight="700" fill="#c084fc">@RestController = @Controller + @ResponseBody</text>
+      <text x="14" y="66" font-size="10.5" fill="#cbd5e1">• Automatically adds <tspan fill="#fde047">@ResponseBody</tspan> to all methods.</text>
+      <text x="14" y="84" font-size="10.5" fill="#cbd5e1">• When returning POJO/String, Spring internally wraps</text>
+      <text x="24" y="100" font-size="10.5" fill="#cbd5e1">it in <tspan fill="#6ee7b7">ResponseEntity&lt;User&gt;</tspan> and sets default status <tspan fill="#6ee7b7">200 OK</tspan>.</text>
+      <text x="14" y="120" font-size="10.5" fill="#cbd5e1">• Data serialized directly to JSON/XML (not View).</text>
+
+      <rect x="14" y="132" width="410" height="24" rx="4" fill="#3b0764"/>
+      <text x="20" y="148" font-size="10" fill="#e9d5ff">✔ Best used for: REST APIs, Microservices, JSON services</text>
+    </g>
+
+    <!-- Right Box: @Controller -->
+    <g transform="translate(476, 50)">
+      <rect width="438" height="165" rx="8" fill="#1e1b4b" stroke="#7e22ce" stroke-width="1"/>
+      <rect x="12" y="10" width="145" height="20" rx="4" fill="#e11d48" fill-opacity="0.3"/>
+      <text x="84.5" y="24" font-size="11" font-weight="700" fill="#fda4af" text-anchor="middle">@Controller (Spring MVC)</text>
+      
+      <text x="14" y="48" font-size="11" font-weight="700" fill="#f43f5e">Treats Return Value as View Template Name</text>
+      <text x="14" y="66" font-size="10.5" fill="#cbd5e1">• If method returns <tspan fill="#fde047">"XYZ"</tspan>, Spring looks for <tspan fill="#fde047">XYZ.html</tspan>.</text>
+      <text x="14" y="84" font-size="10.5" fill="#cbd5e1">• If file does not exist → Throws <tspan fill="#f87171" font-weight="700">404 Not Found</tspan>!</text>
+      <text x="14" y="102" font-size="10.5" fill="#cbd5e1">• To return raw data with @Controller, you <tspan font-weight="700" fill="#fde047">MUST</tspan> explicitly</text>
+      <text x="24" y="118" font-size="10.5" fill="#cbd5e1">annotate the method with <tspan fill="#fde047">@ResponseBody</tspan>.</text>
+
+      <rect x="14" y="132" width="410" height="24" rx="4" fill="#4c0519"/>
+      <text x="20" y="148" font-size="10" fill="#fda4af">⚠ Best used for: Server-Side UI rendering (Thymeleaf/JSP)</text>
+    </g>
+  </g>
+
+  <!-- Footer Tip -->
+  <g transform="translate(40, 792)">
+    <text x="460" y="15" font-size="11.5" fill="#64748b" text-anchor="middle" font-weight="500">Summary Sheet 1 • Spring Boot ResponseEntity, BodyBuilder, &amp; Controller Internals</text>
+  </g>
+</svg>

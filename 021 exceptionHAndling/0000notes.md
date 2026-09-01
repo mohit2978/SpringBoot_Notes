@@ -1,6 +1,6 @@
-![alt text](image.png)
 
----
+
+![HTTP Status Codes](http-status-codes.svg)
 
 ## Exception Handling
 

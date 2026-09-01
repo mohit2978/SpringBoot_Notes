@@ -1,0 +1,247 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 890" width="1000" height="890" style="border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="c1xx" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#475569" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="c2xx" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="c3xx" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#075985" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0c4a6e" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="c4xx" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#451a03" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="c5xx" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#881337" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#4c0519" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="110%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="890" rx="14" fill="url(#bgGrad)"/>
+  <rect width="998" height="888" x="1" y="1" rx="13" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Top Decorative Header -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="36" height="36" rx="8" fill="#f59e0b" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="18" y="24" font-size="18" text-anchor="middle" fill="#fbbf24" font-weight="bold">🚦</text>
+    <text x="48" y="22" font-size="22" font-weight="800" fill="#f8fafc" letter-spacing="0.5">Part 2: HTTP Status Codes &amp; Real-World Scenarios</text>
+    <text x="48" y="42" font-size="13" fill="#94a3b8" font-weight="400">Detailed breakdown of 1xx, 2xx, 3xx, 4xx, and 5xx status codes with interview &amp; design patterns</text>
+  </g>
+
+  <!-- 1xx INFORMATIONAL -->
+  <g transform="translate(35, 80)" filter="url(#shadow)">
+    <rect width="930" height="70" rx="8" fill="url(#c1xx)" stroke="#64748b" stroke-width="1.2"/>
+    <rect x="14" y="12" width="145" height="22" rx="4" fill="#64748b" fill-opacity="0.3"/>
+    <text x="86.5" y="27" font-size="11" font-weight="700" fill="#cbd5e1" text-anchor="middle">1xx INFORMATIONAL</text>
+    <text x="175" y="27" font-size="11.5" font-weight="700" fill="#f8fafc">100 Continue:</text>
+    <text x="270" y="27" font-size="11" fill="#cbd5e1">Interim response before sending large body (Multipart/Upload). Client sends <tspan fill="#38bdf8" font-family="monospace">Expect: 100-continue</tspan>.</text>
+    <text x="14" y="52" font-size="10.5" fill="#94a3b8">💡 Server pre-validates headers/auth before client transfers heavy payload. Once validated, client uploads actual file/body.</text>
+  </g>
+
+  <!-- 2xx SUCCESS -->
+  <g transform="translate(35, 162)" filter="url(#shadow)">
+    <rect width="455" height="340" rx="10" fill="url(#c2xx)" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+    <rect x="14" y="12" width="125" height="24" rx="5" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+    <text x="24" y="28" font-size="11.5" font-weight="700" fill="#34d399">2xx SUCCESS</text>
+    <text x="150" y="28" font-size="11" fill="#a7f3d0">Request received &amp; processed successfully</text>
+
+    <!-- Items -->
+    <g transform="translate(14, 45)">
+      <!-- 200 -->
+      <g transform="translate(0, 0)">
+        <rect width="60" height="19" rx="3" fill="#059669" fill-opacity="0.3"/>
+        <text x="30" y="13.5" font-size="11" font-weight="700" fill="#6ee7b7" text-anchor="middle">200 OK</text>
+        <text x="68" y="13.5" font-size="10.5" fill="#e2e8f0"><tspan font-weight="600">GET, PUT, Idempotent POST</tspan> (duplicate POST returns 200)</text>
+      </g>
+      <!-- 201 -->
+      <g transform="translate(0, 26)">
+        <rect width="84" height="19" rx="3" fill="#059669" fill-opacity="0.3"/>
+        <text x="42" y="13.5" font-size="11" font-weight="700" fill="#6ee7b7" text-anchor="middle">201 Created</text>
+        <text x="92" y="13.5" font-size="10.5" fill="#e2e8f0"><tspan font-weight="600">1st POST call</tspan> when new DB resource is created</text>
+      </g>
+      <!-- 202 -->
+      <g transform="translate(0, 52)">
+        <rect width="94" height="19" rx="3" fill="#059669" fill-opacity="0.3"/>
+        <text x="47" y="13.5" font-size="11" font-weight="700" fill="#6ee7b7" text-anchor="middle">202 Accepted</text>
+        <text x="102" y="13.5" font-size="10.5" fill="#e2e8f0">Accepted for <tspan font-weight="600">Async/Batch</tspan> processing (Import/Export)</text>
+      </g>
+      <!-- 204 -->
+      <g transform="translate(0, 78)">
+        <rect width="105" height="19" rx="3" fill="#059669" fill-opacity="0.3"/>
+        <text x="52.5" y="13.5" font-size="11" font-weight="700" fill="#6ee7b7" text-anchor="middle">204 No Content</text>
+        <text x="113" y="13.5" font-size="10.5" fill="#e2e8f0"><tspan font-weight="600">DELETE</tspan> or updates where <tspan font-weight="600">no body</tspan> is returned</text>
+      </g>
+      <!-- 206 -->
+      <g transform="translate(0, 104)">
+        <rect width="108" height="19" rx="3" fill="#059669" fill-opacity="0.3"/>
+        <text x="54" y="13.5" font-size="11" font-weight="700" fill="#6ee7b7" text-anchor="middle">206 Partial Cont.</text>
+        <text x="116" y="13.5" font-size="10.5" fill="#e2e8f0"><tspan font-weight="600">Bulk operations</tspan> (e.g. 95 added, 5 failed)</text>
+      </g>
+    </g>
+
+    <!-- Key Takeaway Card -->
+    <rect x="14" y="185" width="427" height="142" rx="6" fill="#064e3b" fill-opacity="0.5" stroke="#047857" stroke-width="1"/>
+    <text x="24" y="204" font-size="11" font-weight="700" fill="#34d399">🔑 Idempotent POST Pattern:</text>
+    <text x="24" y="222" font-size="10.5" fill="#d1fae5">• <tspan font-weight="700">1st POST call</tspan> inserts User → Returns <tspan fill="#6ee7b7" font-weight="700">201 Created</tspan></text>
+    <text x="24" y="240" font-size="10.5" fill="#d1fae5">• <tspan font-weight="700">2nd duplicate POST call</tspan> sees user already exists</text>
+    <text x="34" y="258" font-size="10.5" fill="#d1fae5">→ Does NOT insert duplicate, returns <tspan fill="#6ee7b7" font-weight="700">200 OK</tspan> with existing data</text>
+    <text x="24" y="280" font-size="11" font-weight="700" fill="#34d399">🔑 204 No Content:</text>
+    <text x="24" y="298" font-size="10.5" fill="#d1fae5">• Use <tspan font-family="monospace">ResponseEntity&lt;Void&gt;</tspan> + <tspan font-family="monospace">.build()</tspan></text>
+    <text x="24" y="316" font-size="10.5" fill="#d1fae5">• Great for DELETE APIs to save bandwidth</text>
+  </g>
+
+  <!-- 3xx REDIRECTION -->
+  <g transform="translate(510, 162)" filter="url(#shadow)">
+    <rect width="455" height="340" rx="10" fill="url(#c3xx)" stroke="#0284c7" stroke-width="1.5" stroke-opacity="0.6"/>
+    <rect x="14" y="12" width="145" height="24" rx="5" fill="#0284c7" fill-opacity="0.2" stroke="#0284c7" stroke-width="1"/>
+    <text x="24" y="28" font-size="11.5" font-weight="700" fill="#38bdf8">3xx REDIRECTION</text>
+    <text x="170" y="28" font-size="11" fill="#bae6fd">Client must perform additional redirect</text>
+
+    <!-- Items -->
+    <g transform="translate(14, 45)">
+      <!-- 301 -->
+      <g transform="translate(0, 0)">
+        <rect width="78" height="19" rx="3" fill="#0284c7" fill-opacity="0.3"/>
+        <text x="39" y="13.5" font-size="11" font-weight="700" fill="#7dd3fc" text-anchor="middle">301 Moved</text>
+        <text x="86" y="13.5" font-size="10.5" fill="#e2e8f0"><tspan font-weight="600">Legacy to New API</tspan> (May change POST → GET)</text>
+      </g>
+      <!-- 308 -->
+      <g transform="translate(0, 26)">
+        <rect width="102" height="19" rx="3" fill="#0284c7" fill-opacity="0.3"/>
+        <text x="51" y="13.5" font-size="11" font-weight="700" fill="#7dd3fc" text-anchor="middle">308 Perm. Redir</text>
+        <text x="110" y="13.5" font-size="10.5" fill="#e2e8f0">Modern 301: <tspan font-weight="600" fill="#38bdf8">Preserves Method</tspan> (POST remains POST)</text>
+      </g>
+      <!-- 304 -->
+      <g transform="translate(0, 52)">
+        <rect width="112" height="19" rx="3" fill="#0284c7" fill-opacity="0.3"/>
+        <text x="56" y="13.5" font-size="11" font-weight="700" fill="#7dd3fc" text-anchor="middle">304 Not Modified</text>
+        <text x="120" y="13.5" font-size="10.5" fill="#e2e8f0">Use Cached Copy via <tspan font-family="monospace">If-Modified-Since</tspan></text>
+      </g>
+    </g>
+
+    <!-- Detailed Notes Box -->
+    <rect x="14" y="132" width="427" height="195" rx="6" fill="#0c4a6e" fill-opacity="0.5" stroke="#0369a1" stroke-width="1"/>
+    <text x="24" y="152" font-size="11" font-weight="700" fill="#38bdf8">💡 Critical 301 vs 308 Difference:</text>
+    <text x="24" y="170" font-size="10.5" fill="#e0f2fe">• In <tspan font-weight="700">301</tspan>: If old call was POST, new redirected call might turn to <tspan fill="#fde047" font-weight="700">GET</tspan>.</text>
+    <text x="24" y="188" font-size="10.5" fill="#e0f2fe">• In <tspan font-weight="700">308</tspan>: HTTP method is strictly <tspan fill="#38bdf8" font-weight="700">LOCKED (POST stays POST)</tspan>.</text>
+    <text x="24" y="206" font-size="10.5" fill="#e0f2fe">• Must send <tspan font-weight="700" fill="#fde047">Location: &lt;new-url&gt;</tspan> header in 301/308 response.</text>
+    <text x="24" y="224" font-size="10.5" fill="#94a3b8">• Postman: Switch off "Automatically follow redirects" to debug 301.</text>
+
+    <text x="24" y="250" font-size="11" font-weight="700" fill="#fb7185">⚠ 304 on PATCH Gotcha:</text>
+    <text x="24" y="268" font-size="10.5" fill="#ffe4e6">• <tspan font-weight="700">Do NOT return 304</tspan> when PATCH data is identical to DB.</text>
+    <text x="24" y="286" font-size="10.5" fill="#ffe4e6">• If name="User" is already "User" in DB, return <tspan font-weight="700" fill="#6ee7b7">200 OK</tspan></text>
+    <text x="34" y="304" font-size="10.5" fill="#ffe4e6">or <tspan font-weight="700" fill="#6ee7b7">204 NO_CONTENT</tspan> instead (304 is for caching only)!</text>
+  </g>
+
+  <!-- 4xx CLIENT / VALIDATION ERRORS -->
+  <g transform="translate(35, 515)" filter="url(#shadow)">
+    <rect width="455" height="325" rx="10" fill="url(#c4xx)" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.6"/>
+    <rect x="14" y="12" width="195" height="24" rx="5" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+    <text x="24" y="28" font-size="11.5" font-weight="700" fill="#fbbf24">4xx CLIENT / VALIDATION ERRORS</text>
+
+    <g transform="translate(14, 45)">
+      <!-- 400 -->
+      <g transform="translate(0, 0)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">400 Bad Request:</text>
+        <text x="110" y="12" font-size="10.5" fill="#e2e8f0">Client didn't pass required params/malformed body</text>
+      </g>
+      <!-- 401 -->
+      <g transform="translate(0, 24)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">401 Unauthorized:</text>
+        <text x="118" y="12" font-size="10.5" fill="#e2e8f0">Missing or invalid Auth (Bearer/Basic token)</text>
+      </g>
+      <!-- 403 -->
+      <g transform="translate(0, 48)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">403 Forbidden:</text>
+        <text x="96" y="12" font-size="10.5" fill="#e2e8f0">Authenticated, but <tspan font-weight="700" fill="#fbbf24">Role NOT allowed</tspan> (e.g. non-Admin)</text>
+      </g>
+      <!-- 404 -->
+      <g transform="translate(0, 72)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">404 Not Found:</text>
+        <text x="98" y="12" font-size="10.5" fill="#e2e8f0">User ID / Resource doesn't exist in DB</text>
+      </g>
+      <!-- 405 -->
+      <g transform="translate(0, 96)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">405 Method Not Allowed:</text>
+        <text x="156" y="12" font-size="10.5" fill="#e2e8f0">e.g. POST sent to GET endpoint</text>
+      </g>
+      <!-- 422 -->
+      <g transform="translate(0, 120)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">422 Unprocessable:</text>
+        <text x="122" y="12" font-size="10.5" fill="#e2e8f0">Business rule fail (e.g. country not supported)</text>
+      </g>
+      <!-- 429 -->
+      <g transform="translate(0, 144)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fde68a">429 Too Many Req:</text>
+        <text x="124" y="12" font-size="10.5" fill="#e2e8f0"><tspan font-weight="700" fill="#fbbf24">Rate Limiting</tspan> (e.g. 11th call in 1 min fails)</text>
+      </g>
+    </g>
+
+    <rect x="14" y="222" width="427" height="88" rx="6" fill="#78350f" fill-opacity="0.5" stroke="#b45309" stroke-width="1"/>
+    <text x="24" y="242" font-size="11" font-weight="700" fill="#fbbf24">💡 Interview Quick Check:</text>
+    <text x="24" y="260" font-size="10.5" fill="#fef3c7">• <tspan font-weight="700">401 vs 403</tspan>: 401 = Who are you? (Authn) | 403 = Access denied! (Authz)</text>
+    <text x="24" y="278" font-size="10.5" fill="#fef3c7">• <tspan font-weight="700">422 vs 400</tspan>: 400 = Syntax/JSON bad | 422 = Syntax fine, Business Logic failed</text>
+    <text x="24" y="296" font-size="10.5" fill="#fef3c7">• Fault is on <tspan font-weight="700">Client</tspan> or expected business validation.</text>
+  </g>
+
+  <!-- 5xx SERVER ERRORS -->
+  <g transform="translate(510, 515)" filter="url(#shadow)">
+    <rect width="455" height="325" rx="10" fill="url(#c5xx)" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.6"/>
+    <rect x="14" y="12" width="175" height="24" rx="5" fill="#f43f5e" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1"/>
+    <text x="24" y="28" font-size="11.5" font-weight="700" fill="#fb7185">5xx SERVER ERRORS</text>
+    <text x="200" y="28" font-size="11" fill="#fda4af">(Should be as LOW as possible!)</text>
+
+    <g transform="translate(14, 45)">
+      <!-- 500 -->
+      <g transform="translate(0, 0)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fecdd3">500 Internal Error:</text>
+        <text x="120" y="12" font-size="10.5" fill="#e2e8f0">Generic error (NullPointerException, DB crash)</text>
+      </g>
+      <!-- 501 -->
+      <g transform="translate(0, 28)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fecdd3">501 Not Implemented:</text>
+        <text x="135" y="12" font-size="10.5" fill="#e2e8f0">API in development / not supported by server</text>
+      </g>
+      <!-- 502 -->
+      <g transform="translate(0, 56)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fecdd3">502 Bad Gateway:</text>
+        <text x="114" y="12" font-size="10.5" fill="#e2e8f0">Reverse proxy (Nginx) got invalid response</text>
+      </g>
+      <!-- 504 -->
+      <g transform="translate(0, 84)">
+        <text x="0" y="12" font-size="11" font-weight="700" fill="#fecdd3">504 Gateway Timeout:</text>
+        <text x="136" y="12" font-size="10.5" fill="#e2e8f0">Upstream microservice timed out</text>
+      </g>
+    </g>
+
+    <rect x="14" y="170" width="427" height="140" rx="6" fill="#881337" fill-opacity="0.5" stroke="#be123c" stroke-width="1"/>
+    <text x="24" y="190" font-size="11" font-weight="700" fill="#fb7185">💡 Real World Architecture Gotcha (502):</text>
+    <text x="24" y="208" font-size="10.5" fill="#ffe4e6">• When deployed behind <tspan font-weight="700">Reverse Proxy (Nginx/Gateway)</tspan>:</text>
+    <text x="34" y="226" font-size="10.5" fill="#ffe4e6">If Nginx can't reach Spring Boot (port misconfigured/service dead),</text>
+    <text x="34" y="244" font-size="10.5" fill="#ffe4e6">Nginx returns <tspan font-weight="700" fill="#fda4af">502 Bad Gateway</tspan> directly to client.</text>
+    <text x="24" y="270" font-size="11" font-weight="700" fill="#fb7185">🎯 Server Rule:</text>
+    <text x="24" y="288" font-size="10.5" fill="#ffe4e6">• Server should <tspan font-weight="700">NEVER fail</tspan> on valid requests — minimize 5xx to 0%!</text>
+  </g>
+
+  <!-- Footer Tip -->
+  <g transform="translate(40, 862)">
+    <text x="460" y="15" font-size="11.5" fill="#64748b" text-anchor="middle" font-weight="500">Summary Sheet 2 • Complete HTTP Status Codes &amp; Real-World Production Architecture</text>
+  </g>
+</svg>
