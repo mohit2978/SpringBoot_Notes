@@ -1,4 +1,2 @@
-# Notes
-
 ![alt text](010profiles_241227_214948_250716_002318_1.jpg) ![alt text](010profiles_241227_214948_250716_002318_2.jpg) ![alt text](010profiles_241227_214948_250716_002318_3.jpg) ![alt text](010profiles_241227_214948_250716_002318_4.jpg) ![alt text](010profiles_241227_214948_250716_002318_5.jpg)
 

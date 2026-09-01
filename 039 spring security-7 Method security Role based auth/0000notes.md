@@ -1,5 +1,3 @@
-# Notes
-
 - We have already covered different type of Authentications.
 - And with that, we have also covered, how at Security Filter layer itself we can do authorization.
 

@@ -1,4 +1,3 @@
-# Notes
 ![alt text](016_async_2_250716_002345_1.jpg) ![alt text](016_async_2_250716_002345_2.jpg) ![alt text](016_async_2_250716_002345_3.jpg)
 
 

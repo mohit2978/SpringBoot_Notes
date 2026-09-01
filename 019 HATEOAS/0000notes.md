@@ -1,2 +1,1 @@
-# Notes
 ![alt text](019_HATEOAS_250716_002618_1.jpg) ![alt text](019_HATEOAS_250716_002618_2.jpg) ![alt text](019_HATEOAS_250716_002618_3.jpg) ![alt text](019_HATEOAS_250716_002618_4.jpg) ![alt text](019_HATEOAS_250716_002618_5.jpg) ![alt text](019_HATEOAS_250716_002618_6.jpg) ![alt text](019_HATEOAS_250716_002618_7.jpg) ![alt text](019_HATEOAS_250716_002618_8.jpg)
