@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="caller-box" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="proxy-box" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="pool-box" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="worker-box" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#701a75"/>
+      <stop offset="100%" stop-color="#86198f"/>
+    </linearGradient>
+
+    <filter id="shadow-2" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc"/>
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="520" rx="16" fill="url(#bg-grad-2)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 32)">
+    <rect x="0" y="0" width="170" height="24" rx="12" fill="#818cf8" fill-opacity="0.12" stroke="#818cf8" stroke-opacity="0.3"/>
+    <text x="85" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#a5b4fc" text-anchor="middle">INTERNAL ARCHITECTURE</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      How @Async Works Internally (CGLIB Proxy &amp; TaskExecutor)
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Spring wraps the target bean in a dynamic proxy that intercepts invocations and dispatches them to a TaskExecutor
+    </text>
+  </g>
+
+  <!-- Architectural Pipeline Diagram -->
+  <g transform="translate(40, 125)">
+    <!-- 1. Caller Thread -->
+    <g transform="translate(0, 20)" filter="url(#shadow-2)">
+      <rect width="180" height="150" rx="12" fill="url(#caller-box)" stroke="#475569" stroke-width="1.5"/>
+      <rect x="14" y="14" width="76" height="20" rx="4" fill="#38bdf8" fill-opacity="0.15"/>
+      <text x="52" y="28" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">CALLER</text>
+      <text x="14" y="56" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc">Caller Thread</text>
+      <text x="14" y="74" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">http-nio-exec-1</text>
+      <line x1="14" y1="84" x2="166" y2="84" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">1. Invokes method:</text>
+      <text x="14" y="122" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">service.sendEmail()</text>
+      <text x="14" y="138" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Direct call on bean ref</text>
+    </g>
+
+    <!-- Arrow 1: Caller -> Proxy -->
+    <g transform="translate(180, 85)">
+      <line x1="0" y1="0" x2="48" y2="0" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr-blue)"/>
+      <text x="24" y="-8" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#38bdf8" text-anchor="middle">Call</text>
+    </g>
+
+    <!-- 2. CGLIB Proxy -->
+    <g transform="translate(235, 10)" filter="url(#shadow-2)">
+      <rect width="210" height="170" rx="12" fill="url(#proxy-box)" stroke="#6366f1" stroke-width="1.5"/>
+      <rect x="14" y="14" width="85" height="20" rx="4" fill="#818cf8" fill-opacity="0.2"/>
+      <text x="56" y="28" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#c7d2fe" text-anchor="middle">SPRING AOP</text>
+      <text x="14" y="56" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc">CGLIB Proxy</text>
+      <text x="14" y="74" font-family="'JetBrains Mono', monospace" font-size="10" fill="#c7d2fe">AsyncExecutionInterceptor</text>
+      <line x1="14" y1="84" x2="196" y2="84" stroke="#4f46e5" stroke-width="1"/>
+      <text x="14" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#e0e7ff">2. Intercepts call</text>
+      <text x="14" y="122" font-family="system-ui, sans-serif" font-size="11" fill="#e0e7ff">3. Wraps in Callable /</text>
+      <text x="14" y="138" font-family="'JetBrains Mono', monospace" font-size="10" fill="#a5b4fc">   Runnable task</text>
+      <text x="14" y="156" font-family="system-ui, sans-serif" font-size="10" fill="#c7d2fe">4. Submits to Executor</text>
+    </g>
+
+    <!-- Arrow 2: Proxy -> Executor -->
+    <g transform="translate(445, 85)">
+      <line x1="0" y1="0" x2="48" y2="0" stroke="#818cf8" stroke-width="2" marker-end="url(#arr-purple)"/>
+      <text x="24" y="-8" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#818cf8" text-anchor="middle">Submit</text>
+    </g>
+
+    <!-- 3. TaskExecutor (Thread Pool) -->
+    <g transform="translate(500, 10)" filter="url(#shadow-2)">
+      <rect width="200" height="170" rx="12" fill="url(#pool-box)" stroke="#10b981" stroke-width="1.5"/>
+      <rect x="14" y="14" width="95" height="20" rx="4" fill="#34d399" fill-opacity="0.2"/>
+      <text x="61" y="28" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">THREAD POOL</text>
+      <text x="14" y="56" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc">TaskExecutor</text>
+      <text x="14" y="74" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6ee7b7">ThreadPoolTaskExecutor</text>
+      <line x1="14" y1="84" x2="186" y2="84" stroke="#047857" stroke-width="1"/>
+      <text x="14" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#d1fae5">• Core Pool: 2-8</text>
+      <text x="14" y="122" font-family="system-ui, sans-serif" font-size="11" fill="#d1fae5">• Queue: Holds waiting</text>
+      <text x="14" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#d1fae5">• Max Pool: Overflow</text>
+      <text x="14" y="158" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0">Dispatches to idle thread</text>
+    </g>
+
+    <!-- Arrow 3: Pool -> Worker Threads -->
+    <g transform="translate(700, 85)">
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+      <text x="20" y="-8" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#34d399" text-anchor="middle">Assign</text>
+    </g>
+
+    <!-- 4. Worker Threads -->
+    <g transform="translate(745, 0)">
+      <!-- Worker Thread 1 -->
+      <g filter="url(#shadow-2)">
+        <rect width="135" height="52" rx="8" fill="url(#worker-box)" stroke="#d946ef" stroke-width="1.2"/>
+        <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fae8ff">Worker Thread 1</text>
+        <text x="12" y="38" font-family="'JetBrains Mono', monospace" font-size="10" fill="#f0abfc">task-1 (Executes)</text>
+      </g>
+      <!-- Worker Thread 2 -->
+      <g transform="translate(0, 68)" filter="url(#shadow-2)">
+        <rect width="135" height="52" rx="8" fill="url(#worker-box)" stroke="#d946ef" stroke-width="1.2"/>
+        <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fae8ff">Worker Thread 2</text>
+        <text x="12" y="38" font-family="'JetBrains Mono', monospace" font-size="10" fill="#f0abfc">task-2 (Executes)</text>
+      </g>
+      <!-- Worker Thread N -->
+      <g transform="translate(0, 136)" filter="url(#shadow-2)">
+        <rect width="135" height="52" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-dasharray="3 3" stroke-width="1.2"/>
+        <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#c7d2fe">Worker Thread N</text>
+        <text x="12" y="38" font-family="'JetBrains Mono', monospace" font-size="10" fill="#a5b4fc">task-N (Available)</text>
+      </g>
+    </g>
+
+    <!-- Return Flow: Return Immediately to Caller -->
+    <g transform="translate(0, 195)">
+      <path d="M 340 0 L 340 25 L 90 25 L 90 0" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arr-blue)"/>
+      <rect x="130" y="14" width="180" height="22" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <text x="220" y="29" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">5. Returns immediately (void / Future)</text>
+    </g>
+  </g>
+
+  <!-- Bottom Details Banner -->
+  <g transform="translate(40, 365)">
+    <rect width="880" height="120" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="20" y="26" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f1f5f9">Key Architectural Principles:</text>
+
+    <g transform="translate(20, 42)">
+      <circle cx="6" cy="10" r="3" fill="#38bdf8"/>
+      <text x="18" y="14" font-family="system-ui, sans-serif" font-size="12" fill="#cbd5e1">
+        <tspan font-weight="600" fill="#f8fafc">1. Spring Proxy Bypass Trap:</tspan> Calling an @Async method from within the same class (<tspan font-family="'JetBrains Mono', monospace" fill="#f43f5e">this.method()</tspan>) bypasses the CGLIB proxy, causing synchronous execution.
+      </text>
+
+      <circle cx="6" cy="34" r="3" fill="#34d399"/>
+      <text x="18" y="38" font-family="system-ui, sans-serif" font-size="12" fill="#cbd5e1">
+        <tspan font-weight="600" fill="#f8fafc">2. Non-blocking Caller:</tspan> The caller thread does not wait for method completion. If the return type is <tspan font-family="'JetBrains Mono', monospace" fill="#34d399">void</tspan>, control returns in &lt;1ms.
+      </text>
+
+      <circle cx="6" cy="58" r="3" fill="#fbbf24"/>
+      <text x="18" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#cbd5e1">
+        <tspan font-weight="600" fill="#f8fafc">3. Result Handling:</tspan> If return type is <tspan font-family="'JetBrains Mono', monospace" fill="#fbbf24">CompletableFuture&lt;T&gt;</tspan>, caller receives future immediately and registers non-blocking callbacks.
+      </text>
+    </g>
+  </g>
+</svg>

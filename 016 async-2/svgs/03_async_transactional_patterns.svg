@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-16-3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="p1-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f2922"/>
+      <stop offset="100%" stop-color="#0a1d18"/>
+    </linearGradient>
+    <linearGradient id="p2-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1b2438"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="p3-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#241b35"/>
+      <stop offset="100%" stop-color="#150f24"/>
+    </linearGradient>
+
+    <filter id="shadow-16-3" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="1060" height="620" rx="16" fill="url(#bg-grad-16-3)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="170" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.3"/>
+    <text x="85" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">DESIGN PATTERNS</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      The 3 Correct @Async + @Transactional Architectural Patterns
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Proven enterprise patterns to combine asynchronous processing with transactional safety
+    </text>
+  </g>
+
+  <!-- 3 Column Cards -->
+  <g transform="translate(40, 125)">
+    <!-- Pattern 1: Separate (Safest) -->
+    <g filter="url(#shadow-16-3)">
+      <rect width="310" height="455" rx="12" fill="url(#p1-card)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 18)">
+        <rect x="0" y="0" width="85" height="22" rx="4" fill="#047857" fill-opacity="0.3"/>
+        <text x="42.5" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">PATTERN 1</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">Keep Them Separate</text>
+        <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#34d399">Simplest &amp; Safest (Fire &amp; Forget)</text>
+
+        <!-- Code Block -->
+        <rect x="0" y="76" width="274" height="175" rx="6" fill="#081c17" stroke="#047857"/>
+        <g transform="translate(12, 76)" font-family="'JetBrains Mono', monospace" font-size="10">
+          <text y="20" fill="#a7f3d0">// Step 1: Main Thread</text>
+          <text y="36" fill="#34d399">@Transactional</text>
+          <text y="52" fill="#cbd5e1">saveOrder(req) {</text>
+          <text y="68" fill="#e2e8f0">  order = repo.save();</text>
+          <text y="84" fill="#94a3b8">  // TX1 commits here</text>
+          <text y="100" fill="#cbd5e1">}</text>
+          <text y="120" fill="#a7f3d0">// Step 2: Async Thread</text>
+          <text y="136" fill="#38bdf8">@Async</text>
+          <text y="154" fill="#cbd5e1">sendEmail(order.getId());</text>
+        </g>
+
+        <!-- Steps -->
+        <text x="0" y="272" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">Execution Flow:</text>
+        <text x="0" y="292" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">1. Main thread writes DB and commits TX1.</text>
+        <text x="0" y="312" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">2. Fire async notification AFTER commit.</text>
+        <text x="0" y="332" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">3. Only pass entity ID (<tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">orderId</tspan>).</text>
+
+        <!-- Best For Pill Box -->
+        <rect x="0" y="352" width="274" height="64" rx="6" fill="#064e3b" fill-opacity="0.35" stroke="#059669"/>
+        <text x="12" y="374" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#6ee7b7">Best For:</text>
+        <text x="12" y="394" font-family="system-ui, sans-serif" font-size="10" fill="#d1fae5">Emails, SMS, push alerts, webhooks.</text>
+      </g>
+    </g>
+
+    <!-- Pattern 2: Independent Transaction (REQUIRES_NEW) -->
+    <g transform="translate(335, 0)" filter="url(#shadow-16-3)">
+      <rect width="310" height="455" rx="12" fill="url(#p2-card)" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 18)">
+        <rect x="0" y="0" width="85" height="22" rx="4" fill="#0369a1" fill-opacity="0.3"/>
+        <text x="42.5" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">PATTERN 2</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">Independent Transaction</text>
+        <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#38bdf8">Async Work Writes to Database</text>
+
+        <!-- Code Block -->
+        <rect x="0" y="76" width="274" height="175" rx="6" fill="#0c1626" stroke="#0284c7"/>
+        <g transform="translate(12, 76)" font-family="'JetBrains Mono', monospace" font-size="9.5">
+          <text y="20" fill="#38bdf8">@Async</text>
+          <text y="36" fill="#fde047">@Transactional(</text>
+          <text y="52" fill="#fde047">  propagation=REQUIRES_NEW)</text>
+          <text y="70" fill="#cbd5e1">void logAndAudit(Long id) {</text>
+          <text y="88" fill="#e2e8f0">  // Reload fresh from DB</text>
+          <text y="104" fill="#38bdf8">  order = repo.findById(id);</text>
+          <text y="120" fill="#e2e8f0">  auditRepo.save(new Log());</text>
+          <text y="138" fill="#94a3b8">  // TX2 commits separately</text>
+          <text y="154" fill="#cbd5e1">}</text>
+        </g>
+
+        <!-- Steps -->
+        <text x="0" y="272" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#7dd3fc">Execution Flow:</text>
+        <text x="0" y="292" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">1. Async method opens fresh <tspan font-weight="700" fill="#fde047">TX2</tspan>.</text>
+        <text x="0" y="312" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">2. Loads entity by ID via fresh session.</text>
+        <text x="0" y="332" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">3. Writes audit data and commits TX2.</text>
+
+        <!-- Best For Pill Box -->
+        <rect x="0" y="352" width="274" height="64" rx="6" fill="#075985" fill-opacity="0.3" stroke="#0284c7"/>
+        <text x="12" y="374" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#bae6fd">Best For:</text>
+        <text x="12" y="394" font-family="system-ui, sans-serif" font-size="10" fill="#e0f2fe">Audit logging, event sourcing, telemetry.</text>
+      </g>
+    </g>
+
+    <!-- Pattern 3: CompletableFuture (Queries/Reports) -->
+    <g transform="translate(670, 0)" filter="url(#shadow-16-3)">
+      <rect width="310" height="455" rx="12" fill="url(#p3-card)" stroke="#c084fc" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 18)">
+        <rect x="0" y="0" width="85" height="22" rx="4" fill="#6b21a8" fill-opacity="0.3"/>
+        <text x="42.5" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#d8b4fe" text-anchor="middle">PATTERN 3</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">CompletableFuture</text>
+        <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#c084fc">Caller Requires Async Result</text>
+
+        <!-- Code Block -->
+        <rect x="0" y="76" width="274" height="175" rx="6" fill="#130e1f" stroke="#7e22ce"/>
+        <g transform="translate(12, 76)" font-family="'JetBrains Mono', monospace" font-size="9.5">
+          <text y="20" fill="#c084fc">@Async</text>
+          <text y="36" fill="#a855f7">@Transactional(readOnly=true)</text>
+          <text y="52" fill="#cbd5e1">CompletableFuture&lt;Report&gt;</text>
+          <text y="68" fill="#cbd5e1">fetchReportAsync(Long id) {</text>
+          <text y="86" fill="#e2e8f0">  Report r = repo.get(id);</text>
+          <text y="104" fill="#38bdf8">  return CompletableFuture</text>
+          <text y="120" fill="#38bdf8">    .completedFuture(r);</text>
+          <text y="138" fill="#cbd5e1">}</text>
+        </g>
+
+        <!-- Steps -->
+        <text x="0" y="272" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#e9d5ff">Execution Flow:</text>
+        <text x="0" y="292" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">1. Query runs on background thread.</text>
+        <text x="0" y="312" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">2. Main thread continues other tasks.</text>
+        <text x="0" y="332" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">3. Joins or handles non-blockingly.</text>
+
+        <!-- Best For Pill Box -->
+        <rect x="0" y="352" width="274" height="64" rx="6" fill="#581c87" fill-opacity="0.3" stroke="#7e22ce"/>
+        <text x="12" y="374" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f3e8ff">Best For:</text>
+        <text x="12" y="394" font-family="system-ui, sans-serif" font-size="10" fill="#faf5ff">Heavy reports, dashboard aggregations.</text>
+      </g>
+    </g>
+  </g>
+</svg>

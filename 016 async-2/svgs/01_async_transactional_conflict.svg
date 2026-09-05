@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-16-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="thread-main" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="thread-async" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d151d"/>
+      <stop offset="100%" stop-color="#190a10"/>
+    </linearGradient>
+
+    <filter id="shadow-16" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="600" rx="16" fill="url(#bg-grad-16-1)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="185" height="24" rx="12" fill="#ef4444" fill-opacity="0.12" stroke="#ef4444" stroke-opacity="0.3"/>
+    <text x="92" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#f87171" text-anchor="middle">CONCURRENCY &amp; TRANSACTIONS</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      @Async + @Transactional: The ThreadLocal Conflict
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      @Transactional binds to ThreadLocal on the caller thread. @Async switches to a new thread, severing transaction context.
+    </text>
+  </g>
+
+  <!-- Split Comparison Columns -->
+  <g transform="translate(40, 125)">
+    <!-- Column 1: Main Thread (Caller) -->
+    <g filter="url(#shadow-16)">
+      <rect width="445" height="325" rx="14" fill="url(#thread-main)" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(22, 20)">
+        <rect x="0" y="0" width="145" height="22" rx="4" fill="#1e40af" fill-opacity="0.3"/>
+        <text x="72" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#93c5fd">MAIN THREAD (TX 1)</text>
+        <text x="0" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">CheckoutService.checkout()</text>
+
+        <!-- Timeline Step 1 -->
+        <g transform="translate(0, 62)">
+          <circle cx="10" cy="12" r="9" fill="#3b82f6" fill-opacity="0.3" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#60a5fa" text-anchor="middle">1</text>
+          <text x="28" y="16" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">Cart cleared in TX1: <tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">cartRepo.clear()</tspan></text>
+        </g>
+
+        <!-- Timeline Step 2 -->
+        <g transform="translate(0, 112)">
+          <circle cx="10" cy="12" r="9" fill="#a855f7" fill-opacity="0.3" stroke="#a855f7" stroke-width="1.5"/>
+          <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#c084fc" text-anchor="middle">2</text>
+          <text x="28" y="16" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">Fires <tspan font-family="'JetBrains Mono', monospace" fill="#c084fc">orderService.processOrder()</tspan></text>
+          <text x="28" y="34" font-family="system-ui, sans-serif" font-size="10.5" fill="#94a3b8">Control returns in &lt;1ms. Caller cannot see failures!</text>
+        </g>
+
+        <!-- Timeline Step 3 -->
+        <g transform="translate(0, 172)">
+          <circle cx="10" cy="12" r="9" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="1.5"/>
+          <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">3</text>
+          <text x="28" y="16" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">TX 1 COMMITS SUCCESSFULLY</text>
+
+          <rect x="28" y="28" width="350" height="34" rx="6" fill="#064e3b" fill-opacity="0.4" stroke="#059669"/>
+          <text x="40" y="50" font-family="system-ui, sans-serif" font-size="11.5" font-weight="600" fill="#a7f3d0">Database state: Cart is permanently empty ✓</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Column 2: Async Thread (Background) -->
+    <g transform="translate(475, 0)" filter="url(#shadow-16)">
+      <rect width="445" height="325" rx="14" fill="url(#thread-async)" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(22, 20)">
+        <rect x="0" y="0" width="155" height="22" rx="4" fill="#881337" fill-opacity="0.4"/>
+        <text x="77" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fda4af">ASYNC THREAD (TX 2)</text>
+        <text x="0" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">OrderService.processOrder()</text>
+
+        <!-- Timeline Step 1 -->
+        <g transform="translate(0, 62)">
+          <circle cx="10" cy="12" r="9" fill="#38bdf8" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">1</text>
+          <text x="28" y="16" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">Opens independent <tspan font-weight="700" fill="#fde047">TX 2</tspan> on worker thread</text>
+        </g>
+
+        <!-- Timeline Step 2 -->
+        <g transform="translate(0, 112)">
+          <circle cx="10" cy="12" r="9" fill="#f43f5e" fill-opacity="0.3" stroke="#f43f5e" stroke-width="1.5"/>
+          <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fb7185" text-anchor="middle">2</text>
+          <text x="28" y="16" font-family="system-ui, sans-serif" font-size="12" fill="#fda4af">Payment gateway timeout / throws Exception:</text>
+          <text x="28" y="34" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f43f5e">throw new RuntimeException("Payment Failed!");</text>
+        </g>
+
+        <!-- Timeline Step 3 -->
+        <g transform="translate(0, 172)">
+          <circle cx="10" cy="12" r="9" fill="#f43f5e" fill-opacity="0.3" stroke="#f43f5e" stroke-width="1.5"/>
+          <text x="10" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fb7185" text-anchor="middle">3</text>
+          <text x="28" y="16" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f43f5e">TX 2 ROLLS BACK ENTIRELY</text>
+
+          <rect x="28" y="28" width="350" height="34" rx="6" fill="#450a0a" fill-opacity="0.5" stroke="#e11d48"/>
+          <text x="40" y="50" font-family="system-ui, sans-serif" font-size="11.5" font-weight="600" fill="#fecdd3">Database state: Order was NEVER created ✗</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Result Banner: Inconsistency -->
+  <g transform="translate(40, 475)">
+    <rect width="920" height="95" rx="10" fill="#180c14" stroke="#f43f5e" stroke-width="1.2"/>
+    <text x="20" y="26" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f87171">Catastrophic Database Inconsistency Result:</text>
+    <text x="20" y="50" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">
+      • Cart is <tspan fill="#34d399" font-weight="700">EMPTY</tspan> (committed in TX1), but Order is <tspan fill="#f43f5e" font-weight="700">MISSING</tspan> (rolled back in TX2). Customer lost their cart items without an order!
+    </text>
+    <text x="20" y="72" font-family="system-ui, sans-serif" font-size="12" fill="#cbd5e1">
+      • <tspan font-weight="700" fill="#fde047">Golden Rule:</tspan> NEVER execute business-critical transactional mutations asynchronously if the caller depends on them!
+    </text>
+  </g>
+</svg>

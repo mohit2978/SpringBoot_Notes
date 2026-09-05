@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="tomcat-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#292524"/>
+    </linearGradient>
+
+    <linearGradient id="spring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c2824"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
+
+    <filter id="shadow-5" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <marker id="arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f97316"/>
+    </marker>
+    <marker id="arr-green-5" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="540" rx="16" fill="url(#bg-grad-5)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="180" height="24" rx="12" fill="#f97316" fill-opacity="0.12" stroke="#f97316" stroke-opacity="0.3"/>
+    <text x="90" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#fb923c" text-anchor="middle">THREAD ARCHITECTURE</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      Tomcat Controller Threads vs Spring Async Service Threads
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Understanding the clear separation between Servlet container HTTP handlers and Spring background worker pools
+    </text>
+  </g>
+
+  <!-- Split Container Diagram -->
+  <g transform="translate(40, 115)">
+    <!-- 1. Tomcat Servlet Container Pool -->
+    <g filter="url(#shadow-5)">
+      <rect width="435" height="390" rx="14" fill="url(#tomcat-grad)" stroke="#f97316" stroke-opacity="0.35" stroke-width="1.5"/>
+
+      <g transform="translate(22, 20)">
+        <rect x="0" y="0" width="190" height="22" rx="4" fill="#f97316" fill-opacity="0.15"/>
+        <text x="10" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fdba74">TOMCAT THREAD POOL</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Controller Threads</text>
+        <text x="0" y="62" font-family="'JetBrains Mono', monospace" font-size="12" fill="#fb923c">name: [http-nio-8080-exec-x]</text>
+
+        <rect x="0" y="76" width="391" height="74" rx="6" fill="#1c1917" stroke="#44403c"/>
+        <text x="14" y="96" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#e7e5e4">Managed By: <tspan fill="#f97316">Embedded Servlet Container (Tomcat / Jetty)</tspan></text>
+        <text x="14" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#a8a29e">• Handles incoming TCP socket connections &amp; HTTP requests</text>
+        <text x="14" y="134" font-family="system-ui, sans-serif" font-size="11" fill="#a8a29e">• Routes through Filters, DispatcherServlet, into Controllers</text>
+
+        <!-- Configuration box -->
+        <rect x="0" y="162" width="391" height="110" rx="6" fill="#0c0a09" stroke="#292524"/>
+        <text x="14" y="184" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fdba74">Configuration (application.properties):</text>
+        <text x="14" y="206" font-family="'JetBrains Mono', monospace" font-size="11" fill="#78716c"># Max concurrent HTTP handler threads</text>
+        <text x="14" y="224" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fed7aa">server.tomcat.threads.max=<tspan fill="#f97316" font-weight="700">200</tspan> <tspan fill="#a8a29e">(default)</tspan></text>
+        <text x="14" y="244" font-family="'JetBrains Mono', monospace" font-size="11" fill="#78716c"># Minimum idle worker threads kept ready</text>
+        <text x="14" y="262" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fed7aa">server.tomcat.threads.min-spare=<tspan fill="#f97316" font-weight="700">10</tspan> <tspan fill="#a8a29e">(default)</tspan></text>
+
+        <!-- Golden rule -->
+        <rect x="0" y="284" width="391" height="58" rx="6" fill="#292524" stroke="#44403c"/>
+        <text x="12" y="304" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f8fafc">Key Takeaway:</text>
+        <text x="12" y="322" font-family="system-ui, sans-serif" font-size="10.5" fill="#d6d3d1">
+          Spring Boot does NOT run application methods on Tomcat threads if offloaded via @Async; Tomcat thread is freed immediately!
+        </text>
+      </g>
+    </g>
+
+    <!-- 2. Spring Async Service Thread Pool -->
+    <g transform="translate(465, 0)" filter="url(#shadow-5)">
+      <rect width="435" height="390" rx="14" fill="url(#spring-grad)" stroke="#10b981" stroke-opacity="0.35" stroke-width="1.5"/>
+
+      <g transform="translate(22, 20)">
+        <rect x="0" y="0" width="180" height="22" rx="4" fill="#047857" fill-opacity="0.3"/>
+        <text x="10" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#6ee7b7">SPRING TASK POOL</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Service Threads</text>
+        <text x="0" y="62" font-family="'JetBrains Mono', monospace" font-size="12" fill="#34d399">name: [task-x] or [MyThread-x]</text>
+
+        <rect x="0" y="76" width="391" height="74" rx="6" fill="#064e3b" stroke="#047857"/>
+        <text x="14" y="96" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#ecfdf5">Managed By: <tspan fill="#34d399">Spring TaskExecutor / Java ThreadPool</tspan></text>
+        <text x="14" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">• Executes background, time-consuming business logic</text>
+        <text x="14" y="134" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">• Independent lifecycle from HTTP request-response cycle</text>
+
+        <!-- Configuration box -->
+        <rect x="0" y="162" width="391" height="110" rx="6" fill="#022c22" stroke="#064e3b"/>
+        <text x="14" y="184" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#6ee7b7">Configuration (ThreadPoolTaskExecutor):</text>
+        <text x="14" y="206" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6ee7b7">executor.setCorePoolSize(<tspan fill="#fde047">5</tspan>);</text>
+        <text x="14" y="224" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6ee7b7">executor.setMaxPoolSize(<tspan fill="#fde047">20</tspan>);</text>
+        <text x="14" y="244" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6ee7b7">executor.setQueueCapacity(<tspan fill="#fde047">100</tspan>);</text>
+        <text x="14" y="262" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6ee7b7">executor.setThreadNamePrefix(<tspan fill="#38bdf8">"AsyncService-"</tspan>);</text>
+
+        <!-- Golden rule -->
+        <rect x="0" y="284" width="391" height="58" rx="6" fill="#064e3b" stroke="#059669"/>
+        <text x="12" y="304" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f8fafc">Key Takeaway:</text>
+        <text x="12" y="322" font-family="system-ui, sans-serif" font-size="10.5" fill="#d1fae5">
+          Allows separating IO-bound tasks (emails, notifications) and CPU-bound tasks (reports) into dedicated thread pools!
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

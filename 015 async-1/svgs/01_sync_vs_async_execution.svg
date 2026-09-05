@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="sync-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b2e"/>
+      <stop offset="100%" stop-color="#151221"/>
+    </linearGradient>
+
+    <linearGradient id="async-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f2922"/>
+      <stop offset="100%" stop-color="#0a1d18"/>
+    </linearGradient>
+
+    <filter id="shadow-1" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <marker id="arrow-sky" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" rx="16" fill="url(#bg-grad-1)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 36)">
+    <rect x="0" y="0" width="130" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.3"/>
+    <text x="65" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">EXECUTION MODEL</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      Synchronous vs Asynchronous (@Async) Execution
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      How @Async offloads long-running, non-critical tasks to background worker threads to prevent blocking HTTP request threads
+    </text>
+  </g>
+
+  <!-- Left Card: Synchronous (Blocking) -->
+  <g transform="translate(40, 130)" filter="url(#shadow-1)">
+    <rect width="425" height="350" rx="14" fill="url(#sync-card)" stroke="#f43f5e" stroke-opacity="0.3" stroke-width="1.5"/>
+
+    <g transform="translate(24, 24)">
+      <rect x="0" y="0" width="170" height="26" rx="6" fill="#f43f5e" fill-opacity="0.15"/>
+      <text x="10" y="17" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fb7185">WITHOUT @Async (Sequential)</text>
+
+      <!-- Client Request -->
+      <g transform="translate(0, 42)">
+        <rect width="377" height="34" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">HTTP Request Arrives</text>
+        <text x="363" y="22" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8" text-anchor="end">Tomcat Thread</text>
+      </g>
+
+      <!-- Timeline steps -->
+      <g transform="translate(20, 88)">
+        <!-- Step 1 -->
+        <circle cx="10" cy="16" r="10" fill="#38bdf8" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="10" y="20" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">1</text>
+        <text x="32" y="16" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#f1f5f9">Save Order to DB</text>
+        <rect x="250" y="4" width="85" height="20" rx="4" fill="#0f172a" stroke="#334155"/>
+        <text x="292" y="18" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8" text-anchor="middle">50 ms</text>
+        <line x1="10" y1="28" x2="10" y2="48" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+        <!-- Step 2 -->
+        <g transform="translate(0, 48)">
+          <circle cx="10" cy="16" r="10" fill="#f43f5e" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1.5"/>
+          <text x="10" y="20" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#f43f5e" text-anchor="middle">2</text>
+          <text x="32" y="16" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#f1f5f9">Send Email via SMTP</text>
+          <rect x="250" y="4" width="85" height="20" rx="4" fill="#0f172a" stroke="#334155"/>
+          <text x="292" y="18" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f43f5e" text-anchor="middle">3000 ms (BLOCKED)</text>
+          <line x1="10" y1="28" x2="10" y2="48" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+        </g>
+
+        <!-- Step 3 -->
+        <g transform="translate(0, 96)">
+          <circle cx="10" cy="16" r="10" fill="#fbbf24" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="10" y="20" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fbbf24" text-anchor="middle">3</text>
+          <text x="32" y="16" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#f1f5f9">Send SMS Notification</text>
+          <rect x="250" y="4" width="85" height="20" rx="4" fill="#0f172a" stroke="#334155"/>
+          <text x="292" y="18" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fbbf24" text-anchor="middle">1000 ms (BLOCKED)</text>
+        </g>
+      </g>
+
+      <!-- Total Response Box -->
+      <g transform="translate(0, 240)">
+        <rect width="377" height="48" rx="8" fill="#450a0a" fill-opacity="0.4" stroke="#f43f5e" stroke-width="1.2"/>
+        <text x="16" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#fecdd3">Client Waits Total:</text>
+        <text x="16" y="38" font-family="system-ui, sans-serif" font-size="11" fill="#fda4af">Caller thread held for whole duration</text>
+        <text x="361" y="32" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#f43f5e" text-anchor="end">4050 ms ✗</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right Card: Asynchronous (Non-Blocking) -->
+  <g transform="translate(495, 130)" filter="url(#shadow-1)">
+    <rect width="425" height="350" rx="14" fill="url(#async-card)" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.5"/>
+
+    <g transform="translate(24, 24)">
+      <rect x="0" y="0" width="180" height="26" rx="6" fill="#10b981" fill-opacity="0.15"/>
+      <text x="10" y="17" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#34d399">WITH @Async (Non-blocking)</text>
+
+      <!-- Client Request -->
+      <g transform="translate(0, 42)">
+        <rect width="377" height="34" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">HTTP Request Arrives</text>
+        <text x="363" y="22" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399" text-anchor="end">Tomcat Thread</text>
+      </g>
+
+      <!-- Actions -->
+      <g transform="translate(0, 88)">
+        <!-- Step 1 Main -->
+        <rect width="377" height="32" rx="6" fill="#064e3b" fill-opacity="0.4" stroke="#059669" stroke-width="1"/>
+        <circle cx="16" cy="16" r="9" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1.2"/>
+        <text x="16" y="20" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">✓</text>
+        <text x="34" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#f0fdf4">Save Order to DB (Main Thread)</text>
+        <text x="363" y="20" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399" text-anchor="end">50 ms</text>
+
+        <!-- Delegated Tasks -->
+        <g transform="translate(20, 42)">
+          <path d="M 0 0 L 0 54" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+          <!-- Fork 1 -->
+          <g transform="translate(10, 6)">
+            <line x1="-10" y1="12" x2="6" y2="12" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-emerald)"/>
+            <rect x="12" y="0" width="335" height="26" rx="5" fill="#1e293b" stroke="#047857"/>
+            <text x="22" y="17" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">@Async sendEmail()</text>
+            <text x="325" y="17" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8" text-anchor="end">task-1 (Pool)</text>
+          </g>
+
+          <!-- Fork 2 -->
+          <g transform="translate(10, 38)">
+            <line x1="-10" y1="12" x2="6" y2="12" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-emerald)"/>
+            <rect x="12" y="0" width="335" height="26" rx="5" fill="#1e293b" stroke="#047857"/>
+            <text x="22" y="17" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">@Async sendSMS()</text>
+            <text x="325" y="17" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8" text-anchor="end">task-2 (Pool)</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- Total Response Box -->
+      <g transform="translate(0, 240)">
+        <rect width="377" height="48" rx="8" fill="#064e3b" fill-opacity="0.4" stroke="#10b981" stroke-width="1.2"/>
+        <text x="16" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#a7f3d0">HTTP Response Returned:</text>
+        <text x="16" y="38" font-family="system-ui, sans-serif" font-size="11" fill="#6ee7b7">Tomcat thread released immediately to pool</text>
+        <text x="361" y="32" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#34d399" text-anchor="end">50 ms ✓</text>
+      </g>
+    </g>
+  </g>
+</svg>

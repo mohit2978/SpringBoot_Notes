@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Card Backgrounds -->
+    <linearGradient id="wrong-panel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24121b"/>
+      <stop offset="100%" stop-color="#140a0f"/>
+    </linearGradient>
+    <linearGradient id="right-panel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d231e"/>
+      <stop offset="100%" stop-color="#071411"/>
+    </linearGradient>
+
+    <!-- Component boxes -->
+    <linearGradient id="proxy-shell" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="bean-box" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="worker-pool" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <filter id="shadow-6" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <marker id="arr-red-6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="arr-green-6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arr-sky-6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1000" height="620" rx="16" fill="url(#bg-grad-6)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 28)">
+    <rect x="0" y="0" width="160" height="24" rx="12" fill="#ef4444" fill-opacity="0.12" stroke="#ef4444" stroke-opacity="0.3"/>
+    <text x="80" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#f87171" text-anchor="middle">AOP PROXY MECHANICS</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      The Self-Invocation Trap: Why @Async Fails on Internal Calls
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Spring wraps beans in a proxy. Calling an @Async method internally via 'this' bypasses the proxy entirely.
+    </text>
+  </g>
+
+  <!-- 2 Visual Columns: PROBLEM vs SOLUTION -->
+  <g transform="translate(40, 115)">
+    <!-- LEFT PANEL: THE TRAP (FAIL) -->
+    <g filter="url(#shadow-6)">
+      <rect width="445" height="380" rx="14" fill="url(#wrong-panel)" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1.5"/>
+
+      <g transform="translate(20, 18)">
+        <!-- Badge -->
+        <rect x="0" y="0" width="170" height="22" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+        <text x="85" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fb7185">✗ DIRECT CALL (TRAP)</text>
+
+        <!-- Caller Request -->
+        <g transform="translate(0, 36)">
+          <rect width="405" height="30" rx="6" fill="#1e293b" stroke="#334155"/>
+          <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#cbd5e1">Caller Thread: <tspan fill="#38bdf8" font-family="'JetBrains Mono', monospace">[http-nio-exec-1]</tspan></text>
+          <text x="393" y="20" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8" text-anchor="end">service.processOrder()</text>
+        </g>
+
+        <!-- Outer Proxy Shell -->
+        <g transform="translate(0, 78)">
+          <rect width="405" height="175" rx="10" fill="#1e1b4b" fill-opacity="0.4" stroke="#6366f1" stroke-dasharray="4 4" stroke-width="1.5"/>
+          <text x="14" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#818cf8">Spring CGLIB Dynamic Proxy</text>
+
+          <!-- Raw Target Bean inside -->
+          <g transform="translate(15, 34)">
+            <rect width="375" height="125" rx="8" fill="url(#bean-box)" stroke="#475569" stroke-width="1.2"/>
+            <text x="14" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f8fafc">Target Instance: <tspan fill="#a5b4fc" font-family="'JetBrains Mono', monospace">OrderService (Raw Object)</tspan></text>
+
+            <!-- Method 1: processOrder -->
+            <rect x="14" y="32" width="347" height="34" rx="5" fill="#1e293b" stroke="#334155"/>
+            <text x="24" y="53" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">public void processOrder() {</text>
+
+            <!-- Self invocation internal arrow -->
+            <path d="M 70 66 L 70 82" fill="none" stroke="#f43f5e" stroke-width="2" marker-end="url(#arr-red-6)"/>
+            <text x="80" y="78" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fb7185">this.sendEmail() [Internal call]</text>
+
+            <!-- Method 2: sendEmail -->
+            <rect x="14" y="84" width="347" height="32" rx="5" fill="#450a0a" fill-opacity="0.5" stroke="#f43f5e"/>
+            <text x="24" y="104" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fda4af">@Async public void sendEmail()</text>
+          </g>
+        </g>
+
+        <!-- Result Box -->
+        <g transform="translate(0, 266)">
+          <rect width="405" height="85" rx="8" fill="#450a0a" fill-opacity="0.4" stroke="#e11d48" stroke-width="1.2"/>
+          <text x="12" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fda4af">Why this fails completely:</text>
+          <text x="12" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#fecdd3">• The call uses Java's implicit <tspan font-family="'JetBrains Mono', monospace" fill="#fde047">this</tspan> pointer internally.</text>
+          <text x="12" y="58" font-family="system-ui, sans-serif" font-size="11" fill="#fecdd3">• The CGLIB Proxy &amp; TaskExecutor are <tspan font-weight="700" fill="#f43f5e">BYPASSED</tspan>.</text>
+          <text x="12" y="76" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f43f5e">Result: Runs SYNCHRONOUSLY on [http-nio-exec-1]! ✗</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- RIGHT PANEL: THE FIX (SUCCESS) -->
+    <g transform="translate(475, 0)" filter="url(#shadow-6)">
+      <rect width="445" height="380" rx="14" fill="url(#right-panel)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+
+      <g transform="translate(20, 18)">
+        <!-- Badge -->
+        <rect x="0" y="0" width="190" height="22" rx="4" fill="#047857" fill-opacity="0.3"/>
+        <text x="95" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">✓ PROXY INVOCATION (CORRECT)</text>
+
+        <!-- Caller Request -->
+        <g transform="translate(0, 36)">
+          <rect width="405" height="30" rx="6" fill="#1e293b" stroke="#334155"/>
+          <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#cbd5e1">Caller Thread: <tspan fill="#38bdf8" font-family="'JetBrains Mono', monospace">[http-nio-exec-1]</tspan></text>
+          <text x="393" y="20" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399" text-anchor="end">Separate Bean / Self-Inject</text>
+        </g>
+
+        <!-- Proxy & TaskExecutor Architecture -->
+        <g transform="translate(0, 78)">
+          <!-- Proxy Shell -->
+          <rect width="250" height="175" rx="10" fill="#1e1b4b" fill-opacity="0.4" stroke="#6366f1" stroke-width="1.5"/>
+          <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#818cf8">CGLIB Proxy Intercepts</text>
+
+          <g transform="translate(10, 34)">
+            <!-- Bean box -->
+            <rect width="230" height="125" rx="8" fill="url(#bean-box)" stroke="#475569"/>
+            <text x="10" y="22" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">OrderService</text>
+            <rect x="10" y="32" width="210" height="30" rx="4" fill="#1e293b" stroke="#334155"/>
+            <text x="18" y="52" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">self.sendEmail();</text>
+
+            <!-- Arrow looping OUT to proxy -->
+            <path d="M 120 62 L 120 74 L 210 74 L 210 20" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <text x="120" y="90" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#38bdf8">Calls via Proxy Ref</text>
+
+            <rect x="10" y="98" width="210" height="24" rx="4" fill="#064e3b" stroke="#059669"/>
+            <text x="18" y="114" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6ee7b7">@Async sendEmail()</text>
+          </g>
+
+          <!-- Dispatched to ThreadPool -->
+          <g transform="translate(262, 10)">
+            <line x1="-12" y1="75" x2="6" y2="75" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green-6)"/>
+            <rect width="143" height="155" rx="8" fill="url(#worker-pool)" stroke="#34d399" stroke-width="1.5"/>
+            <text x="10" y="24" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f0fdf4">TaskExecutor</text>
+            <text x="10" y="40" font-family="'JetBrains Mono', monospace" font-size="10" fill="#a7f3d0">Thread Pool</text>
+            <line x1="10" y1="48" x2="133" y2="48" stroke="#047857"/>
+
+            <rect x="10" y="60" width="123" height="38" rx="5" fill="#022c22" stroke="#059669"/>
+            <text x="16" y="76" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#ecfdf5">Worker Thread</text>
+            <text x="16" y="90" font-family="'JetBrains Mono', monospace" font-size="10" fill="#34d399">[task-1]</text>
+
+            <rect x="10" y="106" width="123" height="38" rx="5" fill="#022c22" stroke="#059669"/>
+            <text x="16" y="122" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#ecfdf5">Caller Released</text>
+            <text x="16" y="136" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8">&lt; 1 ms</text>
+          </g>
+        </g>
+
+        <!-- Result Box -->
+        <g transform="translate(0, 266)">
+          <rect width="405" height="85" rx="8" fill="#064e3b" fill-opacity="0.4" stroke="#10b981" stroke-width="1.2"/>
+          <text x="12" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6ee7b7">The 3 Valid Solutions:</text>
+          <text x="12" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">1. <tspan font-weight="700" fill="#f0fdf4">Separate Service Bean</tspan> (EmailService injected into OrderService).</text>
+          <text x="12" y="58" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">2. <tspan font-weight="700" fill="#f0fdf4">Self-Injection</tspan> with <tspan font-family="'JetBrains Mono', monospace" fill="#fde047">@Autowired @Lazy private OrderService self;</tspan></text>
+          <text x="12" y="76" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">Result: Runs ASYNCHRONOUSLY in worker thread [task-1]! ✓</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Key Note Bar -->
+  <g transform="translate(40, 510)">
+    <rect width="920" height="85" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.2"/>
+    <text x="20" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc">Golden Rule of Spring AOP Proxies:</text>
+    <text x="20" y="44" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">
+      Spring proxy annotations (<tspan fill="#38bdf8" font-weight="600">@Async</tspan>, <tspan fill="#34d399" font-weight="600">@Transactional</tspan>, <tspan fill="#fbbf24" font-weight="600">@Cacheable</tspan>) ONLY take effect when the method is invoked from an <tspan fill="#f43f5e" font-weight="700">external caller through the Spring Proxy</tspan>.
+    </text>
+    <text x="20" y="64" font-family="system-ui, sans-serif" font-size="11.5" fill="#cbd5e1">
+      Internal method-to-method calls inside the same class always bypass the proxy and execute synchronously on the caller thread.
+    </text>
+  </g>
+</svg>

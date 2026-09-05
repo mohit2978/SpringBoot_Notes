@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-16-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="card-wrong-lie" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24121b"/>
+      <stop offset="100%" stop-color="#140a0f"/>
+    </linearGradient>
+
+    <linearGradient id="card-right-lie" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d231e"/>
+      <stop offset="100%" stop-color="#071411"/>
+    </linearGradient>
+
+    <filter id="shadow-16-2" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="600" rx="16" fill="url(#bg-grad-16-2)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="195" height="24" rx="12" fill="#ef4444" fill-opacity="0.12" stroke="#ef4444" stroke-opacity="0.3"/>
+    <text x="97" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#f87171" text-anchor="middle">HIBERNATE SESSION LIFECYCLE</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      The LazyInitializationException Trap in Async Methods
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Hibernate Sessions are bound to the caller thread. Passing detached entities to an async thread causes lazy load failures.
+    </text>
+  </g>
+
+  <!-- Split Comparison Columns -->
+  <g transform="translate(40, 125)">
+    <!-- LEFT: PASSING ENTITY (THE TRAP) -->
+    <g filter="url(#shadow-16-2)">
+      <rect width="445" height="330" rx="14" fill="url(#card-wrong-lie)" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1.5"/>
+
+      <!-- Card Header Pill -->
+      <g transform="translate(20, 18)">
+        <rect x="0" y="0" width="180" height="22" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+        <text x="90" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fb7185">✗ PASSING ENTITY OBJECT</text>
+      </g>
+
+      <!-- Code Block -->
+      <rect x="20" y="50" width="405" height="105" rx="6" fill="#170c13" stroke="#3d1222"/>
+      <g transform="translate(32, 50)" font-family="'JetBrains Mono', monospace" font-size="10.5">
+        <text y="22" fill="#94a3b8">// Caller (Main Thread with Session 1):</text>
+        <text y="42" fill="#cbd5e1">Order order = orderRepo.findById(1L);</text>
+        <text y="62" fill="#fb7185">asyncService.process(order); <tspan fill="#f43f5e">// Detached entity!</tspan></text>
+        <text y="84" fill="#94a3b8">// Main transaction finishes &amp; Session 1 CLOSES!</text>
+      </g>
+
+      <!-- Async execution failure box -->
+      <rect x="20" y="170" width="405" height="140" rx="8" fill="#450a0a" fill-opacity="0.55" stroke="#f43f5e"/>
+      <g transform="translate(34, 170)">
+        <text y="22" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#fda4af">Async Thread Execution (No Session!):</text>
+        <text y="42" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="#e2e8f0">order.getItems().size(); // Trigger lazy load</text>
+        <line x1="0" y1="54" x2="375" y2="54" stroke="#9f1239" stroke-width="1"/>
+        <text y="74" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#f43f5e">💥 LazyInitializationException:</text>
+        <text y="94" font-family="system-ui, sans-serif" font-size="11" fill="#fecdd3">"failed to lazily initialize a collection of role:</text>
+        <text y="112" font-family="system-ui, sans-serif" font-size="11" fill="#fecdd3">Order.items, could not initialize proxy - no Session"</text>
+      </g>
+    </g>
+
+    <!-- RIGHT: PASSING ID ONLY (THE FIX) -->
+    <g transform="translate(475, 0)" filter="url(#shadow-16-2)">
+      <rect width="445" height="330" rx="14" fill="url(#card-right-lie)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+
+      <!-- Card Header Pill -->
+      <g transform="translate(20, 18)">
+        <rect x="0" y="0" width="180" height="22" rx="4" fill="#047857" fill-opacity="0.3"/>
+        <text x="90" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">✓ PASSING ID ONLY (FIX)</text>
+      </g>
+
+      <!-- Code Block -->
+      <rect x="20" y="50" width="405" height="105" rx="6" fill="#091b16" stroke="#047857"/>
+      <g transform="translate(32, 50)" font-family="'JetBrains Mono', monospace" font-size="10.5">
+        <text y="22" fill="#94a3b8">// Caller (Main Thread):</text>
+        <text y="42" fill="#cbd5e1">Order order = orderRepo.save(newOrder);</text>
+        <text y="62" fill="#34d399">asyncService.process(order.getId()); <tspan fill="#a7f3d0">// ID only!</tspan></text>
+        <text y="84" fill="#94a3b8">// TX1 commits successfully before async runs</text>
+      </g>
+
+      <!-- Async execution success box -->
+      <rect x="20" y="170" width="405" height="140" rx="8" fill="#064e3b" fill-opacity="0.45" stroke="#059669"/>
+      <g transform="translate(34, 170)">
+        <text y="22" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">Async Thread Execution (Fresh Session!):</text>
+        <text y="42" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="#e2e8f0">Order order = orderRepo.findById(orderId);</text>
+        <text y="60" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="#38bdf8">order.getItems().size(); // Loads cleanly!</text>
+        <line x1="0" y1="72" x2="375" y2="72" stroke="#047857" stroke-width="1"/>
+        <text y="92" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">✓ 100% Safe Execution:</text>
+        <text y="110" font-family="system-ui, sans-serif" font-size="11" fill="#d1fae5">Async thread owns its own active Hibernate Session.</text>
+        <text y="126" font-family="system-ui, sans-serif" font-size="11" fill="#d1fae5">Zero risk of proxy or detached entity exceptions.</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Golden Rule -->
+  <g transform="translate(40, 480)">
+    <rect width="920" height="90" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.2"/>
+    <text x="20" y="26" font-family="system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#fde047">Golden Rule of Async JPA Operations:</text>
+    <text x="20" y="50" font-family="system-ui, sans-serif" font-size="12" fill="#e2e8f0">
+      • NEVER pass JPA entity instances across thread boundaries to an @Async method.
+    </text>
+    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="12" fill="#cbd5e1">
+      • Always pass primary keys (<tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">Long orderId</tspan>) and reload the entity fresh inside the async thread!
+    </text>
+  </g>
+</svg>

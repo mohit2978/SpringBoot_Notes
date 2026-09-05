@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 590" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="uc-card-1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b2e"/>
+      <stop offset="100%" stop-color="#141124"/>
+    </linearGradient>
+    <linearGradient id="uc-card-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f2922"/>
+      <stop offset="100%" stop-color="#0a1d18"/>
+    </linearGradient>
+    <linearGradient id="uc-card-3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d1b1e"/>
+      <stop offset="100%" stop-color="#1f1114"/>
+    </linearGradient>
+    <linearGradient id="uc-card-4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1b2438"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <filter id="shadow-4" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="980" height="590" rx="16" fill="url(#bg-grad-4)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 28)">
+    <rect x="0" y="0" width="180" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.3"/>
+    <text x="90" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">SPRING BOOT USE CASES</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      The 4 Executor Configuration Use Cases &amp; Fallbacks
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      How Spring Boot discovers executors, when SimpleAsyncTaskExecutor kicks in, and industry best practices
+    </text>
+  </g>
+
+  <!-- 4 Grid Cards -->
+  <g transform="translate(40, 115)">
+    <!-- Card 1: Default Spring Boot -->
+    <g filter="url(#shadow-4)">
+      <rect width="435" height="210" rx="12" fill="url(#uc-card-1)" stroke="#818cf8" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 16)">
+        <rect x="0" y="0" width="85" height="20" rx="4" fill="#6366f1" fill-opacity="0.2"/>
+        <text x="42" y="14" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#a5b4fc" text-anchor="middle">USE CASE 1</text>
+        <text x="96" y="15" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Zero Config (Default Auto-Config)</text>
+
+        <text x="0" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          Only <tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">@EnableAsync</tspan> is added. No executor bean provided.
+        </text>
+
+        <rect x="0" y="54" width="398" height="52" rx="6" fill="#0f172a" stroke="#334155"/>
+        <text x="12" y="72" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8">Spring creates: ThreadPoolTaskExecutor</text>
+        <text x="12" y="90" font-family="'JetBrains Mono', monospace" font-size="10" fill="#fb7185">core: 8 | max: Integer.MAX | queue: Integer.MAX</text>
+
+        <text x="0" y="128" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Thread Output:</text>
+        <text x="90" y="128" font-family="'JetBrains Mono', monospace" font-size="11" fill="#a5b4fc">task-1, task-2, ..., task-8</text>
+
+        <rect x="0" y="144" width="398" height="46" rx="6" fill="#450a0a" fill-opacity="0.3" stroke="#e11d48" stroke-width="1"/>
+        <text x="10" y="162" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fda4af">⚠️ Trap:</text>
+        <text x="56" y="162" font-family="system-ui, sans-serif" font-size="10" fill="#fecdd3">Queue is 2 Billion, never fills; tasks queue up</text>
+        <text x="10" y="178" font-family="system-ui, sans-serif" font-size="10" fill="#fecdd3">causing latency; threads above 8 are never created!</text>
+      </g>
+    </g>
+
+    <!-- Card 2: Custom ThreadPoolTaskExecutor Bean -->
+    <g transform="translate(465, 0)" filter="url(#shadow-4)">
+      <rect width="435" height="210" rx="12" fill="url(#uc-card-2)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 16)">
+        <rect x="0" y="0" width="85" height="20" rx="4" fill="#10b981" fill-opacity="0.2"/>
+        <text x="42" y="14" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">USE CASE 2</text>
+        <text x="96" y="15" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Custom ThreadPoolTaskExecutor Bean</text>
+
+        <text x="0" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          Defined <tspan font-family="'JetBrains Mono', monospace" fill="#34d399">@Bean public Executor taskPoolExecutor()</tspan> returning Spring's wrapper.
+        </text>
+
+        <rect x="0" y="54" width="398" height="52" rx="6" fill="#0f172a" stroke="#047857"/>
+        <text x="12" y="72" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8">Spring auto-detects &amp; sets as DEFAULT executor</text>
+        <text x="12" y="90" font-family="'JetBrains Mono', monospace" font-size="10" fill="#34d399">core: 2 | queue: 3 | max: 4 | prefix: "MyThread-"</text>
+
+        <text x="0" y="128" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Thread Output:</text>
+        <text x="90" y="128" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399">MyThread-1, MyThread-2 (Reused)</text>
+
+        <rect x="0" y="144" width="398" height="46" rx="6" fill="#064e3b" fill-opacity="0.3" stroke="#059669" stroke-width="1"/>
+        <text x="10" y="162" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#6ee7b7">✓ Works with bare @Async:</text>
+        <text x="175" y="162" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0">Spring automatically binds it,</text>
+        <text x="10" y="178" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0">even without specifying executor qualifier!</text>
+      </g>
+    </g>
+
+    <!-- Card 3: Plain Java ThreadPoolExecutor Bean (The Pitfall) -->
+    <g transform="translate(0, 230)" filter="url(#shadow-4)">
+      <rect width="435" height="215" rx="12" fill="url(#uc-card-3)" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 16)">
+        <rect x="0" y="0" width="85" height="20" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+        <text x="42" y="14" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#f87171" text-anchor="middle">USE CASE 3</text>
+        <text x="96" y="15" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Plain Java ThreadPoolExecutor (Trap!)</text>
+
+        <text x="0" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          Defined <tspan font-family="'JetBrains Mono', monospace" fill="#f87171">java.util.concurrent.ThreadPoolExecutor</tspan> bean directly.
+        </text>
+
+        <rect x="0" y="54" width="398" height="52" rx="6" fill="#0f172a" stroke="#7f1d1d"/>
+        <text x="12" y="72" font-family="'JetBrains Mono', monospace" font-size="10" fill="#fca5a5">Spring searches for TaskExecutor (not found!)</text>
+        <text x="12" y="90" font-family="'JetBrains Mono', monospace" font-size="10" fill="#f87171">Falls back to: SimpleAsyncTaskExecutor!</text>
+
+        <text x="0" y="128" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Thread Output:</text>
+        <text x="90" y="128" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f87171">SimpleAsyncTaskExecutor-1, 2, ..., 9...</text>
+
+        <rect x="0" y="144" width="398" height="52" rx="6" fill="#450a0a" fill-opacity="0.4" stroke="#dc2626" stroke-width="1"/>
+        <text x="10" y="162" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fca5a5">🚨 Severe Hazard:</text>
+        <text x="122" y="162" font-family="system-ui, sans-serif" font-size="10" fill="#fecdd3">Creates a brand new thread on EVERY request!</text>
+        <text x="10" y="178" font-family="system-ui, sans-serif" font-size="10" fill="#fecdd3">Zero thread reuse! Leads to OS Thread Exhaustion &amp; Crash!</text>
+        <text x="10" y="192" font-family="system-ui, sans-serif" font-size="10" fill="#fde047">Fix: Must use @Async("myThreadPoolExecutor") explicitly.</text>
+      </g>
+    </g>
+
+    <!-- Card 4: AsyncConfigurer (Production Standard) -->
+    <g transform="translate(465, 230)" filter="url(#shadow-4)">
+      <rect width="435" height="215" rx="12" fill="url(#uc-card-4)" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(18, 16)">
+        <rect x="0" y="0" width="130" height="20" rx="4" fill="#0284c7" fill-opacity="0.25"/>
+        <text x="65" y="14" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">USE CASE 4 (STANDARD)</text>
+        <text x="140" y="15" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">implements AsyncConfigurer</text>
+
+        <text x="0" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          AppConfig implements <tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">AsyncConfigurer</tspan> and overrides <tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">getAsyncExecutor()</tspan>.
+        </text>
+
+        <rect x="0" y="54" width="398" height="52" rx="6" fill="#0f172a" stroke="#0369a1"/>
+        <text x="12" y="72" font-family="'JetBrains Mono', monospace" font-size="10" fill="#7dd3fc">Guaranteed global default for ALL bare @Async calls</text>
+        <text x="12" y="90" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8">Can supply ThreadPoolTaskExecutor or ThreadPoolExecutor</text>
+
+        <text x="0" y="128" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">Thread Output:</text>
+        <text x="90" y="128" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">MyThread-1, MyThread-2 (Without naming bean)</text>
+
+        <rect x="0" y="144" width="398" height="52" rx="6" fill="#0c4a6e" fill-opacity="0.3" stroke="#0284c7" stroke-width="1"/>
+        <text x="10" y="162" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#7dd3fc">🏆 Enterprise Best Practice:</text>
+        <text x="175" y="162" font-family="system-ui, sans-serif" font-size="10" fill="#bae6fd">Zero ambiguity. Developers don't</text>
+        <text x="10" y="178" font-family="system-ui, sans-serif" font-size="10" fill="#bae6fd">need to remember string qualifiers on methods. Also configures</text>
+        <text x="10" y="192" font-family="system-ui, sans-serif" font-size="10" fill="#bae6fd">AsyncUncaughtExceptionHandler for silent void exception tracking!</text>
+      </g>
+    </g>
+  </g>
+</svg>

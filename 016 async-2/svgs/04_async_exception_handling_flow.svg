@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-16-4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="ret-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#101826"/>
+    </linearGradient>
+
+    <linearGradient id="void-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d1522"/>
+      <stop offset="100%" stop-color="#170911"/>
+    </linearGradient>
+
+    <filter id="shadow-16-4" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="600" rx="16" fill="url(#bg-grad-16-4)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="180" height="24" rx="12" fill="#f59e0b" fill-opacity="0.12" stroke="#f59e0b" stroke-opacity="0.3"/>
+    <text x="90" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#fbbf24" text-anchor="middle">ERROR HANDLING</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      Exception Handling in Spring @Async Methods
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      How exceptions are propagated, captured, and handled depending on the method's return type
+    </text>
+  </g>
+
+  <!-- Split Comparison Columns -->
+  <g transform="translate(40, 125)">
+    <!-- LEFT: METHOD WITH RETURN TYPE -->
+    <g filter="url(#shadow-16-4)">
+      <rect width="445" height="435" rx="14" fill="url(#ret-card)" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(20, 18)">
+        <rect x="0" y="0" width="165" height="22" rx="4" fill="#0284c7" fill-opacity="0.25"/>
+        <text x="82.5" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">WITH RETURN TYPE</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#f8fafc">CompletableFuture&lt;T&gt; / Future&lt;T&gt;</text>
+
+        <!-- Mechanism Description -->
+        <rect x="0" y="58" width="405" height="65" rx="6" fill="#0f172a" stroke="#334155"/>
+        <text x="14" y="84" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          Exceptions are <tspan font-weight="700" fill="#38bdf8">captured inside the future handle</tspan>.
+        </text>
+        <text x="14" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8">
+          The caller inspects or joins the handle to catch failures.
+        </text>
+
+        <!-- Code sample -->
+        <rect x="0" y="135" width="405" height="165" rx="6" fill="#0b1320" stroke="#0369a1"/>
+        <g transform="translate(14, 135)" font-family="'JetBrains Mono', monospace" font-size="10.5">
+          <text y="22" fill="#94a3b8">// 1. Synchronous get() inspection:</text>
+          <text y="40" fill="#e2e8f0">try {</text>
+          <text y="58" fill="#38bdf8">    String res = future.get();</text>
+          <text y="76" fill="#e2e8f0">} catch (<tspan fill="#f43f5e">ExecutionException</tspan> ex) {</text>
+          <text y="94" fill="#94a3b8">    // Unwrap cause: ex.getCause()</text>
+          <text y="112" fill="#e2e8f0">}</text>
+          <text y="132" fill="#94a3b8">// 2. Non-blocking callback:</text>
+          <text y="150" fill="#34d399">future.exceptionally(ex -&gt; handle(ex));</text>
+        </g>
+
+        <!-- Trait Box -->
+        <rect x="0" y="315" width="405" height="68" rx="6" fill="#075985" fill-opacity="0.25" stroke="#0284c7"/>
+        <text x="14" y="338" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">Key Trait:</text>
+        <text x="14" y="360" font-family="system-ui, sans-serif" font-size="10.5" fill="#bae6fd">The caller has full visibility and control over failure handling.</text>
+      </g>
+    </g>
+
+    <!-- RIGHT: VOID METHOD (THE SILENT KILLER) -->
+    <g transform="translate(475, 0)" filter="url(#shadow-16-4)">
+      <rect width="445" height="435" rx="14" fill="url(#void-card)" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(20, 18)">
+        <rect x="0" y="0" width="165" height="22" rx="4" fill="#be123c" fill-opacity="0.25"/>
+        <text x="82.5" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fda4af" text-anchor="middle">NO RETURN TYPE</text>
+        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#f8fafc">void Return Type ("Silent Killer")</text>
+
+        <!-- Mechanism Description -->
+        <rect x="0" y="58" width="405" height="65" rx="6" fill="#1b0c15" stroke="#4c102b"/>
+        <text x="14" y="84" font-family="system-ui, sans-serif" font-size="11" fill="#fecdd3">
+          Exceptions <tspan font-weight="700" fill="#f43f5e">cannot propagate back</tspan> to the caller thread.
+        </text>
+        <text x="14" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#fda4af">
+          Unless handled, exceptions are silently dropped or merely logged!
+        </text>
+
+        <!-- 2 Handlers -->
+        <rect x="0" y="135" width="405" height="165" rx="6" fill="#130910" stroke="#831843"/>
+        <g transform="translate(14, 135)">
+          <text y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f43f5e">Way 1: try-catch Inside Method</text>
+          <text y="40" font-family="'JetBrains Mono', monospace" font-size="10" fill="#fecdd3">try { ... } catch (Exception e) { log.error(e); }</text>
+
+          <line x1="0" y1="54" x2="375" y2="54" stroke="#4c102b" stroke-width="1"/>
+
+          <text y="74" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">Way 2: AsyncUncaughtExceptionHandler</text>
+          <text y="94" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Default: <tspan font-family="'JetBrains Mono', monospace" fill="#94a3b8">SimpleAsyncUncaughtExceptionHandler</tspan></text>
+          <text y="114" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Custom: Register via <tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">AsyncConfigurer</tspan> interface</text>
+          <text y="134" font-family="'JetBrains Mono', monospace" font-size="10" fill="#34d399">  handleUncaughtException(Throwable ex, Method m)</text>
+        </g>
+
+        <!-- Trait Box -->
+        <rect x="0" y="315" width="405" height="68" rx="6" fill="#4c0519" fill-opacity="0.35" stroke="#e11d48"/>
+        <text x="14" y="338" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fecdd3">Production Best Practice:</text>
+        <text x="14" y="356" font-family="system-ui, sans-serif" font-size="10.5" fill="#fda4af">Always register an AsyncUncaughtExceptionHandler to route</text>
+        <text x="14" y="372" font-family="system-ui, sans-serif" font-size="10.5" fill="#fda4af">uncaught worker failures to Slack, PagerDuty, or APM!</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 580" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="step-core" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="step-queue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="step-max" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#854d0e"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="step-reject" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#881337"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+
+    <filter id="shadow-3" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <marker id="arr-main" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="580" rx="16" fill="url(#bg-grad-3)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="165" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.3"/>
+    <text x="82" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">LIFECYCLE &amp; QUEUING</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      ThreadPoolTaskExecutor: Task Dispatch &amp; Saturation Policy
+    </text>
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Exact chronological order in which ThreadPool handles incoming tasks, queues, max pools, and rejections
+    </text>
+  </g>
+
+  <!-- 4 Step Dispatch Flowchart -->
+  <g transform="translate(40, 120)">
+    <!-- Task Arrival Box -->
+    <g transform="translate(0, 30)" filter="url(#shadow-3)">
+      <rect width="130" height="90" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <text x="65" y="32" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Task Submitted</text>
+      <line x1="15" y1="42" x2="115" y2="42" stroke="#334155" stroke-width="1"/>
+      <text x="65" y="60" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8" text-anchor="middle">@Async method</text>
+      <text x="65" y="76" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8" text-anchor="middle">Runnable task</text>
+    </g>
+
+    <!-- Connector 1 -->
+    <line x1="130" y1="75" x2="168" y2="75" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-main)"/>
+
+    <!-- Stage 1: Core Pool -->
+    <g transform="translate(170, 10)" filter="url(#shadow-3)">
+      <rect width="165" height="130" rx="10" fill="url(#step-core)" stroke="#10b981" stroke-width="1.5"/>
+      <rect x="12" y="12" width="60" height="18" rx="4" fill="#047857"/>
+      <text x="42" y="25" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">STEP 1</text>
+      <text x="12" y="52" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Core Pool</text>
+      <text x="12" y="70" font-family="'JetBrains Mono', monospace" font-size="10" fill="#a7f3d0">threads &lt; corePoolSize</text>
+      <line x1="12" y1="78" x2="153" y2="78" stroke="#059669" stroke-width="1"/>
+      <text x="12" y="96" font-family="system-ui, sans-serif" font-size="11" fill="#d1fae5">✓ Spawn / assign to</text>
+      <text x="12" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#ecfdf5">Core Worker Thread</text>
+    </g>
+
+    <!-- Connector 2 -->
+    <g transform="translate(335, 75)">
+      <line x1="0" y1="0" x2="38" y2="0" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-main)"/>
+      <text x="19" y="-8" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">If Full</text>
+    </g>
+
+    <!-- Stage 2: Queue -->
+    <g transform="translate(375, 10)" filter="url(#shadow-3)">
+      <rect width="165" height="130" rx="10" fill="url(#step-queue)" stroke="#3b82f6" stroke-width="1.5"/>
+      <rect x="12" y="12" width="60" height="18" rx="4" fill="#1e40af"/>
+      <text x="42" y="25" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#bfdbfe" text-anchor="middle">STEP 2</text>
+      <text x="12" y="52" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Task Queue</text>
+      <text x="12" y="70" font-family="'JetBrains Mono', monospace" font-size="10" fill="#93c5fd">queue &lt; queueCapacity</text>
+      <line x1="12" y1="78" x2="153" y2="78" stroke="#2563eb" stroke-width="1"/>
+      <text x="12" y="96" font-family="system-ui, sans-serif" font-size="11" fill="#dbeafe">✓ Task placed in</text>
+      <text x="12" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#eff6ff">Queue (Waits turn)</text>
+    </g>
+
+    <!-- Connector 3 -->
+    <g transform="translate(540, 75)">
+      <line x1="0" y1="0" x2="38" y2="0" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-main)"/>
+      <text x="19" y="-8" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Queue Full</text>
+    </g>
+
+    <!-- Stage 3: Max Pool -->
+    <g transform="translate(580, 10)" filter="url(#shadow-3)">
+      <rect width="165" height="130" rx="10" fill="url(#step-max)" stroke="#f59e0b" stroke-width="1.5"/>
+      <rect x="12" y="12" width="60" height="18" rx="4" fill="#92400e"/>
+      <text x="42" y="25" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fde68a" text-anchor="middle">STEP 3</text>
+      <text x="12" y="52" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Max Pool</text>
+      <text x="12" y="70" font-family="'JetBrains Mono', monospace" font-size="10" fill="#fde68a">threads &lt; maxPoolSize</text>
+      <line x1="12" y1="78" x2="153" y2="78" stroke="#d97706" stroke-width="1"/>
+      <text x="12" y="96" font-family="system-ui, sans-serif" font-size="11" fill="#fef3c7">✓ Spawn extra worker</text>
+      <text x="12" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fffbeb">up to Max Pool</text>
+    </g>
+
+    <!-- Connector 4 -->
+    <g transform="translate(745, 75)">
+      <line x1="0" y1="0" x2="38" y2="0" stroke="#f43f5e" stroke-width="2" marker-end="url(#arr-red)"/>
+      <text x="19" y="-8" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="#f43f5e" text-anchor="middle">Max Full</text>
+    </g>
+
+    <!-- Stage 4: Rejection -->
+    <g transform="translate(785, 10)" filter="url(#shadow-3)">
+      <rect width="115" height="130" rx="10" fill="url(#step-reject)" stroke="#f43f5e" stroke-width="1.5"/>
+      <rect x="12" y="12" width="60" height="18" rx="4" fill="#9f1239"/>
+      <text x="42" y="25" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fecdd3" text-anchor="middle">STEP 4</text>
+      <text x="12" y="52" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Rejection</text>
+      <text x="12" y="70" font-family="'JetBrains Mono', monospace" font-size="10" fill="#fecdd3">Saturation!</text>
+      <line x1="12" y1="78" x2="103" y2="78" stroke="#be123c" stroke-width="1"/>
+      <text x="12" y="96" font-family="system-ui, sans-serif" font-size="10" fill="#ffe4e6">AbortPolicy or</text>
+      <text x="12" y="110" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#ffe4e6">CallerRunsPolicy</text>
+    </g>
+  </g>
+
+  <!-- Comparison Section: Spring Boot Default vs Recommended Custom -->
+  <g transform="translate(40, 280)">
+    <!-- Default Box -->
+    <g filter="url(#shadow-3)">
+      <rect width="435" height="260" rx="12" fill="#1a141f" stroke="#e11d48" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(20, 18)">
+        <rect x="0" y="0" width="190" height="22" rx="4" fill="#e11d48" fill-opacity="0.15"/>
+        <text x="10" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fb7185">SPRING BOOT DEFAULT CONFIG</text>
+        <text x="0" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1">
+          • corePoolSize: <tspan fill="#38bdf8">8</tspan> (Processor count)
+        </text>
+        <text x="0" y="64" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1">
+          • queueCapacity: <tspan fill="#f43f5e" font-weight="700">2,147,483,647</tspan> (Integer.MAX)
+        </text>
+        <text x="0" y="84" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1">
+          • maxPoolSize: <tspan fill="#f43f5e" font-weight="700">2,147,483,647</tspan> (Integer.MAX)
+        </text>
+
+        <line x1="0" y1="98" x2="395" y2="98" stroke="#334155" stroke-width="1"/>
+
+        <text x="0" y="118" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#f43f5e">Why Default is DANGEROUS in Production:</text>
+
+        <text x="0" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#fda4af">
+          <tspan font-weight="700">1. Underutilization of Threads:</tspan> Standard Java thread pool
+        </text>
+        <text x="0" y="156" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          only expands past core (8) when queue fills. Because queue is 2 Billion, it never fills! Only 8 threads run!
+        </text>
+
+        <text x="0" y="180" font-family="system-ui, sans-serif" font-size="11" fill="#fda4af">
+          <tspan font-weight="700">2. Extreme Latency:</tspan> Tasks pile up in the endless queue.
+        </text>
+
+        <text x="0" y="204" font-family="system-ui, sans-serif" font-size="11" fill="#fda4af">
+          <tspan font-weight="700">3. OutOfMemoryError (OOM):</tspan> Unbounded memory heap leak.
+        </text>
+      </g>
+    </g>
+
+    <!-- Custom Box -->
+    <g transform="translate(465, 0)" filter="url(#shadow-3)">
+      <rect width="435" height="260" rx="12" fill="#0c1f1d" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+      <g transform="translate(20, 18)">
+        <rect x="0" y="0" width="210" height="22" rx="4" fill="#10b981" fill-opacity="0.15"/>
+        <text x="10" y="15" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">RECOMMENDED PRODUCTION CONFIG</text>
+        <text x="0" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1">
+          • corePoolSize: <tspan fill="#34d399" font-weight="700">2 - 10</tspan> (Always-alive threads)
+        </text>
+        <text x="0" y="64" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1">
+          • queueCapacity: <tspan fill="#34d399" font-weight="700">50 - 200</tspan> (Bounded queue)
+        </text>
+        <text x="0" y="84" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1">
+          • maxPoolSize: <tspan fill="#34d399" font-weight="700">10 - 50</tspan> (Peak overflow threads)
+        </text>
+
+        <line x1="0" y1="98" x2="395" y2="98" stroke="#047857" stroke-width="1"/>
+
+        <text x="0" y="118" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#34d399">Production Safety Advantages:</text>
+
+        <text x="0" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">
+          <tspan font-weight="700">1. Predictable Memory:</tspan> Fixed queue protects JVM heap.
+        </text>
+
+        <text x="0" y="166" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">
+          <tspan font-weight="700">2. Active Burst Scaling:</tspan> When queue fills, thread pool
+        </text>
+        <text x="0" y="182" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          spawns additional threads up to maxPoolSize to drain traffic!
+        </text>
+
+        <text x="0" y="206" font-family="system-ui, sans-serif" font-size="11" fill="#a7f3d0">
+          <tspan font-weight="700">3. Backpressure Protection:</tspan> Rejection policy (e.g. CallerRuns)
+        </text>
+        <text x="0" y="222" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">
+          slows down incoming traffic without crashing the server!
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
