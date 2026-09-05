@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1150" viewBox="0 0 1400 1150" role="img" aria-labelledby="title"><title id="title">ONE CODEBASE · DIFFERENT ENVIRONMENT SETTINGS</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7dd3fc"/></marker></defs><rect width="1400" height="1150" fill="#0c1423"/><text x="40" y="56" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#f8fafc"><tspan x="40" dy="0">ONE CODEBASE · DIFFERENT ENVIRONMENT SETTINGS</tspan></text>
+<text x="40" y="99" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#a9c0d8"><tspan x="40" dy="0">Choose the runtime profile to use that environment’s configuration.</tspan></text>
+<rect x="40" y="135" width="1320" height="110" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="175" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">Common configuration: application.properties</tspan></text>
+<text x="63" y="216" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">Shared values remain available; active profile files override matching keys.</tspan></text>
+<rect x="40" y="295" width="300" height="158" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="335" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">DEV / LOCAL</tspan></text>
+<text x="63" y="376" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">Active profile: dev</tspan><tspan x="63" dy="31">Same application code</tspan></text>
+<rect x="475" y="295" width="520" height="158" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="498" y="335" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="498" dy="0">application-dev.properties</tspan></text>
+<text x="498" y="376" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="498" dy="0">username=devUsername</tspan><tspan x="498" dy="31">password=devPassword</tspan></text>
+<rect x="1110" y="295" width="250" height="158" rx="14" fill="#2d281c" stroke="#49617c" stroke-width="2"/>
+<text x="1133" y="335" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="1133" dy="0">DATABASE</tspan></text>
+<text x="1133" y="376" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="1133" dy="0">Development database</tspan></text>
+<path d="M 340 382 H 469" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="359" y="362" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#e2e8f0"><tspan x="359" dy="0">selects</tspan></text>
+<path d="M 995 382 H 1104" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1009" y="362" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#e2e8f0"><tspan x="1009" dy="0">used for</tspan></text>
+<rect x="40" y="523" width="300" height="158" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">QA / STAGE</tspan></text>
+<text x="63" y="604" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">Active profile: qa</tspan><tspan x="63" dy="31">Same application code</tspan></text>
+<rect x="475" y="523" width="520" height="158" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="498" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="498" dy="0">application-qa.properties</tspan></text>
+<text x="498" y="604" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="498" dy="0">username=qaUsername</tspan><tspan x="498" dy="31">password=qaPassword</tspan></text>
+<rect x="1110" y="523" width="250" height="158" rx="14" fill="#2d281c" stroke="#49617c" stroke-width="2"/>
+<text x="1133" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="1133" dy="0">DATABASE</tspan></text>
+<text x="1133" y="604" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="1133" dy="0">QA database</tspan></text>
+<path d="M 340 610 H 469" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="359" y="590" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#e2e8f0"><tspan x="359" dy="0">selects</tspan></text>
+<path d="M 995 610 H 1104" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1009" y="590" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#e2e8f0"><tspan x="1009" dy="0">used for</tspan></text>
+<rect x="40" y="751" width="300" height="158" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="791" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">PROD / LIVE</tspan></text>
+<text x="63" y="832" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">Active profile: prod</tspan><tspan x="63" dy="31">Same application code</tspan></text>
+<rect x="475" y="751" width="520" height="158" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="498" y="791" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="498" dy="0">application-prod.properties</tspan></text>
+<text x="498" y="832" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="498" dy="0">username=prodUsername</tspan><tspan x="498" dy="31">password=prodPassword</tspan></text>
+<rect x="1110" y="751" width="250" height="158" rx="14" fill="#2d281c" stroke="#49617c" stroke-width="2"/>
+<text x="1133" y="791" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="1133" dy="0">DATABASE</tspan></text>
+<text x="1133" y="832" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="1133" dy="0">Production database</tspan></text>
+<path d="M 340 838 H 469" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="359" y="818" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#e2e8f0"><tspan x="359" dy="0">selects</tspan></text>
+<path d="M 995 838 H 1104" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1009" y="818" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#e2e8f0"><tspan x="1009" dy="0">used for</tspan></text>
+<rect x="40" y="1000" width="1320" height="108" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="1040" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">Profiles also separate other settings</tspan></text>
+<text x="63" y="1081" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">URLs, ports, connection timeouts, request timeouts, throttle limits, and retry values.</tspan></text></svg>

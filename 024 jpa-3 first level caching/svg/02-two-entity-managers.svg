@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2010" viewBox="0 0 1400 2010" role="img" aria-labelledby="title desc">
+<title id="title">Two EntityManagers: separate caches, numbered operations, and database access</title>
+<desc id="desc">Session 1 persists a user and reads it twice from its own cache, then commits and closes. Session 2 starts with an empty cache, selects the committed row once, stores a separate object, and serves its second read from cache. SQL arrows point to the database; database results point back to the session. No cache is transferred between sessions.</desc>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7dd3fc"/></marker><marker id="gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#fbbf24"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6ee7b7"/></marker><marker id="gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#94a3b8"/></marker></defs>
+<rect width="1400" height="2010" fill="#0c1423"/>
+<text x="40" y="56" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#f8fafc"><tspan x="40" dy="0">TWO ENTITYMANAGERS · TWO INDEPENDENT CACHES</tspan></text>
+<text x="40" y="100" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0"><tspan x="40" dy="0">Read top to bottom: Session 1 finishes before Session 2 starts. Both access the same database.</tspan></text>
+<rect x="40" y="129" width="1320" height="90" rx="14" fill="#142e35" stroke="#397e84" stroke-width="2"/>
+<text x="62" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#99f6e4"><tspan x="62" dy="0">Example: fresh H2 database • generated ID = 1 • no second-level cache</tspan></text>
+<text x="62" y="193" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="62" dy="0">Each underlying EntityManager owns a persistence context with its own entitiesByKey HashMap.</tspan></text>
+<rect x="40" y="250" width="1320" height="625" rx="14" fill="#18283c" stroke="#3a5472" stroke-width="2"/>
+<text x="65" y="292" font-family="Segoe UI, Arial, sans-serif" font-size="27" fill="#7dd3fc"><tspan x="65" dy="0">SESSION 1  ·  EntityManager 1 + persistence context 1</tspan></text>
+<text x="65" y="331" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0"><tspan x="65" dy="0">① Create EntityManager 1 and begin transaction 1. Its first-level cache starts empty.</tspan></text>
+<rect x="65" y="360" width="620" height="146" rx="14" fill="#102032" stroke="#3a5472" stroke-width="2"/>
+<text x="85" y="395" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#fbbf24"><tspan x="85" dy="0">② persist(user)</tspan></text>
+<text x="85" y="430" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="85" dy="0">Hibernate inserts the new row and obtains ID 1.</tspan><tspan x="85" dy="31">The entity becomes managed in context 1.</tspan></text>
+<rect x="1040" y="360" width="295" height="146" rx="14" fill="#2d281c" stroke="#9e7b35" stroke-width="2"/>
+<text x="1060" y="395" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#fbbf24"><tspan x="1060" dy="0">DATABASE · user_details</tspan></text>
+<text x="1060" y="430" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="1060" dy="0">id = 1, name = xyx</tspan><tspan x="1060" dy="31">Row inserted in transaction 1.</tspan></text>
+<path d="M 685 402 L 1034 402" stroke="#fbbf24" stroke-width="3" fill="none"  marker-end="url(#gold)"/>
+<text x="747" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#fbbf24"><tspan x="747" dy="0">INSERT</tspan></text>
+<path d="M 1040 469 L 691 469" stroke="#7dd3fc" stroke-width="3" fill="none"  marker-end="url(#blue)"/>
+<text x="759" y="451" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#7dd3fc"><tspan x="759" dy="0">generated ID: 1</tspan></text>
+<rect x="65" y="551" width="500" height="214" rx="14" fill="#102032" stroke="#3a5472" stroke-width="2"/>
+<text x="85" y="589" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#6ee7b7"><tspan x="85" dy="0">③ find(UserDetails.class, 1L) — twice</tspan></text>
+<text x="85" y="626" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="85" dy="0">Both lookups check context 1.</tspan><tspan x="85" dy="31">Both return the same managed object.</tspan><tspan x="85" dy="31">No SELECT is needed.</tspan></text>
+<rect x="935" y="551" width="400" height="214" rx="14" fill="#12352e" stroke="#387963" stroke-width="2"/>
+<text x="955" y="589" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#6ee7b7"><tspan x="955" dy="0">FIRST-LEVEL CACHE 1</tspan></text>
+<text x="955" y="626" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#e2e8f0"><tspan x="955" dy="0">entitiesByKey: HashMap</tspan><tspan x="955" dy="31">UserDetails#1 → holder → object A</tspan><tspan x="955" dy="31">holder.state = INITIALIZED</tspan></text>
+<path d="M 565 623 L 929 623" stroke="#6ee7b7" stroke-width="3" fill="none"  marker-end="url(#green)"/>
+<text x="623" y="605" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#6ee7b7"><tspan x="623" dy="0">lookup key: UserDetails#1</tspan></text>
+<path d="M 935 714 L 571 714" stroke="#6ee7b7" stroke-width="3" fill="none"  marker-end="url(#green)"/>
+<text x="630" y="695" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#6ee7b7"><tspan x="630" dy="0">return managed object A</tspan></text>
+<text x="65" y="816" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="65" dy="0">④ Commit transaction 1 → the row is committed. Close EntityManager 1 → its context ends.</tspan></text>
+<text x="65" y="850" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#a9c0d8"><tspan x="65" dy="0">Session 1 result: 1 INSERT + 0 SELECTs. Closing the context does not delete the database row.</tspan></text>
+<path d="M 700 891 L 700 963" stroke="#94a3b8" stroke-width="3" fill="none" stroke-dasharray="7 6" marker-end="url(#gray)"/>
+<text x="741" y="924" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#cbd5e1"><tspan x="741" dy="0">NEXT STEP IN TIME</tspan></text>
+<text x="741" y="951" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#cbd5e1"><tspan x="741" dy="0">No entity or cache is transferred.</tspan></text>
+<rect x="40" y="982" width="1320" height="717" rx="14" fill="#18283c" stroke="#3a5472" stroke-width="2"/>
+<text x="65" y="1024" font-family="Segoe UI, Arial, sans-serif" font-size="27" fill="#c4b5fd"><tspan x="65" dy="0">SESSION 2  ·  EntityManager 2 + persistence context 2</tspan></text>
+<text x="65" y="1064" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="65" dy="0">⑤ Create EntityManager 2 and begin transaction 2. Cache 2 is empty, even though row 1 exists.</tspan></text>
+<rect x="65" y="1092" width="620" height="192" rx="14" fill="#102032" stroke="#3a5472" stroke-width="2"/>
+<text x="85" y="1132" font-family="Segoe UI, Arial, sans-serif" font-size="23" fill="#fbbf24"><tspan x="85" dy="0">⑥ First find(UserDetails.class, 1L)</tspan></text>
+<text x="85" y="1171" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="85" dy="0">Cache 2 lookup: key UserDetails#1 is absent.</tspan><tspan x="85" dy="31">Cache MISS → Hibernate queries the database.</tspan><tspan x="85" dy="31">The result becomes a new managed object B.</tspan></text>
+<rect x="1040" y="1092" width="295" height="192" rx="14" fill="#2d281c" stroke="#9e7b35" stroke-width="2"/>
+<text x="1060" y="1132" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#fbbf24"><tspan x="1060" dy="0">SAME DATABASE</tspan></text>
+<text x="1060" y="1171" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="1060" dy="0">Committed row from Session 1:</tspan><tspan x="1060" dy="31">id = 1</tspan><tspan x="1060" dy="31">name = xyx</tspan></text>
+<path d="M 685 1152 L 1034 1152" stroke="#fbbf24" stroke-width="3" fill="none"  marker-end="url(#gold)"/>
+<text x="724" y="1133" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#fbbf24"><tspan x="724" dy="0">SELECT … WHERE id = 1</tspan></text>
+<path d="M 1040 1243 L 691 1243" stroke="#7dd3fc" stroke-width="3" fill="none"  marker-end="url(#blue)"/>
+<text x="752" y="1224" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#7dd3fc"><tspan x="752" dy="0">return database row</tspan></text>
+<text x="65" y="1325" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0"><tspan x="65" dy="0">⑦ Hibernate stores object B in cache 2 under EntityKey(UserDetails, 1).</tspan></text>
+<rect x="65" y="1360" width="500" height="210" rx="14" fill="#102032" stroke="#3a5472" stroke-width="2"/>
+<text x="85" y="1399" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#6ee7b7"><tspan x="85" dy="0">⑧ Second find(UserDetails.class, 1L)</tspan></text>
+<text x="85" y="1438" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="85" dy="0">The entity is now in context 2.</tspan><tspan x="85" dy="31">Cache HIT → return object B again.</tspan><tspan x="85" dy="31">No second SELECT is needed.</tspan></text>
+<rect x="935" y="1360" width="400" height="210" rx="14" fill="#12352e" stroke="#387963" stroke-width="2"/>
+<text x="955" y="1399" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#6ee7b7"><tspan x="955" dy="0">FIRST-LEVEL CACHE 2</tspan></text>
+<text x="955" y="1438" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#e2e8f0"><tspan x="955" dy="0">entitiesByKey: a different HashMap</tspan><tspan x="955" dy="31">UserDetails#1 → holder → object B</tspan><tspan x="955" dy="31">holder.state = INITIALIZED</tspan></text>
+<path d="M 565 1435 L 929 1435" stroke="#6ee7b7" stroke-width="3" fill="none"  marker-end="url(#green)"/>
+<text x="623" y="1417" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#6ee7b7"><tspan x="623" dy="0">lookup key: UserDetails#1</tspan></text>
+<path d="M 935 1526 L 571 1526" stroke="#6ee7b7" stroke-width="3" fill="none"  marker-end="url(#green)"/>
+<text x="630" y="1507" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#6ee7b7"><tspan x="630" dy="0">return managed object B</tspan></text>
+<text x="65" y="1620" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0"><tspan x="65" dy="0">⑨ Commit transaction 2 and close EntityManager 2. Its persistence context ends.</tspan></text>
+<text x="65" y="1660" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#a9c0d8"><tspan x="65" dy="0">Session 2 result: 0 INSERTs + 1 SELECT. Both finds in this session return object B.</tspan></text>
+<rect x="40" y="1730" width="1320" height="150" rx="14" fill="#142e35" stroke="#397e84" stroke-width="2"/>
+<text x="65" y="1771" font-family="Segoe UI, Arial, sans-serif" font-size="23" fill="#99f6e4"><tspan x="65" dy="0">WHAT TO REMEMBER</tspan></text>
+<text x="65" y="1807" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0"><tspan x="65" dy="0">Same database identity (UserDetails#1) ≠ shared Java object or shared first-level cache.</tspan><tspan x="65" dy="31">Session 1 uses object A; Session 2 loads object B. Total SQL: 1 INSERT + 1 SELECT.</tspan></text>
+<text x="40" y="1924" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#94a3b8"><tspan x="40" dy="0">ARROW KEY</tspan></text>
+<path d="M 200 1917 L 280 1917" stroke="#fbbf24" stroke-width="3" fill="none"  marker-end="url(#gold)"/>
+<text x="298" y="1924" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="298" dy="0">SQL sent to DB</tspan></text>
+<path d="M 500 1917 L 580 1917" stroke="#7dd3fc" stroke-width="3" fill="none"  marker-end="url(#blue)"/>
+<text x="598" y="1924" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="598" dy="0">DB result returned</tspan></text>
+<path d="M 840 1917 L 920 1917" stroke="#6ee7b7" stroke-width="3" fill="none"  marker-end="url(#green)"/>
+<text x="938" y="1924" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="938" dy="0">In-memory cache access</tspan></text>
+<text x="40" y="1973" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#a9c0d8"><tspan x="40" dy="0">Database boxes depict the same database at two times. Green arrows stay inside each session.</tspan></text>
+</svg>

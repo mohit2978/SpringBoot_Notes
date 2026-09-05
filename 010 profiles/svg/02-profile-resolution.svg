@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1380" viewBox="0 0 1400 1380" role="img" aria-labelledby="title"><title id="title">QA PROFILE · FROM PROPERTY FILES TO OUTPUT</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7dd3fc"/></marker></defs><rect width="1400" height="1380" fill="#0c1423"/><text x="40" y="56" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#f8fafc"><tspan x="40" dy="0">QA PROFILE · FROM PROPERTY FILES TO OUTPUT</tspan></text>
+<text x="40" y="99" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#a9c0d8"><tspan x="40" dy="0">Base values + QA overrides → shared Spring Environment → injected fields.</tspan></text>
+<rect x="40" y="140" width="600" height="190" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">① application.properties</tspan></text>
+<text x="63" y="221" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">username=defaultUsername</tspan><tspan x="63" dy="31">password=defaultPassword</tspan><tspan x="63" dy="31">spring.profiles.active=qa</tspan></text>
+<rect x="790" y="140" width="570" height="190" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="813" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="813" dy="0">② application-qa.properties</tspan></text>
+<text x="813" y="221" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="813" dy="0">username=qaUsername</tspan><tspan x="813" dy="31">password=qaPassword</tspan><tspan x="813" dy="31">Selected because qa is active.</tspan></text>
+<path d="M 640 235 H 784" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="660" y="213" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#e2e8f0"><tspan x="660" dy="0">activate qa</tspan></text>
+<path d="M 340 330 V 393 H 590 V 438" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 1075 330 V 393 H 810 V 438" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="355" y="378" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="355" dy="0">base values</tspan></text>
+<text x="919" y="378" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="919" dy="0">QA overrides</tspan></text>
+<rect x="210" y="445" width="980" height="178" rx="14" fill="#142e35" stroke="#49617c" stroke-width="2"/>
+<text x="233" y="485" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="233" dy="0">③ Resolved properties in the Spring Environment</tspan></text>
+<text x="233" y="526" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="233" dy="0">username → qaUsername</tspan><tspan x="233" dy="31">password → qaPassword</tspan><tspan x="233" dy="31">If QA omits a key, its base value can remain.</tspan></text>
+<path d="M 700 623 V 688" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="731" y="660" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="731" dy="0">resolve placeholders</tspan></text>
+<rect x="210" y="695" width="980" height="182" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="233" y="735" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="233" dy="0">④ Create the unconditional MySQLConnection bean</tspan></text>
+<text x="233" y="776" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="233" dy="0">@Value("${username}") → username field = qaUsername</tspan><tspan x="233" dy="31">@Value("${password}") → password field = qaPassword</tspan><tspan x="233" dy="31">Dependency injection completes before @PostConstruct.</tspan></text>
+<path d="M 700 877 V 942" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="731" y="914" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="731" dy="0">run init()</tspan></text>
+<rect x="210" y="949" width="980" height="115" rx="14" fill="#142e35" stroke="#49617c" stroke-width="2"/>
+<text x="233" y="989" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="233" dy="0">⑤ Console output</tspan></text>
+<text x="233" y="1030" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="233" dy="0">username: qaUsername password: qaPassword</tspan></text>
+<rect x="40" y="1110" width="1320" height="211" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="1150" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">Startup override: choose prod instead</tspan></text>
+<text x="63" y="1191" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">mvn spring-boot:run -Dspring-boot.run.profiles=prod</tspan><tspan x="63" dy="31">For this run, prod overrides the qa selection in the common file.</tspan><tspan x="63" dy="31">Resolve production values → inject prodUsername / prodPassword.</tspan><tspan x="63" dy="31">Maven -Pproduction can do the same through its spring-boot.run.profiles property.</tspan></text></svg>

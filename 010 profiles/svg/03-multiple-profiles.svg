@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1560" viewBox="0 0 1400 1560" role="img" aria-labelledby="title"><title id="title">MULTIPLE PROFILES · TWO BEANS, ONE RESOLVED CONFIGURATION</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7dd3fc"/></marker></defs><rect width="1400" height="1560" fill="#0c1423"/><text x="40" y="56" font-family="Segoe UI, Arial, sans-serif" font-size="32" fill="#f8fafc"><tspan x="40" dy="0">MULTIPLE PROFILES · TWO BEANS, ONE RESOLVED CONFIGURATION</tspan></text>
+<text x="40" y="99" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#a9c0d8"><tspan x="40" dy="0">spring.profiles.active=prod,qa — both profiles are active; QA wins duplicate keys in this setup.</tspan></text>
+<rect x="40" y="145" width="630" height="272" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="185" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">① Bean registration: check @Profile</tspan></text>
+<text x="63" y="226" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">MySQLConnection: @Profile("prod") → MATCH</tspan><tspan x="63" dy="31">NoSQLConnection: @Profile("qa") → MATCH</tspan><tspan x="63" dy="31">Both beans are registered.</tspan><tspan x="63" dy="31">The annotation answers: should this bean exist?</tspan></text>
+<rect x="720" y="145" width="640" height="272" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="743" y="185" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="743" dy="0">② Property resolution: combine files</tspan></text>
+<text x="743" y="226" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="743" dy="0">application.properties → common values</tspan><tspan x="743" dy="31">application-prod.properties → production values</tspan><tspan x="743" dy="31">application-qa.properties → QA overrides</tspan><tspan x="743" dy="31">Same keys: username and password.</tspan><tspan x="743" dy="31">Later profile qa wins duplicate keys.</tspan></text>
+<path d="M 1040 417 V 482" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1070" y="454" font-family="Segoe UI, Arial, sans-serif" font-size="19" fill="#e2e8f0"><tspan x="1070" dy="0">resolved values</tspan></text>
+<rect x="720" y="489" width="640" height="162" rx="14" fill="#142e35" stroke="#49617c" stroke-width="2"/>
+<text x="743" y="529" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="743" dy="0">③ One shared Spring Environment</tspan></text>
+<text x="743" y="570" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="743" dy="0">username=qaUsername</tspan><tspan x="743" dy="31">password=qaPassword</tspan></text>
+<text x="65" y="495" font-family="Segoe UI, Arial, sans-serif" font-size="25" fill="#c4b5fd"><tspan x="65" dy="0">Profile matching and property precedence</tspan><tspan x="65" dy="31">are separate decisions.</tspan></text>
+<text x="65" y="590" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#e2e8f0"><tspan x="65" dy="0">A prod bean does not automatically receive</tspan><tspan x="65" dy="31">a private copy of production properties.</tspan></text>
+<path d="M 1040 651 V 700 H 352 V 756" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 1040 651 V 756" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="470" y="683" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#7dd3fc"><tspan x="470" dy="0">both beans resolve the same property keys</tspan></text>
+<rect x="40" y="763" width="630" height="198" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="803" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">④ MySQLConnection bean</tspan></text>
+<text x="63" y="844" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">@Profile("prod") → bean exists</tspan><tspan x="63" dy="31">@Value("${username}") → qaUsername</tspan><tspan x="63" dy="31">@Value("${password}") → qaPassword</tspan></text>
+<rect x="720" y="763" width="640" height="198" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="743" y="803" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="743" dy="0">⑤ NoSQLConnection bean</tspan></text>
+<text x="743" y="844" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="743" dy="0">@Profile("qa") → bean exists</tspan><tspan x="743" dy="31">@Value("${username}") → qaUsername</tspan><tspan x="743" dy="31">@Value("${password}") → qaPassword</tspan></text>
+<path d="M 352 961 V 1026" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 1040 961 V 1026" fill="none" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="40" y="1033" width="1320" height="167" rx="14" fill="#142e35" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="1073" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">⑥ @PostConstruct output from the two beans</tspan></text>
+<text x="63" y="1114" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">MySql username: qaUsername password: qaPassword</tspan><tspan x="63" dy="31">NoSQL username: qaUsername password: qaPassword</tspan><tspan x="63" dy="31">Initialization message order is not guaranteed.</tspan></text>
+<rect x="40" y="1240" width="1320" height="241" rx="14" fill="#18283c" stroke="#49617c" stroke-width="2"/>
+<text x="63" y="1280" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#7dd3fc"><tspan x="63" dy="0">What changes if you reverse the order?</tspan></text>
+<text x="63" y="1321" font-family="Segoe UI, Arial, sans-serif" font-size="21" fill="#e2e8f0"><tspan x="63" dy="0">prod,qa → QA values win matching keys.</tspan><tspan x="63" dy="31">qa,prod → production values win matching keys.</tspan><tspan x="63" dy="31">Both beans still exist, because both profiles remain active.</tspan><tspan x="63" dy="31">This comparison assumes the files are in the same configuration location.</tspan><tspan x="63" dy="31">Missing keys retain earlier values; other configuration sources can affect precedence.</tspan></text></svg>
