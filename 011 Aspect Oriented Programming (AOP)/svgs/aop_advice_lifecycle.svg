@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-adv" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <filter id="shadow-adv" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="500" rx="16" fill="url(#bg-adv)"/>
+
+  <!-- Title -->
+  <g transform="translate(40, 35)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      Spring AOP Advice Execution Lifecycle
+    </text>
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Chronological execution order of Spring AOP advices surrounding a Join Point
+    </text>
+  </g>
+
+  <!-- Big Outer Container: @Around Advice Wrapper -->
+  <g transform="translate(40, 80)" filter="url(#shadow-adv)">
+    <rect width="860" height="380" rx="14" fill="#1e1b4b" fill-opacity="0.6" stroke="#6366f1" stroke-width="2" stroke-dasharray="6,4"/>
+    <rect x="20" y="14" width="220" height="26" rx="6" fill="#4f46e5"/>
+    <text x="130" y="32" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">
+      🔄 @Around Advice (Outer Wrapper)
+    </text>
+    <text x="700" y="32" font-family="'Consolas', monospace" font-size="11" fill="#c7d2fe">
+      Object proceed() throws Throwable
+    </text>
+
+    <!-- Inside Workflow -->
+    <g transform="translate(24, 60)">
+      
+      <!-- Step 1: Around Before -->
+      <g transform="translate(0, 0)">
+        <rect width="180" height="70" rx="8" fill="#0f172a" stroke="#818cf8" stroke-width="1.5"/>
+        <text x="14" y="24" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">1. @Around (Part 1)</text>
+        <text x="14" y="44" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Pre-processing logic</text>
+        <text x="14" y="58" font-family="'Consolas', monospace" font-size="9.5" fill="#93c5fd">long start = time();</text>
+      </g>
+
+      <!-- Arrow 1 -> 2 -->
+      <path d="M 180 35 L 210 35" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr)" fill="none"/>
+
+      <!-- Step 2: @Before -->
+      <g transform="translate(215, 0)">
+        <rect width="180" height="70" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="14" y="24" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#38bdf8">2. @Before Advice</text>
+        <text x="14" y="44" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Runs right before</text>
+        <text x="14" y="58" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">join point (Auth, Log)</text>
+      </g>
+
+      <!-- Arrow 2 -> Target -->
+      <path d="M 395 35 L 430 35" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr)" fill="none"/>
+
+      <!-- Target Bean Method (Center Stage) -->
+      <g transform="translate(435, -15)">
+        <rect width="210" height="100" rx="10" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+        <text x="105" y="28" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#34d399" text-anchor="middle">
+          🎯 Target Method Execution
+        </text>
+        <rect x="14" y="38" width="182" height="48" rx="6" fill="#022c22"/>
+        <text x="24" y="56" font-family="'Consolas', monospace" font-size="10.5" fill="#a7f3d0">public Order create(..)</text>
+        <text x="24" y="74" font-family="system-ui, sans-serif" font-size="9.5" fill="#94a3b8">Actual core business logic</text>
+      </g>
+
+      <!-- Branching: Success vs Error -->
+      <!-- Branch Success: Green -->
+      <path d="M 540 85 L 540 130 L 320 130 L 320 155" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)" fill="none"/>
+      <rect x="360" y="118" width="140" height="20" rx="4" fill="#064e3b"/>
+      <text x="430" y="132" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#a7f3d0" text-anchor="middle">
+        ✔ If Method Returns (Success)
+      </text>
+
+      <!-- Step 3A: @AfterReturning -->
+      <g transform="translate(215, 160)">
+        <rect width="210" height="65" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+        <text x="14" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">3A. @AfterReturning</text>
+        <text x="14" y="40" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Accesses return value</text>
+        <text x="14" y="55" font-family="'Consolas', monospace" font-size="9.5" fill="#6ee7b7">returning = "result"</text>
+      </g>
+
+      <!-- Branch Error: Red -->
+      <path d="M 540 85 L 540 130 L 680 130 L 680 155" stroke="#f87171" stroke-width="2" marker-end="url(#arr-red)" fill="none"/>
+      <rect x="580" y="118" width="160" height="20" rx="4" fill="#7f1d1d"/>
+      <text x="660" y="132" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#fca5a5" text-anchor="middle">
+        ✖ If Exception Thrown (Error)
+      </text>
+
+      <!-- Step 3B: @AfterThrowing -->
+      <g transform="translate(575, 160)">
+        <rect width="210" height="65" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="14" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f87171">3B. @AfterThrowing</text>
+        <text x="14" y="40" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Catches thrown exception</text>
+        <text x="14" y="55" font-family="'Consolas', monospace" font-size="9.5" fill="#fca5a5">throwing = "ex"</text>
+      </g>
+
+      <!-- Convergence to Step 4: @After (finally) -->
+      <path d="M 320 225 L 320 245 L 435 245" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 680 225 L 680 245 L 645 245" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 540 245 L 540 258" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr)" fill="none"/>
+
+      <!-- Step 4: @After (Finally) -->
+      <g transform="translate(435, 260)">
+        <rect width="210" height="48" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+        <text x="105" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">
+          4. @After (Finally)
+        </text>
+        <text x="105" y="36" font-family="system-ui, sans-serif" font-size="9.5" fill="#94a3b8" text-anchor="middle">
+          Runs regardless of outcome (Cleanup)
+        </text>
+      </g>
+
+      <!-- Step 5: @Around Post-processing -->
+      <path d="M 435 284 L 185 284" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr)" fill="none"/>
+      <g transform="translate(0, 250)">
+        <rect width="180" height="65" rx="8" fill="#0f172a" stroke="#818cf8" stroke-width="1.5"/>
+        <text x="14" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">5. @Around (Part 2)</text>
+        <text x="14" y="38" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Post-processing &amp; metrics</text>
+        <text x="14" y="52" font-family="'Consolas', monospace" font-size="9.5" fill="#93c5fd">return result;</text>
+      </g>
+    </g>
+  </g>
+</svg>

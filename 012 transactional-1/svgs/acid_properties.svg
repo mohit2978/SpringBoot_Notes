@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    
+    <linearGradient id="card-grad-a" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="card-grad-c" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </linearGradient>
+    <linearGradient id="card-grad-i" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#701a75"/>
+      <stop offset="100%" stop-color="#86198f"/>
+    </linearGradient>
+    <linearGradient id="card-grad-d" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c2d12"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="620" rx="16" fill="url(#bg-grad)"/>
+
+  <!-- Title Section -->
+  <g transform="translate(40, 35)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#f8fafc" letter-spacing="0.5">
+      ACID Properties in Database Transactions
+    </text>
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Guarantees reliable processing of DB operations even during errors, crashes, or high concurrency
+    </text>
+  </g>
+
+  <!-- 4 Pillars Grid -->
+  <!-- Card A: Atomicity -->
+  <g transform="translate(40, 90)" filter="url(#shadow)">
+    <rect width="205" height="340" rx="12" fill="url(#card-grad-a)" stroke="#6366f1" stroke-width="1.5"/>
+    <rect x="14" y="16" width="34" height="34" rx="8" fill="#4f46e5"/>
+    <text x="31" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="900" fill="#ffffff" text-anchor="middle">A</text>
+    <text x="58" y="32" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#e0e7ff">Atomicity</text>
+    <text x="58" y="48" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#a5b4fc">"All or Nothing"</text>
+    
+    <line x1="14" y1="62" x2="191" y2="62" stroke="#4338ca" stroke-width="1"/>
+    
+    <text x="14" y="82" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#c7d2fe">CORE RULE:</text>
+    <text x="14" y="100" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">Entire transaction</text>
+    <text x="14" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">completes or none of</text>
+    <text x="14" y="132" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">it takes effect.</text>
+
+    <text x="14" y="160" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#c7d2fe">MECHANISM:</text>
+    <text x="14" y="178" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• BEGIN TRANSACTION</text>
+    <text x="14" y="196" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• COMMIT on success</text>
+    <text x="14" y="214" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• ROLLBACK on failure</text>
+    <text x="14" y="232" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Single atomic unit</text>
+
+    <rect x="14" y="260" width="177" height="64" rx="8" fill="#1e1b4b" stroke="#4338ca"/>
+    <text x="22" y="278" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#818cf8">Failure State:</text>
+    <text x="22" y="295" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">Never leaves DB in a</text>
+    <text x="22" y="310" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">partial / broken state.</text>
+  </g>
+
+  <!-- Card C: Consistency -->
+  <g transform="translate(265, 90)" filter="url(#shadow)">
+    <rect width="205" height="340" rx="12" fill="url(#card-grad-c)" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="14" y="16" width="34" height="34" rx="8" fill="#059669"/>
+    <text x="31" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="900" fill="#ffffff" text-anchor="middle">C</text>
+    <text x="58" y="32" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#d1fae5">Consistency</text>
+    <text x="58" y="48" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#6ee7b7">"Preserve Rules"</text>
+    
+    <line x1="14" y1="62" x2="191" y2="62" stroke="#047857" stroke-width="1"/>
+    
+    <text x="14" y="82" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">CORE RULE:</text>
+    <text x="14" y="100" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">Transitions DB from</text>
+    <text x="14" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">one valid state to</text>
+    <text x="14" y="132" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">another valid state.</text>
+
+    <text x="14" y="160" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">MECHANISM:</text>
+    <text x="14" y="178" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Constraints (PK, FK)</text>
+    <text x="14" y="196" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• UNIQUE, CHECK, NOT NULL</text>
+    <text x="14" y="214" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• DB Triggers &amp; Procedures</text>
+    <text x="14" y="232" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• App-level validations</text>
+
+    <rect x="14" y="260" width="177" height="64" rx="8" fill="#022c22" stroke="#047857"/>
+    <text x="22" y="278" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399">Integrity Check:</text>
+    <text x="22" y="295" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">Total balance remains</text>
+    <text x="22" y="310" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">constant before &amp; after.</text>
+  </g>
+
+  <!-- Card I: Isolation -->
+  <g transform="translate(490, 90)" filter="url(#shadow)">
+    <rect width="205" height="340" rx="12" fill="url(#card-grad-i)" stroke="#d946ef" stroke-width="1.5"/>
+    <rect x="14" y="16" width="34" height="34" rx="8" fill="#c026d3"/>
+    <text x="31" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="900" fill="#ffffff" text-anchor="middle">I</text>
+    <text x="58" y="32" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#fae8ff">Isolation</text>
+    <text x="58" y="48" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#f0abfc">"Independent Tx"</text>
+    
+    <line x1="14" y1="62" x2="191" y2="62" stroke="#86198f" stroke-width="1"/>
+    
+    <text x="14" y="82" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f5d0fe">CORE RULE:</text>
+    <text x="14" y="100" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">Concurrent executions</text>
+    <text x="14" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">do not interfere or see</text>
+    <text x="14" y="132" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">uncommitted states.</text>
+
+    <text x="14" y="160" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f5d0fe">MECHANISM:</text>
+    <text x="14" y="178" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Shared &amp; Exclusive Locks</text>
+    <text x="14" y="196" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• MVCC (Multi-Version)</text>
+    <text x="14" y="214" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Isolation Levels</text>
+    <text x="14" y="232" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Read Committed / RR</text>
+
+    <rect x="14" y="260" width="177" height="64" rx="8" fill="#4a044e" stroke="#86198f"/>
+    <text x="22" y="278" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#e879f9">Concurrency Shield:</text>
+    <text x="22" y="295" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">Prevents dirty reads &amp;</text>
+    <text x="22" y="310" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">non-repeatable reads.</text>
+  </g>
+
+  <!-- Card D: Durability -->
+  <g transform="translate(715, 90)" filter="url(#shadow)">
+    <rect width="205" height="340" rx="12" fill="url(#card-grad-d)" stroke="#f97316" stroke-width="1.5"/>
+    <rect x="14" y="16" width="34" height="34" rx="8" fill="#ea580c"/>
+    <text x="31" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="900" fill="#ffffff" text-anchor="middle">D</text>
+    <text x="58" y="32" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffedd5">Durability</text>
+    <text x="58" y="48" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#fdba74">"Survives Crashes"</text>
+    
+    <line x1="14" y1="62" x2="191" y2="62" stroke="#9a3412" stroke-width="1"/>
+    
+    <text x="14" y="82" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fed7aa">CORE RULE:</text>
+    <text x="14" y="100" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">Committed changes are</text>
+    <text x="14" y="116" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">permanent, even during</text>
+    <text x="14" y="132" font-family="system-ui, sans-serif" font-size="11" fill="#e2e8f0">power cuts or crashes.</text>
+
+    <text x="14" y="160" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fed7aa">MECHANISM:</text>
+    <text x="14" y="178" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Write-Ahead Log (WAL)</text>
+    <text x="14" y="196" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Force log flush (fsync)</text>
+    <text x="14" y="214" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• Checkpointing</text>
+    <text x="14" y="232" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">• REDO / UNDO Recovery</text>
+
+    <rect x="14" y="260" width="177" height="64" rx="8" fill="#431407" stroke="#9a3412"/>
+    <text x="22" y="278" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fb923c">Persistence:</text>
+    <text x="22" y="295" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">Data safely written to</text>
+    <text x="22" y="310" font-family="system-ui, sans-serif" font-size="9.5" fill="#e2e8f0">non-volatile disk storage.</text>
+  </g>
+
+  <!-- Bottom Example Banner -->
+  <g transform="translate(40, 450)" filter="url(#shadow)">
+    <rect width="880" height="140" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <text x="24" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">
+      Real World Example: Transfer ₹100 from Account A to Account B
+    </text>
+    
+    <!-- Step boxes -->
+    <g transform="translate(24, 45)">
+      <!-- Step 1 & 2 -->
+      <rect width="180" height="72" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1"/>
+      <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">1. Debit ₹100 (A)</text>
+      <text x="12" y="40" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">2. Credit ₹100 (B)</text>
+      <text x="12" y="60" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">⚡ Atomicity: Both or None</text>
+
+      <!-- Consistency -->
+      <g transform="translate(195, 0)">
+        <rect width="205" height="72" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+        <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#6ee7b7">Consistency</text>
+        <text x="12" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">Total balance across A &amp; B</text>
+        <text x="12" y="58" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">remains unchanged (Net ₹0).</text>
+      </g>
+
+      <!-- Isolation -->
+      <g transform="translate(415, 0)">
+        <rect width="215" height="72" rx="8" fill="#0f172a" stroke="#d946ef" stroke-width="1"/>
+        <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f0abfc">Isolation</text>
+        <text x="12" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">Concurrent balance checks</text>
+        <text x="12" y="58" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">never see intermediate state.</text>
+      </g>
+
+      <!-- Durability -->
+      <g transform="translate(645, 0)">
+        <rect width="187" height="72" rx="8" fill="#0f172a" stroke="#f97316" stroke-width="1"/>
+        <text x="12" y="22" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fdba74">Durability</text>
+        <text x="12" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">Once committed, money</text>
+        <text x="12" y="58" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">stays saved even if crash.</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-pt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <filter id="shadow-pt" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="940" height="500" rx="16" fill="url(#bg-pt)"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 35)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      AspectJ Pointcut Expression Anatomy
+    </text>
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Understanding pointcut designators, wildcards, and pattern matching syntax in Spring AOP
+    </text>
+  </g>
+
+  <!-- Top: Execution Syntax Anatomy Box -->
+  <g transform="translate(40, 80)" filter="url(#shadow-pt)">
+    <rect width="860" height="150" rx="12" fill="#020617" stroke="#334155" stroke-width="1.5"/>
+    <text x="24" y="28" font-family="'Consolas', monospace" font-size="12" font-weight="700" fill="#38bdf8">
+      execution( [modifiers]  [return_type]  [package.class].[method_name]([arguments]) )
+    </text>
+
+    <!-- Visual callout blocks -->
+    <g transform="translate(24, 45)">
+      <!-- Modifier -->
+      <g transform="translate(0, 0)">
+        <rect width="120" height="75" rx="6" fill="#1e293b" stroke="#6366f1"/>
+        <text x="12" y="22" font-family="'Consolas', monospace" font-size="12" fill="#a5b4fc">public</text>
+        <text x="12" y="44" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#818cf8">Access Modifier</text>
+        <text x="12" y="60" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8">(Optional)</text>
+      </g>
+
+      <!-- Return Type -->
+      <g transform="translate(130, 0)">
+        <rect width="110" height="75" rx="6" fill="#1e293b" stroke="#10b981"/>
+        <text x="12" y="22" font-family="'Consolas', monospace" font-size="12" fill="#6ee7b7">*</text>
+        <text x="12" y="44" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399">Return Type</text>
+        <text x="12" y="60" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8">(* = any type)</text>
+      </g>
+
+      <!-- Package & Class -->
+      <g transform="translate(250, 0)">
+        <rect width="250" height="75" rx="6" fill="#1e293b" stroke="#0ea5e9"/>
+        <text x="12" y="22" font-family="'Consolas', monospace" font-size="11.5" fill="#38bdf8">com.example.service.*</text>
+        <text x="12" y="44" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8">Package &amp; Class</text>
+        <text x="12" y="60" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8">(.. = subpackages)</text>
+      </g>
+
+      <!-- Method Name -->
+      <g transform="translate(510, 0)">
+        <rect width="150" height="75" rx="6" fill="#1e293b" stroke="#f59e0b"/>
+        <text x="12" y="22" font-family="'Consolas', monospace" font-size="12" fill="#fde047">*(..)</text>
+        <text x="12" y="44" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fbbf24">Method Name</text>
+        <text x="12" y="60" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8">(* = any method)</text>
+      </g>
+
+      <!-- Arguments -->
+      <g transform="translate(670, 0)">
+        <rect width="140" height="75" rx="6" fill="#1e293b" stroke="#ec4899"/>
+        <text x="12" y="22" font-family="'Consolas', monospace" font-size="12" fill="#f472b6">(..)</text>
+        <text x="12" y="44" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#f472b6">Arguments</text>
+        <text x="12" y="60" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8">(.. = 0 or more args)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom: Pointcut Designator Cheat Sheet Grid -->
+  <g transform="translate(40, 245)" filter="url(#shadow-pt)">
+    <rect width="860" height="215" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="24" y="26" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#e2e8f0">
+      Common Pointcut Designators in Spring AOP
+    </text>
+
+    <!-- Grid items -->
+    <g transform="translate(24, 40)">
+      <!-- Row 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="395" height="46" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="20" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">execution(* com.example.service.*.*(..))</text>
+        <text x="14" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Matches all methods in all classes of service package</text>
+      </g>
+      <g transform="translate(415, 0)">
+        <rect width="395" height="46" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="20" font-family="'Consolas', monospace" font-size="11" fill="#34d399">within(com.example.service..*)</text>
+        <text x="14" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Limits match to all join points within the service package</text>
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 54)">
+        <rect width="395" height="46" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="20" font-family="'Consolas', monospace" font-size="11" fill="#fbbf24">@annotation(com.example.LogExecution)</text>
+        <text x="14" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Matches methods having custom @LogExecution annotation</text>
+      </g>
+      <g transform="translate(415, 54)">
+        <rect width="395" height="46" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="20" font-family="'Consolas', monospace" font-size="11" fill="#f472b6">args(String, ..)</text>
+        <text x="14" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Matches methods where the first parameter is of type String</text>
+      </g>
+
+      <!-- Row 3 -->
+      <g transform="translate(0, 108)">
+        <rect width="395" height="46" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="20" font-family="'Consolas', monospace" font-size="11" fill="#c084fc">@within(org.springframework.stereotype.Service)</text>
+        <text x="14" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Matches any method inside classes annotated with @Service</text>
+      </g>
+      <g transform="translate(415, 108)">
+        <rect width="395" height="46" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="14" y="20" font-family="'Consolas', monospace" font-size="11" fill="#a78bfa">execution(public * *..Repository.*(..))</text>
+        <text x="14" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Matches all public methods in any Repository classes</text>
+      </g>
+    </g>
+  </g>
+</svg>

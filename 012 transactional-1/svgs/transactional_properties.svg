@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-attr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <linearGradient id="code-box-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <filter id="shadow-attr" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" rx="16" fill="url(#bg-attr)"/>
+
+  <!-- Title Section -->
+  <g transform="translate(40, 35)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+      Spring @Transactional Annotation Attributes Breakdown
+    </text>
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Key configuration attributes and their direct effect on transaction management
+    </text>
+  </g>
+
+  <!-- Left: Code Box -->
+  <g transform="translate(40, 80)" filter="url(#shadow-attr)">
+    <rect width="460" height="400" rx="12" fill="url(#code-box-grad)" stroke="#334155" stroke-width="1.5"/>
+    
+    <!-- Code Editor Header Dots -->
+    <circle cx="24" cy="22" r="5" fill="#ef4444"/>
+    <circle cx="40" cy="22" r="5" fill="#f59e0b"/>
+    <circle cx="56" cy="22" r="5" fill="#10b981"/>
+    <text x="80" y="26" font-family="'Consolas', monospace" font-size="11" fill="#64748b">@Transactional Configuration</text>
+    <line x1="12" y1="38" x2="448" y2="38" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Code Lines -->
+    <g transform="translate(24, 65)">
+      <text x="0" y="0" font-family="'Consolas', monospace" font-size="13" font-weight="700" fill="#c084fc">@Transactional(</text>
+      
+      <!-- Line 1: propagation -->
+      <g transform="translate(20, 30)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">propagation</text>
+        <text x="85" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= Propagation.REQUIRED,</text>
+      </g>
+
+      <!-- Line 2: isolation -->
+      <g transform="translate(20, 68)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">isolation</text>
+        <text x="85" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= Isolation.DEFAULT,</text>
+      </g>
+
+      <!-- Line 3: readOnly -->
+      <g transform="translate(20, 106)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">readOnly</text>
+        <text x="85" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= false,</text>
+      </g>
+
+      <!-- Line 4: timeout -->
+      <g transform="translate(20, 144)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">timeout</text>
+        <text x="85" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= -1,</text>
+      </g>
+
+      <!-- Line 5: rollbackFor -->
+      <g transform="translate(20, 182)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">rollbackFor</text>
+        <text x="85" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= {RuntimeException.class},</text>
+      </g>
+
+      <!-- Line 6: rollbackForClassName -->
+      <g transform="translate(20, 220)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">rollbackForClassName</text>
+        <text x="165" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= "",</text>
+      </g>
+
+      <!-- Line 7: noRollbackFor -->
+      <g transform="translate(20, 258)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">noRollbackFor</text>
+        <text x="110" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= {},</text>
+      </g>
+
+      <!-- Line 8: noRollbackForClassName -->
+      <g transform="translate(20, 296)">
+        <text x="0" y="0" font-family="'Consolas', monospace" font-size="12" fill="#38bdf8">noRollbackForClassName</text>
+        <text x="180" y="0" font-family="'Consolas', monospace" font-size="12" fill="#e2e8f0">= {}</text>
+      </g>
+
+      <text x="0" y="325" font-family="'Consolas', monospace" font-size="13" font-weight="700" fill="#c084fc">)</text>
+    </g>
+  </g>
+
+  <!-- Right: Attribute Explanations -->
+  <g transform="translate(530, 80)">
+    
+    <!-- Item 1: propagation -->
+    <g transform="translate(0, 20)">
+      <path d="M -30 20 L -5 20" stroke="#6366f1" stroke-width="2"/>
+      <circle cx="-5" cy="20" r="3" fill="#6366f1"/>
+      <rect width="390" height="42" rx="8" fill="#1e293b" stroke="#4338ca"/>
+      <text x="14" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#818cf8">PROPAGATION</text>
+      <text x="14" y="33" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">How tx joins or creates new (e.g. REQUIRED, REQUIRES_NEW)</text>
+    </g>
+
+    <!-- Item 2: isolation -->
+    <g transform="translate(0, 68)">
+      <path d="M -30 20 L -5 20" stroke="#059669" stroke-width="2"/>
+      <circle cx="-5" cy="20" r="3" fill="#059669"/>
+      <rect width="390" height="42" rx="8" fill="#1e293b" stroke="#047857"/>
+      <text x="14" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399">ISOLATION</text>
+      <text x="14" y="33" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">Level of data visibility across concurrent tx (READ_COMMITTED...)</text>
+    </g>
+
+    <!-- Item 3: readOnly -->
+    <g transform="translate(0, 116)">
+      <path d="M -30 20 L -5 20" stroke="#d97706" stroke-width="2"/>
+      <circle cx="-5" cy="20" r="3" fill="#d97706"/>
+      <rect width="390" height="42" rx="8" fill="#1e293b" stroke="#b45309"/>
+      <text x="14" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fbbf24">READ ONLY</text>
+      <text x="14" y="33" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">Hint for optimization (skips Hibernate dirty checks, no updates)</text>
+    </g>
+
+    <!-- Item 4: timeout -->
+    <g transform="translate(0, 164)">
+      <path d="M -30 20 L -5 20" stroke="#e11d48" stroke-width="2"/>
+      <circle cx="-5" cy="20" r="3" fill="#e11d48"/>
+      <rect width="390" height="42" rx="8" fill="#1e293b" stroke="#be123c"/>
+      <text x="14" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fb7185">TIMEOUT</text>
+      <text x="14" y="33" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">Max execution seconds allowed (-1 = default no timeout)</text>
+    </g>
+
+    <!-- Item 5: rollbackFor -->
+    <g transform="translate(0, 212)">
+      <path d="M -30 20 L -5 20" stroke="#ec4899" stroke-width="2"/>
+      <circle cx="-5" cy="20" r="3" fill="#ec4899"/>
+      <rect width="390" height="42" rx="8" fill="#1e293b" stroke="#be185d"/>
+      <text x="14" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#f472b6">ROLLBACK FOR</text>
+      <text x="14" y="33" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">Explicit exception types that trigger rollback (e.g. Exception.class)</text>
+    </g>
+
+    <!-- Item 6: noRollbackFor -->
+    <g transform="translate(0, 275)">
+      <path d="M -30 20 L -5 20" stroke="#06b6d4" stroke-width="2"/>
+      <circle cx="-5" cy="20" r="3" fill="#06b6d4"/>
+      <rect width="390" height="42" rx="8" fill="#1e293b" stroke="#0e7490"/>
+      <text x="14" y="18" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#22d3ee">NO ROLLBACK FOR</text>
+      <text x="14" y="33" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">Exception types that should NOT trigger rollback</text>
+    </g>
+
+  </g>
+</svg>

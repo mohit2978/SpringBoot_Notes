@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-aop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#131d2e"/>
+    </linearGradient>
+
+    <linearGradient id="layer-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="cross-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+
+    <filter id="shadow-aop" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="560" rx="16" fill="url(#bg-aop)"/>
+
+  <!-- Title -->
+  <g transform="translate(40, 35)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#f8fafc">
+      Aspect-Oriented Programming (AOP) Concept
+    </text>
+    <text x="0" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
+      Separating Cross-Cutting Concerns from Core Business Logic
+    </text>
+  </g>
+
+  <!-- Left: Cross-Cutting Concerns Layered Diagram -->
+  <g transform="translate(40, 85)" filter="url(#shadow-aop)">
+    <rect width="440" height="430" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="20" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#38bdf8">
+      Business Layers vs Cross-Cutting Aspects
+    </text>
+
+    <!-- Vertical Business Modules -->
+    <g transform="translate(20, 55)">
+      <!-- Order Service -->
+      <g transform="translate(0, 0)">
+        <rect width="90" height="280" rx="8" fill="url(#layer-grad)" stroke="#475569"/>
+        <text x="45" y="30" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Order</text>
+        <text x="45" y="45" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Service</text>
+      </g>
+      <!-- User Service -->
+      <g transform="translate(105, 0)">
+        <rect width="90" height="280" rx="8" fill="url(#layer-grad)" stroke="#475569"/>
+        <text x="45" y="30" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">User</text>
+        <text x="45" y="45" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Service</text>
+      </g>
+      <!-- Payment Service -->
+      <g transform="translate(210, 0)">
+        <rect width="90" height="280" rx="8" fill="url(#layer-grad)" stroke="#475569"/>
+        <text x="45" y="30" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Payment</text>
+        <text x="45" y="45" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Service</text>
+      </g>
+      <!-- Inventory Service -->
+      <g transform="translate(315, 0)">
+        <rect width="85" height="280" rx="8" fill="url(#layer-grad)" stroke="#475569"/>
+        <text x="42" y="30" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Inventory</text>
+        <text x="42" y="45" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#e2e8f0" text-anchor="middle">Service</text>
+      </g>
+
+      <!-- Horizontal Cross-Cutting Slices (Aspects) -->
+      <!-- Logging Aspect -->
+      <g transform="translate(-10, 70)">
+        <rect width="420" height="36" rx="6" fill="#0284c7" fill-opacity="0.85" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="210" y="23" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">
+          ⚡ Logging Aspect (@Before, @After)
+        </text>
+      </g>
+
+      <!-- Security Aspect -->
+      <g transform="translate(-10, 120)">
+        <rect width="420" height="36" rx="6" fill="#059669" fill-opacity="0.85" stroke="#34d399" stroke-width="1.5"/>
+        <text x="210" y="23" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">
+          🔒 Security &amp; Auth Aspect (Check Permissions)
+        </text>
+      </g>
+
+      <!-- Transaction Management Aspect -->
+      <g transform="translate(-10, 170)">
+        <rect width="420" height="36" rx="6" fill="#7c3aed" fill-opacity="0.85" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="210" y="23" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">
+          💾 Transaction Management Aspect (@Transactional)
+        </text>
+      </g>
+
+      <!-- Performance Monitoring Aspect -->
+      <g transform="translate(-10, 220)">
+        <rect width="420" height="36" rx="6" fill="#db2777" fill-opacity="0.85" stroke="#f472b6" stroke-width="1.5"/>
+        <text x="210" y="23" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle">
+          ⏱️ Performance &amp; Metrics Aspect (@Around)
+        </text>
+      </g>
+    </g>
+
+    <!-- Bottom note -->
+    <rect x="20" y="360" width="400" height="50" rx="8" fill="#1e293b"/>
+    <text x="32" y="380" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#facc15">Benefit of AOP:</text>
+    <text x="32" y="398" font-family="system-ui, sans-serif" font-size="10" fill="#cbd5e1">No duplicate boilerplate code across multiple services.</text>
+  </g>
+
+  <!-- Right: AOP Core Terminology Card Grid -->
+  <g transform="translate(505, 85)" filter="url(#shadow-aop)">
+    <rect width="415" height="430" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="20" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#a78bfa">
+      Key AOP Terminology
+    </text>
+
+    <!-- Terms list -->
+    <g transform="translate(20, 48)">
+      <!-- Term 1: Aspect -->
+      <g transform="translate(0, 0)">
+        <rect width="375" height="48" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
+        <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#818cf8">Aspect (@Aspect)</text>
+        <text x="12" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">The modular class containing pointcuts and advice.</text>
+      </g>
+
+      <!-- Term 2: Join Point -->
+      <g transform="translate(0, 54)">
+        <rect width="375" height="48" rx="6" fill="#1e293b" stroke="#0ea5e9" stroke-width="1"/>
+        <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#38bdf8">Join Point</text>
+        <text x="12" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Candidate execution point (In Spring AOP: Method execution).</text>
+      </g>
+
+      <!-- Term 3: Advice -->
+      <g transform="translate(0, 108)">
+        <rect width="375" height="48" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+        <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">Advice (@Before, @After, @Around...)</text>
+        <text x="12" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">The action/code executed at a specific join point.</text>
+      </g>
+
+      <!-- Term 4: Pointcut -->
+      <g transform="translate(0, 162)">
+        <rect width="375" height="48" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+        <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#fbbf24">Pointcut (@Pointcut)</text>
+        <text x="12" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Expression defining WHERE advice applies (e.g. execution(...)).</text>
+      </g>
+
+      <!-- Term 5: Target & Proxy -->
+      <g transform="translate(0, 216)">
+        <rect width="375" height="48" rx="6" fill="#1e293b" stroke="#ec4899" stroke-width="1"/>
+        <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#f472b6">Target &amp; Proxy</text>
+        <text x="12" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Target = Raw bean; Proxy = Advised wrapper object generated by Spring.</text>
+      </g>
+
+      <!-- Term 6: Weaving -->
+      <g transform="translate(0, 270)">
+        <rect width="375" height="48" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="1"/>
+        <text x="12" y="20" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#2dd4bf">Weaving</text>
+        <text x="12" y="36" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Process of linking aspects with target beans (at Runtime via Proxies).</text>
+      </g>
+
+      <!-- Term 7: Introduction -->
+      <g transform="translate(0, 324)">
+        <rect width="375" height="44" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
+        <text x="12" y="18" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#a78bfa">Introduction (@DeclareParents)</text>
+        <text x="12" y="34" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8">Declaring new interfaces/methods dynamically on target classes.</text>
+      </g>
+    </g>
+  </g>
+</svg>
