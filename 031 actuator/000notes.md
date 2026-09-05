@@ -1,4 +1,4 @@
-![alt text](image.png)
+
 
 ## What is Actuator
 
