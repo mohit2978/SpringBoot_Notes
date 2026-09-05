@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="680" viewBox="0 0 1050 680">
+  <defs>
+    <marker id="arr12" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#89b4fa"/>
+    </marker>
+    <marker id="arr12-yellow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#f9e2af"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1050" height="680" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== SECTION 1: APPLICATION.PROPERTIES ==================== -->
+  <rect x="30" y="20" width="990" height="260" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Section 1 Header -->
+  <rect x="50" y="32" width="175" height="22" rx="4" fill="#313244"/>
+  <text x="137" y="47" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#89b4fa">CONFIGURATION</text>
+  <text x="238" y="49" font-family="sans-serif" font-size="15" font-weight="bold" fill="#cdd6f4">2. Understanding application.properties for L2 Caching</text>
+
+  <!-- Left: Properties Editor Mockup -->
+  <rect x="50" y="65" width="605" height="195" rx="8" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <!-- Editor Window Bar -->
+  <path d="M 50 73 A 8 8 0 0 1 58 65 L 647 65 A 8 8 0 0 1 655 73 L 655 93 L 50 93 Z" fill="#181825"/>
+  <circle cx="68" cy="79" r="4.5" fill="#f38ba8"/>
+  <circle cx="82" cy="79" r="4.5" fill="#f9e2af"/>
+  <circle cx="96" cy="79" r="4.5" fill="#a6e3a1"/>
+  <text x="115" y="83" font-family="monospace" font-size="11" fill="#a6adc8">src/main/resources/application.properties</text>
+
+  <!-- Property 1: Enable L2 Cache -->
+  <text x="65" y="115" font-family="monospace" font-size="11" fill="#cba6f7">spring.jpa.properties.hibernate.cache.<tspan fill="#f38ba8">use_second_level_cache</tspan>=<tspan fill="#a6e3a1" font-weight="bold">true</tspan></text>
+
+  <!-- Property 2: Region Factory (Target of Callout) -->
+  <rect x="60" y="126" width="585" height="42" rx="5" fill="#28241c" stroke="#f9e2af" stroke-width="1"/>
+  <text x="65" y="142" font-family="monospace" font-size="11" fill="#cba6f7">spring.jpa.properties.hibernate.cache.region.factory_class=</text>
+  <text x="80" y="160" font-family="monospace" font-size="11.5" font-weight="bold" fill="#f9e2af">    org.hibernate.cache.jcache.JCacheRegionFactory</text>
+
+  <!-- Property 3: Cache Provider -->
+  <text x="65" y="188" font-family="monospace" font-size="11" fill="#cba6f7">spring.jpa.properties.javax.cache.provider=</text>
+  <text x="80" y="204" font-family="monospace" font-size="11" fill="#89b4fa">    org.ehcache.jsr107.EhcacheCachingProvider</text>
+
+  <!-- Property 4: Logging -->
+  <text x="65" y="228" font-family="monospace" font-size="11" fill="#cba6f7">logging.level.org.hibernate.cache.spi=<tspan fill="#fab387" font-weight="bold">DEBUG</tspan></text>
+
+  <!-- Arrow from Callout to Region Factory -->
+  <line x1="675" y1="147" x2="650" y2="147" stroke="#f9e2af" stroke-width="2" marker-end="url(#arr12-yellow)"/>
+
+  <!-- Right: Callout Annotation Card -->
+  <rect x="675" y="65" width="325" height="195" rx="8" fill="#28241c" stroke="#f9e2af" stroke-width="1.5"/>
+  <rect x="690" y="78" width="130" height="20" rx="4" fill="#f9e2af"/>
+  <text x="755" y="92" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#11111b">JCacheRegionFactory</text>
+  <text x="690" y="118" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f9e2af">Role of Region Factory Class:</text>
+  <text x="690" y="139" font-family="sans-serif" font-size="11.5" fill="#cdd6f4">• Tells Hibernate to use <tspan fill="#f9e2af" font-weight="bold">hibernate-jcache</tspan></text>
+  <text x="702" y="156" font-family="sans-serif" font-size="11.5" fill="#cdd6f4">to manage 2nd level caching.</text>
+  <text x="690" y="178" font-family="sans-serif" font-size="11" fill="#a6adc8">• Enables JCache (JSR-107) standard API.</text>
+  <text x="690" y="198" font-family="sans-serif" font-size="11" fill="#bac2de">• Alternatively, direct Ehcache factory can</text>
+  <text x="702" y="214" font-family="sans-serif" font-size="11" fill="#bac2de">be provided (bypassing JCache interface).</text>
+  <rect x="690" y="226" width="295" height="22" rx="4" fill="#181825"/>
+  <text x="837" y="241" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a6e3a1">Default is disabled ➔ Must enable in properties!</text>
+
+
+  <!-- ==================== SECTION 2: REGION CONCEPT ==================== -->
+  <rect x="30" y="295" width="990" height="205" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Section 2 Header -->
+  <rect x="50" y="307" width="140" height="22" rx="4" fill="#313244"/>
+  <text x="120" y="322" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#a6e3a1">CORE CONCEPT</text>
+  <text x="202" y="324" font-family="sans-serif" font-size="15" font-weight="bold" fill="#cdd6f4">What is a Region? (Logical Grouping of Cached Data)</text>
+  <text x="50" y="352" font-family="sans-serif" font-size="12" fill="#a6adc8">A Region allows applying distinct caching policies per entity, collection, or query result for granular control:</text>
+
+  <!-- 4 Feature Cards for Region Strategies -->
+  <!-- Card 1: Eviction Policy -->
+  <rect x="50" y="368" width="225" height="116" rx="7" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="62" y="378" width="105" height="18" rx="3" fill="#1e2238"/>
+  <text x="114" y="391" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#89b4fa">EVICTION POLICY</text>
+  <text x="62" y="415" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#cdd6f4">Eviction Strategy</text>
+  <text x="62" y="434" font-family="sans-serif" font-size="11" fill="#a6adc8">• LRU (Least Recently Used)</text>
+  <text x="62" y="452" font-family="sans-serif" font-size="11" fill="#a6adc8">• LFU (Least Frequently Used)</text>
+  <text x="62" y="470" font-family="sans-serif" font-size="11" fill="#a6adc8">• FIFO (First In First Out)</text>
+
+  <!-- Card 2: TTL -->
+  <rect x="295" y="368" width="225" height="116" rx="7" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="307" y="378" width="95" height="18" rx="3" fill="#1c2d25"/>
+  <text x="354" y="391" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#a6e3a1">EXPIRATION</text>
+  <text x="307" y="415" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#cdd6f4">TTL &amp; TTI</text>
+  <text x="307" y="434" font-family="sans-serif" font-size="11" fill="#a6adc8">• Time To Live (lifespan)</text>
+  <text x="307" y="452" font-family="sans-serif" font-size="11" fill="#a6adc8">• Time To Idle (inactivity)</text>
+  <text x="307" y="470" font-family="sans-serif" font-size="11" fill="#a6adc8">• Granular per entity region</text>
+
+  <!-- Card 3: Cache Size -->
+  <rect x="540" y="368" width="225" height="116" rx="7" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="552" y="378" width="105" height="18" rx="3" fill="#2d261e"/>
+  <text x="604" y="391" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#fab387">CAPACITY LIMITS</text>
+  <text x="552" y="415" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#cdd6f4">Cache Sizing</text>
+  <text x="552" y="434" font-family="sans-serif" font-size="11" fill="#a6adc8">• Max entries in heap</text>
+  <text x="552" y="452" font-family="sans-serif" font-size="11" fill="#a6adc8">• Off-heap memory limits</text>
+  <text x="552" y="470" font-family="sans-serif" font-size="11" fill="#a6adc8">• Disk persistent quotas</text>
+
+  <!-- Card 4: Concurrency Strategy -->
+  <rect x="785" y="368" width="220" height="116" rx="7" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="797" y="378" width="135" height="18" rx="3" fill="#31202e"/>
+  <text x="864" y="391" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f38ba8">CONCURRENCY MODE</text>
+  <text x="797" y="415" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#cdd6f4">Concurrency Strategy</text>
+  <text x="797" y="434" font-family="sans-serif" font-size="11" fill="#a6adc8">• READ_ONLY</text>
+  <text x="797" y="452" font-family="sans-serif" font-size="11" fill="#a6adc8">• READ_WRITE</text>
+  <text x="797" y="470" font-family="sans-serif" font-size="11" fill="#a6adc8">• NONSTRICT / TX</text>
+
+
+  <!-- ==================== SECTION 3: ARCHITECTURE RECAP ==================== -->
+  <rect x="30" y="515" width="990" height="145" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Architecture Header -->
+  <text x="50" y="538" font-family="sans-serif" font-size="13" font-weight="bold" fill="#cdd6f4">Architectural Mapping: How Properties Wire Up the System</text>
+
+  <!-- Component Flow Boxes -->
+  <!-- Box 1: Hibernate -->
+  <rect x="50" y="552" width="140" height="52" rx="7" fill="#11111b" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="120" y="575" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#cdd6f4">Hibernate</text>
+  <text x="120" y="592" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a6adc8">L2 Cache Enabled</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="190" y1="578" x2="235" y2="578" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr12)"/>
+
+  <!-- Box 2: JCacheRegionFactory -->
+  <rect x="235" y="552" width="225" height="52" rx="7" fill="#28241c" stroke="#f9e2af" stroke-width="1.5"/>
+  <text x="347" y="573" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f9e2af">JCacheRegionFactory</text>
+  <text x="347" y="591" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a6adc8">(from hibernate-jcache)</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="460" y1="578" x2="505" y2="578" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr12)"/>
+
+  <!-- Box 3: JCache APIs -->
+  <rect x="505" y="552" width="180" height="52" rx="7" fill="#1e2238" stroke="#89b4fa" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="595" y="574" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#89b4fa">JCache APIs</text>
+  <text x="595" y="591" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#cdd6f4">Standard Interfaces</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="685" y1="578" x2="730" y2="578" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr12)"/>
+
+  <!-- Box 4: Ehcache with Regions -->
+  <rect x="730" y="552" width="270" height="52" rx="7" fill="#1c2d25" stroke="#a6e3a1" stroke-width="1.5"/>
+  <text x="865" y="573" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#a6e3a1">Ehcache (Cache Regions)</text>
+  <text x="865" y="591" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a6adc8">Separate Regions for each Entity / Query</text>
+
+  <!-- Footer Takeaway -->
+  <text x="525" y="635" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#a6adc8">
+    <tspan fill="#f9e2af" font-weight="bold">Summary: </tspan>
+    Regions allow you to tune eviction, TTL, and concurrency separately for critical vs rarely accessed entities!
+  </text>
+</svg>

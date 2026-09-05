@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="580" viewBox="0 0 1050 580">
+  <!-- Background Canvas -->
+  <rect width="1050" height="580" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== LEFT COLUMN: ENTITY CODE ==================== -->
+  <rect x="30" y="20" width="580" height="480" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Window Header -->
+  <path d="M 30 28 A 8 8 0 0 1 38 20 L 602 20 A 8 8 0 0 1 610 28 L 610 52 L 30 52 Z" fill="#11111b"/>
+  <circle cx="48" cy="36" r="4.5" fill="#f38ba8"/>
+  <circle cx="62" cy="36" r="4.5" fill="#f9e2af"/>
+  <circle cx="76" cy="36" r="4.5" fill="#a6e3a1"/>
+  <text x="94" y="40" font-family="monospace" font-size="11.5" fill="#cdd6f4">UserDetails.java (Configured with READ_ONLY)</text>
+  <rect x="440" y="27" width="160" height="18" rx="3" fill="#1e2238"/>
+  <text x="520" y="40" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#89b4fa">@Cache: READ_ONLY</text>
+
+  <!-- Code Body -->
+  <text x="50" y="76" font-family="monospace" font-size="12" fill="#cba6f7">@Entity</text>
+
+  <!-- Highlighted @Cache block -->
+  <rect x="44" y="86" width="550" height="48" rx="6" fill="#1e2238" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="54" y="106" font-family="monospace" font-size="12" fill="#89dceb">@Cache<tspan fill="#cdd6f4">(usage = </tspan><tspan fill="#89b4fa" font-weight="bold">CacheConcurrencyStrategy.READ_ONLY</tspan><tspan fill="#cdd6f4">,</tspan></text>
+  <text x="54" y="124" font-family="monospace" font-size="12" fill="#cdd6f4">        region = <tspan fill="#a6e3a1">"userDetailsCache"</tspan><tspan fill="#cdd6f4">)</tspan></text>
+
+  <!-- Entity definition -->
+  <text x="50" y="156" font-family="monospace" font-size="12" fill="#89b4fa">public class <tspan fill="#f9e2af" font-weight="bold">UserDetails</tspan> {</text>
+
+  <text x="70" y="178" font-family="monospace" font-size="11.5" fill="#cba6f7">    @Id</text>
+  <text x="70" y="196" font-family="monospace" font-size="11.5" fill="#89dceb">    @GeneratedValue<tspan fill="#cdd6f4">(strategy = GenerationType.IDENTITY)</tspan></text>
+  <text x="70" y="214" font-family="monospace" font-size="11.5" fill="#89b4fa">    private <tspan fill="#cdd6f4">Long</tspan> id;</text>
+
+  <text x="70" y="238" font-family="monospace" font-size="11.5" fill="#89b4fa">    private <tspan fill="#cdd6f4">String</tspan> name;</text>
+  <text x="70" y="256" font-family="monospace" font-size="11.5" fill="#89b4fa">    private <tspan fill="#cdd6f4">String</tspan> email;</text>
+
+  <text x="70" y="284" font-family="monospace" font-size="11" fill="#585b70">    // Constructors</text>
+  <text x="70" y="302" font-family="monospace" font-size="11.5" fill="#89b4fa">    public <tspan fill="#f9e2af">UserDetails</tspan><tspan fill="#cdd6f4">() {}</tspan></text>
+
+  <text x="70" y="324" font-family="monospace" font-size="11.5" fill="#89b4fa">    public <tspan fill="#f9e2af">UserDetails</tspan><tspan fill="#cdd6f4">(String name, String email) {</tspan></text>
+  <text x="94" y="342" font-family="monospace" font-size="11.5" fill="#cdd6f4">        this.name = name;</text>
+  <text x="94" y="360" font-family="monospace" font-size="11.5" fill="#cdd6f4">        this.email = email;</text>
+  <text x="70" y="378" font-family="monospace" font-size="11.5" fill="#cdd6f4">    }</text>
+
+  <text x="70" y="404" font-family="monospace" font-size="11" fill="#585b70">    // Getters and setters...</text>
+  <text x="50" y="430" font-family="monospace" font-size="12" fill="#cdd6f4">}</text>
+
+  <!-- Left Bottom Tag -->
+  <rect x="44" y="450" width="550" height="34" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <text x="319" y="471" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#89b4fa" font-weight="bold">Configured Strategy: READ_ONLY — strictly immutable in L2 Cache</text>
+
+
+  <!-- ==================== RIGHT COLUMN: LIFECYCLE FLOW ==================== -->
+  <rect x="630" y="20" width="390" height="480" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Right Header -->
+  <path d="M 630 28 A 8 8 0 0 1 638 20 L 1012 20 A 8 8 0 0 1 1020 28 L 1020 52 L 630 52 Z" fill="#11111b"/>
+  <text x="645" y="40" font-family="sans-serif" font-size="12" font-weight="bold" fill="#cdd6f4">Execution Lifecycle Demo</text>
+  <rect x="895" y="27" width="115" height="18" rx="3" fill="#313244"/>
+  <text x="952" y="40" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f9e2af">TEST SCENARIO</text>
+
+  <!-- Step 1: POST -->
+  <rect x="645" y="68" width="360" height="105" rx="7" fill="#11111b" stroke="#a6e3a1" stroke-width="1.2"/>
+  <rect x="655" y="78" width="130" height="20" rx="3" fill="#1c2d25"/>
+  <text x="720" y="92" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#a6e3a1">STEP 1: POST /user</text>
+  <text x="655" y="116" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#cdd6f4">Insert New User Entity</text>
+  <text x="655" y="134" font-family="sans-serif" font-size="11" fill="#a6adc8">• Record inserted directly into Database.</text>
+  <text x="655" y="150" font-family="sans-serif" font-size="11" fill="#a6adc8">• L2 Cache is not touched during insertion.</text>
+
+  <!-- Step 2: GET -->
+  <rect x="645" y="185" width="360" height="115" rx="7" fill="#11111b" stroke="#89b4fa" stroke-width="1.2"/>
+  <rect x="655" y="195" width="145" height="20" rx="3" fill="#1e2238"/>
+  <text x="727" y="209" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#89b4fa">STEP 2: GET /user/1</text>
+  <text x="655" y="233" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#cdd6f4">First Read: Cache Miss</text>
+  <text x="655" y="251" font-family="sans-serif" font-size="11" fill="#a6adc8">• 1st GET results in Cache Miss (DB query).</text>
+  <text x="655" y="267" font-family="sans-serif" font-size="11" fill="#a6adc8">• Data is loaded into L2 Cache as <tspan fill="#89b4fa" font-weight="bold">READ_ONLY</tspan>.</text>
+  <text x="655" y="283" font-family="sans-serif" font-size="11" fill="#a6adc8">• Subsequent GETs hit L2 Cache directly.</text>
+
+  <!-- Step 3: PUT -->
+  <rect x="645" y="312" width="360" height="120" rx="7" fill="#11111b" stroke="#f38ba8" stroke-width="1.5"/>
+  <rect x="655" y="322" width="135" height="20" rx="3" fill="#31202e"/>
+  <text x="722" y="336" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#f38ba8">STEP 3: PUT /user/1</text>
+  <text x="655" y="360" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#f38ba8">Attempt to Update Cached Entity</text>
+  <text x="655" y="378" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Client sends PUT request to update user.</text>
+  <text x="655" y="394" font-family="sans-serif" font-size="11" fill="#f38ba8">• Hibernate blocks the update operation!</text>
+  <text x="655" y="410" font-family="sans-serif" font-size="10.5" fill="#f38ba8" font-weight="bold">➔ Throws UnsupportedOperationException</text>
+
+  <!-- Right Footer Tag -->
+  <rect x="645" y="444" width="360" height="40" rx="5" fill="#11111b"/>
+  <text x="825" y="468" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f9e2af">Read-only objects cannot be updated once cached!</text>
+
+
+  <!-- ==================== BOTTOM SUMMARY BANNER ==================== -->
+  <rect x="30" y="515" width="990" height="46" rx="8" fill="#181825" stroke="#45475a" stroke-width="1"/>
+  <text x="525" y="543" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#cdd6f4">
+    <tspan fill="#f9e2af" font-weight="bold">Key Takeaway: </tspan>
+    Under <tspan fill="#89b4fa" font-weight="bold">READ_ONLY</tspan>, inserting and reading work normally, but any subsequent UPDATE on a cached entity will be rejected with an Exception.
+  </text>
+</svg>

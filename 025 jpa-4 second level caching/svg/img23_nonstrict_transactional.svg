@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="440" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#1e1e2e" rx="12"/>
+
+  <!-- NONSTRICT_READ_WRITE box -->
+  <rect x="20" y="20" width="760" height="180" rx="8" fill="#181825" stroke="#45475a" stroke-width="1.5"/>
+  <text x="400" y="50" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#cdd6f4" font-weight="bold">3. NONSTRICT_READ_WRITE</text>
+  <text x="40" y="80" font-family="sans-serif" font-size="13" fill="#cdd6f4">- During Read, No Lock is acquired at all.</text>
+  <text x="40" y="100" font-family="sans-serif" font-size="13" fill="#cdd6f4">- During Update, after txn commit successful, Cache is mark Invalidated and not updated with Fresh data.</text>
+  <text x="40" y="120" font-family="sans-serif" font-size="13" fill="#cdd6f4">- Good for Heavy Read application.</text>
+  <text x="40" y="140" font-family="sans-serif" font-size="13" fill="#cdd6f4">- So if Update and Read happens in parallel, its a chance that read operation gets the stale data.</text>
+
+  <!-- TRANSACTIONAL box -->
+  <rect x="20" y="220" width="760" height="180" rx="8" fill="#181825" stroke="#45475a" stroke-width="1.5"/>
+  <text x="400" y="252" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#cdd6f4" font-weight="bold">4. TRANSACTIONAL</text>
+  <text x="40" y="283" font-family="sans-serif" font-size="13" fill="#cdd6f4">- Acquire READ lock and Also WRITE lock.</text>
+  <text x="40" y="303" font-family="sans-serif" font-size="13" fill="#cdd6f4">- Updates the cache too, after txn commit successfully.</text>
+  <text x="40" y="323" font-family="sans-serif" font-size="13" fill="#cdd6f4">- Any other READ operation during cache lock, goes directly to DB.</text>
+  <text x="40" y="343" font-family="sans-serif" font-size="13" fill="#cdd6f4">- Any other WRITE operation during cache lock, waits in queue.</text>
+
+  <!-- Notes -->
+  <text x="20" y="390" font-family="sans-serif" font-size="14" fill="#cdd6f4">Transactional is more strict!!</text>
+  <text x="20" y="412" font-family="sans-serif" font-size="14" fill="#cdd6f4">If lock on read then Will read from DB!!</text>
+  <text x="20" y="432" font-family="sans-serif" font-size="14" fill="#cdd6f4">If on lock write operation comes it has to wait!!</text>
+</svg>

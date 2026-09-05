@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="660" viewBox="0 0 1050 660">
+  <!-- Background Canvas -->
+  <rect width="1050" height="660" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== HEADER SECTION ==================== -->
+  <rect x="30" y="20" width="990" height="125" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Title Pill -->
+  <rect x="48" y="32" width="160" height="22" rx="4" fill="#1e2238"/>
+  <text x="128" y="47" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#89b4fa">STRATEGY 1 OF 4</text>
+  <text x="220" y="49" font-family="sans-serif" font-size="16" font-weight="bold" fill="#cdd6f4">1. READ_ONLY Strategy</text>
+
+  <!-- 3 Key Property Cards -->
+  <!-- Card 1: Static Data -->
+  <rect x="48" y="66" width="305" height="66" rx="6" fill="#11111b" stroke="#89b4fa" stroke-width="1.2"/>
+  <text x="60" y="86" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#89b4fa">✔ Good for Static Data</text>
+  <text x="60" y="105" font-family="sans-serif" font-size="10.5" fill="#a6adc8">• Ideal for read-only tables (lookup codes, zips).</text>
+  <text x="60" y="121" font-family="sans-serif" font-size="10.5" fill="#a6adc8">• Excellent throughput; cached indefinitely.</text>
+
+  <!-- Card 2: No Updates -->
+  <rect x="372" y="66" width="305" height="66" rx="6" fill="#11111b" stroke="#a6e3a1" stroke-width="1.2"/>
+  <text x="384" y="86" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#a6e3a1">✔ Never Requires Updates</text>
+  <text x="384" y="105" font-family="sans-serif" font-size="10.5" fill="#a6adc8">• Data is loaded once into L2 cache.</text>
+  <text x="384" y="121" font-family="sans-serif" font-size="10.5" fill="#a6adc8">• Zero lock management overhead.</text>
+
+  <!-- Card 3: Throws Exception -->
+  <rect x="696" y="66" width="306" height="66" rx="6" fill="#11111b" stroke="#f38ba8" stroke-width="1.2"/>
+  <text x="708" y="86" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#f38ba8">⚠ Throws Exception on Update</text>
+  <text x="708" y="105" font-family="sans-serif" font-size="10.5" fill="#f38ba8">• Any UPDATE attempt throws an Exception!</text>
+  <text x="708" y="121" font-family="sans-serif" font-size="10.5" fill="#a6adc8">• Hibernate explicitly forbids updating.</text>
+
+
+  <!-- ==================== MID CALLOUT BANNER ==================== -->
+  <rect x="30" y="156" width="990" height="36" rx="6" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <text x="525" y="179" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#cdd6f4">
+    <tspan fill="#f9e2af" font-weight="bold">Testing Setup: </tspan>
+    In <tspan fill="#89b4fa">UserController</tspan>, we map POST (Insert), PUT (Update), and GET endpoints to observe READ_ONLY behavior:
+  </text>
+
+
+  <!-- ==================== CODE WINDOW: UserController ==================== -->
+  <rect x="30" y="202" width="990" height="438" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Code Window Bar -->
+  <path d="M 30 210 A 8 8 0 0 1 38 202 L 1012 202 A 8 8 0 0 1 1020 210 L 1020 234 L 30 234 Z" fill="#11111b"/>
+  <circle cx="48" cy="218" r="4.5" fill="#f38ba8"/>
+  <circle cx="62" cy="218" r="4.5" fill="#f9e2af"/>
+  <circle cx="76" cy="218" r="4.5" fill="#a6e3a1"/>
+  <text x="94" y="222" font-family="monospace" font-size="11.5" fill="#cdd6f4">UserController.java</text>
+  <rect x="850" y="208" width="160" height="20" rx="3" fill="#1e2238"/>
+  <text x="930" y="222" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#89b4fa">Spring REST Controller</text>
+
+  <!-- Code Lines -->
+  <text x="50" y="258" font-family="monospace" font-size="11.5" fill="#cba6f7">@RestController</text>
+  <text x="50" y="276" font-family="monospace" font-size="11.5" fill="#89dceb">@RequestMapping<tspan fill="#cdd6f4">(value = </tspan><tspan fill="#a6e3a1">"/api/"</tspan><tspan fill="#cdd6f4">)</tspan></text>
+  <text x="50" y="294" font-family="monospace" font-size="11.5" fill="#89b4fa">public class <tspan fill="#f9e2af" font-weight="bold">UserController</tspan> {</text>
+
+  <!-- Autowired Field -->
+  <text x="74" y="316" font-family="monospace" font-size="11" fill="#cba6f7">    @Autowired</text>
+  <text x="74" y="332" font-family="monospace" font-size="11" fill="#89b4fa">    UserDetailsService <tspan fill="#cdd6f4">userDetailsService;</tspan></text>
+
+  <!-- 1. POST (Insert) -->
+  <text x="74" y="358" font-family="monospace" font-size="11" fill="#89dceb">    @PostMapping<tspan fill="#cdd6f4">(path = </tspan><tspan fill="#a6e3a1">"/user"</tspan><tspan fill="#cdd6f4">)</tspan></text>
+  <text x="74" y="374" font-family="monospace" font-size="11" fill="#89b4fa">    public <tspan fill="#f9e2af">UserDetails</tspan> <tspan fill="#89dceb">insertUser</tspan><tspan fill="#cdd6f4">(@RequestBody UserDetails userDetails) {</tspan></text>
+  <text x="98" y="390" font-family="monospace" font-size="11" fill="#89b4fa">        return <tspan fill="#cdd6f4">userDetailsService.saveUser(userDetails);</tspan></text>
+  <text x="74" y="406" font-family="monospace" font-size="11" fill="#cdd6f4">    }</text>
+
+  <!-- 2. PUT (Update) - Highlighted as the error trigger -->
+  <rect x="68" y="420" width="915" height="88" rx="6" fill="#2d1c25" stroke="#f38ba8" stroke-width="1.2"/>
+  <rect x="80" y="428" width="280" height="20" rx="3" fill="#31202e"/>
+  <text x="220" y="442" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#f38ba8">⚠ FAILS UNDER READ_ONLY STRATEGY</text>
+
+  <text x="80" y="464" font-family="monospace" font-size="11" fill="#89dceb">    @PutMapping<tspan fill="#cdd6f4">(path = </tspan><tspan fill="#a6e3a1">"/user/{id}"</tspan><tspan fill="#cdd6f4">)</tspan></text>
+  <text x="80" y="480" font-family="monospace" font-size="11" fill="#89b4fa">    public <tspan fill="#f9e2af">UserDetails</tspan> <tspan fill="#89dceb">updateUser</tspan><tspan fill="#cdd6f4">(@PathVariable Long id, @RequestBody UserDetails userDetails) {</tspan></text>
+  <text x="104" y="496" font-family="monospace" font-size="11" fill="#89b4fa">        return <tspan fill="#cdd6f4">userDetailsService.updateUser(id, userDetails);</tspan></text>
+  <text x="80" y="504" font-family="monospace" font-size="11" fill="#cdd6f4">    }</text>
+
+  <!-- 3. GET (Read) -->
+  <text x="74" y="534" font-family="monospace" font-size="11" fill="#89dceb">    @GetMapping<tspan fill="#cdd6f4">(</tspan><tspan fill="#a6e3a1">"/user/{id}"</tspan><tspan fill="#cdd6f4">)</tspan></text>
+  <text x="74" y="550" font-family="monospace" font-size="11" fill="#89b4fa">    public <tspan fill="#f9e2af">UserDetails</tspan> <tspan fill="#89dceb">getUser</tspan><tspan fill="#cdd6f4">(@PathVariable Long id) {</tspan></text>
+  <text x="98" y="566" font-family="monospace" font-size="11" fill="#89b4fa">        return <tspan fill="#cdd6f4">userDetailsService.findByID(id);</tspan></text>
+  <text x="74" y="582" font-family="monospace" font-size="11" fill="#cdd6f4">    }</text>
+
+  <text x="50" y="608" font-family="monospace" font-size="11.5" fill="#cdd6f4">}</text>
+
+  <!-- Footer Tag -->
+  <rect x="48" y="618" width="954" height="16" rx="2" fill="#181825"/>
+</svg>

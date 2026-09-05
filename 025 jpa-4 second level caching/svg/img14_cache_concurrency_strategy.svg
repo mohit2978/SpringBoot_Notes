@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="520" viewBox="0 0 1050 520">
+  <defs>
+    <marker id="arr14" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#f38ba8"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1050" height="520" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== HEADER BAR ==================== -->
+  <rect x="30" y="18" width="190" height="22" rx="4" fill="#313244"/>
+  <text x="125" y="33" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#f9e2af">CONCURRENCY STRATEGIES</text>
+  <text x="235" y="35" font-family="sans-serif" font-size="15" font-weight="bold" fill="#cdd6f4">3. Different CacheConcurrencyStrategy Types</text>
+
+  <!-- ==================== LEFT COLUMN: ENTITY CODE ==================== -->
+  <rect x="30" y="55" width="510" height="385" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Window Bar -->
+  <path d="M 30 63 A 8 8 0 0 1 38 55 L 532 55 A 8 8 0 0 1 540 63 L 540 85 L 30 85 Z" fill="#11111b"/>
+  <circle cx="48" cy="70" r="4.5" fill="#f38ba8"/>
+  <circle cx="62" cy="70" r="4.5" fill="#f9e2af"/>
+  <circle cx="76" cy="70" r="4.5" fill="#a6e3a1"/>
+  <text x="94" y="74" font-family="monospace" font-size="11" fill="#cdd6f4">UserDetails.java</text>
+  <rect x="375" y="61" width="150" height="18" rx="3" fill="#31202e"/>
+  <text x="450" y="74" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f38ba8">Target Annotation</text>
+
+  <!-- Code Lines -->
+  <text x="48" y="110" font-family="monospace" font-size="12" fill="#cba6f7">@Entity</text>
+
+  <!-- Highlighted Red Box around @Cache -->
+  <rect x="44" y="122" width="480" height="52" rx="6" fill="#2d1c25" stroke="#f38ba8" stroke-width="1.8"/>
+  <text x="54" y="142" font-family="monospace" font-size="12" fill="#89dceb">@Cache<tspan fill="#cdd6f4">(usage = </tspan><tspan fill="#fab387" font-weight="bold">CacheConcurrencyStrategy.READ_WRITE</tspan><tspan fill="#cdd6f4">,</tspan></text>
+  <text x="54" y="160" font-family="monospace" font-size="12" fill="#cdd6f4">        region = <tspan fill="#a6e3a1">"userDetailsCache"</tspan><tspan fill="#cdd6f4">)</tspan></text>
+
+  <!-- Class Body -->
+  <text x="48" y="196" font-family="monospace" font-size="12" fill="#89b4fa">public class <tspan fill="#f9e2af" font-weight="bold">UserDetails</tspan> {</text>
+  <text x="68" y="218" font-family="monospace" font-size="11.5" fill="#cba6f7">    @Id</text>
+  <text x="68" y="238" font-family="monospace" font-size="11.5" fill="#89dceb">    @GeneratedValue<tspan fill="#cdd6f4">(strategy = GenerationType.IDENTITY)</tspan></text>
+  <text x="68" y="258" font-family="monospace" font-size="11.5" fill="#89b4fa">    private <tspan fill="#cdd6f4">Long</tspan> id;</text>
+  <text x="68" y="280" font-family="monospace" font-size="11.5" fill="#89b4fa">    private <tspan fill="#cdd6f4">String</tspan> name;</text>
+  <text x="68" y="302" font-family="monospace" font-size="11.5" fill="#89b4fa">    private <tspan fill="#cdd6f4">String</tspan> email;</text>
+  <text x="68" y="326" font-family="monospace" font-size="11" fill="#585b70">    // Constructors, Getters and setters...</text>
+  <text x="48" y="352" font-family="monospace" font-size="12" fill="#cdd6f4">}</text>
+
+  <!-- Callout Bottom Tag -->
+  <rect x="44" y="380" width="480" height="42" rx="6" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <text x="284" y="399" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#f9e2af" font-weight="bold">Notice: CacheConcurrencyStrategy is specified inside @Cache</text>
+  <text x="284" y="414" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#a6adc8">Determines how Hibernate handles parallel reads, writes, and invalidations.</text>
+
+
+  <!-- ==================== RIGHT COLUMN: 4 STRATEGIES TABLE ==================== -->
+  <rect x="560" y="55" width="460" height="385" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Right Header -->
+  <path d="M 560 63 A 8 8 0 0 1 568 55 L 1012 55 A 8 8 0 0 1 1020 63 L 1020 85 L 560 85 Z" fill="#11111b"/>
+  <text x="575" y="74" font-family="sans-serif" font-size="12" font-weight="bold" fill="#cdd6f4">Available Cache Concurrency Strategies</text>
+  <rect x="915" y="61" width="95" height="18" rx="3" fill="#313244"/>
+  <text x="962" y="74" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#89b4fa">4 TYPES</text>
+
+  <!-- STRATEGY 1: READ_ONLY -->
+  <rect x="575" y="98" width="430" height="66" rx="6" fill="#11111b" stroke="#89b4fa" stroke-width="1.2"/>
+  <rect x="585" y="106" width="115" height="20" rx="3" fill="#1e2238"/>
+  <text x="642" y="120" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="bold" fill="#89b4fa">1. READ_ONLY</text>
+  <rect x="708" y="106" width="135" height="20" rx="3" fill="#181825"/>
+  <text x="775" y="120" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="#a6adc8">For Static / Reference Data</text>
+  <text x="585" y="142" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Excellent performance. Data is never modified.</text>
+  <text x="585" y="157" font-family="sans-serif" font-size="11" fill="#f38ba8">• If an update is attempted, Hibernate throws an Exception!</text>
+
+  <!-- STRATEGY 2: READ_WRITE -->
+  <rect x="575" y="172" width="430" height="66" rx="6" fill="#11111b" stroke="#a6e3a1" stroke-width="1.2"/>
+  <rect x="585" y="180" width="125" height="20" rx="3" fill="#1c2d25"/>
+  <text x="647" y="194" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="bold" fill="#a6e3a1">2. READ_WRITE</text>
+  <rect x="718" y="180" width="155" height="20" rx="3" fill="#181825"/>
+  <text x="795" y="194" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="#a6adc8">Strict Consistency (Soft Lock)</text>
+  <text x="585" y="216" font-family="sans-serif" font-size="11" fill="#cdd6f4">• For read-heavy data with occasional updates.</text>
+  <text x="585" y="231" font-family="sans-serif" font-size="11" fill="#a6adc8">• Uses soft-locks during updates to prevent dirty/stale reads.</text>
+
+  <!-- STRATEGY 3: NONSTRICT_READ_WRITE -->
+  <rect x="575" y="246" width="430" height="66" rx="6" fill="#11111b" stroke="#fab387" stroke-width="1.2"/>
+  <rect x="585" y="254" width="200" height="20" rx="3" fill="#2d261e"/>
+  <text x="685" y="268" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" fill="#fab387">3. NONSTRICT_READ_WRITE</text>
+  <text x="585" y="290" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Best when data is rarely updated and stale data is tolerable.</text>
+  <text x="585" y="305" font-family="sans-serif" font-size="11" fill="#a6adc8">• No lock taken; cache is simply invalidated after DB commit.</text>
+
+  <!-- STRATEGY 4: TRANSACTIONAL -->
+  <rect x="575" y="320" width="430" height="66" rx="6" fill="#11111b" stroke="#f38ba8" stroke-width="1.2"/>
+  <rect x="585" y="328" width="145" height="20" rx="3" fill="#31202e"/>
+  <text x="657" y="342" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="bold" fill="#f38ba8">4. TRANSACTIONAL</text>
+  <rect x="738" y="328" width="160" height="20" rx="3" fill="#181825"/>
+  <text x="818" y="342" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="#a6adc8">Full 2PC / JTA Transactions</text>
+  <text x="585" y="364" font-family="sans-serif" font-size="11" fill="#cdd6f4">• For enterprise systems requiring full distributed transaction support.</text>
+  <text x="585" y="379" font-family="sans-serif" font-size="11" fill="#a6adc8">• Strict synchronization using JTA; cache provider must support JTA.</text>
+
+  <!-- Footer Indicator -->
+  <rect x="575" y="394" width="430" height="32" rx="4" fill="#181825"/>
+  <text x="790" y="414" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a6adc8">Choice depends on business tolerance for stale data vs concurrency performance.</text>
+
+
+  <!-- ==================== BOTTOM SUMMARY FOOTER ==================== -->
+  <rect x="30" y="455" width="990" height="46" rx="8" fill="#181825" stroke="#45475a" stroke-width="1"/>
+  <text x="525" y="483" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#cdd6f4">
+    <tspan fill="#f9e2af" font-weight="bold">Key Takeaway: </tspan>
+    Concurrency Strategy tells Hibernate how parallel INSERT, UPDATE, and DELETE operations interact with cached entries to prevent stale reads.
+  </text>
+</svg>

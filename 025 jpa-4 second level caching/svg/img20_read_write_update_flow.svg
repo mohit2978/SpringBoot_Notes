@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="730" viewBox="0 0 1050 730">
+  <defs>
+    <marker id="arr20-blue" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#89b4fa"/>
+    </marker>
+    <marker id="arr20-green" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#a6e3a1"/>
+    </marker>
+    <marker id="arr20-red" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#f38ba8"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1050" height="730" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== HEADER BAR ==================== -->
+  <rect x="30" y="18" width="165" height="22" rx="4" fill="#1c2d25"/>
+  <text x="112" y="33" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#a6e3a1">UPDATE WORKFLOW</text>
+  <text x="210" y="35" font-family="sans-serif" font-size="15" font-weight="bold" fill="#cdd6f4">READ_WRITE Strategy — Internal Update &amp; Invalidation Flow</text>
+
+  <!-- ==================== FLOWCHART CONTAINER ==================== -->
+  <rect x="30" y="52" width="990" height="585" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Top bar -->
+  <path d="M 30 60 A 8 8 0 0 1 38 52 L 1012 52 A 8 8 0 0 1 1020 60 L 1020 80 L 30 80 Z" fill="#11111b"/>
+  <circle cx="48" cy="66" r="4" fill="#f38ba8"/>
+  <circle cx="60" cy="66" r="4" fill="#f9e2af"/>
+  <circle cx="72" cy="66" r="4" fill="#a6e3a1"/>
+  <text x="90" y="70" font-family="monospace" font-size="11" fill="#cdd6f4">Transaction &amp; Cache Locking Flowchart</text>
+
+  <!-- STEP 1: Update (PUT) Box -->
+  <rect x="190" y="100" width="150" height="46" rx="6" fill="#11111b" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="265" y="121" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#cdd6f4">Update Request</text>
+  <text x="265" y="136" text-anchor="middle" font-family="monospace" font-size="10" fill="#89b4fa">PUT /api/user/1</text>
+
+  <!-- Arrow Step 1 -> Step 2 -->
+  <line x1="340" y1="123" x2="415" y2="123" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr20-blue)"/>
+
+  <!-- STEP 2: Txn Begin Box -->
+  <rect x="425" y="100" width="165" height="46" rx="6" fill="#11111b" stroke="#a6e3a1" stroke-width="1.5"/>
+  <text x="507" y="121" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#a6e3a1">Txn Begin</text>
+  <text x="507" y="136" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a6adc8">Transaction Scope Starts</text>
+
+  <!-- Down Arrow Step 2 -> Step 3 -->
+  <line x1="507" y1="146" x2="507" y2="175" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr20-blue)"/>
+
+  <!-- STEP 3: Acquire Lock on Cache -->
+  <rect x="317" y="177" width="380" height="60" rx="8" fill="#28241c" stroke="#f9e2af" stroke-width="1.8"/>
+  <text x="507" y="201" text-anchor="middle" font-family="sans-serif" font-size="13.5" font-weight="bold" fill="#f9e2af">1. Acquire Lock on Cache</text>
+  <text x="507" y="221" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#cdd6f4">(Soft-lock prevents stale reads — concurrent reads &amp; writes are blocked)</text>
+
+  <!-- Down Arrow Step 3 -> Step 4 -->
+  <line x1="507" y1="237" x2="507" y2="265" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr20-blue)"/>
+
+  <!-- STEP 4: Mark Cache Invalidate -->
+  <rect x="317" y="267" width="380" height="58" rx="8" fill="#2d1c25" stroke="#f38ba8" stroke-width="1.8"/>
+  <text x="507" y="291" text-anchor="middle" font-family="sans-serif" font-size="13.5" font-weight="bold" fill="#f38ba8">2. Mark Cache Entry as 'Invalid'</text>
+  <text x="507" y="310" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#cdd6f4">(Old cached entry marked invalid; concurrent readers go directly to DB)</text>
+
+  <!-- Down Arrow Step 4 -> Step 5 -->
+  <line x1="507" y1="325" x2="507" y2="355" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr20-blue)"/>
+
+  <!-- STEP 5: Decision Diamond (If Txn?) -->
+  <polygon points="507,357 582,392 507,427 432,392" fill="#313244" stroke="#89b4fa" stroke-width="2"/>
+  <text x="507" y="397" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#cdd6f4">If Txn?</text>
+
+  <!-- BRANCH A: COMMITS (Downward) -->
+  <line x1="507" y1="427" x2="507" y2="465" stroke="#a6e3a1" stroke-width="2.2" marker-end="url(#arr20-green)"/>
+  <rect x="515" y="435" width="115" height="20" rx="3" fill="#1c2d25"/>
+  <text x="572" y="449" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#a6e3a1">Commits (Success)</text>
+
+  <!-- STEP 6: Update Cache & Remove Invalidate Flag -->
+  <rect x="297" y="467" width="420" height="66" rx="8" fill="#1c2d25" stroke="#a6e3a1" stroke-width="1.8"/>
+  <text x="507" y="491" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#a6e3a1">3A. Update Cache Data with Latest DB Data</text>
+  <text x="507" y="512" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#cdd6f4">&amp; Remove 'Invalidate' Flag from Cache</text>
+
+  <!-- Down Arrow Step 6 -> Step 7 -->
+  <line x1="507" y1="533" x2="507" y2="563" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr20-blue)"/>
+
+  <!-- STEP 7: Release Lock on Cache -->
+  <rect x="357" y="565" width="300" height="52" rx="8" fill="#1e2238" stroke="#89b4fa" stroke-width="2"/>
+  <text x="507" y="588" text-anchor="middle" font-family="sans-serif" font-size="13.5" font-weight="bold" fill="#89b4fa">4. Release Lock on Cache</text>
+  <text x="507" y="605" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#cdd6f4">Cache is fully accessible again for fast reads</text>
+
+  <!-- BRANCH B: ROLLBACK (Rightward & Downward) -->
+  <!-- Horizontal line out of diamond right point -->
+  <line x1="582" y1="392" x2="775" y2="392" stroke="#f38ba8" stroke-width="2"/>
+  <rect x="615" y="372" width="130" height="20" rx="3" fill="#31202e"/>
+  <text x="680" y="386" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#f38ba8">Rollback (Failure)</text>
+
+  <!-- Vertical line down along right column -->
+  <line x1="775" y1="392" x2="775" y2="591" stroke="#f38ba8" stroke-width="2"/>
+  <!-- Horizontal line into Release Lock box -->
+  <line x1="775" y1="591" x2="665" y2="591" stroke="#f38ba8" stroke-width="2" marker-end="url(#arr20-red)"/>
+
+
+  <!-- ==================== SIDE EXPLANATION CARDS ==================== -->
+  <!-- Left Side Card: Dirty Read Protection -->
+  <rect x="50" y="195" width="240" height="115" rx="7" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="60" y="205" width="155" height="18" rx="3" fill="#28241c"/>
+  <text x="137" y="218" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f9e2af">STALE READ DEFENSE</text>
+  <text x="60" y="240" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Exclusive soft-lock blocks</text>
+  <text x="70" y="256" font-family="sans-serif" font-size="11" fill="#cdd6f4">concurrent cache reads.</text>
+  <text x="60" y="276" font-family="sans-serif" font-size="10.5" fill="#a6adc8">• Prevents other threads from</text>
+  <text x="70" y="292" font-family="sans-serif" font-size="10.5" fill="#a6adc8">reading uncommitted data.</text>
+
+  <!-- Right Side Card: Rollback Invalidation -->
+  <rect x="735" y="420" width="265" height="135" rx="7" fill="#2d1c25" stroke="#f38ba8" stroke-width="1.2"/>
+  <rect x="745" y="430" width="170" height="18" rx="3" fill="#31202e"/>
+  <text x="830" y="443" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f38ba8">ROLLBACK GUARANTEE</text>
+  <text x="745" y="468" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f38ba8">No cache update is done!</text>
+  <text x="745" y="488" font-family="sans-serif" font-size="10.5" fill="#cdd6f4">• The 'Invalidate' flag remains active.</text>
+  <text x="745" y="506" font-family="sans-serif" font-size="10.5" fill="#cdd6f4">• Next GET request sees invalid flag,</text>
+  <text x="755" y="522" font-family="sans-serif" font-size="10.5" fill="#cdd6f4">reads from DB, and refreshes cache.</text>
+  <text x="745" y="542" font-family="sans-serif" font-size="10" fill="#a6adc8">Transaction does NOT fail if cache fails.</text>
+
+
+  <!-- ==================== BOTTOM TAKEAWAY BANNER ==================== -->
+  <rect x="30" y="650" width="990" height="60" rx="8" fill="#181825" stroke="#45475a" stroke-width="1"/>
+  <text x="525" y="674" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#cdd6f4">
+    <tspan fill="#f9e2af" font-weight="bold">Core Design Principle: </tspan>
+    Even if updating the L2 Cache fails, Hibernate does <tspan fill="#f38ba8" font-weight="bold">NOT</tspan> fail the database transaction!
+  </text>
+  <text x="525" y="694" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#a6adc8">
+    It simply retains the 'Invalidate' flag so that the very next read triggers a fresh Database fetch to re-populate the cache cleanly.
+  </text>
+</svg>

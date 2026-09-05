@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="780" viewBox="0 0 1100 780">
+  <defs>
+    <marker id="arr21-blue" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#89b4fa"/>
+    </marker>
+    <marker id="arr21-green" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#a6e3a1"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1100" height="780" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== HEADER BAR ==================== -->
+  <rect x="35" y="18" width="165" height="22" rx="4" fill="#1c2d25"/>
+  <text x="117" y="33" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#a6e3a1">PRACTICAL DEMO</text>
+  <text x="215" y="35" font-family="sans-serif" font-size="16" font-weight="bold" fill="#cdd6f4">READ_WRITE Lifecycle Demo — POST ➔ GET ➔ PUT ➔ GET</text>
+
+
+  <!-- ==================== ROW 1: POST & FIRST GET ==================== -->
+
+  <!-- CARD 1: POST (Insert) -->
+  <rect x="35" y="55" width="495" height="325" rx="10" fill="#181825" stroke="#313244" stroke-width="1.5"/>
+
+  <!-- Window Bar 1 -->
+  <path d="M 35 63 A 8 8 0 0 1 43 55 L 522 55 A 8 8 0 0 1 530 63 L 530 87 L 35 87 Z" fill="#11111b"/>
+  <circle cx="53" cy="71" r="4.5" fill="#f38ba8"/>
+  <circle cx="67" cy="71" r="4.5" fill="#f9e2af"/>
+  <circle cx="81" cy="71" r="4.5" fill="#a6e3a1"/>
+  <text x="98" y="75" font-family="monospace" font-size="11.5" fill="#cdd6f4">Step 1: Insert New User</text>
+  <rect x="385" y="62" width="135" height="18" rx="3" fill="#1c2d25"/>
+  <text x="452" y="75" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#a6e3a1">DIRECT DB INSERT</text>
+
+  <!-- URL Bar 1 -->
+  <rect x="48" y="96" width="468" height="30" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="54" y="101" width="48" height="20" rx="3" fill="#a6e3a1"/>
+  <text x="78" y="115" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#11111b">POST</text>
+  <text x="110" y="116" font-family="monospace" font-size="11.5" fill="#cdd6f4">http://localhost:8080/api/user</text>
+
+  <!-- Request Body 1 -->
+  <rect x="48" y="134" width="468" height="84" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <text x="60" y="150" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#a6adc8">REQUEST BODY (JSON)</text>
+  <text x="60" y="169" font-family="monospace" font-size="11" fill="#6c7086">{</text>
+  <text x="74" y="186" font-family="monospace" font-size="11" fill="#cdd6f4">  "name" : <tspan fill="#a6e3a1">"sj"</tspan>,  "email" : <tspan fill="#a6e3a1">"xyz@conceptandcoding.com"</tspan></text>
+  <text x="60" y="204" font-family="monospace" font-size="11" fill="#6c7086">}</text>
+
+  <!-- Response 1 -->
+  <rect x="48" y="226" width="468" height="96" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="58" y="234" width="120" height="18" rx="3" fill="#1c2d25"/>
+  <text x="118" y="247" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#a6e3a1">RESPONSE [200 OK]</text>
+  <text x="60" y="270" font-family="monospace" font-size="11" fill="#6c7086">{</text>
+  <text x="74" y="287" font-family="monospace" font-size="11" fill="#cdd6f4">  "id": <tspan fill="#fab387">1</tspan>,  "name": <tspan fill="#f9e2af">"sj"</tspan>,  "email": <tspan fill="#f9e2af">"xyz@conceptandcoding.com"</tspan></text>
+  <text x="60" y="304" font-family="monospace" font-size="11" fill="#6c7086">}</text>
+
+  <!-- Callout 1 -->
+  <rect x="48" y="330" width="468" height="40" rx="5" fill="#1c2d25"/>
+  <text x="282" y="354" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#a6e3a1" font-weight="bold">✔ Record saved directly in DB — Cache is neither read nor updated</text>
+
+
+  <!-- Connecting Arrow: Card 1 -> Card 2 -->
+  <line x1="530" y1="217" x2="562" y2="217" stroke="#89b4fa" stroke-width="2.5" marker-end="url(#arr21-blue)"/>
+
+
+  <!-- CARD 2: FIRST GET (Cache Miss) -->
+  <rect x="570" y="55" width="495" height="325" rx="10" fill="#181825" stroke="#f38ba8" stroke-width="1.5"/>
+
+  <!-- Window Bar 2 -->
+  <path d="M 570 63 A 8 8 0 0 1 578 55 L 1057 55 A 8 8 0 0 1 1065 63 L 1065 87 L 570 87 Z" fill="#11111b"/>
+  <circle cx="588" cy="71" r="4.5" fill="#f38ba8"/>
+  <circle cx="602" cy="71" r="4.5" fill="#f9e2af"/>
+  <circle cx="616" cy="71" r="4.5" fill="#a6e3a1"/>
+  <text x="633" y="75" font-family="monospace" font-size="11.5" fill="#cdd6f4">Step 2: 1st GET Call</text>
+  <rect x="945" y="62" width="110" height="18" rx="3" fill="#31202e"/>
+  <text x="1000" y="75" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f38ba8">CACHE MISS</text>
+
+  <!-- URL Bar 2 -->
+  <rect x="583" y="96" width="468" height="30" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="589" y="101" width="42" height="20" rx="3" fill="#89b4fa"/>
+  <text x="610" y="115" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#11111b">GET</text>
+  <text x="640" y="116" font-family="monospace" font-size="11.5" fill="#cdd6f4">http://localhost:8080/api/user/1</text>
+
+  <!-- Cache Behavior Note 2 -->
+  <rect x="583" y="134" width="468" height="84" rx="5" fill="#2d1c25" stroke="#f38ba8" stroke-width="1"/>
+  <text x="595" y="152" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f38ba8">1st Read Lifecycle:</text>
+  <text x="595" y="172" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Checks L2 Cache ➔ <tspan fill="#f38ba8" font-weight="bold">Cache Miss</tspan> occurred.</text>
+  <text x="595" y="191" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Fetches user from Database via SQL SELECT query.</text>
+  <text x="595" y="210" font-family="sans-serif" font-size="11" fill="#a6e3a1">• Populates entity into L2 Cache under Shared Lock.</text>
+
+  <!-- Response 2 -->
+  <rect x="583" y="226" width="468" height="96" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="593" y="234" width="120" height="18" rx="3" fill="#1e2238"/>
+  <text x="653" y="247" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#89b4fa">RESPONSE [200 OK]</text>
+  <text x="595" y="270" font-family="monospace" font-size="11" fill="#6c7086">{</text>
+  <text x="609" y="287" font-family="monospace" font-size="11" fill="#cdd6f4">  "id": <tspan fill="#fab387">1</tspan>,  "name": <tspan fill="#f9e2af">"sj"</tspan>,  "email": <tspan fill="#f9e2af">"xyz@conceptandcoding.com"</tspan></text>
+  <text x="595" y="304" font-family="monospace" font-size="11" fill="#6c7086">}</text>
+
+  <!-- Callout 2 -->
+  <rect x="583" y="330" width="468" height="40" rx="5" fill="#31202e"/>
+  <text x="817" y="354" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#f38ba8" font-weight="bold">⚠ DB Query Executed ➔ Cache now populated with user #1</text>
+
+
+  <!-- Connecting Step from Row 1 to Row 2 -->
+  <path d="M 817 380 L 817 400 L 282 400 L 282 414" fill="none" stroke="#89b4fa" stroke-width="2" marker-end="url(#arr21-blue)"/>
+  <rect x="470" y="390" width="160" height="20" rx="3" fill="#181825"/>
+  <text x="550" y="404" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#f9e2af">NEXT: UPDATE DATA</text>
+
+
+  <!-- ==================== ROW 2: PUT & FINAL GET ==================== -->
+
+  <!-- CARD 3: PUT (Update) -->
+  <rect x="35" y="420" width="495" height="325" rx="10" fill="#181825" stroke="#fab387" stroke-width="1.5"/>
+
+  <!-- Window Bar 3 -->
+  <path d="M 35 428 A 8 8 0 0 1 43 420 L 522 420 A 8 8 0 0 1 530 428 L 530 452 L 35 452 Z" fill="#11111b"/>
+  <circle cx="53" cy="436" r="4.5" fill="#f38ba8"/>
+  <circle cx="67" cy="436" r="4.5" fill="#f9e2af"/>
+  <circle cx="81" cy="436" r="4.5" fill="#a6e3a1"/>
+  <text x="98" y="440" font-family="monospace" font-size="11.5" fill="#cdd6f4">Step 3: Update User Details</text>
+  <rect x="375" y="427" width="145" height="18" rx="3" fill="#2d261e"/>
+  <text x="447" y="440" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#fab387">SOFT-LOCK &amp; INVALIDATE</text>
+
+  <!-- URL Bar 3 -->
+  <rect x="48" y="461" width="468" height="30" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="54" y="466" width="42" height="20" rx="3" fill="#fab387"/>
+  <text x="75" y="480" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#11111b">PUT</text>
+  <text x="106" y="481" font-family="monospace" font-size="11.5" fill="#cdd6f4">http://localhost:8080/api/user/1</text>
+
+  <!-- Request Body 3 -->
+  <rect x="48" y="499" width="468" height="84" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <text x="60" y="515" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#a6adc8">REQUEST BODY (UPDATE PAYLOAD)</text>
+  <text x="60" y="534" font-family="monospace" font-size="11" fill="#6c7086">{</text>
+  <text x="74" y="551" font-family="monospace" font-size="11" fill="#cdd6f4">  "name" : <tspan fill="#fab387">"sj_updated"</tspan>,  "email" : <tspan fill="#fab387">"xyz_updated@conceptandcoding.com"</tspan></text>
+  <text x="60" y="569" font-family="monospace" font-size="11" fill="#6c7086">}</text>
+
+  <!-- Response 3 -->
+  <rect x="48" y="591" width="468" height="96" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="58" y="599" width="120" height="18" rx="3" fill="#2d261e"/>
+  <text x="118" y="612" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#fab387">RESPONSE [200 OK]</text>
+  <text x="60" y="635" font-family="monospace" font-size="11" fill="#6c7086">{</text>
+  <text x="74" y="652" font-family="monospace" font-size="11" fill="#cdd6f4">  "id": <tspan fill="#fab387">1</tspan>,  "name": <tspan fill="#fab387">"sj_updated"</tspan>,  "email": <tspan fill="#fab387">"xyz_updated@..."</tspan></text>
+  <text x="60" y="669" font-family="monospace" font-size="11" fill="#6c7086">}</text>
+
+  <!-- Callout 3 -->
+  <rect x="48" y="695" width="468" height="40" rx="5" fill="#2d261e"/>
+  <text x="282" y="719" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#fab387" font-weight="bold">⚡ Exclusive Soft-Lock taken ➔ DB updated &amp; cache refreshed on commit</text>
+
+
+  <!-- Connecting Arrow: Card 3 -> Card 4 -->
+  <line x1="530" y1="582" x2="562" y2="582" stroke="#a6e3a1" stroke-width="2.5" marker-end="url(#arr21-green)"/>
+
+
+  <!-- CARD 4: FINAL GET (Cache Hit) -->
+  <rect x="570" y="420" width="495" height="325" rx="10" fill="#181825" stroke="#a6e3a1" stroke-width="1.8"/>
+
+  <!-- Window Bar 4 -->
+  <path d="M 570 428 A 8 8 0 0 1 578 420 L 1057 420 A 8 8 0 0 1 1065 428 L 1065 452 L 570 452 Z" fill="#11111b"/>
+  <circle cx="588" cy="436" r="4.5" fill="#f38ba8"/>
+  <circle cx="602" cy="436" r="4.5" fill="#f9e2af"/>
+  <circle cx="616" cy="436" r="4.5" fill="#a6e3a1"/>
+  <text x="633" y="440" font-family="monospace" font-size="11.5" fill="#cdd6f4">Step 4: Subsequent GET Call</text>
+  <rect x="955" y="427" width="100" height="18" rx="3" fill="#1c2d25"/>
+  <text x="1005" y="440" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#a6e3a1">CACHE HIT</text>
+
+  <!-- URL Bar 4 -->
+  <rect x="583" y="461" width="468" height="30" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="589" y="466" width="42" height="20" rx="3" fill="#89b4fa"/>
+  <text x="610" y="480" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#11111b">GET</text>
+  <text x="640" y="481" font-family="monospace" font-size="11.5" fill="#cdd6f4">http://localhost:8080/api/user/1</text>
+
+  <!-- Cache Behavior Note 4 -->
+  <rect x="583" y="499" width="468" height="84" rx="5" fill="#1c2d25" stroke="#a6e3a1" stroke-width="1"/>
+  <text x="595" y="517" font-family="sans-serif" font-size="11" font-weight="bold" fill="#a6e3a1">Cache Hit Lifecycle:</text>
+  <text x="595" y="537" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Checks L2 Cache ➔ <tspan fill="#a6e3a1" font-weight="bold">Cache Hit!</tspan></text>
+  <text x="595" y="556" font-family="sans-serif" font-size="11" fill="#cdd6f4">• Fresh updated user details returned directly from cache memory.</text>
+  <text x="595" y="575" font-family="sans-serif" font-size="11" fill="#a6e3a1">• <tspan font-weight="bold">NO Database SQL query</tspan> executed! Ultra fast response time.</text>
+
+  <!-- Response 4 -->
+  <rect x="583" y="591" width="468" height="96" rx="5" fill="#11111b" stroke="#313244" stroke-width="1"/>
+  <rect x="593" y="599" width="120" height="18" rx="3" fill="#1c2d25"/>
+  <text x="653" y="612" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#a6e3a1">RESPONSE [200 OK]</text>
+  <text x="595" y="635" font-family="monospace" font-size="11" fill="#6c7086">{</text>
+  <text x="609" y="652" font-family="monospace" font-size="11" fill="#cdd6f4">  "id": <tspan fill="#fab387">1</tspan>,  "name": <tspan fill="#a6e3a1">"sj_updated"</tspan>,  "email": <tspan fill="#a6e3a1">"xyz_updated@..."</tspan></text>
+  <text x="595" y="669" font-family="monospace" font-size="11" fill="#6c7086">}</text>
+
+  <!-- Callout 4 -->
+  <rect x="583" y="695" width="468" height="40" rx="5" fill="#1c2d25"/>
+  <text x="817" y="719" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#a6e3a1" font-weight="bold">🚀 CACHE HIT — Zero Database Query! Served 100% from L2 Cache</text>
+
+</svg>

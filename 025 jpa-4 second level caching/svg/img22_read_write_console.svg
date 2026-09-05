@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="790" viewBox="0 0 1050 790">
+  <!-- Background Canvas -->
+  <rect width="1050" height="790" fill="#1e1e2e" rx="14"/>
+
+  <!-- ==================== HEADER BAR ==================== -->
+  <rect x="30" y="16" width="170" height="22" rx="4" fill="#1e2238"/>
+  <text x="115" y="31" text-anchor="middle" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#89b4fa">DEBUG LOGS ANALYSIS</text>
+  <text x="220" y="33" font-family="sans-serif" font-size="15" font-weight="bold" fill="#cdd6f4">Hibernate &amp; L2 Cache Console Logs (READ_WRITE Strategy)</text>
+
+  <!-- Container Window -->
+  <rect x="30" y="48" width="990" height="675" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Terminal Window Bar -->
+  <path d="M 30 56 A 8 8 0 0 1 38 48 L 1012 48 A 8 8 0 0 1 1020 56 L 1020 74 L 30 74 Z" fill="#161b22"/>
+  <circle cx="48" cy="61" r="4" fill="#f38ba8"/>
+  <circle cx="60" cy="61" r="4" fill="#f9e2af"/>
+  <circle cx="72" cy="61" r="4" fill="#a6e3a1"/>
+  <text x="92" y="65" font-family="monospace" font-size="11" fill="#8b949e">bash — Spring Boot Console (logging.level.org.hibernate.cache.spi=DEBUG)</text>
+
+
+  <!-- ==================== SECTION 1: INSERT OPERATION ==================== -->
+  <rect x="44" y="86" width="962" height="106" rx="7" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  
+  <!-- Header Banner 1 -->
+  <rect x="44" y="86" width="962" height="28" rx="6" fill="#1c2d25"/>
+  <rect x="52" y="90" width="160" height="20" rx="3" fill="#11111b"/>
+  <text x="132" y="104" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#a6e3a1">1. INSERT OPERATION</text>
+  <text x="225" y="105" font-family="sans-serif" font-size="11" fill="#cdd6f4">Direct Database Insert — L2 Cache is untouched and not populated</text>
+
+  <!-- Terminal Output 1 -->
+  <rect x="52" y="120" width="946" height="62" rx="4" fill="#0d1117"/>
+  <text x="64" y="142" font-family="monospace" font-size="11" fill="#8b949e">
+    <tspan fill="#a6e3a1">$ </tspan>Hibernate: <tspan fill="#f9e2af" font-weight="bold">insert into user_details</tspan> (email, name, id) values (?, ?, default)
+  </text>
+  <text x="64" y="164" font-family="monospace" font-size="10.5" fill="#6c7086">
+    [main] org.hibernate.SQL : insert executed directly in DB | Cache region 'userDetailsCache' unaffected
+  </text>
+
+
+  <!-- ==================== SECTION 2: 1ST GET (CACHE MISS) ==================== -->
+  <rect x="44" y="202" width="962" height="154" rx="7" fill="#161b22" stroke="#f38ba8" stroke-width="1.2"/>
+
+  <!-- Header Banner 2 -->
+  <rect x="44" y="202" width="962" height="28" rx="6" fill="#31202e"/>
+  <rect x="52" y="206" width="175" height="20" rx="3" fill="#11111b"/>
+  <text x="139" y="220" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#f38ba8">2. 1ST GET: CACHE MISS</text>
+  <text x="240" y="221" font-family="sans-serif" font-size="11" fill="#cdd6f4">Cache is empty ➔ SQL query fetches from DB ➔ Entity stored into L2 Cache</text>
+
+  <!-- Terminal Output 2 -->
+  <rect x="52" y="236" width="946" height="110" rx="4" fill="#0d1117"/>
+  <text x="64" y="256" font-family="monospace" font-size="10.5" fill="#8b949e">
+    DEBUG AbstractReadWriteAccess : Getting cached data from region ['userDetailsCache'] (AccessType[read-write])
+  </text>
+  <text x="64" y="276" font-family="monospace" font-size="11.5" fill="#f38ba8" font-weight="bold">
+    DEBUG AbstractReadWriteAccess : Cache miss : region = 'userDetailsCache'
+  </text>
+  <text x="64" y="296" font-family="monospace" font-size="11" fill="#cdd6f4">
+    <tspan fill="#f38ba8">$ </tspan>Hibernate: <tspan fill="#89b4fa" font-weight="bold">select</tspan> ud1_0.id, ud1_0.email, ud1_0.name from user_details ud1_0 where ud1_0.id=?
+  </text>
+  <text x="64" y="316" font-family="monospace" font-size="11" fill="#a6e3a1">
+    DEBUG AbstractReadWriteAccess : <tspan font-weight="bold">Caching data from load</tspan> [region='userDetailsCache'] (AccessType[read-write])
+  </text>
+  <text x="64" y="334" font-family="monospace" font-size="10" fill="#6c7086">
+    ➔ UserDetails#1 loaded from DB and placed into L2 Cache under Shared Lock
+  </text>
+
+
+  <!-- ==================== SECTION 3: PUT (UPDATE & LOCK) ==================== -->
+  <rect x="44" y="366" width="962" height="154" rx="7" fill="#161b22" stroke="#fab387" stroke-width="1.2"/>
+
+  <!-- Header Banner 3 -->
+  <rect x="44" y="366" width="962" height="28" rx="6" fill="#2d261e"/>
+  <rect x="52" y="370" width="225" height="20" rx="3" fill="#11111b"/>
+  <text x="164" y="384" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#fab387">3. UPDATE: LOCK &amp; COMMIT</text>
+  <text x="290" y="385" font-family="sans-serif" font-size="11" fill="#cdd6f4">Exclusive Soft-Lock taken ➔ DB updated ➔ Old cache entry invalidated on commit</text>
+
+  <!-- Terminal Output 3 -->
+  <rect x="52" y="400" width="946" height="110" rx="4" fill="#0d1117"/>
+  <text x="64" y="420" font-family="monospace" font-size="11" fill="#fab387">
+    DEBUG AbstractReadWriteAccess : <tspan font-weight="bold">Locking cache item</tspan> [region='userDetailsCache'] (AccessType[read-write])
+  </text>
+  <text x="64" y="440" font-family="monospace" font-size="11" fill="#cdd6f4">
+    <tspan fill="#fab387">$ </tspan>Hibernate: <tspan fill="#fab387" font-weight="bold">update user_details</tspan> set email=?, name=? where id=?
+  </text>
+  <text x="64" y="460" font-family="monospace" font-size="10.5" fill="#a6adc8">
+    DEBUG AbstractReadWriteAccess : Invalidate flag active during database transaction
+  </text>
+  <text x="64" y="480" font-family="monospace" font-size="11" fill="#a6e3a1">
+    DEBUG AbstractReadWriteAccess : <tspan font-weight="bold">Updating cache data</tspan> after transaction commit
+  </text>
+  <text x="64" y="498" font-family="monospace" font-size="10" fill="#89b4fa">
+    DEBUG AbstractReadWriteAccess : Released soft-lock on region='userDetailsCache' ➔ Cache ready for reads
+  </text>
+
+
+  <!-- ==================== SECTION 4: 2ND GET (CACHE HIT) ==================== -->
+  <rect x="44" y="530" width="962" height="142" rx="7" fill="#161b22" stroke="#a6e3a1" stroke-width="1.8"/>
+
+  <!-- Header Banner 4 -->
+  <rect x="44" y="530" width="962" height="28" rx="6" fill="#1c2d25"/>
+  <rect x="52" y="534" width="165" height="20" rx="3" fill="#11111b"/>
+  <text x="134" y="548" text-anchor="middle" font-family="sans-serif" font-size="9.5" font-weight="bold" fill="#a6e3a1">4. 2ND GET: CACHE HIT</text>
+  <text x="230" y="549" font-family="sans-serif" font-size="11" font-weight="bold" fill="#a6e3a1">Served 100% from L2 Cache — ZERO SQL queries generated to the Database!</text>
+
+  <!-- Terminal Output 4 -->
+  <rect x="52" y="564" width="946" height="98" rx="4" fill="#0d1117"/>
+  <text x="64" y="584" font-family="monospace" font-size="10.5" fill="#8b949e">
+    DEBUG AbstractReadWriteAccess : Getting cached data from region ['userDetailsCache']
+  </text>
+  <text x="64" y="604" font-family="monospace" font-size="10.5" fill="#8b949e">
+    DEBUG AbstractReadWriteAccess : Checking readability of read-write cache item [timestamp=...], version=...
+  </text>
+  <text x="64" y="625" font-family="monospace" font-size="12" fill="#a6e3a1" font-weight="bold">
+    DEBUG AbstractReadWriteAccess : Cache hit : region = 'userDetailsCache' , key = 'com.conceptandcoding.UserDetails#1'
+  </text>
+  <text x="64" y="646" font-family="monospace" font-size="11" fill="#a6e3a1">
+    ✔ [NO HIBERNATE SELECT SQL STATEMENT ISSUED TO DATABASE — SERVED INSTANTLY FROM L2 CACHE]
+  </text>
+
+
+  <!-- ==================== BOTTOM TAKEAWAY BANNER ==================== -->
+  <rect x="30" y="734" width="990" height="42" rx="8" fill="#181825" stroke="#45475a" stroke-width="1"/>
+  <text x="525" y="760" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#cdd6f4">
+    <tspan fill="#f9e2af" font-weight="bold">Log Proof: </tspan>
+    Notice the 2nd GET log explicitly records <tspan fill="#a6e3a1" font-weight="bold">Cache hit</tspan> with completely absent "Hibernate: select" SQL, proving L2 cache is actively serving requests.
+  </text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="480" viewBox="0 0 820 480">
+  <rect width="820" height="480" fill="#1e1e2e" rx="12"/>
+
+  <!-- Title -->
+  <text x="410" y="32" text-anchor="middle" font-family="monospace" font-size="13" fill="#f38ba8">Now, in Second Level caching or L2 caching,</text>
+  <text x="410" y="50" text-anchor="middle" font-family="monospace" font-size="13" fill="#cdd6f4">We will achieve something like this:</text>
+
+  <!-- Row 1: 1st POST call -->
+  <text x="20" y="100" font-family="monospace" font-size="12" fill="#cdd6f4">1st POST call</text>
+  <line x1="118" y1="97" x2="155" y2="97" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="160" y="82" width="155" height="32" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="237" y="97" text-anchor="middle" font-family="monospace" font-size="11" fill="#cdd6f4">EntityManager Object1</text>
+  <text x="237" y="111" text-anchor="middle" font-family="monospace" font-size="10" fill="#a6adc8">(Session 1)</text>
+  <line x1="318" y1="97" x2="355" y2="97" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="360" y="82" width="155" height="32" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="437" y="97" text-anchor="middle" font-family="monospace" font-size="11" fill="#cdd6f4">Its own 1st level cache</text>
+  <text x="437" y="111" text-anchor="middle" font-family="monospace" font-size="10" fill="#a6adc8">(PersistenceContext)</text>
+  <line x1="518" y1="97" x2="548" y2="97" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- Row 2: 2nd Get call -->
+  <text x="20" y="185" font-family="monospace" font-size="12" fill="#cdd6f4">2nd Get call</text>
+  <line x1="118" y1="182" x2="155" y2="182" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="160" y="167" width="155" height="32" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="237" y="182" text-anchor="middle" font-family="monospace" font-size="11" fill="#cdd6f4">EntityManager Object2</text>
+  <text x="237" y="196" text-anchor="middle" font-family="monospace" font-size="10" fill="#a6adc8">(Session 2)</text>
+  <line x1="318" y1="182" x2="355" y2="182" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="360" y="167" width="155" height="32" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="437" y="182" text-anchor="middle" font-family="monospace" font-size="11" fill="#cdd6f4">Its own 1st level cache</text>
+  <text x="437" y="196" text-anchor="middle" font-family="monospace" font-size="10" fill="#a6adc8">(PersistenceContext)</text>
+  <line x1="518" y1="182" x2="548" y2="182" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- Row 3: 3rd Get call -->
+  <text x="20" y="265" font-family="monospace" font-size="12" fill="#cdd6f4">3rd Get Call</text>
+  <line x1="118" y1="262" x2="155" y2="262" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="160" y="247" width="155" height="32" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="237" y="262" text-anchor="middle" font-family="monospace" font-size="11" fill="#cdd6f4">EntityManager Object3</text>
+  <text x="237" y="276" text-anchor="middle" font-family="monospace" font-size="10" fill="#a6adc8">(Session 3)</text>
+  <line x1="318" y1="262" x2="355" y2="262" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <rect x="360" y="247" width="155" height="32" rx="5" fill="#313244" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="437" y="262" text-anchor="middle" font-family="monospace" font-size="11" fill="#cdd6f4">Its own 1st level cache</text>
+  <text x="437" y="276" text-anchor="middle" font-family="monospace" font-size="10" fill="#a6adc8">(PersistenceContext)</text>
+  <line x1="518" y1="262" x2="548" y2="262" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- 2nd Level Caching box (shared) -->
+  <rect x="555" y="80" width="100" height="230" rx="8" fill="#181825" stroke="#f38ba8" stroke-width="2"/>
+  <text x="605" y="165" text-anchor="middle" font-family="monospace" font-size="14" fill="#f38ba8" font-weight="bold">2nd</text>
+  <text x="605" y="185" text-anchor="middle" font-family="monospace" font-size="14" fill="#f38ba8" font-weight="bold">Level</text>
+  <text x="605" y="205" text-anchor="middle" font-family="monospace" font-size="14" fill="#f38ba8" font-weight="bold">Caching</text>
+
+  <!-- DB -->
+  <line x1="658" y1="182" x2="695" y2="182" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)"/>
+  <line x1="695" y1="182" x2="658" y2="182" stroke="#89b4fa" stroke-width="2"/>
+  <ellipse cx="725" cy="174" rx="28" ry="9" fill="#45475a" stroke="#89b4fa" stroke-width="1.5"/>
+  <rect x="697" y="174" width="56" height="22" fill="#45475a" stroke="#89b4fa" stroke-width="1.5"/>
+  <ellipse cx="725" cy="196" rx="28" ry="9" fill="#585b70" stroke="#89b4fa" stroke-width="1.5"/>
+  <text x="725" y="189" text-anchor="middle" font-family="monospace" font-size="12" fill="#cdd6f4">DB</text>
+  <!-- bidirectional arrow -->
+  <line x1="660" y1="182" x2="697" y2="182" stroke="#89b4fa" stroke-width="2" marker-end="url(#a2)" marker-start="url(#a2b)"/>
+
+  <defs>
+    <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#89b4fa"/>
+    </marker>
+    <marker id="a2b" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L0,6 L8,3 z" fill="#89b4fa"/>
+    </marker>
+  </defs>
+</svg>
