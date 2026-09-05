@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 660" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <filter id="shadow7" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="cycleRedArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="660" rx="16" fill="url(#bgGrad7)"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="20" width="910" height="55" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#shadow7)"/>
+  <text x="55" y="54" fill="#ef4444" font-family="Segoe UI, Roboto, sans-serif" font-size="20" font-weight="bold">Circular Dependency: The Deadly Loop Problem</text>
+  <text x="730" y="54" fill="#f87171" font-family="Segoe UI, Roboto, sans-serif" font-size="13">Startup Fatal Error</text>
+
+  <!-- Visual Cycle Diagram Section -->
+  <rect x="35" y="90" width="910" height="230" rx="12" fill="url(#cardGrad7)" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow7)"/>
+  <rect x="50" y="102" width="220" height="25" rx="5" fill="#991b1b"/>
+  <text x="60" y="120" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">The Infinite Resolution Cycle</text>
+
+  <!-- Order Bean Box -->
+  <rect x="80" y="140" width="280" height="155" rx="10" fill="#090d16" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="90" y="150" width="260" height="26" rx="5" fill="#0284c7"/>
+  <text x="220" y="168" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Bean: Order</text>
+  <text x="100" y="198" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">@Component</text>
+  <text x="100" y="218" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5">public class Order {</text>
+  <text x="115" y="240" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">  @Autowired</text>
+  <text x="115" y="260" fill="#f87171" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">  Invoice invoice; // Needs Invoice</text>
+  <text x="100" y="280" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5">}</text>
+
+  <!-- Cycle Arrows -->
+  <!-- Top Arrow: Order -> Invoice -->
+  <path d="M 365 185 L 595 185" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#cycleRedArrow)"/>
+  <text x="480" y="173" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Order requires Invoice bean</text>
+
+  <!-- Bottom Arrow: Invoice -> Order -->
+  <path d="M 600 245 L 375 245" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#cycleRedArrow)"/>
+  <text x="480" y="267" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Invoice requires Order bean</text>
+
+  <!-- Invoice Bean Box -->
+  <rect x="610" y="140" width="280" height="155" rx="10" fill="#090d16" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="620" y="150" width="260" height="26" rx="5" fill="#0284c7"/>
+  <text x="750" y="168" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Bean: Invoice</text>
+  <text x="630" y="198" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">@Component</text>
+  <text x="630" y="218" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5">public class Invoice {</text>
+  <text x="645" y="240" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">  @Autowired</text>
+  <text x="645" y="260" fill="#f87171" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">  Order order; // Needs Order</text>
+  <text x="630" y="280" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5">}</text>
+
+  <!-- Spring Boot Crash Terminal Box -->
+  <rect x="35" y="335" width="910" height="305" rx="12" fill="#050811" stroke="#dc2626" stroke-width="1.5" filter="url(#shadow7)"/>
+  
+  <!-- Terminal Header -->
+  <rect x="35" y="335" width="910" height="30" rx="8" fill="#18181b"/>
+  <circle cx="55" cy="350" r="5" fill="#ef4444"/>
+  <circle cx="70" cy="350" r="5" fill="#f59e0b"/>
+  <circle cx="85" cy="350" r="5" fill="#10b981"/>
+  <text x="490" y="355" fill="#94a3b8" font-family="Consolas, monospace" font-size="11" text-anchor="middle">Spring Boot Terminal Output (Application Startup Failure)</text>
+
+  <text x="55" y="388" fill="#f87171" font-family="Consolas, monospace" font-size="12" font-weight="bold">***************************</text>
+  <text x="55" y="406" fill="#f87171" font-family="Consolas, monospace" font-size="13" font-weight="bold">APPLICATION FAILED TO START</text>
+  <text x="55" y="424" fill="#f87171" font-family="Consolas, monospace" font-size="12" font-weight="bold">***************************</text>
+
+  <text x="55" y="450" fill="#ffffff" font-family="Consolas, monospace" font-size="12" font-weight="bold">Description:</text>
+  <text x="55" y="470" fill="#fca5a5" font-family="Consolas, monospace" font-size="12">The dependencies of some of the beans in the application context form a cycle:</text>
+
+  <!-- Ascii Cycle from Spring Boot (Separated, High-Clarity Lines) -->
+  <rect x="55" y="488" width="210" height="135" rx="8" fill="#0d1117" stroke="#ef4444" stroke-width="1.5"/>
+  
+  <text x="75" y="515" fill="#fca5a5" font-family="Consolas, monospace" font-size="14" font-weight="bold">┌───┐</text>
+  <text x="75" y="538" fill="#38bdf8" font-family="Consolas, monospace" font-size="14" font-weight="bold">│  invoice</text>
+  <text x="75" y="561" fill="#f87171" font-family="Consolas, monospace" font-size="14" font-weight="bold">↑   ↓</text>
+  <text x="75" y="584" fill="#6ee7b7" font-family="Consolas, monospace" font-size="14" font-weight="bold">│  order</text>
+  <text x="75" y="607" fill="#fca5a5" font-family="Consolas, monospace" font-size="14" font-weight="bold">└───┘</text>
+
+  <!-- Explanation on Right Side of Terminal -->
+  <rect x="290" y="488" width="635" height="135" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  
+  <text x="310" y="515" fill="#ef4444" font-family="Segoe UI, Roboto, sans-serif" font-size="13.5" font-weight="bold">Spring Boot Strict Cycle Protection (Spring Boot 2.6+):</text>
+  
+  <text x="310" y="540" fill="#e2e8f0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2022; Circular references are <tspan fill="#f87171" font-weight="bold">prohibited by default</tspan> to ensure predictable startup ordering.</text>
+  <text x="310" y="562" fill="#e2e8f0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2022; Fails fast with: <tspan fill="#fed7aa" font-family="Consolas, monospace">BeanCurrentlyInCreationException</tspan> during context refresh.</text>
+  <text x="310" y="584" fill="#e2e8f0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2022; <tspan fill="#34d399" font-weight="bold">Solution 1 (Recommended):</tspan> Refactor to a 3rd shared service (break the loop).</text>
+  <text x="310" y="605" fill="#e2e8f0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2022; <tspan fill="#38bdf8" font-weight="bold">Solution 2:</tspan> Break runtime cycle using <tspan fill="#fbbf24" font-family="Consolas, monospace">@Lazy</tspan> to inject a dynamic CGLIB proxy.</text>
+</svg>

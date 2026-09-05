@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 560" width="1060" height="560" font-family="'Courier New', monospace">
+  <!-- Background -->
+  <rect width="1060" height="560" fill="#16213e" rx="12"/>
+  <text x="530" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#cc99ff">Spring Boot Application Example</text>
+
+  <!-- ═══ POM.XML BOX ═══  x=10,y=44,w=390,h=330 -->
+  <rect x="10" y="44" width="390" height="330" fill="#0a1a0a" stroke="#66bb66" stroke-width="1.5" rx="5"/>
+  <text x="205" y="64" text-anchor="middle" font-size="12" fill="#66bb66" font-weight="bold">pom.xml  (tell Spring Boot version)</text>
+  <text x="24" y="84"  font-size="9.5" fill="#aaddaa">&lt;parent&gt;</text>
+  <text x="42" y="99"  font-size="9.5" fill="#aaddaa">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</text>
+  <text x="42" y="114" font-size="9.5" fill="#aaddaa">  &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</text>
+  <text x="42" y="129" font-size="9.5" fill="#aaddaa">  &lt;version&gt;3.2.3&lt;/version&gt;</text>
+  <text x="24" y="144" font-size="9.5" fill="#aaddaa">&lt;/parent&gt;</text>
+  <text x="24" y="161" font-size="9.5" fill="#aaddaa">&lt;properties&gt;&lt;java.version&gt;17&lt;/java.version&gt;&lt;/properties&gt;</text>
+  <text x="24" y="178" font-size="9.5" fill="#aaddaa">&lt;dependencies&gt;</text>
+  <text x="42" y="193" font-size="9.5" fill="#aaddaa">  &lt;dependency&gt;</text>
+  <text x="60" y="208" font-size="9.5" fill="#aaddaa">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</text>
+  <text x="60" y="223" font-size="9.5" fill="#aaddaa">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</text>
+  <text x="42" y="238" font-size="9.5" fill="#aaddaa">  &lt;/dependency&gt;</text>
+  <text x="42" y="253" font-size="9.5" fill="#aaddaa">  &lt;dependency&gt;</text>
+  <text x="60" y="268" font-size="9.5" fill="#aaddaa">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</text>
+  <text x="60" y="283" font-size="9.5" fill="#aaddaa">    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</text>
+  <text x="60" y="298" font-size="9.5" fill="#aaddaa">    &lt;scope&gt;test&lt;/scope&gt;</text>
+  <text x="42" y="313" font-size="9.5" fill="#aaddaa">  &lt;/dependency&gt;</text>
+  <text x="24" y="328" font-size="9.5" fill="#aaddaa">&lt;/dependencies&gt;</text>
+  <text x="24" y="345" font-size="9.5" fill="#aaddaa">&lt;build&gt;&lt;plugins&gt;</text>
+  <text x="42" y="360" font-size="9.5" fill="#aaddaa">  &lt;!-- spring-boot-maven-plugin --&gt;</text>
+  <text x="24" y="375" font-size="9.5" fill="#aaddaa">&lt;/plugins&gt;&lt;/build&gt;</text>
+
+  <!-- ═══ MAIN APPLICATION CLASS BOX ═══  x=415,y=44,w=630,h=100 -->
+  <rect x="415" y="44" width="630" height="108" fill="#0d1526" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="730" y="65" text-anchor="middle" font-size="12" fill="#6699ff" font-weight="bold">Main Application Class</text>
+  <text x="430" y="85"  font-size="11" fill="#cc99ff">@SpringBootApplication</text>
+  <text x="430" y="103" font-size="11" fill="#e0e0e0">public class SpringbootApplication {</text>
+  <text x="448" y="121" font-size="11" fill="#aaddaa">  public static void main(String[] args) {</text>
+  <text x="465" y="138" font-size="11" fill="#aaddaa">    SpringApplication.run(SpringbootApplication.class, args);</text>
+  <text x="448" y="145" font-size="10" fill="#aaa"/>
+
+  <!-- ═══ CONTROLLER CLASS BOX ═══  x=415,y=168,w=630,h=148 -->
+  <rect x="415" y="168" width="630" height="148" fill="#0d1526" stroke="#cc99ff" stroke-width="1.5" rx="5"/>
+  <text x="730" y="188" text-anchor="middle" font-size="12" fill="#cc99ff" font-weight="bold">Controller Class</text>
+  <text x="430" y="208" font-size="11" fill="#cc99ff">@RestController</text>
+  <text x="430" y="226" font-size="11" fill="#6699ff">@RequestMapping</text>
+  <text x="560" y="226" font-size="11" fill="#aaa">("/myapi")</text>
+  <text x="430" y="244" font-size="11" fill="#e0e0e0">public class MyController {</text>
+  <text x="448" y="263" font-size="11" fill="#6699ff">  @GetMapping</text>
+  <text x="555" y="263" font-size="11" fill="#aaa">("/firstapi")</text>
+  <text x="448" y="281" font-size="11" fill="#aaddaa">  public String getData() {</text>
+  <text x="465" y="299" font-size="11" fill="#aaa">    return "Hello from concept and coding";</text>
+  <text x="448" y="308" font-size="10" fill="#aaa">  }</text>
+
+  <!-- ═══ BROWSER RESULT ═══  x=415,y=328,w=480,h=60 -->
+  <rect x="415" y="328" width="480" height="60" fill="#f5f5f5" stroke="#888" stroke-width="1" rx="5"/>
+  <rect x="415" y="328" width="480" height="26" fill="#e0e0e0" rx="5"/>
+  <text x="425" y="346" font-size="10" fill="#555">&#x2190;  &#x2192;  C    localhost:8080/myapi/firstapi</text>
+  <text x="425" y="372" font-size="13" fill="#222" font-weight="bold">Hello from concept and coding</text>
+
+  <!-- ═══ BOTTOM NOTES ═══  x=10,y=400,w=1040,h=140 -->
+  <rect x="10" y="400" width="1040" height="148" fill="#0d1526" stroke="#444" stroke-width="1" rx="6"/>
+  <text x="530" y="424" text-anchor="middle" font-size="13" fill="#ffee66" font-weight="bold">Key Takeaway</text>
+  <line x1="22" y1="432" x2="1038" y2="432" stroke="#333" stroke-width="1"/>
+  <text x="530" y="453" text-anchor="middle" font-size="11" fill="#ffee66">See no Dispatcher Servlet here — that also comes under Configuration.</text>
+  <text x="530" y="471" text-anchor="middle" font-size="11" fill="#ffee66">No EnableWebMVC needed — Spring Boot adds ALL those automatically!</text>
+  <text x="530" y="493" text-anchor="middle" font-size="12" fill="#aaddaa" font-weight="bold">Absolutely no configuration here!! 😊</text>
+  <text x="530" y="514" text-anchor="middle" font-size="11" fill="#ccc">Spring Boot = Spring Framework + Embedded Server + Auto-Config + Convention over Configuration</text>
+  <text x="530" y="532" text-anchor="middle" font-size="11" fill="#cc99ff">Comes under configuration → No EnableWebMVC, Spring Boot adds all those!</text>
+  <text x="530" y="540" font-size="10" fill="#aaa"/>
+</svg>

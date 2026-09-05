@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 480" width="980" height="480" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrD" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
+      <path d="M1,1 L4,7 L7,1 Z" fill="#aaa"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#aaa"/>
+    </marker>
+    <marker id="arrL" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto">
+      <path d="M7,1 L1,4 L7,7 Z" fill="#aaa"/>
+    </marker>
+    <marker id="arrU" markerWidth="8" markerHeight="8" refX="4" refY="1" orient="auto">
+      <path d="M1,7 L4,1 L7,7 Z" fill="#aaa"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="480" fill="#1a1a1a" rx="8"/>
+
+  <!-- Title -->
+  <text x="490" y="32" text-anchor="middle" font-size="16" font-weight="bold" fill="#e0e0e0">Maven Build Lifecycle Phases</text>
+  <text x="490" y="52" text-anchor="middle" font-size="11" fill="#cc99ff" font-style="italic">Running a phase automatically runs all preceding phases first</text>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- TOP ROW: Phase 1 → 2 → 3 → 4 (left to right)  -->
+  <!-- ─────────────────────────────────────────────── -->
+
+  <!-- Phase 1: Validate -->
+  <rect x="30"  y="80" width="170" height="70" fill="#222" stroke="#4fc3f7" stroke-width="1.6" rx="6"/>
+  <text x="115" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#4fc3f7">① Validate</text>
+  <text x="115" y="126" text-anchor="middle" font-size="10.5" fill="#aaa">Validate Project</text>
+  <text x="115" y="140" text-anchor="middle" font-size="10.5" fill="#aaa">Structure</text>
+  <text x="115" y="158" text-anchor="middle" font-size="10" fill="#555">mvn validate</text>
+
+  <!-- Arrow 1 → 2 -->
+  <line x1="200" y1="115" x2="240" y2="115" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrR)"/>
+
+  <!-- Phase 2: Compile -->
+  <rect x="240" y="80" width="170" height="70" fill="#222" stroke="#81c784" stroke-width="1.6" rx="6"/>
+  <text x="325" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#81c784">② Compile</text>
+  <text x="325" y="126" text-anchor="middle" font-size="10.5" fill="#aaa">Compile Source</text>
+  <text x="325" y="140" text-anchor="middle" font-size="10.5" fill="#aaa">Code → .class files</text>
+  <text x="325" y="158" text-anchor="middle" font-size="10" fill="#555">mvn compile</text>
+
+  <!-- Arrow 2 → 3 -->
+  <line x1="410" y1="115" x2="450" y2="115" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrR)"/>
+
+  <!-- Phase 3: Test -->
+  <rect x="450" y="80" width="170" height="70" fill="#222" stroke="#ffcc00" stroke-width="1.6" rx="6"/>
+  <text x="535" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffcc00">③ Test</text>
+  <text x="535" y="126" text-anchor="middle" font-size="10.5" fill="#aaa">Run Unit Tests</text>
+  <text x="535" y="140" text-anchor="middle" font-size="10.5" fill="#aaa">(JUnit / Surefire)</text>
+  <text x="535" y="158" text-anchor="middle" font-size="10" fill="#555">mvn test</text>
+
+  <!-- Arrow 3 → 4 -->
+  <line x1="620" y1="115" x2="660" y2="115" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrR)"/>
+
+  <!-- Phase 4: Package -->
+  <rect x="660" y="80" width="180" height="70" fill="#222" stroke="#ff8a65" stroke-width="1.6" rx="6"/>
+  <text x="750" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff8a65">④ Package</text>
+  <text x="750" y="126" text-anchor="middle" font-size="10.5" fill="#aaa">Package Compiled Code</text>
+  <text x="750" y="140" text-anchor="middle" font-size="10.5" fill="#aaa">(.jar or .war file)</text>
+  <text x="750" y="158" text-anchor="middle" font-size="10" fill="#555">mvn package</text>
+
+  <!-- Arrow: Phase 4 → down to row 2 -->
+  <line x1="750" y1="150" x2="750" y2="200" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrD)"/>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- BOTTOM ROW: Phase 7 ← 6 ← 5 (right to left)  -->
+  <!-- ─────────────────────────────────────────────── -->
+
+  <!-- Phase 5: Verify -->
+  <rect x="660" y="200" width="180" height="70" fill="#222" stroke="#ce93d8" stroke-width="1.6" rx="6"/>
+  <text x="750" y="228" text-anchor="middle" font-size="13" font-weight="bold" fill="#ce93d8">⑤ Verify</text>
+  <text x="750" y="246" text-anchor="middle" font-size="10.5" fill="#aaa">Verify Integrity</text>
+  <text x="750" y="260" text-anchor="middle" font-size="10.5" fill="#aaa">Of Package</text>
+  <text x="750" y="278" text-anchor="middle" font-size="10" fill="#555">mvn verify</text>
+
+  <!-- Arrow 5 → 6 (going left) -->
+  <line x1="660" y1="235" x2="620" y2="235" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrL)"/>
+
+  <!-- Phase 6: Install -->
+  <rect x="450" y="200" width="170" height="70" fill="#222" stroke="#4fc3f7" stroke-width="1.6" rx="6"/>
+  <text x="535" y="228" text-anchor="middle" font-size="13" font-weight="bold" fill="#4fc3f7">⑥ Install</text>
+  <text x="535" y="246" text-anchor="middle" font-size="10.5" fill="#aaa">Install Package</text>
+  <text x="535" y="260" text-anchor="middle" font-size="10.5" fill="#aaa">in Local Repo (.m2)</text>
+  <text x="535" y="278" text-anchor="middle" font-size="10" fill="#555">mvn install</text>
+
+  <!-- Arrow 6 → 7 (going left) -->
+  <line x1="450" y1="235" x2="410" y2="235" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrL)"/>
+
+  <!-- Phase 7: Deploy -->
+  <rect x="240" y="200" width="170" height="70" fill="#222" stroke="#ff6b6b" stroke-width="1.6" rx="6"/>
+  <text x="325" y="228" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff6b6b">⑦ Deploy</text>
+  <text x="325" y="246" text-anchor="middle" font-size="10.5" fill="#aaa">Deploy Package to</text>
+  <text x="325" y="260" text-anchor="middle" font-size="10.5" fill="#aaa">Remote Repository</text>
+  <text x="325" y="278" text-anchor="middle" font-size="10" fill="#555">mvn deploy</text>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <!-- NOTES SECTION (below the phase boxes)              -->
+  <!-- ─────────────────────────────────────────────────── -->
+
+  <!-- Divider line -->
+  <line x1="20" y1="305" x2="960" y2="305" stroke="#333" stroke-width="1"/>
+
+  <!-- Note 1 -->
+  <rect x="20" y="318" width="440" height="140" fill="#1e1e1e" stroke="#444" stroke-width="1" stroke-dasharray="4,3" rx="4"/>
+  <text x="40" y="340" font-size="11.5" font-weight="bold" fill="#ffcc00">⚡ Running a phase runs ALL prior phases first:</text>
+  <text x="40" y="362" font-size="11" fill="#ccc">mvn compile   → runs: validate, compile</text>
+  <text x="40" y="380" font-size="11" fill="#ccc">mvn test      → runs: validate, compile, test</text>
+  <text x="40" y="398" font-size="11" fill="#ccc">mvn package   → runs: 1, 2, 3, 4</text>
+  <text x="40" y="416" font-size="11" fill="#ccc">mvn install   → runs: 1, 2, 3, 4, 5, 6</text>
+  <text x="40" y="434" font-size="11" fill="#ccc">mvn deploy    → runs: entire lifecycle (1–7)</text>
+
+  <!-- Note 2 -->
+  <rect x="480" y="318" width="480" height="140" fill="#1e1e1e" stroke="#444" stroke-width="1" stroke-dasharray="4,3" rx="4"/>
+  <text x="500" y="340" font-size="11.5" font-weight="bold" fill="#ffcc00">⚡ Adding custom tasks with &lt;build&gt;:</text>
+  <text x="500" y="362" font-size="11" fill="#ccc">Maven already has tasks for each phase,</text>
+  <text x="500" y="380" font-size="11" fill="#ccc">but to ADD extra tasks, use &lt;build&gt; with plugins:</text>
+  <text x="500" y="400" font-size="11" fill="#aaa">• Validate phase → maven-checkstyle-plugin</text>
+  <text x="500" y="418" font-size="11" fill="#aaa">• Verify phase   → maven-pmd-plugin (static analysis)</text>
+  <text x="500" y="436" font-size="11" fill="#aaa">• Package phase  → spring-boot-maven-plugin (fat jar)</text>
+  <text x="500" y="462" font-size="10" fill="#555" font-style="italic">PMD: detects unused vars, imports, duplicate code, etc.</text>
+</svg>

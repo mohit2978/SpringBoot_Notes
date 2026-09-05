@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 630" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <filter id="shadow5" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="980" height="630" rx="16" fill="url(#bgGrad5)"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="20" width="910" height="55" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#shadow5)"/>
+  <text x="55" y="54" fill="#34d399" font-family="Segoe UI, Roboto, sans-serif" font-size="20" font-weight="bold">Constructor Injection &amp; Spring @Autowired Rules</text>
+  <text x="730" y="54" fill="#60a5fa" font-family="Segoe UI, Roboto, sans-serif" font-size="13">Industry Recommended</text>
+
+  <!-- Left Box: Single Constructor (Autowired Optional) -->
+  <rect x="35" y="90" width="440" height="515" rx="12" fill="url(#cardGrad5)" stroke="#10b981" stroke-width="1.5" filter="url(#shadow5)"/>
+  <rect x="50" y="105" width="410" height="32" rx="6" fill="#059669"/>
+  <text x="65" y="126" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13.5" font-weight="bold">Scenario 1: Single Constructor (Spring 4.3+)</text>
+
+  <rect x="50" y="150" width="410" height="180" rx="8" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="172" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">@Component</text>
+  <text x="65" y="190" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">public class User {</text>
+  <text x="85" y="210" fill="#34d399" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">  private final Order order;</text>
+  <text x="85" y="235" fill="#94a3b8" font-family="Consolas, monospace" font-size="11">  // @Autowired is NOT mandatory here!</text>
+  <text x="85" y="255" fill="#6ee7b7" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">  public User(Order order) {</text>
+  <text x="105" y="275" fill="#f8fafc" font-family="Consolas, monospace" font-size="11.5">    this.order = order;</text>
+  <text x="105" y="295" fill="#94a3b8" font-family="Consolas, monospace" font-size="11">    System.out.println(&quot;User initialized&quot;);</text>
+  <text x="85" y="313" fill="#6ee7b7" font-family="Consolas, monospace" font-size="11.5">  }</text>
+  <text x="65" y="325" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5">}</text>
+
+  <!-- Info list for Single Constructor -->
+  <rect x="50" y="345" width="410" height="240" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="65" y="372" fill="#34d399" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">&#x2714; Automatic Injection by Spring:</text>
+  <text x="65" y="395" fill="#ecfdf5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">Since Spring 4.3, if a target bean has only one</text>
+  <text x="65" y="413" fill="#ecfdf5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">constructor, the <tspan font-family="Consolas, monospace" fill="#a7f3d0">@Autowired</tspan> annotation is entirely optional.</text>
+
+  <text x="65" y="445" fill="#34d399" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">&#x2714; Pure POJO Architecture:</text>
+  <text x="65" y="468" fill="#ecfdf5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">Your class does not need any Spring imports at all</text>
+  <text x="65" y="486" fill="#ecfdf5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">inside its business logic, keeping it 100% clean!</text>
+
+  <text x="65" y="518" fill="#34d399" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">&#x2714; Guarantees Immutability:</text>
+  <text x="65" y="540" fill="#ecfdf5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">Notice <tspan font-family="Consolas, monospace" fill="#a7f3d0">private final Order order</tspan>. Once constructed,</text>
+  <text x="65" y="558" fill="#ecfdf5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">the reference cannot be changed or corrupted.</text>
+
+  <!-- Right Box: Multiple Constructors (Ambiguity) -->
+  <rect x="505" y="90" width="440" height="515" rx="12" fill="url(#cardGrad5)" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow5)"/>
+  <rect x="520" y="105" width="410" height="32" rx="6" fill="#b91c1c"/>
+  <text x="535" y="126" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13.5" font-weight="bold">Scenario 2: Multiple Constructors (Mandatory Annotation)</text>
+
+  <rect x="520" y="150" width="410" height="215" rx="8" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="535" y="172" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">@Component</text>
+  <text x="535" y="190" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">public class User {</text>
+  <text x="555" y="210" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">  Order order; Invoice invoice;</text>
+  <text x="555" y="230" fill="#94a3b8" font-family="Consolas, monospace" font-size="11">  // Constructor A</text>
+  <text x="555" y="248" fill="#f8fafc" font-family="Consolas, monospace" font-size="11">  public User(Order order) { this.order = order; }</text>
+  <text x="555" y="272" fill="#38bdf8" font-family="Consolas, monospace" font-size="11">  @Autowired // &lt;-- MUST specify which to use!</text>
+  <text x="555" y="292" fill="#fbbf24" font-family="Consolas, monospace" font-size="11.5" font-weight="bold">  public User(Invoice invoice) {</text>
+  <text x="575" y="312" fill="#f8fafc" font-family="Consolas, monospace" font-size="11">    this.invoice = invoice;</text>
+  <text x="555" y="330" fill="#fbbf24" font-family="Consolas, monospace" font-size="11.5">  }</text>
+  <text x="535" y="350" fill="#f43f5e" font-family="Consolas, monospace" font-size="11.5">}</text>
+
+  <!-- Error box without @Autowired -->
+  <rect x="520" y="375" width="410" height="95" rx="8" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="535" y="398" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="12" font-weight="bold">&#x2718; If @Autowired is NOT added on multiple ctors:</text>
+  <text x="535" y="420" fill="#fed7aa" font-family="Consolas, monospace" font-size="10.5">org.springframework.beans.BeanInstantiationException:</text>
+  <text x="535" y="438" fill="#fed7aa" font-family="Consolas, monospace" font-size="10.5">Failed to instantiate [User]: No default constructor found</text>
+  <text x="535" y="458" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11">&#x27A4; Spring is confused: &quot;Which constructor should I call?&quot;</text>
+
+  <!-- Resolution Box -->
+  <rect x="520" y="480" width="410" height="105" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+  <text x="535" y="504" fill="#60a5fa" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5" font-weight="bold">&#x2714; The Resolution Rule:</text>
+  <text x="535" y="526" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12">&#x2022; Explicitly add <tspan font-family="Consolas, monospace" fill="#38bdf8">@Autowired</tspan> over the constructor you want.</text>
+  <text x="535" y="546" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12">&#x2022; Spring will satisfy dependencies for that specific constructor.</text>
+  <text x="535" y="566" fill="#34d399" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x27A4; Only ONE constructor can have @Autowired(required = true).</text>
+</svg>

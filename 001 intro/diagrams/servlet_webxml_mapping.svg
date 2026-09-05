@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 510" width="1060" height="510" font-family="'Courier New', monospace">
+  <!-- Background -->
+  <rect width="1060" height="510" fill="#16213e" rx="12"/>
+  <text x="530" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#e0e0e0">Servlet Mapping via Web.xml</text>
+
+  <!-- ── SERVLET 1 BOX ── x=10, y=48, w=370, h=230 -->
+  <rect x="10" y="48" width="370" height="230" fill="#0d1a0d" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="195" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff9944">Servlet1:</text>
+  <text x="25" y="90" font-size="10.5" fill="#6699ff">@WebServlet("/demoservletone/*")</text>
+  <text x="25" y="107" font-size="10.5" fill="#e0e0e0">public class DemoServlet1 extends HttpServlet {</text>
+  <text x="45" y="124" font-size="10.5" fill="#cc99ff">  @Override</text>
+  <text x="45" y="141" font-size="10.5" fill="#aaddaa">  protected void doGet(HttpServletRequest req,</text>
+  <text x="45" y="157" font-size="10.5" fill="#aaddaa">      HttpServletResponse res) {</text>
+  <text x="65" y="174" font-size="10.5" fill="#aaa">    String path = req.getPathInfo();</text>
+  <text x="65" y="190" font-size="10.5" fill="#aaa">    if(path.equals("/")) { //do something }</text>
+  <text x="65" y="206" font-size="10.5" fill="#aaa">    else if(path.equals("/firstendpoint"))</text>
+  <text x="65" y="221" font-size="10.5" fill="#aaa">    else if(path.equals("/secondendpoint"))</text>
+  <text x="45" y="237" font-size="10.5" fill="#aaa">  }</text>
+  <text x="25" y="253" font-size="10.5" fill="#aaa">}</text>
+  <!-- label -->
+  <text x="395" y="118" font-size="11.5" fill="#ff6688" font-style="italic">← 1st Servlet Mapping</text>
+
+  <!-- ── SERVLET 2 BOX ── x=10, y=295, w=370, h=175 -->
+  <rect x="10" y="295" width="370" height="175" fill="#0d1a0d" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="195" y="317" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff9944">Servlet2:</text>
+  <text x="25" y="337" font-size="10.5" fill="#6699ff">@WebServlet("/demoservlettwo/*")</text>
+  <text x="25" y="354" font-size="10.5" fill="#e0e0e0">public class DemoServlet2 extends HttpServlet {</text>
+  <text x="45" y="371" font-size="10.5" fill="#cc99ff">  @Override</text>
+  <text x="45" y="388" font-size="10.5" fill="#aaddaa">  protected void doGet(HttpServletRequest req,</text>
+  <text x="45" y="405" font-size="10.5" fill="#aaddaa">      HttpServletResponse res) {</text>
+  <text x="65" y="421" font-size="10.5" fill="#aaa">    //do something</text>
+  <text x="45" y="437" font-size="10.5" fill="#aaa">  }</text>
+  <text x="25" y="453" font-size="10.5" fill="#aaa">}</text>
+  <!-- label -->
+  <text x="395" y="350" font-size="11.5" fill="#ff6688" font-style="italic">← 2nd Servlet Mapping</text>
+
+  <!-- ── WEB.XML BOX ── x=540, y=48, w=505, h=360 -->
+  <rect x="540" y="48" width="505" height="360" fill="#0f1f0f" stroke="#66bb66" stroke-width="1.5" rx="5"/>
+  <text x="792" y="72" text-anchor="middle" font-size="14" font-weight="bold" fill="#66bb66">Web.xml</text>
+
+  <text x="558" y="96"  font-size="10" fill="#666">&lt;!-- 1st servlet config --&gt;</text>
+  <text x="558" y="112" font-size="10" fill="#aaddaa">&lt;servlet&gt;</text>
+  <text x="576" y="128" font-size="10" fill="#aaddaa">  &lt;servlet-name&gt;DemoServlet1&lt;/servlet-name&gt;</text>
+  <text x="576" y="143" font-size="10" fill="#aaddaa">  &lt;servlet-class&gt;DemoServlet1&lt;/servlet-class&gt;</text>
+  <text x="558" y="158" font-size="10" fill="#aaddaa">&lt;/servlet&gt;</text>
+  <text x="558" y="176" font-size="10" fill="#aaddaa">&lt;servlet-mapping&gt;</text>
+  <text x="576" y="191" font-size="10" fill="#aaddaa">  &lt;servlet-name&gt;DemoServlet1&lt;/servlet-name&gt;</text>
+  <text x="576" y="206" font-size="10" fill="#aaddaa">  &lt;url-pattern&gt;/demoservletone&lt;/url-pattern&gt;</text>
+  <text x="576" y="221" font-size="10" fill="#aaddaa">  &lt;url-pattern&gt;/demoservletone/firstendpoint&lt;/url-pattern&gt;</text>
+  <text x="576" y="236" font-size="10" fill="#aaddaa">  &lt;url-pattern&gt;/demoservletone/secondendpoint&lt;/url-pattern&gt;</text>
+  <text x="558" y="251" font-size="10" fill="#aaddaa">&lt;/servlet-mapping&gt;</text>
+
+  <text x="558" y="270" font-size="10" fill="#666">&lt;!-- 2nd servlet config --&gt;</text>
+  <text x="558" y="285" font-size="10" fill="#aaddaa">&lt;servlet&gt;</text>
+  <text x="576" y="300" font-size="10" fill="#aaddaa">  &lt;servlet-name&gt;DemoServlet2&lt;/servlet-name&gt;</text>
+  <text x="576" y="315" font-size="10" fill="#aaddaa">  &lt;servlet-class&gt;DemoServlet2&lt;/servlet-class&gt;</text>
+  <text x="558" y="330" font-size="10" fill="#aaddaa">&lt;/servlet&gt;</text>
+  <text x="558" y="348" font-size="10" fill="#aaddaa">&lt;servlet-mapping&gt;</text>
+  <text x="576" y="363" font-size="10" fill="#aaddaa">  &lt;servlet-name&gt;DemoServlet2&lt;/servlet-name&gt;</text>
+  <text x="576" y="378" font-size="10" fill="#aaddaa">  &lt;url-pattern&gt;/demoservlettwo&lt;/url-pattern&gt;</text>
+  <text x="558" y="394" font-size="10" fill="#aaddaa">&lt;/servlet-mapping&gt;</text>
+
+  <!-- ── BOTTOM NOTES ── -->
+  <text x="530" y="432" text-anchor="middle" font-size="13" fill="#ffee66" font-weight="bold">Using Web.xml, Tomcat knows which Servlet to call!</text>
+  <text x="530" y="452" text-anchor="middle" font-size="11" fill="#aaa">Web.xml is culprit — it is the place where we used to do</text>
+  <text x="530" y="468" text-anchor="middle" font-size="11" fill="#aaa">a lot of things: filtering, mapping etc. So it became a very large file!</text>
+  <text x="530" y="490" text-anchor="middle" font-size="11" fill="#cc99ff">Note: Web.xml lines grow out of hand with many servlets → Spring solves this.</text>
+</svg>

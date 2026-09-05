@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 590" width="1020" height="590" font-family="'Courier New', monospace">
+  <!-- Background -->
+  <rect width="1020" height="590" fill="#16213e" rx="12"/>
+  <text x="510" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#cc99ff">Advantages of Spring Boot</text>
+
+  <!-- ═══ SECTION 1: Dependency Management ═══ -->
+  <text x="18" y="56" font-size="13" font-weight="bold" fill="#ffee44">1. Dependency Management</text>
+  <text x="18" y="74" font-size="11" fill="#ccc">No need to add different dependencies separately</text>
+  <text x="18" y="90" font-size="11" fill="#ccc">or worry about compatible version headaches.</text>
+
+  <!-- pom.xml box — x=18,y=104,w=440,h=218 -->
+  <rect x="18" y="104" width="440" height="218" fill="#0a1a0a" stroke="#66bb66" stroke-width="1.5" rx="5"/>
+  <text x="238" y="124" text-anchor="middle" font-size="12" fill="#66bb66" font-weight="bold">Spring Boot pom.xml</text>
+  <text x="32" y="142" font-size="9.5" fill="#aaddaa">&lt;parent&gt;</text>
+  <text x="50" y="157" font-size="9.5" fill="#aaddaa">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</text>
+  <text x="50" y="172" font-size="9.5" fill="#aaddaa">  &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</text>
+  <text x="50" y="187" font-size="9.5" fill="#aaddaa">  &lt;version&gt;3.2.3&lt;/version&gt;</text>
+  <text x="32" y="202" font-size="9.5" fill="#aaddaa">&lt;/parent&gt;</text>
+  <text x="32" y="218" font-size="9.5" fill="#aaddaa">&lt;properties&gt;&lt;java.version&gt;17&lt;/java.version&gt;&lt;/properties&gt;</text>
+  <text x="32" y="234" font-size="9.5" fill="#aaddaa">&lt;dependencies&gt;</text>
+  <text x="50" y="249" font-size="9.5" fill="#aaddaa">  &lt;dependency&gt;</text>
+  <text x="68" y="264" font-size="9.5" fill="#aaddaa">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</text>
+  <text x="68" y="279" font-size="9.5" fill="#aaddaa">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</text>
+  <text x="50" y="294" font-size="9.5" fill="#aaddaa">  &lt;/dependency&gt;</text>
+  <text x="32" y="310" font-size="9.5" fill="#aaddaa">&lt;/dependencies&gt;</text>
+
+  <!-- Notes beside pom.xml -->
+  <text x="475" y="128" font-size="11" fill="#ffee66" font-weight="bold">Key Benefits:</text>
+  <text x="475" y="148" font-size="10.5" fill="#aaa">• Just add starter-parent &amp;</text>
+  <text x="475" y="164" font-size="10.5" fill="#aaa">  all versions managed for you.</text>
+  <text x="475" y="184" font-size="10.5" fill="#aaa">• spring-boot-starter-web</text>
+  <text x="475" y="200" font-size="10.5" fill="#aaa">  includes Spring MVC, Tomcat,</text>
+  <text x="475" y="216" font-size="10.5" fill="#aaa">  Jackson etc. automatically.</text>
+  <text x="475" y="236" font-size="10.5" fill="#ff9944">• No DispatcherServlet class</text>
+  <text x="475" y="252" font-size="10.5" fill="#ff9944">  to write in Spring Boot!</text>
+  <text x="475" y="272" font-size="10.5" fill="#ffee66">• Has EnableWebMvc,</text>
+  <text x="475" y="288" font-size="10.5" fill="#ffee66">  ComponentScan built-in.</text>
+
+  <!-- ═══ DIVIDER ═══ -->
+  <line x1="10" y1="336" x2="1010" y2="336" stroke="#333" stroke-width="1" stroke-dasharray="6 4"/>
+
+  <!-- ═══ SECTION 2: Auto Configuration ═══ -->
+  <text x="18" y="358" font-size="13" font-weight="bold" fill="#ffee44">2. Auto Configuration</text>
+  <text x="18" y="376" font-size="11" fill="#ccc">No need to separately configure "DispatcherServlet", "AppConfig",</text>
+  <text x="18" y="392" font-size="11" fill="#ccc">"EnableWebMvc", "ComponentScan". Spring Boot adds them internally by default.</text>
+  <text x="18" y="410" font-size="11" fill="#aaddaa" font-style="italic">But if you want to change default values, you can override them too!</text>
+
+  <!-- SpringBootApplication box — x=18,y=424,w=480,h=108 -->
+  <rect x="18" y="424" width="480" height="108" fill="#0d1526" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="18" y="424"/>
+  <text x="34" y="447" font-size="11" fill="#cc99ff">@SpringBootApplication</text>
+  <text x="34" y="465" font-size="11" fill="#e0e0e0">public class SpringbootApplication {</text>
+  <text x="54" y="484" font-size="11" fill="#aaddaa">  public static void main(String[] args) {</text>
+  <text x="72" y="502" font-size="11" fill="#aaddaa">    SpringApplication.run(SpringbootApplication.class, args);</text>
+  <text x="54" y="519" font-size="11" fill="#aaa">  }</text>
+  <text x="34" y="524" font-size="10" fill="#aaa"/>
+
+  <!-- Notes beside SpringBootApplication -->
+  <text x="515" y="447" font-size="11" fill="#cc99ff" font-weight="bold">@SpringBootApplication includes:</text>
+  <text x="515" y="466" font-size="10.5" fill="#cc99ff">• @EnableWebMvc</text>
+  <text x="515" y="482" font-size="10.5" fill="#cc99ff">• @ComponentScan</text>
+  <text x="515" y="498" font-size="10.5" fill="#cc99ff">• @EnableAutoConfiguration</text>
+  <text x="515" y="518" font-size="10.5" fill="#ff9944">Absolutely no extra configuration!</text>
+
+  <!-- ═══ SECTION 3: Embedded Server ═══ -->
+  <line x1="10" y1="545" x2="1010" y2="545" stroke="#333" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="18" y="565" font-size="13" font-weight="bold" fill="#ffee44">3. Embedded Server</text>
+  <text x="240" y="565" font-size="11" fill="#ccc">— No need to create WAR &amp; deploy to Tomcat. Just run the app!</text>
+  <text x="18" y="582" font-size="11" fill="#aaddaa">Spring Boot embeds Tomcat/Jetty/Undertow automatically. Servlet container is built-in.</text>
+</svg>

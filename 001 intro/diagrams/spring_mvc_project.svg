@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 640" width="1060" height="640" font-family="'Courier New', monospace">
+  <!-- Background -->
+  <rect width="1060" height="640" fill="#16213e" rx="12"/>
+  <text x="530" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#cc99ff">Spring MVC Project Structure</text>
+
+  <!-- ══════════════ POM.XML BOX ══════════════ x=10,y=44,w=340,h=310 -->
+  <rect x="10" y="44" width="340" height="310" fill="#0a1a0a" stroke="#66bb66" stroke-width="1.5" rx="5"/>
+  <text x="180" y="64" text-anchor="middle" font-size="12" font-weight="bold" fill="#66bb66">pom.xml</text>
+  <text x="22" y="82"  font-size="9.5" fill="#aaddaa">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</text>
+  <text x="22" y="97"  font-size="9.5" fill="#aaddaa">&lt;groupId&gt;com.conceptandcoding&lt;/groupId&gt;</text>
+  <text x="22" y="112" font-size="9.5" fill="#aaddaa">&lt;artifactId&gt;learningspringboot&lt;/artifactId&gt;</text>
+  <text x="22" y="127" font-size="9.5" fill="#aaddaa">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</text>
+  <text x="22" y="142" font-size="9.5" fill="#aaddaa">&lt;dependencies&gt;</text>
+  <text x="38" y="157" font-size="9.5" fill="#aaddaa">  &lt;dependency&gt;</text>
+  <text x="54" y="172" font-size="9.5" fill="#aaddaa">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</text>
+  <text x="54" y="187" font-size="9.5" fill="#aaddaa">    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</text>
+  <text x="54" y="202" font-size="9.5" fill="#aaddaa">    &lt;version&gt;6.1.4&lt;/version&gt;</text>
+  <text x="38" y="217" font-size="9.5" fill="#aaddaa">  &lt;/dependency&gt;</text>
+  <text x="38" y="232" font-size="9.5" fill="#aaddaa">  &lt;dependency&gt;</text>
+  <text x="54" y="247" font-size="9.5" fill="#aaddaa">    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</text>
+  <text x="54" y="262" font-size="9.5" fill="#aaddaa">    &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;</text>
+  <text x="54" y="277" font-size="9.5" fill="#aaddaa">    &lt;version&gt;2.5&lt;/version&gt;</text>
+  <text x="38" y="292" font-size="9.5" fill="#aaddaa">  &lt;/dependency&gt;</text>
+  <text x="38" y="307" font-size="9.5" fill="#aaddaa">  &lt;dependency&gt;&lt;groupId&gt;junit&lt;/groupId&gt; ...&lt;/dependency&gt;</text>
+  <text x="22" y="322" font-size="9.5" fill="#aaddaa">&lt;/dependencies&gt;</text>
+  <text x="22" y="342" font-size="10"   fill="#ff9944" font-style="italic">← Load Spring MVC dependency</text>
+
+  <!-- ══════════════ CONTROLLER CLASS BOX ══════════════ x=370,y=44,w=380,h=190 -->
+  <rect x="370" y="44" width="380" height="190" fill="#0a1a0a" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="560" y="64" text-anchor="middle" font-size="12" font-weight="bold" fill="#6699ff">Controller class</text>
+  <text x="385" y="84"  font-size="10.5" fill="#cc99ff">@Controller</text>
+  <text x="385" y="101" font-size="10.5" fill="#6699ff">@RequestMapping</text>
+  <text x="500" y="101" font-size="10.5" fill="#aaa">("/paymentapi")</text>
+  <text x="385" y="118" font-size="10.5" fill="#e0e0e0">public class PaymentController {</text>
+  <text x="402" y="136" font-size="10.5" fill="#cc99ff">  @Autowired</text>
+  <text x="402" y="153" font-size="10.5" fill="#aaddaa">  PaymentDAO paymentService;</text>
+  <text x="402" y="172" font-size="10.5" fill="#6699ff">  @GetMapping</text>
+  <text x="490" y="172" font-size="10.5" fill="#aaa">("/payment")</text>
+  <text x="402" y="189" font-size="10.5" fill="#aaddaa">  public String getPaymentDetails() {</text>
+  <text x="418" y="206" font-size="10.5" fill="#aaa">    return paymentService.getDetails();</text>
+  <text x="402" y="222" font-size="10.5" fill="#aaa">  }</text>
+
+  <!-- ══════════════ CONFIG CLASS BOX ══════════════ x=10,y=374,w=340,h=118 -->
+  <rect x="10" y="374" width="340" height="118" fill="#1a1015" stroke="#cc99ff" stroke-width="1.5" rx="5"/>
+  <text x="180" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#cc99ff">Config class</text>
+  <text x="24" y="412" font-size="10.5" fill="#cc99ff">@Configuration</text>
+  <text x="24" y="429" font-size="10.5" fill="#cc99ff">@EnableWebMvc</text>
+  <text x="24" y="446" font-size="10.5" fill="#cc99ff">@ComponentScan</text>
+  <text x="155" y="446" font-size="10.5" fill="#aaa">(basePackages = "com.conceptandcoding")</text>
+  <text x="24" y="463" font-size="10.5" fill="#e0e0e0">public class AppConfig {</text>
+  <text x="24" y="480" font-size="10.5" fill="#aaa">  // add configuration here if required</text>
+
+  <!-- ══════════════ DISPATCHER SERVLET CLASS BOX ══════════════ x=10,y=508,w=480,h=118 -->
+  <rect x="10" y="508" width="480" height="118" fill="#1a1015" stroke="#ff9944" stroke-width="1.5" rx="5"/>
+  <text x="250" y="528" text-anchor="middle" font-size="12" font-weight="bold" fill="#ff9944">Dispatcher Servlet class</text>
+  <text x="24" y="547" font-size="10"   fill="#e0e0e0">public class MyApplicationInitializer extends</text>
+  <text x="24" y="562" font-size="10"   fill="#e0e0e0">  AbstractAnnotationConfigDispatcherServletInitializer {</text>
+  <text x="44" y="579" font-size="10"   fill="#cc99ff">  @Override  // getRootConfigClasses() { return null; }</text>
+  <text x="44" y="595" font-size="10"   fill="#aaddaa">  @Override  // getServletConfigClasses() {</text>
+  <text x="44" y="611" font-size="10"   fill="#aaddaa">    return new Class[]{AppConfig.class};  // → tells Config class</text>
+  <text x="44" y="626" font-size="10"   fill="#aaddaa">  @Override  // getServletMappings() { return new String[]{"/"} }</text>
+
+  <!-- ══════════════ RIGHT NOTES PANEL ══════════════ x=768,y=250,w=280,h=370 -->
+  <rect x="768" y="250" width="280" height="375" fill="#0d1526" stroke="#555" stroke-width="1" rx="5"/>
+  <text x="908" y="272" text-anchor="middle" font-size="12" fill="#ffee66" font-weight="bold">Key Notes</text>
+  <line x1="780" y1="280" x2="1036" y2="280" stroke="#444" stroke-width="1"/>
+
+  <text x="782" y="298"  font-size="10.5" fill="#ffee66">✔ Unlike Servlet, Spring MVC</text>
+  <text x="782" y="314"  font-size="10.5" fill="#ffee66">  Controller can have multiple</text>
+  <text x="782" y="330"  font-size="10.5" fill="#ffee66">  GET/POST methods — no if/else!</text>
+
+  <text x="782" y="352"  font-size="10.5" fill="#aaddaa">e.g.  /api/user</text>
+  <text x="782" y="368"  font-size="10.5" fill="#aaddaa">      /api/system</text>
+  <text x="782" y="384"  font-size="10.5" fill="#aaddaa">      /api/admin</text>
+  <text x="782" y="400"  font-size="10.5" fill="#aaddaa">Each has its own method!</text>
+
+  <line x1="780" y1="415" x2="1036" y2="415" stroke="#444" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <text x="782" y="433"  font-size="10.5" fill="#ccc">In Servlet → 1 handle method</text>
+  <text x="782" y="449"  font-size="10.5" fill="#ccc">(HttpServletRequest req) with</text>
+  <text x="782" y="465"  font-size="10.5" fill="#ccc">if/else for routing.</text>
+
+  <line x1="780" y1="480" x2="1036" y2="480" stroke="#444" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <text x="782" y="498"  font-size="10"   fill="#ff9944">getServletMappings()</text>
+  <text x="782" y="513"  font-size="10"   fill="#aaa">→ all requests come to /</text>
+  <text x="782" y="530"  font-size="10"   fill="#ff9944">getServletConfigClasses()</text>
+  <text x="782" y="545"  font-size="10"   fill="#aaa">→ points to Config class</text>
+  <text x="782" y="562"  font-size="10"   fill="#ff9944">getRootConfigClasses()</text>
+  <text x="782" y="577"  font-size="10"   fill="#aaa">→ root context (null here)</text>
+  <text x="782" y="600"  font-size="10"   fill="#ccc">In Spring MVC we have to</text>
+  <text x="782" y="615"  font-size="10"   fill="#ccc">create all 3 classes manually.</text>
+</svg>

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f87171"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="620" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="22" width="890" height="56" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1" filter="url(#shadow)"/>
+  <text x="55" y="56" fill="#38bdf8" font-family="Segoe UI, Roboto, sans-serif" font-size="20" font-weight="bold">What is Dependency Injection (DI) &amp; Inversion of Control?</text>
+  <text x="730" y="56" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="13">Spring Boot Architecture</text>
+
+  <!-- LEFT PANEL: Tight Coupling & DIP Violation -->
+  <rect x="35" y="96" width="430" height="495" rx="12" fill="url(#cardGrad)" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="50" y="112" width="400" height="32" rx="6" fill="url(#redGrad)"/>
+  <text x="65" y="133" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13.5" font-weight="bold">1. PROBLEM: Tight Coupling (Breaks DIP)</text>
+
+  <!-- Left Code Box -->
+  <rect x="50" y="156" width="400" height="132" rx="8" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="180" fill="#f43f5e" font-family="Consolas, monospace" font-size="12" font-weight="bold">public class User {</text>
+  <text x="85" y="204" fill="#94a3b8" font-family="Consolas, monospace" font-size="11.5">// Direct concrete instantiation</text>
+  <text x="85" y="224" fill="#f87171" font-family="Consolas, monospace" font-size="12" font-weight="bold">Order order = new Order();</text>
+  <text x="85" y="248" fill="#94a3b8" font-family="Consolas, monospace" font-size="11.5">public User() { System.out.println(&quot;init user&quot;); }</text>
+  <text x="65" y="272" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">}</text>
+
+  <!-- Left Points -->
+  <text x="55" y="312" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">Why this structure is problematic:</text>
+  <circle cx="65" cy="336" r="4" fill="#ef4444"/>
+  <text x="78" y="340" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5"><tspan font-weight="bold" fill="#f87171">Hardcoded Dependency:</tspan> User controls Order's lifecycle.</text>
+  
+  <circle cx="65" cy="368" r="4" fill="#ef4444"/>
+  <text x="78" y="372" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">If Order becomes an interface with implementations:</text>
+  <text x="78" y="392" fill="#fca5a5" font-family="Consolas, monospace" font-size="12">OnlineOrder</text>
+  <text x="165" y="392" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&amp;</text>
+  <text x="180" y="392" fill="#fca5a5" font-family="Consolas, monospace" font-size="12">OfflineOrder</text>
+  <text x="270" y="392" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2192; User class MUST be changed!</text>
+
+  <circle cx="65" cy="424" r="4" fill="#ef4444"/>
+  <text x="78" y="428" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5"><tspan font-weight="bold" fill="#f87171">Breaks S.O.L.I.D DIP:</tspan> High-level modules must</text>
+  <text x="78" y="448" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">depend on abstractions, not concrete classes.</text>
+
+  <!-- Cascading Box -->
+  <rect x="50" y="470" width="400" height="105" rx="8" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="65" y="494" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="12" font-weight="bold">Cascading Ripple Effect:</text>
+  <text x="65" y="515" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Every implementation change forces caller classes to recompile</text>
+  <text x="65" y="535" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Impossible to pass test doubles (mocks/stubs) for unit tests</text>
+  <text x="65" y="555" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Violates Open/Closed and Single Responsibility principles</text>
+
+  <!-- RIGHT PANEL: Spring DI Solution -->
+  <rect x="495" y="96" width="430" height="495" rx="12" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="510" y="112" width="400" height="32" rx="6" fill="url(#greenGrad)"/>
+  <text x="525" y="133" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="13.5" font-weight="bold">2. SOLUTION: Spring Boot Dependency Injection</text>
+
+  <!-- Right Code Box -->
+  <rect x="510" y="156" width="400" height="152" rx="8" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="525" y="178" fill="#38bdf8" font-family="Consolas, monospace" font-size="12">@Component</text>
+  <text x="525" y="198" fill="#f43f5e" font-family="Consolas, monospace" font-size="12" font-weight="bold">public class User {</text>
+  <text x="545" y="220" fill="#94a3b8" font-family="Consolas, monospace" font-size="11.5">// Depend on interface abstraction</text>
+  <text x="545" y="240" fill="#34d399" font-family="Consolas, monospace" font-size="12" font-weight="bold">private final Order order;</text>
+  <text x="545" y="262" fill="#38bdf8" font-family="Consolas, monospace" font-size="11.5">@Autowired // Optional if single constructor</text>
+  <text x="545" y="282" fill="#6ee7b7" font-family="Consolas, monospace" font-size="12">public User(Order order) { this.order = order; }</text>
+  <text x="525" y="300" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">}</text>
+
+  <!-- Right Points -->
+  <text x="515" y="330" fill="#6ee7b7" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">How Inversion of Control works:</text>
+  <circle cx="525" cy="354" r="4" fill="#10b981"/>
+  <text x="538" y="358" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5"><tspan font-weight="bold" fill="#34d399">Inversion of Control (IoC):</tspan> Framework creates objects,</text>
+  <text x="538" y="376" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">manages lifecycle, and resolves dependencies.</text>
+
+  <circle cx="525" cy="402" r="4" fill="#10b981"/>
+  <text x="538" y="406" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5"><tspan font-weight="bold" fill="#34d399">Abstraction Decoupling:</tspan> User knows only interface</text>
+  <text x="538" y="424" fill="#a7f3d0" font-family="Consolas, monospace" font-size="12">Order</text>
+  <text x="585" y="424" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">. Any implementation can be passed easily.</text>
+
+  <!-- Spring IoC Container Box -->
+  <rect x="510" y="450" width="400" height="125" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+  <text x="525" y="474" fill="#a7f3d0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5" font-weight="bold">Spring IoC Container at Work:</text>
+  <text x="525" y="496" fill="#d1fae5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">&#x2714; Discovers beans via @Component scanning</text>
+  <text x="525" y="516" fill="#d1fae5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">&#x2714; Instantiates Order &#x2192; injects into User</text>
+  <text x="525" y="536" fill="#d1fae5" font-family="Segoe UI, Roboto, sans-serif" font-size="12">&#x2714; In tests: directly pass Mockito.mock(Order.class)</text>
+  <text x="525" y="556" fill="#a7f3d0" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x27A4; DIP Achieved: Independent, modular, highly testable!</text>
+
+  <!-- Center Arrow -->
+  <path d="M 467 335 L 493 335" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+</svg>

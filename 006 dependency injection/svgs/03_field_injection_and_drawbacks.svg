@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="warnBanner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+    <filter id="shadow3" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="980" height="620" rx="16" fill="url(#bgGrad3)"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="20" width="910" height="55" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#shadow3)"/>
+  <text x="55" y="54" fill="#f87171" font-family="Segoe UI, Roboto, sans-serif" font-size="20" font-weight="bold">Field Injection: How It Works &amp; Why It Is Discouraged</text>
+  <text x="750" y="54" fill="#fbbf24" font-family="Segoe UI, Roboto, sans-serif" font-size="13">Code Smell &amp; Antipattern</text>
+
+  <!-- Top How it Works Box -->
+  <rect x="35" y="90" width="910" height="120" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+  <rect x="50" y="102" width="220" height="25" rx="5" fill="#1e293b"/>
+  <text x="60" y="120" fill="#38bdf8" font-family="Segoe UI, Roboto, sans-serif" font-size="13" font-weight="bold">How Field Injection Works:</text>
+  
+  <text x="50" y="148" fill="#e2e8f0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2022; Annotated directly on class fields using <tspan fill="#38bdf8" font-family="Consolas, monospace">@Autowired</tspan>.</text>
+  <text x="50" y="170" fill="#e2e8f0" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2022; Spring calls default constructor to create object, then uses <tspan fill="#fca5a5" font-weight="bold">Java Reflection API</tspan> (<tspan font-family="Consolas, monospace" fill="#fed7aa">field.setAccessible(true)</tspan>) to inject dependencies.</text>
+  <text x="50" y="192" fill="#34d399" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5">&#x2714; <tspan font-weight="bold">Only Advantage:</tspan> Extremely concise to write initially in prototypes.</text>
+
+  <!-- 3 Drawbacks Cards -->
+  <!-- Drawback 1: Immutability -->
+  <rect x="35" y="225" width="285" height="365" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow3)"/>
+  <rect x="45" y="238" width="265" height="30" rx="6" fill="url(#warnBanner)"/>
+  <text x="55" y="258" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5" font-weight="bold">1. Cannot Use Final Fields</text>
+
+  <rect x="45" y="278" width="265" height="100" rx="6" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="55" y="298" fill="#38bdf8" font-family="Consolas, monospace" font-size="11">@Component</text>
+  <text x="55" y="315" fill="#f43f5e" font-family="Consolas, monospace" font-size="11">public class User {</text>
+  <text x="65" y="333" fill="#38bdf8" font-family="Consolas, monospace" font-size="11">  @Autowired</text>
+  <text x="65" y="351" fill="#f87171" font-family="Consolas, monospace" font-size="11" font-weight="bold">  public final Order order;</text>
+  <text x="55" y="369" fill="#f43f5e" font-family="Consolas, monospace" font-size="11">}</text>
+
+  <rect x="45" y="388" width="265" height="42" rx="6" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="55" y="405" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x2718; Compilation Failure!</text>
+  <text x="55" y="422" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11">Blank final field not initialized</text>
+
+  <text x="45" y="450" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12"><tspan font-weight="bold" fill="#fca5a5">Reflection Limitations:</tspan></text>
+  <text x="45" y="470" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Java requires final variables to</text>
+  <text x="45" y="488" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">be initialized during construction.</text>
+  <text x="45" y="510" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Prevents creating immutable,</text>
+  <text x="45" y="528" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">thread-safe components.</text>
+  <text x="45" y="555" fill="#f87171" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x27A4; Mutable state open to bugs!</text>
+
+  <!-- Drawback 2: NullPointerException -->
+  <rect x="345" y="225" width="290" height="365" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow3)"/>
+  <rect x="355" y="238" width="270" height="30" rx="6" fill="url(#warnBanner)"/>
+  <text x="365" y="258" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5" font-weight="bold">2. High Risk of NPE Outside Spring</text>
+
+  <rect x="355" y="278" width="270" height="100" rx="6" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="365" y="298" fill="#94a3b8" font-family="Consolas, monospace" font-size="11">// Manual POJO creation</text>
+  <text x="365" y="318" fill="#f8fafc" font-family="Consolas, monospace" font-size="11">User user = new User();</text>
+  <text x="365" y="340" fill="#f87171" font-family="Consolas, monospace" font-size="11" font-weight="bold">user.process();</text>
+  <text x="365" y="362" fill="#fca5a5" font-family="Consolas, monospace" font-size="11">// order.process() throws NPE!</text>
+
+  <rect x="355" y="388" width="270" height="42" rx="6" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="365" y="405" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x2718; NullPointerException!</text>
+  <text x="365" y="422" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11">order field is null at runtime</text>
+
+  <text x="355" y="450" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12"><tspan font-weight="bold" fill="#fca5a5">Hidden Dependency Contract:</tspan></text>
+  <text x="355" y="470" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Nothing forces caller to provide</text>
+  <text x="355" y="488" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">the required dependencies.</text>
+  <text x="355" y="510" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Fails silently until method</text>
+  <text x="355" y="528" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">execution triggers runtime crash.</text>
+  <text x="355" y="555" fill="#f87171" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x27A4; Violates Fail-Fast principle!</text>
+
+  <!-- Drawback 3: Hard to Unit Test -->
+  <rect x="660" y="225" width="285" height="365" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow3)"/>
+  <rect x="670" y="238" width="265" height="30" rx="6" fill="url(#warnBanner)"/>
+  <text x="680" y="258" fill="#ffffff" font-family="Segoe UI, Roboto, sans-serif" font-size="12.5" font-weight="bold">3. Complex Unit Testing</text>
+
+  <rect x="670" y="278" width="265" height="100" rx="6" fill="#090d16" stroke="#334155" stroke-width="1"/>
+  <text x="680" y="296" fill="#94a3b8" font-family="Consolas, monospace" font-size="10.5">@Mock Order mockOrder;</text>
+  <text x="680" y="314" fill="#f59e0b" font-family="Consolas, monospace" font-size="10.5">@InjectMocks User user;</text>
+  <text x="680" y="333" fill="#94a3b8" font-family="Consolas, monospace" font-size="10.5">@BeforeEach void setup() {</text>
+  <text x="685" y="351" fill="#fca5a5" font-family="Consolas, monospace" font-size="10.5">  MockitoAnnotations.openMocks(this);</text>
+  <text x="680" y="369" fill="#94a3b8" font-family="Consolas, monospace" font-size="10.5">}</text>
+
+  <rect x="670" y="388" width="265" height="42" rx="6" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="680" y="405" fill="#fca5a5" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x26A0; Requires Heavy Reflection!</text>
+  <text x="680" y="422" fill="#fecaca" font-family="Segoe UI, Roboto, sans-serif" font-size="11">Cannot do pure POJO unit test</text>
+
+  <text x="670" y="450" fill="#cbd5e1" font-family="Segoe UI, Roboto, sans-serif" font-size="12"><tspan font-weight="bold" fill="#fca5a5">Framework Coupling in Tests:</tspan></text>
+  <text x="670" y="470" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; No setter or constructor to</text>
+  <text x="670" y="488" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">pass mocks directly.</text>
+  <text x="670" y="510" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">&#x2022; Forces Mockito reflection runners,</text>
+  <text x="670" y="528" fill="#94a3b8" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5">slowing down test suites.</text>
+  <text x="670" y="555" fill="#f87171" font-family="Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="bold">&#x27A4; Brittle test infrastructure!</text>
+</svg>

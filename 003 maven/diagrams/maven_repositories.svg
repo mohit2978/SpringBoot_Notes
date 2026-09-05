@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" width="820" height="380" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#aaa"/>
+    </marker>
+  </defs>
+  <rect width="820" height="380" fill="#1a1a1a" rx="8"/>
+  <text x="410" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#e0e0e0">Maven Repository Architecture</text>
+
+  <!-- Your PC / Local Repository -->
+  <rect x="30" y="60" width="200" height="160" fill="#222" stroke="#81c784" stroke-width="1.5" rx="4"/>
+  <text x="130" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#81c784">Your PC</text>
+  <rect x="55" y="95" width="150" height="90" fill="#1a1a1a" stroke="#555" stroke-width="1" rx="3"/>
+  <text x="130" y="120" text-anchor="middle" font-size="11" fill="#4fc3f7">Local Repository</text>
+  <text x="130" y="140" text-anchor="middle" font-size="10" fill="#aaa">(~/.m2/repository)</text>
+  <text x="130" y="158" text-anchor="middle" font-size="10" fill="#aaa">Cache of all downloaded</text>
+  <text x="130" y="172" text-anchor="middle" font-size="10" fill="#aaa">dependencies (JARs)</text>
+
+  <!-- Arrow: Local → Maven Central -->
+  <line x1="230" y1="140" x2="330" y2="140" stroke="#aaa" stroke-width="1.4" marker-end="url(#arrR)"/>
+  <text x="280" y="133" text-anchor="middle" font-size="9.5" fill="#888">if not found locally</text>
+
+  <!-- Maven Central (Remote Repository) -->
+  <rect x="330" y="60" width="220" height="160" fill="#222" stroke="#ff8a65" stroke-width="1.5" rx="4"/>
+  <text x="440" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff8a65">Maven Central</text>
+  <text x="440" y="103" text-anchor="middle" font-size="10" fill="#aaa">(Remote Repository)</text>
+  <text x="440" y="130" text-anchor="middle" font-size="11" fill="#ccc">repo.maven.apache.org</text>
+  <text x="440" y="150" text-anchor="middle" font-size="10" fill="#aaa">Public repository with</text>
+  <text x="440" y="165" text-anchor="middle" font-size="10" fill="#aaa">millions of artifacts</text>
+  <text x="440" y="180" text-anchor="middle" font-size="10" fill="#aaa">No username/password needed</text>
+  <text x="440" y="198" text-anchor="middle" font-size="10" fill="#aaa">(public)</text>
+
+  <!-- Company Remote Repo -->
+  <rect x="600" y="60" width="200" height="160" fill="#222" stroke="#cc99ff" stroke-width="1.5" rx="4"/>
+  <text x="700" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#cc99ff">Company Remote</text>
+  <text x="700" y="102" text-anchor="middle" font-size="13" font-weight="bold" fill="#cc99ff">Repository</text>
+  <text x="700" y="128" text-anchor="middle" font-size="10" fill="#aaa">In company network</text>
+  <text x="700" y="145" text-anchor="middle" font-size="10" fill="#aaa">Requires username +</text>
+  <text x="700" y="160" text-anchor="middle" font-size="10" fill="#aaa">password in settings.xml</text>
+  <text x="700" y="178" text-anchor="middle" font-size="10" fill="#aaa">Any JAR you upload will</text>
+  <text x="700" y="193" text-anchor="middle" font-size="10" fill="#aaa">be here for team to use</text>
+
+  <!-- Arrow: Local → Company Repo -->
+  <line x1="230" y1="100" x2="600" y2="100" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="415" y="93" text-anchor="middle" font-size="9.5" fill="#888">OR company repo</text>
+
+  <!-- m2 folder tree -->
+  <text x="30" y="255" font-size="13" font-weight="bold" fill="#4fc3f7">.m2/repository folder structure:</text>
+  <text x="30" y="278" font-size="12" fill="#ccc" font-family="'Courier New', monospace">.m2/</text>
+  <text x="30" y="296" font-size="12" fill="#ccc" font-family="'Courier New', monospace">  └─ repository/</text>
+  <text x="30" y="314" font-size="12" fill="#ccc" font-family="'Courier New', monospace">       └─ com/</text>
+  <text x="30" y="332" font-size="12" fill="#ccc" font-family="'Courier New', monospace">            └─ conceptandcoding/</text>
+  <text x="30" y="350" font-size="12" fill="#ccc" font-family="'Courier New', monospace">                 └─ learningspringboot/</text>
+  <text x="30" y="368" font-size="12" fill="#ccc" font-family="'Courier New', monospace">                      └─ 0.0.1-SNAPSHOT/ (JARs here)</text>
+
+  <!-- settings.xml note -->
+  <rect x="440" y="250" width="360" height="115" fill="#1e1e1e" stroke="#555" stroke-width="1" stroke-dasharray="4,3" rx="4"/>
+  <text x="620" y="272" text-anchor="middle" font-size="11" font-weight="bold" fill="#ffcc00">settings.xml (in .m2 folder)</text>
+  <text x="455" y="292" font-size="10.5" fill="#aaa">• Change local repo path: </text>
+  <text x="455" y="308" font-size="10" fill="#ccc" font-family="'Courier New', monospace">  &lt;localRepository&gt;</text>
+  <text x="455" y="322" font-size="10" fill="#ccc" font-family="'Courier New', monospace">    ${user.home}/.m2/repository</text>
+  <text x="455" y="336" font-size="10" fill="#ccc" font-family="'Courier New', monospace">  &lt;/localRepository&gt;</text>
+  <text x="455" y="355" font-size="10" fill="#aaa">• Created automatically when Maven is installed</text>
+</svg>

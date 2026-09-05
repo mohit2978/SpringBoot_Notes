@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 320" width="860" height="320" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#aaa"/>
+    </marker>
+  </defs>
+  <rect width="860" height="320" fill="#1a1a1a" rx="8"/>
+  <text x="430" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#e0e0e0">Maven Architecture (High Level)</text>
+
+  <!-- pom.xml box -->
+  <rect x="30" y="100" width="130" height="70" fill="#222" stroke="#aaa" stroke-width="1.5" rx="4"/>
+  <text x="95" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#cc99ff">pom.xml</text>
+  <text x="95" y="145" text-anchor="middle" font-size="10" fill="#aaa">(Project</text>
+  <text x="95" y="160" text-anchor="middle" font-size="10" fill="#aaa">Object Model)</text>
+
+  <!-- Arrow pom → Maven Core -->
+  <line x1="160" y1="135" x2="240" y2="135" stroke="#aaa" stroke-width="1.4" marker-end="url(#arrR)"/>
+
+  <!-- Maven Core box -->
+  <rect x="240" y="90" width="180" height="90" fill="#222" stroke="#ffcc00" stroke-width="1.5" rx="4"/>
+  <text x="330" y="118" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffcc00">Maven Core</text>
+  <text x="330" y="136" text-anchor="middle" font-size="10" fill="#aaa">(Build Lifecycle</text>
+  <text x="330" y="151" text-anchor="middle" font-size="10" fill="#aaa">+ Plugins)</text>
+
+  <!-- Arrow Maven Core → Repo -->
+  <line x1="420" y1="135" x2="500" y2="135" stroke="#aaa" stroke-width="1.4" marker-end="url(#arrR)"/>
+
+  <!-- Local/Remote Repo box -->
+  <rect x="500" y="90" width="200" height="90" fill="#222" stroke="#ff6b6b" stroke-width="1.5" rx="4"/>
+  <text x="600" y="115" text-anchor="middle" font-size="12" font-weight="bold" fill="#ff6b6b">Local/Remote</text>
+  <text x="600" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#ff6b6b">Repository</text>
+  <text x="600" y="152" text-anchor="middle" font-size="10" fill="#aaa">(.m2/repository)</text>
+
+  <!-- How it works dashed box -->
+  <rect x="200" y="210" width="420" height="95" fill="#1e1e1e" stroke="#555" stroke-width="1" stroke-dasharray="4,3" rx="4"/>
+  <text x="220" y="232" font-size="11" font-weight="bold" fill="#cc99ff">How it works?</text>
+  <text x="220" y="252" font-size="11" fill="#ccc">1. Read pom.xml</text>
+  <text x="220" y="268" font-size="11" fill="#ccc">2. Resolve dependencies from repositories</text>
+  <text x="220" y="284" font-size="11" fill="#ccc">3. Execute lifecycle phases using plugins</text>
+  <text x="220" y="300" font-size="11" fill="#ccc">4. Produce build output (jar/war, reports etc.)</text>
+</svg>

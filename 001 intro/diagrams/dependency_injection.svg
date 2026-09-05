@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" width="1020" height="430" font-family="'Courier New', monospace">
+  <!-- Background -->
+  <rect width="1020" height="430" fill="#16213e" rx="12"/>
+  <text x="510" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#e0e0e0">Dependency Injection — Without vs With</text>
+
+  <!-- ══════════ WITHOUT DI (top half) ══════════ -->
+  <text x="305" y="56" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff6644">Without Dependency Injection</text>
+
+  <!-- Payment class box: x=10, y=65, w=290, h=150, right-edge=300 -->
+  <rect x="10" y="65" width="290" height="150" fill="#1a1515" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="24"  y="85"  font-size="10.5" fill="#6699ff">public class</text>
+  <text x="107" y="85"  font-size="10.5" fill="#aaddaa">Payment {</text>
+  <text x="38"  y="103" font-size="10.5" fill="#aaddaa">  User sender =</text>
+  <text x="150" y="103" font-size="10.5" fill="#ff6644">new</text>
+  <text x="178" y="103" font-size="10.5" fill="#aaddaa">User();</text>
+  <text x="38"  y="121" font-size="10.5" fill="#aaa">  void getSenderDetails(</text>
+  <text x="38"  y="138" font-size="10.5" fill="#aaa">        String userID) {</text>
+  <text x="55"  y="155" font-size="10.5" fill="#aaa">    sender.getUserDetails(userID);</text>
+  <text x="38"  y="172" font-size="10.5" fill="#aaa">  }</text>
+  <text x="24"  y="189" font-size="10.5" fill="#aaa">}</text>
+  <text x="24"  y="208" font-size="9"   fill="#ff4444">▲ creates User internally → tight coupling</text>
+
+  <!-- User class box (WITHOUT DI): x=312, y=65, w=290, h=120, right-edge=602 -->
+  <rect x="312" y="65" width="290" height="120" fill="#1a1515" stroke="#6699ff" stroke-width="1.5" rx="5"/>
+  <text x="326" y="85"  font-size="10.5" fill="#6699ff">public class</text>
+  <text x="410" y="85"  font-size="10.5" fill="#aaddaa">User {</text>
+  <text x="342" y="103" font-size="10.5" fill="#aaddaa">  public void getUserDetails(</text>
+  <text x="342" y="120" font-size="10.5" fill="#aaddaa">        String id) {</text>
+  <text x="358" y="137" font-size="10.5" fill="#aaa">    //do something</text>
+  <text x="342" y="154" font-size="10.5" fill="#aaa">  }</text>
+  <text x="326" y="171" font-size="10.5" fill="#aaa">}</text>
+
+  <!-- Tight coupling warning notes: x=620 -->
+  <text x="620" y="78"  font-size="11" fill="#ff6644" font-weight="bold">⚠ Tight Coupling</text>
+  <text x="620" y="97"  font-size="10.5" fill="#ccc">Payment creates User with</text>
+  <text x="620" y="113" font-size="10.5" fill="#ccc">'new User()' internally.</text>
+  <text x="620" y="129" font-size="10.5" fill="#ccc">Can't easily mock or swap</text>
+  <text x="620" y="145" font-size="10.5" fill="#ccc">the User type at runtime.</text>
+  <text x="620" y="165" font-size="10.5" fill="#ffee44">→ Hard to unit test</text>
+  <text x="620" y="181" font-size="10.5" fill="#ffee44">→ Can't change User dynamically</text>
+
+  <!-- divider -->
+  <line x1="10" y1="222" x2="1010" y2="222" stroke="#444" stroke-width="1" stroke-dasharray="6 4"/>
+
+  <!-- ══════════ WITH DI (bottom half) ══════════ -->
+  <text x="305" y="246" text-anchor="middle" font-size="13" font-weight="bold" fill="#66ff88">With Dependency Injection (@Autowired)</text>
+
+  <!-- Payment class box WITH DI: x=10, y=258, w=290, h=150, right-edge=300 -->
+  <rect x="10" y="258" width="290" height="158" fill="#0f1f0f" stroke="#66bb66" stroke-width="1.5" rx="5"/>
+  <text x="24"  y="278" font-size="10.5" fill="#cc99ff">@Component</text>
+  <text x="24"  y="295" font-size="10.5" fill="#6699ff">public class</text>
+  <text x="107" y="295" font-size="10.5" fill="#aaddaa">Payment {</text>
+  <text x="38"  y="313" font-size="10.5" fill="#cc99ff">  @Autowired</text>
+  <text x="38"  y="330" font-size="10.5" fill="#aaddaa">  User sender;</text>
+  <text x="38"  y="348" font-size="10.5" fill="#aaa">  void getSenderDetails(</text>
+  <text x="38"  y="365" font-size="10.5" fill="#aaa">        String userID) {</text>
+  <text x="55"  y="382" font-size="10.5" fill="#aaa">    sender.getUserDetails(userID);</text>
+  <text x="38"  y="399" font-size="10.5" fill="#aaa">  }</text>
+  <text x="24"  y="410" font-size="10.5" fill="#aaa">}</text>
+
+  <!-- User class box WITH DI: x=312, y=258, w=290, h=130, right-edge=602 -->
+  <rect x="312" y="258" width="290" height="130" fill="#0f1f0f" stroke="#66bb66" stroke-width="1.5" rx="5"/>
+  <text x="326" y="278" font-size="10.5" fill="#cc99ff">@Component</text>
+  <text x="326" y="295" font-size="10.5" fill="#6699ff">public class</text>
+  <text x="410" y="295" font-size="10.5" fill="#aaddaa">User {</text>
+  <text x="342" y="313" font-size="10.5" fill="#aaddaa">  public void getUserDetails(</text>
+  <text x="342" y="330" font-size="10.5" fill="#aaddaa">        String id) {</text>
+  <text x="358" y="347" font-size="10.5" fill="#aaa">    //do something</text>
+  <text x="342" y="364" font-size="10.5" fill="#aaa">  }</text>
+  <text x="326" y="381" font-size="10.5" fill="#aaa">}</text>
+
+  <!-- Notes WITH DI: x=620 -->
+  <text x="620" y="270"  font-size="11" fill="#66ff88" font-weight="bold">✔ Loose Coupling</text>
+  <text x="620" y="290"  font-size="10.5" fill="#aaddaa">@Component — tells Spring</text>
+  <text x="620" y="306"  font-size="10.5" fill="#aaddaa">to manage this class/bean.</text>
+  <text x="620" y="326"  font-size="10.5" fill="#cc99ff">@Autowired — tells Spring to</text>
+  <text x="620" y="342"  font-size="10.5" fill="#cc99ff">resolve &amp; inject the dependency.</text>
+  <text x="620" y="364"  font-size="10.5" fill="#ffee66">→ Easy to mock in unit tests</text>
+  <text x="620" y="380"  font-size="10.5" fill="#ffee66">→ Can swap User impl dynamically</text>
+  <text x="620" y="402"  font-size="10"   fill="#aaa">Whatever Bean needs Spring</text>
+  <text x="620" y="417"  font-size="10"   fill="#aaa">management → put @Component!</text>
+</svg>
