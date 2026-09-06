@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="520" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="996" height="516" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title -->
+  <rect x="300" y="14" width="400" height="36" rx="18" fill="#1e293b" stroke="#334155"/>
+  <text x="500" y="37" text-anchor="middle" font-size="14" font-weight="700" fill="#f8fafc">Transaction Propagation Types</text>
+
+  <!-- Context explanation -->
+  <rect x="30" y="62" width="940" height="52" rx="8" fill="#1e293b"/>
+  <text x="500" y="82" text-anchor="middle" font-size="12" fill="#cbd5e1">When a new transaction is created, it first checks the PROPAGATION value set.</text>
+  <text x="500" y="100" text-anchor="middle" font-size="11.5" fill="#94a3b8">Both m1() and m2() have @Transactional. When m1() calls m2(), propagation decides: does m2() use m1()'s TX or create its own?</text>
+
+  <!-- REQUIRED -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="132" width="290" height="148" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect x="30" y="132" width="290" height="28" rx="8" fill="#0369a1"/>
+    <text x="175" y="151" text-anchor="middle" font-size="12" font-weight="800" fill="#e0f2fe">REQUIRED (default)</text>
+    <text x="45" y="180" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">if(parent txn present)</text>
+    <text x="65" y="197" font-size="11" fill="#4ade80" font-family="Consolas, monospace">  Use it;</text>
+    <text x="45" y="214" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">else</text>
+    <text x="65" y="231" font-size="11" fill="#fbbf24" font-family="Consolas, monospace">  Create new transaction;</text>
+    <rect x="45" y="246" width="260" height="24" rx="4" fill="#1e293b"/>
+    <text x="175" y="262" text-anchor="middle" font-size="10" fill="#94a3b8">One TX shared — all or nothing</text>
+  </g>
+
+  <!-- REQUIRES_NEW -->
+  <g filter="url(#shadow)">
+    <rect x="355" y="132" width="290" height="168" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="1.8"/>
+    <rect x="355" y="132" width="290" height="28" rx="8" fill="#7f1d1d"/>
+    <text x="500" y="151" text-anchor="middle" font-size="12" font-weight="800" fill="#fecaca">REQUIRES_NEW</text>
+    <text x="370" y="180" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">if(parent txn present)</text>
+    <text x="385" y="197" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  Suspend the parent txn;</text>
+    <text x="385" y="214" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  Create a new Txn;</text>
+    <text x="385" y="231" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  Once finished, resume parent txn;</text>
+    <text x="370" y="249" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">else</text>
+    <text x="385" y="267" font-size="10.5" fill="#4ade80" font-family="Consolas, monospace">  Create new txn &amp; execute;</text>
+    <rect x="370" y="278" width="260" height="16" rx="4" fill="#1e293b"/>
+    <text x="500" y="290" text-anchor="middle" font-size="10" fill="#94a3b8">Independent TX — isolated commit/rollback</text>
+  </g>
+
+  <!-- SUPPORTS -->
+  <g filter="url(#shadow)">
+    <rect x="680" y="132" width="290" height="148" rx="8" fill="#0f172a" stroke="#818cf8" stroke-width="1.8"/>
+    <rect x="680" y="132" width="290" height="28" rx="8" fill="#312e81"/>
+    <text x="825" y="151" text-anchor="middle" font-size="12" font-weight="800" fill="#c7d2fe">SUPPORTS</text>
+    <text x="695" y="180" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">if(parent txn present)</text>
+    <text x="715" y="197" font-size="11" fill="#4ade80" font-family="Consolas, monospace">  Use it;</text>
+    <text x="695" y="214" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">else</text>
+    <text x="715" y="231" font-size="11" fill="#fbbf24" font-family="Consolas, monospace">  Execute without any TX;</text>
+    <rect x="695" y="246" width="260" height="24" rx="4" fill="#1e293b"/>
+    <text x="825" y="262" text-anchor="middle" font-size="10" fill="#94a3b8">TX or no TX — works either way</text>
+  </g>
+
+  <!-- NOT_SUPPORTED -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="306" width="290" height="168" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+    <rect x="30" y="306" width="290" height="28" rx="8" fill="#78350f"/>
+    <text x="175" y="325" text-anchor="middle" font-size="12" font-weight="800" fill="#fef3c7">NOT_SUPPORTED</text>
+    <text x="45" y="354" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">if(parent txn present)</text>
+    <text x="60" y="371" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  Suspend the parent txn;</text>
+    <text x="60" y="388" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  Execute without any TX;</text>
+    <text x="60" y="405" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  Resume the parent txn;</text>
+    <text x="45" y="423" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">else</text>
+    <text x="60" y="440" font-size="10.5" fill="#4ade80" font-family="Consolas, monospace">  Execute without any TX;</text>
+    <rect x="45" y="452" width="260" height="16" rx="4" fill="#1e293b"/>
+    <text x="175" y="464" text-anchor="middle" font-size="10" fill="#94a3b8">Always runs non-transactionally</text>
+  </g>
+
+  <!-- MANDATORY -->
+  <g filter="url(#shadow)">
+    <rect x="355" y="306" width="290" height="150" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+    <rect x="355" y="306" width="290" height="28" rx="8" fill="#14532d"/>
+    <text x="500" y="325" text-anchor="middle" font-size="12" font-weight="800" fill="#86efac">MANDATORY</text>
+    <text x="370" y="354" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">if(parent txn present)</text>
+    <text x="385" y="371" font-size="11" fill="#4ade80" font-family="Consolas, monospace">  Use it;</text>
+    <text x="370" y="389" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">else</text>
+    <text x="385" y="406" font-size="11" fill="#f87171" font-family="Consolas, monospace">  Throw exception;</text>
+    <rect x="370" y="420" width="260" height="28" rx="4" fill="#1e293b"/>
+    <text x="500" y="436" text-anchor="middle" font-size="10" fill="#94a3b8">Must always be called within an</text>
+    <text x="500" y="450" text-anchor="middle" font-size="10" fill="#f87171">existing transaction</text>
+  </g>
+
+  <!-- NEVER -->
+  <g filter="url(#shadow)">
+    <rect x="680" y="306" width="290" height="150" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="1.8"/>
+    <rect x="680" y="306" width="290" height="28" rx="8" fill="#450a0a"/>
+    <text x="825" y="325" text-anchor="middle" font-size="12" font-weight="800" fill="#fecaca">NEVER</text>
+    <text x="695" y="354" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">if(parent txn present)</text>
+    <text x="710" y="371" font-size="11" fill="#f87171" font-family="Consolas, monospace">  Throw exception;</text>
+    <text x="695" y="389" font-size="10.5" fill="#94a3b8" font-family="Consolas, monospace">else</text>
+    <text x="710" y="406" font-size="11" fill="#4ade80" font-family="Consolas, monospace">  Execute without TX;</text>
+    <rect x="695" y="420" width="260" height="28" rx="4" fill="#1e293b"/>
+    <text x="825" y="436" text-anchor="middle" font-size="10" fill="#94a3b8">Must NEVER be called inside</text>
+    <text x="825" y="450" text-anchor="middle" font-size="10" fill="#f87171">a transaction</text>
+  </g>
+
+  <!-- Default note -->
+  <rect x="30" y="488" width="940" height="22" rx="5" fill="#0369a1"/>
+  <text x="500" y="503" text-anchor="middle" font-size="11" fill="#e0f2fe" font-weight="600">By default: REQUIRED is the propagation — m2() joins m1()'s transaction if one exists</text>
+</svg>

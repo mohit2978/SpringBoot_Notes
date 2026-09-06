@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="960" height="400" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="956" height="396" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title -->
+  <rect x="280" y="14" width="400" height="36" rx="18" fill="#1e293b" stroke="#334155"/>
+  <text x="480" y="37" text-anchor="middle" font-size="14" font-weight="700" fill="#f8fafc">Self-Invocation Problem with @Transactional</text>
+
+  <!-- Problem explanation -->
+  <rect x="30" y="62" width="900" height="40" rx="8" fill="#450a0a" stroke="#f87171" stroke-width="1"/>
+  <text x="480" y="78" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f87171">⚠ Self-Invocation Issue: @Transactional works ONLY when the method is called via a Spring proxy</text>
+  <text x="480" y="96" text-anchor="middle" font-size="11" fill="#fca5a5">If m2() is called directly inside m1() (same class), Spring does NOT create a new TX for m2()</text>
+
+  <!-- Left: Wrong pattern - same class self-call -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="118" width="420" height="260" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="1.8"/>
+    <rect x="30" y="118" width="420" height="28" rx="8" fill="#450a0a"/>
+    <text x="240" y="137" text-anchor="middle" font-size="12" font-weight="700" fill="#fecaca">❌ WRONG — Self-Invocation</text>
+    <text x="45" y="168" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">@Service</text>
+    <text x="45" y="185" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">public class UserService {</text>
+    <text x="60" y="206" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  @Transactional</text>
+    <text x="60" y="223" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  void m1() {</text>
+    <text x="75" y="240" font-size="10" fill="#94a3b8" font-family="Consolas, monospace">    // TX1 active</text>
+    <text x="75" y="257" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">    m2();  </text>
+    <text x="150" y="257" font-size="10" fill="#f87171" font-family="Consolas, monospace">// direct call — NO Spring proxy!</text>
+    <text x="60" y="274" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  }</text>
+    <text x="60" y="294" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  @Transactional</text>
+    <text x="60" y="311" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  void m2() {</text>
+    <text x="75" y="328" font-size="10" fill="#94a3b8" font-family="Consolas, monospace">    // TX annotation IGNORED!</text>
+    <text x="60" y="345" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  }</text>
+    <text x="45" y="360" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">}</text>
+    <text x="240" y="370" text-anchor="middle" font-size="10" fill="#f87171">Transaction name will be same as m1() — both share TX1</text>
+  </g>
+
+  <!-- Right: Correct pattern - separate bean -->
+  <g filter="url(#shadow)">
+    <rect x="510" y="118" width="420" height="260" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+    <rect x="510" y="118" width="420" height="28" rx="8" fill="#14532d"/>
+    <text x="720" y="137" text-anchor="middle" font-size="12" font-weight="700" fill="#86efac">✓ CORRECT — Separate Bean (DAO)</text>
+    <text x="525" y="168" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">@Service</text>
+    <text x="525" y="185" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">public class UserService {</text>
+    <text x="540" y="205" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  @Autowired</text>
+    <text x="540" y="222" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  UserDAO userDAO;</text>
+    <text x="540" y="242" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">  @Transactional</text>
+    <text x="540" y="259" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  void m1() {</text>
+    <text x="555" y="276" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">    userDAO.m2();  </text>
+    <text x="660" y="276" font-size="10" fill="#4ade80" font-family="Consolas, monospace">// via Spring proxy ✓</text>
+    <text x="540" y="293" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">  }</text>
+    <text x="525" y="313" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">}</text>
+    <text x="525" y="336" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">// UserDAO — separate Spring bean</text>
+    <text x="525" y="353" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">@Service</text>
+    <text x="525" y="370" font-size="10.5" fill="#e2e8f0" font-family="Consolas, monospace">public class UserDAO { @Transactional void m2(){...} }</text>
+  </g>
+</svg>
