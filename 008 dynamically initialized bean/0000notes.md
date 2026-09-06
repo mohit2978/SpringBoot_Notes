@@ -1,1 +1,0 @@
-![alt text](<008dynamicallly initialise bean_250202_204301_250716_002315_1.jpg>) ![alt text](<008dynamicallly initialise bean_250202_204301_250716_002315_2.jpg>) ![alt text](<008dynamicallly initialise bean_250202_204301_250716_002315_3.jpg>)

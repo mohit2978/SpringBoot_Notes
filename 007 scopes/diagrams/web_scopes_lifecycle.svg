@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 460" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="webSh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="460" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1056" height="456" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="330" y="18" width="400" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Spring Web-Aware Scopes Lifespan</text>
+
+  <!-- Container Box: ServletContext / Application Scope -->
+  <g filter="url(#webSh)">
+    <rect x="40" y="80" width="980" height="320" rx="12" fill="#0f172a" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4"/>
+  </g>
+  <rect x="60" y="66" width="310" height="26" rx="5" fill="#be123c"/>
+  <text x="215" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Application Scope (1 per ServletContext)</text>
+
+  <!-- Nested Box: HTTP Session 1 -->
+  <rect x="70" y="115" width="440" height="260" rx="10" fill="#1e1b4b" stroke="#facc15" stroke-width="1.6"/>
+  <rect x="85" y="102" width="220" height="24" rx="4" fill="#a16207"/>
+  <text x="195" y="118" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">HTTP Session A (User 1)</text>
+
+  <!-- Inside Session A: Request 1 -->
+  <rect x="90" y="145" width="190" height="150" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="1.4"/>
+  <rect x="100" y="155" width="170" height="22" rx="4" fill="#15803d"/>
+  <text x="185" y="170" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">HTTP Request 1</text>
+  <text x="185" y="200" text-anchor="middle" font-family="monospace" font-size="11" fill="#4ade80">User Bean #1</text>
+  <text x="185" y="222" text-anchor="middle" font-size="10" fill="#cbd5e1">Born with HTTP request</text>
+  <text x="185" y="240" text-anchor="middle" font-size="10" fill="#f87171">Dies when response sent</text>
+  <rect x="105" y="258" width="160" height="24" rx="4" fill="#0f172a"/>
+  <text x="185" y="274" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#38bdf8">hashCode: 39793904</text>
+
+  <!-- Inside Session A: Request 2 -->
+  <rect x="300" y="145" width="190" height="150" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="1.4"/>
+  <rect x="310" y="155" width="170" height="22" rx="4" fill="#15803d"/>
+  <text x="395" y="170" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">HTTP Request 2</text>
+  <text x="395" y="200" text-anchor="middle" font-family="monospace" font-size="11" fill="#4ade80">User Bean #2</text>
+  <text x="395" y="222" text-anchor="middle" font-size="10" fill="#cbd5e1">Fresh request bean!</text>
+  <text x="395" y="240" text-anchor="middle" font-size="10" fill="#f87171">Dies when response sent</text>
+  <rect x="315" y="258" width="160" height="24" rx="4" fill="#0f172a"/>
+  <text x="395" y="274" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#facc15">hashCode: 1227388929</text>
+
+  <!-- Session A Shared Scope Footer -->
+  <rect x="90" y="315" width="400" height="40" rx="6" fill="#1e293b" stroke="#facc15" stroke-width="1"/>
+  <text x="290" y="335" text-anchor="middle" font-size="11" font-weight="600" fill="#facc15">Session Scoped Bean: Active across Request 1 &amp; Request 2</text>
+  <text x="290" y="348" text-anchor="middle" font-size="9.5" fill="#cbd5e1">Preserves login/cart state until logout or session timeout</text>
+
+
+  <!-- Nested Box: HTTP Session 2 (Another User) -->
+  <rect x="545" y="115" width="455" height="260" rx="10" fill="#1e1b4b" stroke="#facc15" stroke-width="1.6"/>
+  <rect x="560" y="102" width="220" height="24" rx="4" fill="#a16207"/>
+  <text x="670" y="118" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">HTTP Session B (User 2)</text>
+
+  <!-- Inside Session B: Request 1 -->
+  <rect x="565" y="145" width="200" height="150" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="1.4"/>
+  <rect x="575" y="155" width="180" height="22" rx="4" fill="#15803d"/>
+  <text x="665" y="170" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">HTTP Request 1</text>
+  <text x="665" y="200" text-anchor="middle" font-family="monospace" font-size="11" fill="#4ade80">User Bean #3</text>
+  <text x="665" y="222" text-anchor="middle" font-size="10" fill="#cbd5e1">Separate user request</text>
+  <text x="665" y="240" text-anchor="middle" font-size="10" fill="#f87171">Isolated memory space</text>
+  <rect x="580" y="258" width="170" height="24" rx="4" fill="#0f172a"/>
+  <text x="665" y="274" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#a855f7">hashCode: 83920194</text>
+
+  <!-- Session B Scope Footer -->
+  <rect x="565" y="315" width="415" height="40" rx="6" fill="#1e293b" stroke="#facc15" stroke-width="1"/>
+  <text x="772" y="335" text-anchor="middle" font-size="11" font-weight="600" fill="#facc15">Session Scoped Bean: Completely isolated from Session A</text>
+  <text x="772" y="348" text-anchor="middle" font-size="9.5" fill="#cbd5e1">Unique instance per client browser cookie (JSESSIONID)</text>
+
+  <!-- Bottom Strip -->
+  <rect x="180" y="418" width="700" height="30" rx="15" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="530" y="438" text-anchor="middle" font-size="11.5" fill="#cbd5e1">
+    Hierarchy: <tspan fill="#f43f5e" font-weight="700">Application</tspan> (ServletContext) &#x25B6; <tspan fill="#facc15" font-weight="700">Session</tspan> (Client Browser) &#x25B6; <tspan fill="#4ade80" font-weight="700">Request</tspan> (Single HTTP Request/Response cycle)
+  </text>
+</svg>

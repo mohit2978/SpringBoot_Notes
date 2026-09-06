@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 440" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrPurple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#c084fc"/>
+    </marker>
+    <filter id="shadowCard" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1020" height="440" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1016" height="436" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Header -->
+  <rect x="260" y="18" width="500" height="36" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="510" y="42" text-anchor="middle" font-size="14.5" font-weight="700" fill="#f8fafc">Custom Type Conversion: @InitBinder &amp; PropertyEditor</text>
+
+  <!-- Box 1: Incoming Request -->
+  <g filter="url(#shadowCard)">
+    <rect x="40" y="80" width="230" height="110" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+    <rect x="55" y="92" width="95" height="22" rx="5" fill="#0369a1"/>
+    <text x="102" y="107" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">INPUT URL</text>
+    <text x="155" y="137" text-anchor="middle" font-family="monospace" font-size="12" fill="#f8fafc">?firstName=  JOHN </text>
+    <text x="155" y="160" text-anchor="middle" font-size="11" fill="#94a3b8">(Untrimmed / Mixed case)</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="270" y1="135" x2="318" y2="135" stroke="#c084fc" stroke-width="2" marker-end="url(#arrPurple)"/>
+
+  <!-- Box 2: @InitBinder in Controller -->
+  <g filter="url(#shadowCard)">
+    <rect x="325" y="80" width="370" height="160" rx="10" fill="#0f172a" stroke="#a855f7" stroke-width="1.8"/>
+    <rect x="340" y="92" width="180" height="22" rx="5" fill="#6b21a8"/>
+    <text x="430" y="107" text-anchor="middle" font-size="11" font-weight="700" fill="#f3e8ff">@InitBinder in Controller</text>
+    <text x="345" y="135" font-family="monospace" font-size="11" fill="#c084fc">binder.registerCustomEditor(</text>
+    <text x="365" y="155" font-family="monospace" font-size="11" fill="#38bdf8">&#x2022; String.class,</text>
+    <text x="475" y="155" font-size="10" fill="#94a3b8">&#x2190; Target Property Type</text>
+    <text x="365" y="175" font-family="monospace" font-size="11" fill="#facc15">&#x2022; &quot;firstName&quot;,</text>
+    <text x="475" y="175" font-size="10" fill="#94a3b8">&#x2190; Exact Parameter Match</text>
+    <text x="365" y="195" font-family="monospace" font-size="11" fill="#4ade80">&#x2022; new FirstNamePropertyEditor()</text>
+    <text x="345" y="215" font-family="monospace" font-size="11" fill="#c084fc">);</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 (to PropertyEditor) -->
+  <path d="M 510 240 L 510 270" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#arrPurple)"/>
+
+  <!-- Box 3: Custom PropertyEditorSupport -->
+  <g filter="url(#shadowCard)">
+    <rect x="250" y="275" width="520" height="135" rx="10" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.8"/>
+    <rect x="270" y="287" width="290" height="22" rx="5" fill="#3730a3"/>
+    <text x="415" y="302" text-anchor="middle" font-size="11" font-weight="700" fill="#e0e7ff">FirstNamePropertyEditor extends PropertyEditorSupport</text>
+
+    <text x="270" y="332" font-family="monospace" font-size="11.5" fill="#a5b4fc">@Override</text>
+    <text x="270" y="352" font-family="monospace" font-size="11.5" fill="#a5b4fc">public void setAsText(String text) {</text>
+    <rect x="285" y="360" width="300" height="24" rx="4" fill="#312e81"/>
+    <text x="295" y="376" font-family="monospace" font-size="11.5" font-weight="700" fill="#4ade80">setValue(text.trim().toLowerCase());</text>
+    <text x="270" y="398" font-family="monospace" font-size="11.5" fill="#a5b4fc">}</text>
+  </g>
+
+  <!-- Arrow 3 -> Result -->
+  <path d="M 770 342 L 800 342 L 800 135 L 820 135" fill="none" stroke="#4ade80" stroke-width="2" marker-end="url(#arrPurple)"/>
+
+  <!-- Box 4: Final Bound Parameter -->
+  <g filter="url(#shadowCard)">
+    <rect x="825" y="80" width="165" height="110" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="1.6"/>
+    <rect x="840" y="92" width="115" height="22" rx="5" fill="#166534"/>
+    <text x="897" y="107" text-anchor="middle" font-size="11" font-weight="700" fill="#dcfce7">BOUND VALUE</text>
+    <text x="907" y="137" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#4ade80">&quot;john&quot;</text>
+    <text x="907" y="160" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Clean &amp; formatted</text>
+  </g>
+</svg>

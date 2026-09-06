@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowCyan" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="540" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="996" height="536" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="250" y="16" width="500" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="500" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Solution 2: Dynamic Bean Initialization via @Configuration &amp; @Value</text>
+
+  <!-- Column 1: Config Property & @Configuration Class -->
+  <g filter="url(#cardShadow)">
+    <!-- application.properties -->
+    <rect x="30" y="75" width="310" height="95" rx="8" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="45" y="86" width="160" height="20" rx="4" fill="#78350f"/>
+    <text x="125" y="100" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fef3c7">application.properties</text>
+    <rect x="45" y="116" width="280" height="40" rx="4" fill="#1e293b"/>
+    <text x="55" y="141" font-size="12" fill="#fbbf24" font-family="Consolas, monospace">isOnlineOrder=false</text>
+
+    <!-- AppConfig @Configuration -->
+    <rect x="30" y="185" width="310" height="205" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+    <rect x="45" y="196" width="140" height="20" rx="4" fill="#0369a1"/>
+    <text x="115" y="210" text-anchor="middle" font-size="10.5" font-weight="700" fill="#e0f2fe">@Configuration</text>
+    <text x="45" y="236" font-size="14" font-weight="700" fill="#f8fafc">AppConfig</text>
+
+    <rect x="45" y="248" width="280" height="128" rx="4" fill="#111827" stroke="#334155" stroke-width="1"/>
+    <text x="55" y="268" font-size="10" fill="#fbbf24" font-family="Consolas, monospace">@Bean</text>
+    <text x="55" y="285" font-size="10" fill="#38bdf8" font-family="Consolas, monospace">public Order createOrderBean(</text>
+    <text x="65" y="302" font-size="9.5" fill="#f59e0b" font-family="Consolas, monospace">@Value("${isOnlineOrder}") boolean isOnlineOrder</text>
+    <text x="55" y="319" font-size="10" fill="#e2e8f0" font-family="Consolas, monospace">) {</text>
+    <text x="65" y="336" font-size="10" fill="#e2e8f0" font-family="Consolas, monospace">  if(isOnlineOrder) return new OnlineOrder();</text>
+    <text x="65" y="353" font-size="10" fill="#4ade80" font-family="Consolas, monospace">  else return new OfflineOrder();</text>
+    <text x="55" y="369" font-size="10" fill="#e2e8f0" font-family="Consolas, monospace">}</text>
+  </g>
+
+  <!-- Middle: IoC Container Evaluation -->
+  <g filter="url(#cardShadow)">
+    <rect x="370" y="75" width="270" height="315" rx="10" fill="#111827" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="390" y="88" width="230" height="24" rx="4" fill="#1f2937"/>
+    <text x="505" y="104" text-anchor="middle" font-size="11.5" font-weight="700" fill="#94a3b8">Spring IoC Container</text>
+
+    <!-- Condition Result -->
+    <rect x="390" y="125" width="230" height="58" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <text x="505" y="145" text-anchor="middle" font-size="11" fill="#cbd5e1">Evaluates Property Value:</text>
+    <text x="505" y="167" text-anchor="middle" font-size="12" font-weight="700" fill="#fbbf24">isOnlineOrder = false</text>
+
+    <!-- Decision Branch -->
+    <rect x="390" y="200" width="230" height="85" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+    <text x="405" y="222" font-size="12" font-weight="700" fill="#4ade80">&#x2714; Instantiates ONLY:</text>
+    <text x="405" y="244" font-size="13" font-weight="700" fill="#f8fafc" font-family="Consolas, monospace">new OfflineOrder()</text>
+    <text x="405" y="268" font-size="10.5" fill="#86efac">Log: "Offline Order initialized"</text>
+
+    <rect x="390" y="300" width="230" height="72" rx="6" fill="#18181b" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="405" y="322" font-size="11" font-weight="700" fill="#f87171">&#x2718; OnlineOrder Skipped</text>
+    <text x="405" y="342" font-size="10" fill="#94a3b8">No @Component present</text>
+    <text x="405" y="358" font-size="10" fill="#94a3b8">Never created in JVM memory!</text>
+  </g>
+
+  <!-- Right: Clean Consumer Injection (User Controller) -->
+  <g filter="url(#cardShadow)">
+    <rect x="670" y="75" width="300" height="315" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+    <rect x="685" y="88" width="140" height="22" rx="4" fill="#0369a1"/>
+    <text x="755" y="103" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">@RestController</text>
+    <text x="685" y="132" font-size="15" font-weight="700" fill="#f8fafc">User Controller</text>
+    <line x1="685" y1="142" x2="955" y2="142" stroke="#334155" stroke-width="1"/>
+
+    <rect x="685" y="155" width="270" height="60" rx="6" fill="#1e293b"/>
+    <text x="695" y="176" font-size="11" fill="#fbbf24" font-weight="600">@Autowired</text>
+    <text x="695" y="198" font-size="13" fill="#4ade80" font-weight="700" font-family="Consolas, monospace">Order order;</text>
+
+    <rect x="685" y="230" width="270" height="60" rx="6" fill="#111827"/>
+    <text x="695" y="250" font-size="10.5" font-weight="700" fill="#38bdf8">&#x2713; Zero Hardcoding!</text>
+    <text x="695" y="270" font-size="10" fill="#cbd5e1">No @Qualifier needed in User controller</text>
+
+    <!-- Request flow -->
+    <rect x="685" y="305" width="270" height="70" rx="6" fill="#052e16" stroke="#4ade80" stroke-width="1"/>
+    <text x="695" y="325" font-size="11" font-weight="700" fill="#86efac">POST /api/createOrder</text>
+    <text x="695" y="345" font-size="10.5" fill="#e2e8f0">&#x2192; order.createOrder()</text>
+    <text x="695" y="362" font-size="10" fill="#4ade80" font-family="Consolas, monospace">O/P: "created Offline Order"</text>
+  </g>
+
+  <!-- Connectors -->
+  <path d="M 340 280 L 370 240" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+  <path d="M 640 240 L 670 240" fill="none" stroke="#4ade80" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Footer Banner -->
+  <g filter="url(#cardShadow)">
+    <rect x="30" y="415" width="940" height="105" rx="8" fill="#18181b" stroke="#334155" stroke-width="1.2"/>
+    <rect x="45" y="427" width="220" height="20" rx="4" fill="#334155"/>
+    <text x="155" y="441" text-anchor="middle" font-size="10.5" font-weight="800" fill="#f8fafc">KEY ARCHITECTURAL BENEFITS</text>
+
+    <text x="45" y="468" font-size="11.5" fill="#f8fafc">&#x2022; <tspan font-weight="700" fill="#38bdf8">Decoupling:</tspan> The User controller does not know or care which implementation is loaded.</text>
+    <text x="45" y="488" font-size="11.5" fill="#cbd5e1">&#x2022; <tspan font-weight="700" fill="#4ade80">Memory Optimization:</tspan> Only the required bean is created; unused beans do not consume memory.</text>
+    <text x="45" y="508" font-size="11.5" fill="#cbd5e1">&#x2022; <tspan font-weight="700" fill="#fbbf24">Configurability:</tspan> Switch behavior dynamically across environments (dev/qa/prod) via configuration files or environment variables without code changes.</text>
+  </g>
+</svg>

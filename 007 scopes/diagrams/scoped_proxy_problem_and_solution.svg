@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 500" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrRedS" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#f87171"/>
+    </marker>
+    <marker id="arrGreenS" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#4ade80"/>
+    </marker>
+    <filter id="proxySh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="500" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1076" height="496" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="290" y="18" width="500" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="540" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Scoped Proxy: Singleton Injecting Request-Scoped Bean</text>
+
+  <!-- ================= TOP: The Problem ================= -->
+  <g filter="url(#proxySh)">
+    <rect x="40" y="75" width="1000" height="180" rx="12" fill="#0f172a" stroke="#f87171" stroke-width="1.8"/>
+  </g>
+  <rect x="60" y="90" width="180" height="26" rx="5" fill="#991b1b"/>
+  <text x="150" y="107" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">&#x26A0; The Dilemma / Problem</text>
+
+  <!-- Box: Singleton Controller -->
+  <rect x="60" y="130" width="260" height="105" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+  <text x="190" y="153" text-anchor="middle" font-size="12.5" font-weight="700" fill="#38bdf8">TestController (Singleton)</text>
+  <text x="190" y="173" text-anchor="middle" font-size="11" fill="#cbd5e1">Eagerly created at <tspan font-weight="700" fill="#facc15">STARTUP</tspan></text>
+  <text x="190" y="195" text-anchor="middle" font-size="10.5" fill="#94a3b8">Immediately requires dependency:</text>
+  <text x="190" y="213" text-anchor="middle" font-family="monospace" font-size="11" fill="#a5b4fc">@Autowired User user;</text>
+
+  <!-- Red Arrow -->
+  <line x1="320" y1="175" x2="415" y2="175" stroke="#f87171" stroke-width="2.5" marker-end="url(#arrRedS)"/>
+
+  <!-- Box: Request Scoped User -->
+  <rect x="425" y="130" width="260" height="105" rx="8" fill="#281414" stroke="#f87171" stroke-width="1.4"/>
+  <text x="555" y="153" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f87171">User (Request Scope)</text>
+  <text x="555" y="173" text-anchor="middle" font-size="11" fill="#cbd5e1">Can ONLY be created during an</text>
+  <text x="555" y="192" text-anchor="middle" font-weight="700" fill="#f87171">ACTIVE HTTP REQUEST</text>
+  <text x="555" y="212" text-anchor="middle" font-size="10.5" fill="#cbd5e1">At startup: NO HTTP request exists!</text>
+
+  <!-- Crash Notification Callout -->
+  <rect x="715" y="130" width="305" height="105" rx="8" fill="#1e1e24" stroke="#f87171" stroke-width="1.2"/>
+  <text x="867" y="153" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f87171">&#x2718; UnsatisfiedDependencyException</text>
+  <text x="867" y="175" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Scope &#39;request&#39; is not active</text>
+  <text x="867" y="193" text-anchor="middle" font-size="10.5" fill="#cbd5e1">for the current thread.</text>
+  <text x="867" y="215" text-anchor="middle" font-size="10" font-weight="700" fill="#f87171">APPLICATION FAILS TO START!</text>
+
+
+  <!-- ================= BOTTOM: The Solution (Scoped Proxy) ================= -->
+  <g filter="url(#proxySh)">
+    <rect x="40" y="275" width="1000" height="195" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.8"/>
+  </g>
+  <rect x="60" y="290" width="340" height="26" rx="5" fill="#15803d"/>
+  <text x="230" y="307" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">&#x2714; The Solution: proxyMode = TARGET_CLASS</text>
+
+  <!-- Step A: Singleton Controller -->
+  <rect x="60" y="330" width="240" height="120" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+  <text x="180" y="355" text-anchor="middle" font-size="12.5" font-weight="700" fill="#38bdf8">TestController (Singleton)</text>
+  <text x="180" y="375" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Instantiated at Startup</text>
+  <text x="180" y="398" text-anchor="middle" font-size="10.5" fill="#94a3b8">Receives dummy proxy at boot:</text>
+  <text x="180" y="418" text-anchor="middle" font-family="monospace" font-size="10" fill="#4ade80">User$$SpringCGLIB$$0</text>
+  <text x="180" y="435" text-anchor="middle" font-size="9" fill="#a7f3d0">(hashCode: 1159352444)</text>
+
+  <!-- Green Arrow to Proxy -->
+  <line x1="300" y1="390" x2="385" y2="390" stroke="#4ade80" stroke-width="2.2" marker-end="url(#arrGreenS)"/>
+
+  <!-- Step B: CGLIB Proxy (Dummy Bean) -->
+  <rect x="395" y="330" width="280" height="120" rx="8" fill="#14281e" stroke="#4ade80" stroke-width="1.6"/>
+  <text x="535" y="355" text-anchor="middle" font-size="13" font-weight="700" fill="#4ade80">CGLIB Scoped Proxy</text>
+  <text x="535" y="377" text-anchor="middle" font-size="11" fill="#cbd5e1">&#x2022; Dummy placeholder injected at startup</text>
+  <text x="535" y="397" text-anchor="middle" font-size="11" fill="#cbd5e1">&#x2022; Intercepts every method invocation</text>
+  <text x="535" y="419" text-anchor="middle" font-size="11" font-weight="700" fill="#facc15">&#x2192; Dynamically routes to active thread request!</text>
+
+  <!-- Green Arrow to Real Target -->
+  <line x1="675" y1="390" x2="755" y2="390" stroke="#4ade80" stroke-width="2.2" marker-end="url(#arrGreenS)"/>
+
+  <!-- Step C: Real Request Target Bean -->
+  <rect x="765" y="330" width="255" height="120" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.4"/>
+  <text x="892" y="355" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a5b4fc">Real User Bean Target</text>
+  <text x="892" y="377" text-anchor="middle" font-size="11" fill="#cbd5e1">Created when HTTP Request hits API</text>
+  <text x="892" y="397" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#facc15">hashCode: 1078757370</text>
+  <text x="892" y="420" text-anchor="middle" font-size="10" fill="#94a3b8">Executes actual business logic</text>
+  <text x="892" y="435" text-anchor="middle" font-size="10" fill="#f87171">Disposed when request finishes</text>
+</svg>

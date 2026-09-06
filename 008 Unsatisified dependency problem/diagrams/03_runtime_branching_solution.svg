@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowCyan" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#c084fc"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="520" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="956" height="516" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="240" y="16" width="480" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="480" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Solution 1: Runtime Dynamic Selection (Industry Pattern)</text>
+
+  <!-- Left: Incoming HTTP Request -->
+  <g filter="url(#cardShadow)">
+    <rect x="30" y="80" width="220" height="230" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+    <rect x="45" y="94" width="120" height="22" rx="4" fill="#0369a1"/>
+    <text x="105" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">Client Request</text>
+    
+    <text x="45" y="142" font-size="13" font-weight="700" fill="#f8fafc">HTTP POST</text>
+    <text x="45" y="162" font-size="11" fill="#94a3b8" font-family="Consolas, monospace">/api/createOrder</text>
+
+    <rect x="45" y="180" width="190" height="110" rx="6" fill="#1e293b"/>
+    <text x="55" y="202" font-size="11" font-weight="700" fill="#fbbf24">Request Parameter:</text>
+    <text x="55" y="224" font-size="11.5" fill="#38bdf8" font-family="Consolas, monospace">?isOnlineOrder=true</text>
+    <text x="55" y="244" font-size="11" fill="#94a3b8">OR</text>
+    <text x="55" y="264" font-size="11.5" fill="#c084fc" font-family="Consolas, monospace">?isOnlineOrder=false</text>
+    <text x="55" y="282" font-size="10" fill="#64748b">Dynamic per client call</text>
+  </g>
+
+  <!-- Middle: Controller with Dual Injections and Branching Logic -->
+  <g filter="url(#cardShadow)">
+    <rect x="290" y="80" width="370" height="295" rx="10" fill="#0f172a" stroke="#818cf8" stroke-width="1.8"/>
+    <rect x="305" y="94" width="140" height="22" rx="4" fill="#3730a3"/>
+    <text x="375" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="#c7d2fe">@RestController</text>
+    <text x="460" y="110" font-size="14" font-weight="700" fill="#f8fafc">User Controller</text>
+    <line x1="305" y1="125" x2="645" y2="125" stroke="#334155" stroke-width="1"/>
+
+    <!-- Injected Fields -->
+    <rect x="305" y="135" width="340" height="48" rx="6" fill="#1e293b"/>
+    <text x="315" y="152" font-size="10" fill="#38bdf8" font-family="Consolas, monospace">@Qualifier("onlineOrderObject") @Autowired</text>
+    <text x="315" y="170" font-size="11" font-weight="600" fill="#e2e8f0" font-family="Consolas, monospace">Order onlineOrderObj;</text>
+
+    <rect x="305" y="190" width="340" height="48" rx="6" fill="#1e293b"/>
+    <text x="315" y="207" font-size="10" fill="#c084fc" font-family="Consolas, monospace">@Qualifier("offlineOrderObject") @Autowired</text>
+    <text x="315" y="225" font-size="11" font-weight="600" fill="#e2e8f0" font-family="Consolas, monospace">Order offlineOrderObj;</text>
+
+    <!-- Branching Code Box -->
+    <rect x="305" y="248" width="340" height="112" rx="6" fill="#111827" stroke="#475569" stroke-width="1"/>
+    <text x="315" y="268" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">if (isOnlineOrder) {</text>
+    <text x="330" y="288" font-size="10.5" fill="#4ade80" font-family="Consolas, monospace">    onlineOrderObj.createOrder();</text>
+    <text x="315" y="308" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">} else {</text>
+    <text x="330" y="328" font-size="10.5" fill="#c084fc" font-family="Consolas, monospace">    offlineOrderObj.createOrder();</text>
+    <text x="315" y="348" font-size="10.5" fill="#fbbf24" font-family="Consolas, monospace">}</text>
+  </g>
+
+  <!-- Right: Both Beans Active -->
+  <!-- OnlineOrder -->
+  <g filter="url(#cardShadow)">
+    <rect x="700" y="115" width="230" height="95" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.6"/>
+    <rect x="715" y="125" width="100" height="20" rx="4" fill="#14532d"/>
+    <text x="765" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="#86efac">OnlineOrder</text>
+    <text x="715" y="165" font-size="11" fill="#cbd5e1">&#x2022; Instantiated at startup</text>
+    <text x="715" y="185" font-size="11" fill="#4ade80">&#x2022; Invoked when isOnline=true</text>
+  </g>
+
+  <!-- OfflineOrder -->
+  <g filter="url(#cardShadow)">
+    <rect x="700" y="235" width="230" height="95" rx="8" fill="#0f172a" stroke="#c084fc" stroke-width="1.6"/>
+    <rect x="715" y="245" width="100" height="20" rx="4" fill="#581c87"/>
+    <text x="765" y="259" text-anchor="middle" font-size="10" font-weight="700" fill="#f3e8ff">OfflineOrder</text>
+    <text x="715" y="285" font-size="11" fill="#cbd5e1">&#x2022; Instantiated at startup</text>
+    <text x="715" y="305" font-size="11" fill="#c084fc">&#x2022; Invoked when isOnline=false</text>
+  </g>
+
+  <!-- Arrows -->
+  <path d="M 250 195 L 290 195" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+  <path d="M 645 285 L 700 162" fill="none" stroke="#4ade80" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+  <path d="M 645 325 L 700 282" fill="none" stroke="#c084fc" stroke-width="1.8" marker-end="url(#arrowPurple)"/>
+
+  <!-- Footer Banner: Industry Context -->
+  <g filter="url(#cardShadow)">
+    <rect x="30" y="395" width="900" height="105" rx="8" fill="#18181b" stroke="#38bdf8" stroke-width="1.2"/>
+    <rect x="45" y="407" width="190" height="20" rx="4" fill="#0369a1"/>
+    <text x="140" y="421" text-anchor="middle" font-size="10.5" font-weight="800" fill="#e0f2fe">WHY USED IN INDUSTRY?</text>
+
+    <text x="45" y="448" font-size="11.5" fill="#f8fafc">&#x2022; Both implementations are loaded once during bootstrap and remain warm in memory.</text>
+    <text x="45" y="468" font-size="11.5" fill="#cbd5e1">&#x2022; Each client request dynamically determines which business strategy/service to run based on user input, headers, or DB flags.</text>
+    <text x="45" y="488" font-size="11" fill="#94a3b8">&#x2022; Common application of the <tspan fill="#38bdf8" font-weight="700">Strategy Pattern</tspan> paired with Spring Dependency Injection.</text>
+  </g>
+</svg>

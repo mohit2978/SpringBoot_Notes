@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="500" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="956" height="496" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="250" y="16" width="460" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="480" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">@Qualifier Resolution &amp; The Hardcoding Dilemma</text>
+
+  <!-- Left: User Controller -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="80" width="280" height="230" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect x="55" y="94" width="140" height="22" rx="4" fill="#0369a1"/>
+    <text x="125" y="110" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">@RestController</text>
+    <text x="55" y="140" font-size="16" font-weight="700" fill="#f8fafc">User</text>
+    <line x1="55" y1="150" x2="305" y2="150" stroke="#334155" stroke-width="1"/>
+
+    <rect x="55" y="162" width="250" height="30" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+    <text x="65" y="182" font-size="11" fill="#38bdf8" font-weight="700" font-family="Consolas, monospace">@Qualifier("onlineOrderObject")</text>
+
+    <text x="55" y="215" font-size="12" fill="#fbbf24" font-weight="600">@Autowired</text>
+    <text x="55" y="235" font-size="13" fill="#e2e8f0" font-family="Consolas, monospace">Order order;</text>
+
+    <rect x="55" y="252" width="250" height="42" rx="4" fill="#111827"/>
+    <text x="65" y="270" font-size="10.5" fill="#f87171" font-weight="700">Hardcoded Binding!</text>
+    <text x="65" y="285" font-size="10" fill="#94a3b8">Calls will always route to OnlineOrder</text>
+  </g>
+
+  <!-- Middle: IoC Container Matching -->
+  <g filter="url(#cardShadow)">
+    <rect x="360" y="80" width="240" height="230" rx="10" fill="#111827" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="380" y="94" width="200" height="24" rx="4" fill="#1f2937"/>
+    <text x="480" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#94a3b8">Spring IoC Container</text>
+
+    <circle cx="480" cy="165" r="26" fill="#064e3b" stroke="#4ade80" stroke-width="2"/>
+    <text x="480" y="173" text-anchor="middle" font-size="20" font-weight="900" fill="#4ade80">&#x2713;</text>
+    <text x="480" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">Qualifier Matched</text>
+    <text x="480" y="228" text-anchor="middle" font-size="10.5" fill="#cbd5e1">"onlineOrderObject"</text>
+
+    <rect x="375" y="245" width="210" height="50" rx="6" fill="#1e293b"/>
+    <text x="480" y="263" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Both beans initialized:</text>
+    <text x="480" y="282" text-anchor="middle" font-size="10" fill="#fbbf24" font-family="Consolas, monospace">&#x2022; Offline Order &amp; &#x2022; Online Order</text>
+  </g>
+
+  <!-- Right: 2 Candidate Beans with Qualifiers -->
+  <!-- OnlineOrder -->
+  <g filter="url(#cardShadow)">
+    <rect x="640" y="80" width="280" height="105" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="2"/>
+    <rect x="655" y="92" width="220" height="20" rx="4" fill="#14532d"/>
+    <text x="765" y="106" text-anchor="middle" font-size="10" font-weight="700" fill="#86efac">@Qualifier("onlineOrderObject")</text>
+    <text x="655" y="132" font-size="15" font-weight="700" fill="#f8fafc">OnlineOrder</text>
+    <text x="655" y="152" font-size="11" fill="#4ade80">&#x2714; Injected into User</text>
+    <text x="655" y="170" font-size="10" fill="#94a3b8">Executes on POST /api/createOrder</text>
+  </g>
+
+  <!-- OfflineOrder -->
+  <g filter="url(#cardShadow)">
+    <rect x="640" y="205" width="280" height="105" rx="10" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="655" y="217" width="220" height="20" rx="4" fill="#1e293b"/>
+    <text x="765" y="231" text-anchor="middle" font-size="10" font-weight="700" fill="#94a3b8">@Qualifier("offlineOrderObject")</text>
+    <text x="655" y="257" font-size="15" font-weight="700" fill="#94a3b8">OfflineOrder</text>
+    <text x="655" y="277" font-size="11" fill="#64748b">&#x2014; Initialized in IoC but unused</text>
+    <text x="655" y="295" font-size="10" fill="#64748b">Wasted memory if not needed</text>
+  </g>
+
+  <!-- Connection lines -->
+  <path d="M 640 132 L 600 150" fill="none" stroke="#4ade80" stroke-width="2"/>
+  <path d="M 360 165 L 320 165" fill="none" stroke="#4ade80" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Bottom Analysis: DI Principle Question -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="335" width="880" height="145" rx="8" fill="#18181b" stroke="#f59e0b" stroke-width="1.5"/>
+    <rect x="55" y="348" width="180" height="22" rx="4" fill="#78350f"/>
+    <text x="145" y="363" text-anchor="middle" font-size="11" font-weight="800" fill="#fef3c7">THE CORE QUESTION</text>
+
+    <text x="55" y="392" font-size="13" font-weight="700" fill="#fbbf24">Does this approach break the core philosophy of Dependency Injection?</text>
+    <text x="55" y="414" font-size="11.5" fill="#e2e8f0">&#x2022; DI states: Dependencies should be injected by the framework dynamically; the consumer should not care or hardcode which implementation to take.</text>
+    <text x="55" y="434" font-size="11.5" fill="#e2e8f0">&#x2022; By writing <tspan fill="#38bdf8" font-family="Consolas, monospace">@Qualifier("onlineOrderObject")</tspan>, we hardcode the selection at compile-time.</text>
+    <text x="55" y="454" font-size="11.5" fill="#94a3b8">&#x2022; How can we make this truly dynamic? &#x2192; <tspan fill="#4ade80" font-weight="700">Solution 1 (Industry Runtime)</tspan> vs <tspan fill="#38bdf8" font-weight="700">Solution 2 (Configuration-Driven @Bean)</tspan></text>
+  </g>
+</svg>

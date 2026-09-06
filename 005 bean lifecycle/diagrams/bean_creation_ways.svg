@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 480" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="cardSh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="480" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1056" height="476" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="330" y="18" width="400" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">2 Ways to Create a Spring Bean</text>
+
+  <!-- ================= LEFT COLUMN: @Component ================= -->
+  <g filter="url(#cardSh)">
+    <rect x="40" y="80" width="460" height="330" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+  </g>
+  <rect x="60" y="95" width="220" height="28" rx="6" fill="#0284c7"/>
+  <text x="170" y="114" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">1. @Component Annotation</text>
+
+  <rect x="60" y="135" width="420" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="75" y="158" font-size="12" font-weight="600" fill="#38bdf8">&#x2022; Approach: <tspan fill="#f8fafc">Convention over Configuration</tspan></text>
+  <text x="75" y="178" font-size="11" fill="#94a3b8">Spring Boot auto-configures based on standard conventions</text>
+
+  <rect x="60" y="205" width="420" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="75" y="228" font-size="12" font-weight="600" fill="#facc15">&#x26A0; Constructor Requirement:</text>
+  <text x="75" y="248" font-size="11.5" fill="#cbd5e1">Spring calls the <tspan font-weight="700" fill="#4ade80">DEFAULT (no-arg) constructor</tspan></text>
+  <text x="75" y="268" font-size="11" fill="#94a3b8">If only parameterized constructor exists without default constructor:</text>
+  <text x="75" y="292" font-size="11" font-weight="700" fill="#f87171">&#x2718; APPLICATION FAILED TO START</text>
+
+  <rect x="60" y="325" width="420" height="65" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="75" y="348" font-size="11.5" font-weight="600" fill="#cbd5e1">Stereotypes that contain @Component inside:</text>
+  <text x="75" y="370" font-size="11" font-weight="700" fill="#38bdf8">@Controller &#x2502; @Service &#x2502; @Repository &#x2502; @Configuration</text>
+
+
+  <!-- ================= RIGHT COLUMN: @Bean ================= -->
+  <g filter="url(#cardSh)">
+    <rect x="560" y="80" width="460" height="330" rx="12" fill="#0f172a" stroke="#a855f7" stroke-width="1.6"/>
+  </g>
+  <rect x="580" y="95" width="200" height="28" rx="6" fill="#6b21a8"/>
+  <text x="680" y="114" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">2. @Bean Annotation</text>
+
+  <rect x="580" y="135" width="420" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="595" y="158" font-size="12" font-weight="600" fill="#c084fc">&#x2022; Approach: <tspan fill="#f8fafc">Explicit Configuration</tspan></text>
+  <text x="595" y="178" font-size="11" fill="#94a3b8">Used inside @Configuration class to tell Spring exactly how to create bean</text>
+
+  <rect x="580" y="205" width="420" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="595" y="228" font-size="12" font-weight="600" fill="#4ade80">&#x2714; Handles Custom Constructors:</text>
+  <text x="595" y="248" font-size="11.5" fill="#cbd5e1">Perfect when class has parameterized constructor or 3rd-party code</text>
+  <text x="595" y="268" font-size="11" fill="#94a3b8">Developer writes: <tspan font-family="monospace" fill="#facc15">return new User(&quot;admin&quot;, &quot;admin@xyz.com&quot;);</tspan></text>
+  <text x="595" y="292" font-size="11" fill="#94a3b8">Allows creating multiple beans of the same type by adding more methods</text>
+
+  <rect x="580" y="325" width="420" height="65" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="595" y="348" font-size="11.5" font-weight="600" fill="#facc15">&#x26A1; Precedence Rule:</text>
+  <text x="595" y="370" font-size="11" fill="#cbd5e1">If both exist, <tspan font-weight="700" fill="#4ade80">@Bean in @Configuration WINS</tspan> over @Component!</text>
+
+  <!-- Bottom Rule -->
+  <rect x="180" y="425" width="700" height="36" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="448" text-anchor="middle" font-size="12" fill="#cbd5e1">
+    <tspan fill="#38bdf8" font-weight="700">@Component:</tspan> Default zero-config instantiation &#x2502; <tspan fill="#a855f7" font-weight="700">@Bean:</tspan> Explicit custom instantiation &amp; 3rd-party beans
+  </text>
+</svg>

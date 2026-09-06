@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 480" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrCyan" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrAmber" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#fbbf24"/>
+    </marker>
+    <filter id="cardGlow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="480" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1056" height="476" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Header -->
+  <rect x="270" y="18" width="520" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">@PathVariable vs @RequestParam Extraction Flow</text>
+
+  <!-- ================= TOP SECTION: @PathVariable ================= -->
+  <g filter="url(#cardGlow)">
+    <rect x="35" y="75" width="990" height="175" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+  </g>
+
+  <!-- Badge @PathVariable -->
+  <rect x="55" y="90" width="160" height="26" rx="5" fill="#0284c7"/>
+  <text x="135" y="107" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">@PathVariable Flow</text>
+  <text x="230" y="107" font-size="11.5" fill="#94a3b8">Resource Identification (URI Path)</text>
+
+  <!-- Step 1: URL -->
+  <rect x="55" y="130" width="260" height="85" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="185" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">Incoming Request URL</text>
+  <text x="185" y="175" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#f8fafc">/users/<tspan fill="#38bdf8">101</tspan>/orders/<tspan fill="#38bdf8">55</tspan></text>
+  <text x="185" y="198" text-anchor="middle" font-size="10.5" fill="#38bdf8">Values are embedded in path</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="315" y1="172" x2="370" y2="172" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 2: Spring URI Matcher -->
+  <rect x="375" y="130" width="280" height="85" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.4"/>
+  <text x="515" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">Spring matches URI template</text>
+  <text x="515" y="176" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#38bdf8">/users/{userId}/orders/{orderId}</text>
+  <text x="515" y="198" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Extracts path template tokens</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="655" y1="172" x2="710" y2="172" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 3: Bound Arguments -->
+  <rect x="715" y="130" width="280" height="85" rx="8" fill="#0369a1" stroke="#38bdf8" stroke-width="1.6"/>
+  <text x="855" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">Binds to Method Parameters</text>
+  <text x="855" y="175" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#ffffff">userId = 101, orderId = 55</text>
+  <text x="855" y="198" text-anchor="middle" font-size="10.5" fill="#bae6fd">@PathVariable Long userId, Long orderId</text>
+
+
+  <!-- ================= BOTTOM SECTION: @RequestParam ================= -->
+  <g filter="url(#cardGlow)">
+    <rect x="35" y="270" width="990" height="175" rx="12" fill="#0f172a" stroke="#fbbf24" stroke-width="1.6"/>
+  </g>
+
+  <!-- Badge @RequestParam -->
+  <rect x="55" y="285" width="165" height="26" rx="5" fill="#d97706"/>
+  <text x="137" y="302" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">@RequestParam Flow</text>
+  <text x="235" y="302" font-size="11.5" fill="#94a3b8">Filtering &amp; Query Data (Query String)</text>
+
+  <!-- Step 1: URL -->
+  <rect x="55" y="325" width="260" height="85" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="185" y="347" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">Incoming Request URL</text>
+  <text x="185" y="370" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#f8fafc">/users?<tspan fill="#fbbf24">name=John&amp;age=25</tspan></text>
+  <text x="185" y="393" text-anchor="middle" font-size="10.5" fill="#fbbf24">Query parameters after &#39;?&#39;</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="315" y1="367" x2="370" y2="367" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrAmber)"/>
+
+  <!-- Step 2: Spring Query Parser -->
+  <rect x="375" y="325" width="280" height="85" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.4"/>
+  <text x="515" y="347" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">Spring parses query parameters</text>
+  <text x="515" y="371" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#fbbf24">name, age, active</text>
+  <text x="515" y="393" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Optional or mandatory query tokens</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="655" y1="367" x2="710" y2="367" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrAmber)"/>
+
+  <!-- Step 3: Bound Arguments -->
+  <rect x="715" y="325" width="280" height="85" rx="8" fill="#92400e" stroke="#fbbf24" stroke-width="1.6"/>
+  <text x="855" y="347" text-anchor="middle" font-size="11" font-weight="700" fill="#fef3c7">Binds to Method Parameters</text>
+  <text x="855" y="370" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#ffffff">name = &quot;John&quot;, age = 25</text>
+  <text x="855" y="393" text-anchor="middle" font-size="10.5" fill="#fde68a">@RequestParam String name, Integer age</text>
+</svg>

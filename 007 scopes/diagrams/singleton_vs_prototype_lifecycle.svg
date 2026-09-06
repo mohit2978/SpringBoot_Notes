@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 480" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrS" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrP" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#818cf8"/>
+    </marker>
+    <filter id="cardSh2" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="480" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1056" height="476" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="310" y="18" width="440" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Singleton vs Prototype Scope Comparison</text>
+
+  <!-- ================= LEFT COLUMN: Singleton ================= -->
+  <g filter="url(#cardSh2)">
+    <rect x="40" y="75" width="460" height="340" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+  </g>
+  <rect x="60" y="90" width="220" height="28" rx="6" fill="#0284c7"/>
+  <text x="170" y="109" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Singleton (1 Instance / IoC)</text>
+
+  <!-- Single Bean Instance in Box -->
+  <rect x="150" y="135" width="240" height="50" rx="8" fill="#14281e" stroke="#4ade80" stroke-width="1.6"/>
+  <text x="270" y="157" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#4ade80">User instance @ 1140202235</text>
+  <text x="270" y="174" text-anchor="middle" font-size="10" fill="#a7f3d0">Created ONCE at startup</text>
+
+  <!-- Arrows to consumers -->
+  <path d="M 230 185 L 140 230" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrS)"/>
+  <path d="M 310 185 L 400 230" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrS)"/>
+
+  <!-- Consumer 1 -->
+  <rect x="60" y="235" width="160" height="70" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+  <text x="140" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f8fafc">TestController1</text>
+  <text x="140" y="278" text-anchor="middle" font-size="10.5" fill="#94a3b8">@Autowired User</text>
+  <text x="140" y="294" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#4ade80"># 1140202235</text>
+
+  <!-- Consumer 2 -->
+  <rect x="320" y="235" width="160" height="70" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+  <text x="400" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f8fafc">TestController2</text>
+  <text x="400" y="278" text-anchor="middle" font-size="10.5" fill="#94a3b8">@Autowired User</text>
+  <text x="400" y="294" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#4ade80"># 1140202235 (SAME!)</text>
+
+  <rect x="60" y="325" width="420" height="70" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="75" y="348" font-size="11.5" fill="#cbd5e1">&#x2022; <tspan font-weight="700" fill="#38bdf8">Eager Initialization:</tspan> Created during application boot</text>
+  <text x="75" y="368" font-size="11.5" fill="#cbd5e1">&#x2022; <tspan font-weight="700" fill="#38bdf8">Lifecycle:</tspan> Full support (Constructor &#x2192; DI &#x2192; @Post &#x2192; @PreDestroy)</text>
+  <text x="75" y="386" font-size="11" fill="#94a3b8">&#x2022; Stateless shared service beans (Services, Repositories)</text>
+
+
+  <!-- ================= RIGHT COLUMN: Prototype ================= -->
+  <g filter="url(#cardSh2)">
+    <rect x="560" y="75" width="460" height="340" rx="12" fill="#0f172a" stroke="#818cf8" stroke-width="1.8"/>
+  </g>
+  <rect x="580" y="90" width="220" height="28" rx="6" fill="#4338ca"/>
+  <text x="690" y="109" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">Prototype (New Instance / Call)</text>
+
+  <!-- Prototype Bean Generation Factory -->
+  <rect x="670" y="135" width="240" height="50" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.6"/>
+  <text x="790" y="157" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#a5b4fc">Spring IoC Factory</text>
+  <text x="790" y="174" text-anchor="middle" font-size="10" fill="#cbd5e1">Creates fresh instance on every request</text>
+
+  <!-- Arrows to separate new instances -->
+  <path d="M 750 185 L 660 230" fill="none" stroke="#818cf8" stroke-width="2" marker-end="url(#arrP)"/>
+  <path d="M 830 185 L 920 230" fill="none" stroke="#818cf8" stroke-width="2" marker-end="url(#arrP)"/>
+
+  <!-- Consumer 1 -->
+  <rect x="580" y="235" width="160" height="70" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="1.2"/>
+  <text x="660" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f8fafc">Consumer A (Student)</text>
+  <text x="660" y="278" text-anchor="middle" font-size="10.5" fill="#94a3b8">@Autowired User</text>
+  <text x="660" y="294" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#facc15"># 1510009630 (Inst 1)</text>
+
+  <!-- Consumer 2 -->
+  <rect x="840" y="235" width="160" height="70" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="1.2"/>
+  <text x="920" y="258" text-anchor="middle" font-size="11.5" font-weight="700" fill="#f8fafc">Consumer B (Controller)</text>
+  <text x="920" y="278" text-anchor="middle" font-size="10.5" fill="#94a3b8">@Autowired User</text>
+  <text x="920" y="294" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#f43f5e"># 1984730322 (Inst 2!)</text>
+
+  <rect x="580" y="325" width="420" height="70" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="595" y="348" font-size="11.5" fill="#cbd5e1">&#x2022; <tspan font-weight="700" fill="#a5b4fc">Lazy Initialization:</tspan> Created only when requested</text>
+  <text x="595" y="368" font-size="11.5" fill="#cbd5e1">&#x2022; <tspan font-weight="700" fill="#f87171">Lifecycle Limitation:</tspan> Spring does NOT call @PreDestroy!</text>
+  <text x="595" y="386" font-size="11" fill="#94a3b8">&#x2022; Stateful objects holding user/call-specific mutable state</text>
+
+  <!-- Bottom Takeaway -->
+  <rect x="180" y="430" width="700" height="34" rx="17" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="452" text-anchor="middle" font-size="12" fill="#cbd5e1">
+    <tspan fill="#38bdf8" font-weight="700">Singleton:</tspan> Shared instance for all callers &#x2502; <tspan fill="#818cf8" font-weight="700">Prototype:</tspan> Distinct independent instance for every caller
+  </text>
+</svg>

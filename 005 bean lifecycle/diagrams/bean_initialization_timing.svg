@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 450" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="shadowTime" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1020" height="450" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1016" height="446" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="280" y="18" width="460" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="510" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Bean Initialization Timing: Eager vs Lazy</text>
+
+  <!-- Left: Eager Initialization (Default) -->
+  <g filter="url(#shadowTime)">
+    <rect x="40" y="80" width="440" height="330" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+  </g>
+  <rect x="60" y="95" width="230" height="28" rx="6" fill="#0284c7"/>
+  <text x="175" y="114" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">1. Eager Initialization (Default)</text>
+
+  <rect x="60" y="135" width="400" height="75" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="75" y="158" font-size="12" font-weight="600" fill="#38bdf8">&#x2022; Creation Point:</text>
+  <text x="75" y="178" font-size="13" font-weight="700" fill="#4ade80">Created during Application Startup</text>
+  <text x="75" y="196" font-size="11" fill="#94a3b8">Instantiated and wired before application is ready for traffic</text>
+
+  <rect x="60" y="220" width="400" height="90" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="75" y="243" font-size="12" font-weight="600" fill="#facc15">&#x2022; Scope Association:</text>
+  <text x="75" y="263" font-size="11.5" fill="#cbd5e1"><tspan font-weight="700" fill="#38bdf8">Singleton Scope</tspan> (Default scope in Spring Boot)</text>
+  <text x="75" y="283" font-size="11" fill="#94a3b8">Every standard bean created without @Lazy or prototype</text>
+  <text x="75" y="299" font-size="11" fill="#94a3b8">is eagerly constructed.</text>
+
+  <rect x="60" y="320" width="400" height="75" rx="8" fill="#14281e" stroke="#4ade80" stroke-width="1"/>
+  <text x="75" y="343" font-size="12" font-weight="700" fill="#4ade80">&#x2714; Advantage:</text>
+  <text x="75" y="363" font-size="11" fill="#cbd5e1">Fails fast if dependencies are missing or misconfigured</text>
+  <text x="75" y="380" font-size="11" fill="#cbd5e1">during startup, preventing runtime errors.</text>
+
+
+  <!-- Right: Lazy Initialization -->
+  <g filter="url(#shadowTime)">
+    <rect x="540" y="80" width="440" height="330" rx="12" fill="#0f172a" stroke="#a855f7" stroke-width="1.8"/>
+  </g>
+  <rect x="560" y="95" width="230" height="28" rx="6" fill="#6b21a8"/>
+  <text x="675" y="114" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">2. Lazy Initialization (@Lazy)</text>
+
+  <rect x="560" y="135" width="400" height="75" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="575" y="158" font-size="12" font-weight="600" fill="#c084fc">&#x2022; Creation Point:</text>
+  <text x="575" y="178" font-size="13" font-weight="700" fill="#facc15">Created on Demand (When Needed)</text>
+  <text x="575" y="196" font-size="11" fill="#94a3b8">Not created at startup; postponed until first injection or call</text>
+
+  <rect x="560" y="220" width="400" height="90" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="575" y="243" font-size="12" font-weight="600" fill="#facc15">&#x2022; Trigger Conditions:</text>
+  <text x="575" y="263" font-size="11.5" fill="#cbd5e1">&#x2022; Annotated explicitly with <tspan font-family="monospace" font-weight="700" fill="#a5b4fc">@Lazy</tspan></text>
+  <text x="575" y="283" font-size="11.5" fill="#cbd5e1">&#x2022; Scope configured as <tspan font-weight="700" fill="#f87171">Prototype</tspan> scope</text>
+  <text x="575" y="301" font-size="11" fill="#94a3b8">Delays instantiation until an eager bean needs it.</text>
+
+  <rect x="560" y="320" width="400" height="75" rx="8" fill="#281414" stroke="#f87171" stroke-width="1"/>
+  <text x="575" y="343" font-size="12" font-weight="700" fill="#f87171">&#x26A0; Note / Trade-off:</text>
+  <text x="575" y="363" font-size="11" fill="#cbd5e1">Saves startup time &amp; memory for rarely used beans,</text>
+  <text x="575" y="380" font-size="11" fill="#cbd5e1">but errors only surface when the bean is first requested.</text>
+</svg>

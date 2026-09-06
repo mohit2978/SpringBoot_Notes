@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 380" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#60a5fa"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <linearGradient id="stepGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="380" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1096" height="376" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="360" y="22" width="380" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="550" y="46" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc" letter-spacing="0.5">@SpringBootApplication — Execution Flow</text>
+
+  <!-- Step 1 -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="90" width="180" height="100" rx="10" fill="url(#stepGrad)" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect x="42" y="102" width="68" height="22" rx="6" fill="#0369a1"/>
+    <text x="76" y="117" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">STEP 1</text>
+    <text x="120" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#f8fafc">Application Starts</text>
+    <text x="120" y="165" text-anchor="middle" font-size="11.5" fill="#94a3b8">main() is executed</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="210" y1="140" x2="242" y2="140" stroke="#60a5fa" stroke-width="2.2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="90" width="185" height="100" rx="10" fill="url(#stepGrad)" stroke="#818cf8" stroke-width="1.8"/>
+    <rect x="257" y="102" width="68" height="22" rx="6" fill="#4338ca"/>
+    <text x="291" y="117" text-anchor="middle" font-size="11" font-weight="700" fill="#e0e7ff">STEP 2</text>
+    <text x="337" y="143" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a5b4fc">Bootstrap Annotation</text>
+    <text x="337" y="163" text-anchor="middle" font-size="11" fill="#94a3b8">Spring reads @SpringBootApp</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="430" y1="140" x2="462" y2="140" stroke="#60a5fa" stroke-width="2.2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <g filter="url(#shadow)">
+    <rect x="465" y="90" width="185" height="100" rx="10" fill="url(#stepGrad)" stroke="#a855f7" stroke-width="1.8"/>
+    <rect x="477" y="102" width="68" height="22" rx="6" fill="#7e22ce"/>
+    <text x="511" y="117" text-anchor="middle" font-size="11" font-weight="700" fill="#f3e8ff">STEP 3</text>
+    <text x="557" y="143" text-anchor="middle" font-size="13" font-weight="700" fill="#c084fc">@Configuration</text>
+    <text x="557" y="163" text-anchor="middle" font-size="11" fill="#94a3b8">Loads bean config class</text>
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="650" y1="140" x2="682" y2="140" stroke="#60a5fa" stroke-width="2.2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <g filter="url(#shadow)">
+    <rect x="685" y="90" width="185" height="100" rx="10" fill="url(#stepGrad)" stroke="#f43f5e" stroke-width="1.8"/>
+    <rect x="697" y="102" width="68" height="22" rx="6" fill="#be123c"/>
+    <text x="731" y="117" text-anchor="middle" font-size="11" font-weight="700" fill="#ffe4e6">STEP 4</text>
+    <text x="777" y="143" text-anchor="middle" font-size="13" font-weight="700" fill="#fb7185">@ComponentScan</text>
+    <text x="777" y="163" text-anchor="middle" font-size="11" fill="#94a3b8">Scans package &amp; sub-pkgs</text>
+  </g>
+
+  <!-- Arrow 4 -> 5 (wraps down to row 2) -->
+  <line x1="870" y1="140" x2="902" y2="140" stroke="#60a5fa" stroke-width="2.2"/>
+  <path d="M 902 140 C 930 140, 930 250, 902 250" fill="none" stroke="#60a5fa" stroke-width="2.2"/>
+  <line x1="902" y1="250" x2="878" y2="250" stroke="#60a5fa" stroke-width="2.2" marker-end="url(#arr)"/>
+
+  <!-- Step 5 (Row 2, right to left or positioned clearly) -->
+  <g filter="url(#shadow)">
+    <rect x="685" y="210" width="185" height="100" rx="10" fill="url(#stepGrad)" stroke="#eab308" stroke-width="1.8"/>
+    <rect x="697" y="222" width="68" height="22" rx="6" fill="#a16207"/>
+    <text x="731" y="237" text-anchor="middle" font-size="11" font-weight="700" fill="#fef9c3">STEP 5</text>
+    <text x="777" y="261" text-anchor="middle" font-size="12" font-weight="700" fill="#facc15">@EnableAutoConfig</text>
+    <text x="777" y="281" text-anchor="middle" font-size="11" fill="#94a3b8">Configures classpath beans</text>
+  </g>
+
+  <!-- Arrow 5 -> 6 -->
+  <line x1="685" y1="260" x2="658" y2="260" stroke="#60a5fa" stroke-width="2.2" marker-end="url(#arr)"/>
+
+  <!-- Step 6 -->
+  <g filter="url(#shadow)">
+    <rect x="445" y="210" width="205" height="100" rx="10" fill="url(#stepGrad)" stroke="#10b981" stroke-width="1.8"/>
+    <rect x="457" y="222" width="68" height="22" rx="6" fill="#047857"/>
+    <text x="491" y="237" text-anchor="middle" font-size="11" font-weight="700" fill="#d1fae5">STEP 6</text>
+    <text x="547" y="261" text-anchor="middle" font-size="12.5" font-weight="700" fill="#34d399">ApplicationContext</text>
+    <text x="547" y="281" text-anchor="middle" font-size="11" fill="#94a3b8">Container created &amp; refreshed</text>
+  </g>
+
+  <!-- Arrow 6 -> 7 -->
+  <line x1="445" y1="260" x2="418" y2="260" stroke="#60a5fa" stroke-width="2.2" marker-end="url(#arr)"/>
+
+  <!-- Step 7 -->
+  <g filter="url(#shadow)">
+    <rect x="180" y="210" width="230" height="100" rx="10" fill="url(#stepGrad)" stroke="#38bdf8" stroke-width="2"/>
+    <rect x="192" y="222" width="68" height="22" rx="6" fill="#0284c7"/>
+    <text x="226" y="237" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">STEP 7</text>
+    <text x="295" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#38bdf8">Embedded Server Starts</text>
+    <text x="295" y="281" text-anchor="middle" font-size="11" fill="#cbd5e1">Tomcat ready to serve requests</text>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="550" y="352" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">
+    Combines configuration, component scanning, auto-wiring, and starts the container in a single unified boot phase
+  </text>
+</svg>

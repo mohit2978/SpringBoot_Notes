@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#f87171"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="480" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="956" height="476" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="270" y="16" width="420" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="480" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">The Unsatisfied Dependency Ambiguity Problem</text>
+
+  <!-- Left: Consumer / Injection Point -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="85" width="260" height="230" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect x="55" y="98" width="140" height="24" rx="4" fill="#0369a1"/>
+    <text x="125" y="115" text-anchor="middle" font-size="11" font-weight="700" fill="#e0f2fe">@RestController</text>
+    <text x="55" y="145" font-size="16" font-weight="700" fill="#f8fafc">User</text>
+    <line x1="55" y1="155" x2="285" y2="155" stroke="#334155" stroke-width="1"/>
+    
+    <text x="55" y="180" font-size="12" fill="#fbbf24" font-weight="600">@Autowired</text>
+    <text x="55" y="200" font-size="13" fill="#e2e8f0" font-family="Consolas, monospace">Order order;</text>
+
+    <rect x="55" y="225" width="230" height="70" rx="6" fill="#1e293b"/>
+    <text x="65" y="247" font-size="11" fill="#94a3b8">Target Dependency:</text>
+    <text x="65" y="267" font-size="12" font-weight="700" fill="#38bdf8">interface Order</text>
+    <text x="65" y="285" font-size="10.5" fill="#cbd5e1">Needs exactly 1 bean candidate</text>
+  </g>
+
+  <!-- Middle: IoC Container & Ambiguity Decision -->
+  <g filter="url(#cardShadow)">
+    <rect x="350" y="85" width="260" height="230" rx="10" fill="#111827" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="370" y="98" width="220" height="26" rx="4" fill="#1f2937"/>
+    <text x="480" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#94a3b8">Spring IoC Container</text>
+
+    <circle cx="480" cy="180" r="32" fill="#450a0a" stroke="#f87171" stroke-width="2"/>
+    <text x="480" y="188" text-anchor="middle" font-size="28" font-weight="900" fill="#f87171">?</text>
+
+    <text x="480" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="#f87171">Ambiguity Conflict!</text>
+    <text x="480" y="262" text-anchor="middle" font-size="11.5" fill="#cbd5e1">Found 2 candidate beans</text>
+    <text x="480" y="280" text-anchor="middle" font-size="11" fill="#94a3b8">Which one should be injected?</text>
+  </g>
+
+  <!-- Right: 2 Implementing Beans -->
+  <!-- Bean 1: OnlineOrder -->
+  <g filter="url(#cardShadow)">
+    <rect x="660" y="85" width="260" height="105" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="1.6"/>
+    <rect x="675" y="96" width="100" height="20" rx="4" fill="#14532d"/>
+    <text x="725" y="110" text-anchor="middle" font-size="10" font-weight="700" fill="#86efac">@Component</text>
+    <text x="675" y="138" font-size="15" font-weight="700" fill="#f8fafc">OnlineOrder</text>
+    <text x="675" y="158" font-size="11" fill="#cbd5e1">implements <tspan font-weight="700" fill="#38bdf8">Order</tspan></text>
+    <text x="675" y="176" font-size="10" fill="#94a3b8">Bean 1 registered in ApplicationContext</text>
+  </g>
+
+  <!-- Bean 2: OfflineOrder -->
+  <g filter="url(#cardShadow)">
+    <rect x="660" y="210" width="260" height="105" rx="10" fill="#0f172a" stroke="#818cf8" stroke-width="1.6"/>
+    <rect x="675" y="221" width="100" height="20" rx="4" fill="#312e81"/>
+    <text x="725" y="235" text-anchor="middle" font-size="10" font-weight="700" fill="#c7d2fe">@Component</text>
+    <text x="675" y="263" font-size="15" font-weight="700" fill="#f8fafc">OfflineOrder</text>
+    <text x="675" y="283" font-size="11" fill="#cbd5e1">implements <tspan font-weight="700" fill="#38bdf8">Order</tspan></text>
+    <text x="675" y="301" font-size="10" fill="#94a3b8">Bean 2 registered in ApplicationContext</text>
+  </g>
+
+  <!-- Connection lines -->
+  <path d="M 660 137 L 610 160" fill="none" stroke="#f87171" stroke-width="1.8" stroke-dasharray="4,4"/>
+  <path d="M 660 262 L 610 200" fill="none" stroke="#f87171" stroke-width="1.8" stroke-dasharray="4,4"/>
+  <path d="M 350 200 L 300 200" fill="none" stroke="#f87171" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+  <!-- Bottom: Error Banner -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="340" width="880" height="115" rx="8" fill="#1c1917" stroke="#ef4444" stroke-width="1.5"/>
+    <rect x="55" y="352" width="230" height="22" rx="4" fill="#7f1d1d"/>
+    <text x="170" y="367" text-anchor="middle" font-size="11" font-weight="800" fill="#fecaca">APPLICATION FAILED TO START</text>
+
+    <text x="55" y="395" font-size="13" font-weight="700" fill="#f87171" font-family="Consolas, monospace">UnsatisfiedDependencyException: Error creating bean with name 'user'</text>
+    <text x="55" y="418" font-size="11.5" fill="#e2e8f0">nested exception: expected single matching bean but found 2: onlineOrder, offlineOrder</text>
+    <text x="55" y="438" font-size="11" fill="#a8a29e">Two standard solutions: (1) @Qualifier with unique bean name, or (2) @Primary</text>
+  </g>
+</svg>

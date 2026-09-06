@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 480" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrSess" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#facc15"/>
+    </marker>
+    <filter id="sessSh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="480" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1056" height="476" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="330" y="18" width="400" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Session Scope Lifecycle &amp; Invalidation Flow</text>
+
+  <!-- 4 Step Boxes Horizontally -->
+  <!-- Step 1: Initial Login / Request -->
+  <g filter="url(#sessSh)">
+    <rect x="30" y="80" width="230" height="320" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+  </g>
+  <rect x="45" y="95" width="85" height="24" rx="5" fill="#0284c7"/>
+  <text x="87" y="111" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">REQUEST 1</text>
+  <text x="145" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#38bdf8">First API Hit</text>
+  <text x="145" y="160" text-anchor="middle" font-family="monospace" font-size="11" fill="#cbd5e1">GET /api/fetchUser</text>
+
+  <rect x="45" y="180" width="200" height="90" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="145" y="202" text-anchor="middle" font-size="11" font-weight="600" fill="#facc15">&#x2022; New HTTP Session Starts</text>
+  <text x="145" y="222" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Session-scoped Controller</text>
+  <text x="145" y="238" text-anchor="middle" font-size="10.5" fill="#cbd5e1">instantiated:</text>
+  <text x="145" y="258" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="#4ade80">hashCode: 1476370807</text>
+
+  <rect x="45" y="285" width="200" height="95" rx="6" fill="#14281e" stroke="#4ade80" stroke-width="1"/>
+  <text x="145" y="307" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">Injected Singleton User:</text>
+  <text x="145" y="327" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#38bdf8">hashCode: 254812619</text>
+  <text x="145" y="348" text-anchor="middle" font-size="10" fill="#94a3b8">(Created once at startup)</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="260" y1="230" x2="290" y2="230" stroke="#facc15" stroke-width="2" marker-end="url(#arrSess)"/>
+
+  <!-- Step 2: Second Request in Same Session -->
+  <g filter="url(#sessSh)">
+    <rect x="295" y="80" width="230" height="320" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="1.6"/>
+  </g>
+  <rect x="310" y="95" width="85" height="24" rx="5" fill="#15803d"/>
+  <text x="352" y="111" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">REQUEST 2</text>
+  <text x="410" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#4ade80">Same Session</text>
+  <text x="410" y="160" text-anchor="middle" font-family="monospace" font-size="11" fill="#cbd5e1">GET /api/fetchUser</text>
+
+  <rect x="310" y="180" width="200" height="90" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="410" y="202" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">&#x2714; Session Still Active</text>
+  <text x="410" y="222" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Reuses existing Controller</text>
+  <text x="410" y="238" text-anchor="middle" font-size="10.5" fill="#cbd5e1">bean instance:</text>
+  <text x="410" y="258" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="#4ade80">hashCode: 1476370807</text>
+
+  <rect x="310" y="285" width="200" height="95" rx="6" fill="#14281e" stroke="#4ade80" stroke-width="1"/>
+  <text x="410" y="307" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">Injected Singleton User:</text>
+  <text x="410" y="327" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#38bdf8">hashCode: 254812619</text>
+  <text x="410" y="348" text-anchor="middle" font-size="10" fill="#94a3b8">(Remains identical)</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="525" y1="230" x2="555" y2="230" stroke="#facc15" stroke-width="2" marker-end="url(#arrSess)"/>
+
+  <!-- Step 3: Logout / Invalidation -->
+  <g filter="url(#sessSh)">
+    <rect x="560" y="80" width="215" height="320" rx="10" fill="#0f172a" stroke="#f43f5e" stroke-width="1.6"/>
+  </g>
+  <rect x="575" y="95" width="85" height="24" rx="5" fill="#be123c"/>
+  <text x="617" y="111" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">LOGOUT</text>
+  <text x="667" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#fb7185">Session Invalidation</text>
+  <text x="667" y="160" text-anchor="middle" font-family="monospace" font-size="11" fill="#cbd5e1">GET /api/logout</text>
+
+  <rect x="575" y="180" width="185" height="100" rx="6" fill="#281414" stroke="#f43f5e" stroke-width="1"/>
+  <text x="667" y="204" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="#fb7185">session.invalidate();</text>
+  <text x="667" y="226" text-anchor="middle" font-size="10.5" fill="#cbd5e1">&quot;end the session&quot;</text>
+  <text x="667" y="248" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Session data wiped</text>
+  <text x="667" y="266" text-anchor="middle" font-size="10" fill="#f87171">Controller bean destroyed</text>
+
+  <rect x="575" y="295" width="185" height="85" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="667" y="325" text-anchor="middle" font-size="10.5" fill="#94a3b8">Singleton User still alive</text>
+  <text x="667" y="345" text-anchor="middle" font-family="monospace" font-size="10" fill="#38bdf8"># 254812619</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="775" y1="230" x2="805" y2="230" stroke="#facc15" stroke-width="2" marker-end="url(#arrSess)"/>
+
+  <!-- Step 4: Post-Logout Request (New Session) -->
+  <g filter="url(#sessSh)">
+    <rect x="810" y="80" width="220" height="320" rx="10" fill="#0f172a" stroke="#a855f7" stroke-width="1.6"/>
+  </g>
+  <rect x="825" y="95" width="95" height="24" rx="5" fill="#6b21a8"/>
+  <text x="872" y="111" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">REQUEST 3</text>
+  <text x="920" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#c084fc">New Session</text>
+  <text x="920" y="160" text-anchor="middle" font-family="monospace" font-size="11" fill="#cbd5e1">GET /api/fetchUser</text>
+
+  <rect x="825" y="180" width="190" height="90" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="920" y="202" text-anchor="middle" font-size="11" font-weight="600" fill="#c084fc">&#x26A1; Fresh Session Created</text>
+  <text x="920" y="222" text-anchor="middle" font-size="10.5" fill="#cbd5e1">Brand new Controller instance</text>
+  <text x="920" y="238" text-anchor="middle" font-size="10.5" fill="#cbd5e1">created for new session:</text>
+  <text x="920" y="258" text-anchor="middle" font-family="monospace" font-size="10" font-weight="700" fill="#facc15">hashCode: 754846954</text>
+
+  <rect x="825" y="285" width="190" height="95" rx="6" fill="#14281e" stroke="#4ade80" stroke-width="1"/>
+  <text x="920" y="307" text-anchor="middle" font-size="11" font-weight="600" fill="#4ade80">Injected Singleton User:</text>
+  <text x="920" y="327" text-anchor="middle" font-family="monospace" font-size="10.5" fill="#38bdf8">hashCode: 254812619</text>
+  <text x="920" y="348" text-anchor="middle" font-size="10" fill="#94a3b8">(Still the same singleton!)</text>
+
+  <!-- Bottom Strip -->
+  <rect x="180" y="420" width="700" height="30" rx="15" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="530" y="440" text-anchor="middle" font-size="11.5" fill="#cbd5e1">
+    Session Beans persist across requests from the same user browser, but are renewed immediately after <tspan font-family="monospace" fill="#fb7185">session.invalidate()</tspan>
+  </text>
+</svg>

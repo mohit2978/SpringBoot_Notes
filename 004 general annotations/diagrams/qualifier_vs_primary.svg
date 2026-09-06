@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 450" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrBlue9" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrGreen9" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+    </marker>
+    <filter id="shadow9" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1020" height="450" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1016" height="446" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Header -->
+  <rect x="290" y="18" width="440" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="510" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">@Qualifier vs @Primary Bean Disambiguation</text>
+
+  <!-- Left: Spring IoC Context Container -->
+  <g filter="url(#shadow9)">
+    <rect x="40" y="75" width="400" height="300" rx="12" fill="#0f172a" stroke="#475569" stroke-width="1.6"/>
+  </g>
+  <rect x="60" y="90" width="220" height="26" rx="5" fill="#334155"/>
+  <text x="170" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Spring IoC Context (Beans)</text>
+
+  <!-- Bean 1: MySqlDataSource (@Primary) -->
+  <rect x="60" y="130" width="360" height="65" rx="8" fill="#14281e" stroke="#4ade80" stroke-width="1.6"/>
+  <text x="75" y="156" font-family="monospace" font-size="13" font-weight="700" fill="#4ade80">MySqlDataSource</text>
+  <rect x="250" y="141" width="80" height="20" rx="4" fill="#15803d"/>
+  <text x="290" y="155" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">@Primary</text>
+  <text x="75" y="182" font-size="11" fill="#cbd5e1">Default fallback when no qualifier is specified</text>
+
+  <!-- Bean 2: PostgreDataSource -->
+  <rect x="60" y="210" width="360" height="65" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.4"/>
+  <text x="75" y="236" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8">PostgreDataSource</text>
+  <rect x="250" y="221" width="160" height="20" rx="4" fill="#0369a1"/>
+  <text x="330" y="235" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">@Qualifier(&quot;postgresDataSource&quot;)</text>
+  <text x="75" y="262" font-size="11" fill="#94a3b8">Targeted explicit bean</text>
+
+  <!-- Bean 3: OracleDataSource -->
+  <rect x="60" y="290" width="360" height="65" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="75" y="316" font-family="monospace" font-size="13" font-weight="700" fill="#94a3b8">OracleDataSource</text>
+  <text x="75" y="340" font-size="11" fill="#64748b">Additional candidate bean</text>
+
+  <!-- Right: Injection Point in Service -->
+  <g filter="url(#shadow9)">
+    <rect x="580" y="75" width="400" height="300" rx="12" fill="#0f172a" stroke="#818cf8" stroke-width="1.6"/>
+  </g>
+  <rect x="600" y="90" width="190" height="26" rx="5" fill="#4338ca"/>
+  <text x="695" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Injection Point: ReportService</text>
+
+  <!-- Code Block in Injection Point -->
+  <rect x="600" y="130" width="360" height="225" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+  <text x="615" y="160" font-family="monospace" font-size="11.5" fill="#a5b4fc">@Service</text>
+  <text x="615" y="180" font-family="monospace" font-size="11.5" fill="#f8fafc">public class ReportService {</text>
+  <text x="630" y="205" font-family="monospace" font-size="11.5" fill="#cbd5e1">private final DataSource ds;</text>
+  
+  <text x="630" y="235" font-family="monospace" font-size="11.5" fill="#facc15">@Autowired</text>
+  <text x="630" y="255" font-family="monospace" font-size="11" fill="#f8fafc">public ReportService(</text>
+  <text x="645" y="275" font-family="monospace" font-size="11" fill="#38bdf8">@Qualifier(&quot;postgresDataSource&quot;)</text>
+  <text x="645" y="295" font-family="monospace" font-size="11" fill="#f8fafc">DataSource ds) {</text>
+  <text x="660" y="315" font-family="monospace" font-size="11" fill="#cbd5e1">this.ds = ds;</text>
+  <text x="630" y="335" font-family="monospace" font-size="11.5" fill="#f8fafc">} }</text>
+
+  <!-- Flow Lines -->
+  <!-- Line 1: Primary fallback (dashed green) -->
+  <path d="M 420 162 L 480 162 L 480 200 L 575 200" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrGreen9)"/>
+  <rect x="440" y="172" width="115" height="18" rx="4" fill="#14281e" stroke="#4ade80" stroke-width="0.8"/>
+  <text x="497" y="185" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4ade80">If no @Qualifier</text>
+
+  <!-- Line 2: Qualifier explicit win (solid blue) -->
+  <path d="M 420 242 L 575 285" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrBlue9)"/>
+  <rect x="445" y="270" width="115" height="18" rx="4" fill="#0c4a6e" stroke="#38bdf8" stroke-width="0.8"/>
+  <text x="502" y="283" text-anchor="middle" font-size="9.5" font-weight="700" fill="#38bdf8">@Qualifier WINS!</text>
+
+  <!-- Bottom Rule Summary -->
+  <rect x="110" y="395" width="800" height="36" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="510" y="418" text-anchor="middle" font-size="12.5" fill="#e2e8f0">
+    <tspan fill="#38bdf8" font-weight="700">@Qualifier</tspan> = Explicit fine-grained choice (Always overrides) &#x2502; <tspan fill="#4ade80" font-weight="700">@Primary</tspan> = Default fallback choice
+  </text>
+</svg>

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 440" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrCyan" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#4ade80"/>
+    </marker>
+    <filter id="shadowL" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1120" height="440" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1116" height="436" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Badge -->
+  <rect x="360" y="20" width="400" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="560" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">Spring Bean Lifecycle — Complete Flow</text>
+
+  <!-- ================= ROW 1: Steps 1, 2, 3 ================= -->
+
+  <!-- App Start Box -->
+  <rect x="30" y="105" width="130" height="60" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="95" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#cbd5e1">Application</text>
+  <text x="95" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#cbd5e1">Start</text>
+
+  <line x1="160" y1="135" x2="195" y2="135" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 1: IoC Container Started -->
+  <g filter="url(#shadowL)">
+    <rect x="200" y="85" width="220" height="100" rx="10" fill="url(#boxGrad)" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect x="212" y="97" width="60" height="20" rx="4" fill="#0369a1"/>
+    <text x="242" y="111" text-anchor="middle" font-size="10.5" font-weight="700" fill="#e0f2fe">STEP 1</text>
+    <text x="310" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#38bdf8">IoC Container Started</text>
+    <text x="310" y="155" text-anchor="middle" font-size="11" fill="#94a3b8">ApplicationContext loaded</text>
+    <text x="310" y="172" text-anchor="middle" font-size="10" fill="#cbd5e1">@ComponentScan &amp; Config parsed</text>
+  </g>
+
+  <line x1="420" y1="135" x2="455" y2="135" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 2: Construct Bean -->
+  <g filter="url(#shadowL)">
+    <rect x="460" y="85" width="220" height="100" rx="10" fill="url(#boxGrad)" stroke="#818cf8" stroke-width="1.8"/>
+    <rect x="472" y="97" width="60" height="20" rx="4" fill="#4338ca"/>
+    <text x="502" y="111" text-anchor="middle" font-size="10.5" font-weight="700" fill="#e0e7ff">STEP 2</text>
+    <text x="570" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#a5b4fc">Construct Bean</text>
+    <text x="570" y="155" text-anchor="middle" font-size="11" fill="#94a3b8">Instantiation phase</text>
+    <text x="570" y="172" text-anchor="middle" font-size="10" fill="#cbd5e1">Calls default constructor / @Bean</text>
+  </g>
+
+  <line x1="680" y1="135" x2="715" y2="135" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 3: Inject Dependencies -->
+  <g filter="url(#shadowL)">
+    <rect x="720" y="85" width="230" height="100" rx="10" fill="url(#boxGrad)" stroke="#a855f7" stroke-width="1.8"/>
+    <rect x="732" y="97" width="60" height="20" rx="4" fill="#7e22ce"/>
+    <text x="762" y="111" text-anchor="middle" font-size="10.5" font-weight="700" fill="#f3e8ff">STEP 3</text>
+    <text x="835" y="136" text-anchor="middle" font-size="13" font-weight="700" fill="#c084fc">Inject Dependencies</text>
+    <text x="835" y="155" text-anchor="middle" font-size="11" fill="#94a3b8">Dependency Injection (@Autowired)</text>
+    <text x="835" y="172" text-anchor="middle" font-size="10" fill="#cbd5e1">Field / Setter / Constructor injection</text>
+  </g>
+
+  <!-- Wrap-around arrow from Row 1 to Row 2 -->
+  <path d="M 950 135 L 1000 135 C 1030 135, 1030 285, 1000 285 L 955 285" fill="none" stroke="#38bdf8" stroke-width="2.2" marker-end="url(#arrCyan)"/>
+
+  <!-- ================= ROW 2: Steps 4, 5, 6 ================= -->
+
+  <!-- Step 4: @PostConstruct -->
+  <g filter="url(#shadowL)">
+    <rect x="720" y="235" width="230" height="100" rx="10" fill="url(#boxGrad)" stroke="#4ade80" stroke-width="1.8"/>
+    <rect x="732" y="247" width="60" height="20" rx="4" fill="#15803d"/>
+    <text x="762" y="261" text-anchor="middle" font-size="10.5" font-weight="700" fill="#dcfce7">STEP 4</text>
+    <text x="835" y="286" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4ade80">@PostConstruct</text>
+    <text x="835" y="305" text-anchor="middle" font-size="11" fill="#94a3b8">Post-initialization callback</text>
+    <text x="835" y="322" text-anchor="middle" font-size="10" fill="#cbd5e1">Runs custom pre-use logic</text>
+  </g>
+
+  <line x1="720" y1="285" x2="685" y2="285" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 5: Use the Bean -->
+  <g filter="url(#shadowL)">
+    <rect x="460" y="235" width="220" height="100" rx="10" fill="url(#boxGrad)" stroke="#facc15" stroke-width="1.8"/>
+    <rect x="472" y="247" width="60" height="20" rx="4" fill="#a16207"/>
+    <text x="502" y="261" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fef9c3">STEP 5</text>
+    <text x="570" y="286" text-anchor="middle" font-size="13" font-weight="700" fill="#facc15">Use the Bean</text>
+    <text x="570" y="305" text-anchor="middle" font-size="11" fill="#94a3b8">Active runtime phase</text>
+    <text x="570" y="322" text-anchor="middle" font-size="10" fill="#cbd5e1">Serves application business logic</text>
+  </g>
+
+  <line x1="460" y1="285" x2="425" y2="285" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Step 6: @PreDestroy -->
+  <g filter="url(#shadowL)">
+    <rect x="200" y="235" width="220" height="100" rx="10" fill="url(#boxGrad)" stroke="#f43f5e" stroke-width="1.8"/>
+    <rect x="212" y="247" width="60" height="20" rx="4" fill="#be123c"/>
+    <text x="242" y="261" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffe4e6">STEP 6</text>
+    <text x="310" y="286" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fb7185">@PreDestroy</text>
+    <text x="310" y="305" text-anchor="middle" font-size="11" fill="#94a3b8">Pre-destruction callback</text>
+    <text x="310" y="322" text-anchor="middle" font-size="10" fill="#cbd5e1">Release connections, cleanup resources</text>
+  </g>
+
+  <line x1="200" y1="285" x2="165" y2="285" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrCyan)"/>
+
+  <!-- Bean Destroyed End Box -->
+  <rect x="30" y="255" width="130" height="60" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.4"/>
+  <text x="95" y="282" text-anchor="middle" font-size="12" font-weight="700" fill="#fb7185">Bean</text>
+  <text x="95" y="300" text-anchor="middle" font-size="12" font-weight="700" fill="#fb7185">Destroyed</text>
+
+  <!-- Bottom Timeline Summary -->
+  <rect x="180" y="375" width="760" height="36" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="560" y="398" text-anchor="middle" font-size="12" fill="#cbd5e1">
+    <tspan fill="#38bdf8" font-weight="700">Creation:</tspan> Constructor &#x2192; DI &#x2192; @PostConstruct &#x2502; <tspan fill="#facc15" font-weight="700">Live:</tspan> Ready for use &#x2502; <tspan fill="#fb7185" font-weight="700">Destruction:</tspan> @PreDestroy on Context Close
+  </text>
+</svg>

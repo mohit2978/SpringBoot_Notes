@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 520" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrBlue" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+    </marker>
+    <filter id="shadowBox" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="520" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1056" height="516" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title Header -->
+  <rect x="280" y="18" width="500" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="530" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">@Controller vs @RestController Request Lifecycle</text>
+
+  <!-- ================= LEFT COLUMN: @Controller ================= -->
+  <g filter="url(#shadowBox)">
+    <rect x="35" y="75" width="470" height="380" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+  </g>
+
+  <!-- Badge Left -->
+  <rect x="55" y="90" width="180" height="28" rx="6" fill="#0284c7"/>
+  <text x="145" y="109" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">1. @Controller (Views)</text>
+  <text x="250" y="109" font-size="11.5" fill="#94a3b8">Traditional Spring MVC</text>
+
+  <!-- Step 1: Client Request -->
+  <rect x="150" y="135" width="240" height="38" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="270" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">Client Request</text>
+  <text x="270" y="167" text-anchor="middle" font-size="12" font-weight="700" fill="#38bdf8">GET /app/home</text>
+
+  <!-- Arrow -->
+  <line x1="270" y1="173" x2="270" y2="195" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrBlue)"/>
+
+  <!-- Step 2: DispatcherServlet -->
+  <rect x="150" y="198" width="240" height="36" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.4"/>
+  <text x="270" y="221" text-anchor="middle" font-size="13" font-weight="700" fill="#f8fafc">DispatcherServlet</text>
+
+  <!-- Arrow -->
+  <line x1="270" y1="234" x2="270" y2="256" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrBlue)"/>
+
+  <!-- Step 3: HomeController -->
+  <rect x="150" y="259" width="240" height="42" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="270" y="277" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8fafc">HomeController.home()</text>
+  <text x="270" y="293" text-anchor="middle" font-size="11" fill="#facc15">Returns &quot;home&quot; (view name)</text>
+
+  <!-- Arrow -->
+  <line x1="270" y1="301" x2="270" y2="323" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrBlue)"/>
+
+  <!-- Step 4: ViewResolver -->
+  <rect x="150" y="326" width="240" height="36" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.4"/>
+  <text x="270" y="349" text-anchor="middle" font-size="13" font-weight="700" fill="#38bdf8">ViewResolver</text>
+
+  <!-- Arrow -->
+  <line x1="270" y1="362" x2="270" y2="384" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrBlue)"/>
+
+  <!-- Step 5: Rendered HTML -->
+  <rect x="130" y="387" width="280" height="48" rx="8" fill="#0369a1" stroke="#38bdf8" stroke-width="1.6"/>
+  <text x="270" y="407" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Renders home.html (HTML Page)</text>
+  <text x="270" y="424" text-anchor="middle" font-size="11" fill="#e0f2fe">Sends rendered HTML response to client</text>
+
+
+  <!-- ================= RIGHT COLUMN: @RestController ================= -->
+  <g filter="url(#shadowBox)">
+    <rect x="555" y="75" width="470" height="380" rx="12" fill="#0f172a" stroke="#4ade80" stroke-width="1.6"/>
+  </g>
+
+  <!-- Badge Right -->
+  <rect x="575" y="90" width="210" height="28" rx="6" fill="#15803d"/>
+  <text x="680" y="109" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">2. @RestController (Data)</text>
+  <text x="805" y="109" font-size="11.5" fill="#94a3b8">RESTful APIs</text>
+
+  <!-- Step 1: Client Request -->
+  <rect x="670" y="135" width="240" height="38" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="790" y="152" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">Client Request</text>
+  <text x="790" y="167" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">GET /api/users/1</text>
+
+  <!-- Arrow -->
+  <line x1="790" y1="173" x2="790" y2="195" stroke="#4ade80" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- Step 2: DispatcherServlet -->
+  <rect x="670" y="198" width="240" height="36" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="1.4"/>
+  <text x="790" y="221" text-anchor="middle" font-size="13" font-weight="700" fill="#f8fafc">DispatcherServlet</text>
+
+  <!-- Arrow -->
+  <line x1="790" y1="234" x2="790" y2="256" stroke="#4ade80" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- Step 3: UserController -->
+  <rect x="670" y="259" width="240" height="42" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="790" y="277" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8fafc">UserController.getUser()</text>
+  <text x="790" y="293" text-anchor="middle" font-size="11" fill="#4ade80">Returns User Java Object</text>
+
+  <!-- Arrow -->
+  <line x1="790" y1="301" x2="790" y2="323" stroke="#4ade80" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- Step 4: HttpMessageConverter (Jackson) -->
+  <rect x="670" y="326" width="240" height="36" rx="8" fill="#1e293b" stroke="#4ade80" stroke-width="1.4"/>
+  <text x="790" y="349" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80">HttpMessageConverter (Jackson)</text>
+
+  <!-- Arrow -->
+  <line x1="790" y1="362" x2="790" y2="384" stroke="#4ade80" stroke-width="2" marker-end="url(#arrGreen)"/>
+
+  <!-- Step 5: Raw JSON Response -->
+  <rect x="650" y="387" width="280" height="48" rx="8" fill="#14532d" stroke="#4ade80" stroke-width="1.6"/>
+  <text x="790" y="407" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Writes JSON directly to Response</text>
+  <text x="790" y="424" text-anchor="middle" font-size="11" fill="#dcfce7">{ &quot;id&quot;: 1, &quot;name&quot;: &quot;John&quot; }</text>
+
+  <!-- Bottom Comparison Pill -->
+  <rect x="230" y="472" width="600" height="32" rx="16" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="530" y="493" text-anchor="middle" font-size="12.5" font-weight="600" fill="#e2e8f0">
+    <tspan fill="#38bdf8" font-weight="700">@Controller</tspan> is for <tspan fill="#38bdf8">HTML Views</tspan> &#x2502; <tspan fill="#4ade80" font-weight="700">@RestController</tspan> = @Controller + @ResponseBody for <tspan fill="#4ade80">Direct Data (JSON)</tspan>
+  </text>
+</svg>

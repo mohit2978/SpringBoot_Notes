@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 440" width="100%" height="100%" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrCyan7" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrGreen7" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+    </marker>
+    <filter id="shadowCard7" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1020" height="440" fill="#0b0f19" rx="14"/>
+  <rect x="2" y="2" width="1016" height="436" fill="none" stroke="#1e293b" stroke-width="1.5" rx="13"/>
+
+  <!-- Title -->
+  <rect x="260" y="18" width="500" height="38" rx="19" fill="#1e293b" stroke="#334155" stroke-width="1.2"/>
+  <text x="510" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#f8fafc">@RequestBody — JSON to Java Object Mapping</text>
+
+  <!-- Left: Client HTTP POST Request -->
+  <g filter="url(#shadowCard7)">
+    <rect x="35" y="75" width="290" height="320" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6"/>
+  </g>
+  <rect x="50" y="90" width="170" height="24" rx="5" fill="#0284c7"/>
+  <text x="135" y="106" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">HTTP POST Payload (JSON)</text>
+  
+  <rect x="50" y="125" width="260" height="250" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="150" font-family="monospace" font-size="11" fill="#94a3b8">// Raw JSON Request Body</text>
+  <text x="65" y="172" font-family="monospace" font-size="12" fill="#f8fafc">{</text>
+  <text x="80" y="200" font-family="monospace" font-size="12" fill="#38bdf8">&quot;user_name&quot;: <tspan fill="#facc15">&quot;Shrayansh&quot;</tspan>,</text>
+  <text x="80" y="230" font-family="monospace" font-size="12" fill="#4ade80">&quot;email&quot;: <tspan fill="#facc15">&quot;test@gmail.com&quot;</tspan></text>
+  <text x="65" y="260" font-family="monospace" font-size="12" fill="#f8fafc">}</text>
+
+  <text x="65" y="300" font-size="11" fill="#cbd5e1">&#x2022; Sent via curl / Postman</text>
+  <text x="65" y="322" font-size="11" fill="#cbd5e1">&#x2022; Content-Type: application/json</text>
+  <text x="65" y="344" font-size="11" fill="#cbd5e1">&#x2022; Captured by @RequestBody</text>
+
+  <!-- Arrow Left -> Center -->
+  <line x1="325" y1="235" x2="385" y2="235" stroke="#38bdf8" stroke-width="2.2" marker-end="url(#arrCyan7)"/>
+
+  <!-- Center: HttpMessageConverter (Jackson / Gson) -->
+  <g filter="url(#shadowCard7)">
+    <rect x="390" y="140" width="220" height="190" rx="10" fill="#1e293b" stroke="#a855f7" stroke-width="1.6"/>
+  </g>
+  <rect x="410" y="155" width="180" height="24" rx="5" fill="#6b21a8"/>
+  <text x="500" y="171" text-anchor="middle" font-size="11" font-weight="700" fill="#f3e8ff">HttpMessageConverter</text>
+  
+  <text x="500" y="210" text-anchor="middle" font-size="13" font-weight="700" fill="#c084fc">Jackson / Gson</text>
+  <text x="500" y="235" text-anchor="middle" font-size="11.5" fill="#e2e8f0">Deserialization Engine</text>
+  <line x1="410" y1="250" x2="590" y2="250" stroke="#475569" stroke-width="1"/>
+  <text x="500" y="275" text-anchor="middle" font-size="10.5" fill="#94a3b8">Parses JSON string into</text>
+  <text x="500" y="293" text-anchor="middle" font-size="10.5" fill="#94a3b8">Java Object graph</text>
+
+  <!-- Arrow Center -> Right -->
+  <line x1="610" y1="235" x2="670" y2="235" stroke="#4ade80" stroke-width="2.2" marker-end="url(#arrGreen7)"/>
+
+  <!-- Right: Java User Object -->
+  <g filter="url(#shadowCard7)">
+    <rect x="675" y="75" width="310" height="320" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="1.6"/>
+  </g>
+  <rect x="690" y="90" width="170" height="24" rx="5" fill="#15803d"/>
+  <text x="775" y="106" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">Java Domain Class (User)</text>
+
+  <rect x="690" y="125" width="280" height="250" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="705" y="150" font-family="monospace" font-size="11" fill="#94a3b8">public class User {</text>
+  
+  <text x="720" y="178" font-family="monospace" font-size="11" font-weight="700" fill="#38bdf8">@JsonProperty(&quot;user_name&quot;)</text>
+  <text x="720" y="196" font-family="monospace" font-size="11" fill="#f8fafc">private String username;</text>
+  <text x="720" y="214" font-size="10" fill="#facc15">&#x2190; Maps &quot;user_name&quot; to username</text>
+
+  <text x="720" y="246" font-family="monospace" font-size="11" fill="#4ade80">private String email;</text>
+  <text x="720" y="264" font-size="10" fill="#94a3b8">&#x2190; Same name, no annotation needed</text>
+
+  <text x="705" y="300" font-family="monospace" font-size="11" fill="#94a3b8">// getters &amp; setters</text>
+  <text x="705" y="325" font-family="monospace" font-size="11" fill="#94a3b8">}</text>
+  <text x="705" y="355" font-size="11" font-weight="600" fill="#4ade80">&#x2714; Injected into controller method!</text>
+</svg>
