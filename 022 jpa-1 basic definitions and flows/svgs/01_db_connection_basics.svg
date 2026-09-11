@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 660" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="card-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e1f36"/>
+      <stop offset="100%" stop-color="#060e19"/>
+    </linearGradient>
+    <linearGradient id="card-green" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c231c"/>
+      <stop offset="100%" stop-color="#05100d"/>
+    </linearGradient>
+    <linearGradient id="card-amber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1200"/>
+      <stop offset="100%" stop-color="#0d0900"/>
+    </linearGradient>
+    <filter id="s1" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <marker id="arrowB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#10b981"/>
+    </marker>
+    <marker id="arrowA" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="660" rx="16" fill="url(#bg1)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40,26)">
+    <rect x="0" y="0" width="200" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.35"/>
+    <text x="100" y="16" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">JPA · JDBC · CONNECTIONS</text>
+    <text x="0" y="52" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#f8fafc">How Spring Boot Talks to the Database</text>
+    <text x="0" y="72" font-family="system-ui,sans-serif" font-size="13" fill="#94a3b8">Every SQL query travels through a TCP socket — the "database connection"</text>
+  </g>
+
+  <!-- ===== LEFT: Analogy ===== -->
+  <g transform="translate(40,108)" filter="url(#s1)">
+    <rect width="310" height="510" rx="12" fill="url(#card-blue)" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="110" height="22" rx="4" fill="#0369a1" fill-opacity="0.35" stroke="#38bdf8" stroke-width="1"/>
+      <text x="55" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">THE ANALOGY</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#f8fafc">Browser → Internet → Server</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="11" fill="#7dd3fc">Same idea: Spring → TCP → MySQL</text>
+
+      <!-- Browser / Spring box -->
+      <rect x="60" y="80" width="150" height="44" rx="8" fill="#0f2b48" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="135" y="100" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Spring Boot App</text>
+      <text x="135" y="116" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7dd3fc" text-anchor="middle">localhost:8080</text>
+
+      <!-- Arrow down -->
+      <line x1="135" y1="128" x2="135" y2="165" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowB)"/>
+      <rect x="76" y="138" width="118" height="22" rx="10" fill="#0c4a6e" fill-opacity="0.5"/>
+      <text x="135" y="153" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7dd3fc" text-anchor="middle">TCP/IP Socket</text>
+
+      <!-- MySQL box -->
+      <rect x="60" y="168" width="150" height="44" rx="8" fill="#0f2b48" stroke="#38bdf8" stroke-width="1.2"/>
+      <text x="135" y="188" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">MySQL Server</text>
+      <text x="135" y="204" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7dd3fc" text-anchor="middle">localhost:3306</text>
+
+      <!-- What travels -->
+      <text x="0" y="238" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">What travels through the TCP wire:</text>
+      <rect x="0" y="248" width="274" height="82" rx="6" fill="#081220" stroke="#0284c7" stroke-width="1"/>
+      <g transform="translate(12,248)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="18" fill="#7dd3fc">→ SQL text</text>
+        <text y="34" fill="#7dd3fc">→ Bind parameters</text>
+        <text y="50" fill="#7dd3fc">→ Result rows (id, name...)</text>
+        <text y="68" fill="#7dd3fc">→ Commit / Rollback signals</text>
+      </g>
+
+      <!-- Connection lifecycle -->
+      <text x="0" y="352" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">Connection lifecycle:</text>
+      <g transform="translate(0,360)" font-family="system-ui,sans-serif" font-size="10.5">
+        <circle cx="8" cy="10" r="7" fill="#0369a1" fill-opacity="0.5" stroke="#38bdf8" stroke-width="1"/>
+        <text x="8" y="14" fill="#38bdf8" text-anchor="middle" font-weight="700">1</text>
+        <text x="22" y="14" fill="#cbd5e1">DriverManager.getConnection(url,user,pwd)</text>
+        <circle cx="8" cy="38" r="7" fill="#0369a1" fill-opacity="0.5" stroke="#38bdf8" stroke-width="1"/>
+        <text x="8" y="42" fill="#38bdf8" text-anchor="middle" font-weight="700">2</text>
+        <text x="22" y="42" fill="#cbd5e1">Authentication (handshake + session)</text>
+        <circle cx="8" cy="66" r="7" fill="#0369a1" fill-opacity="0.5" stroke="#38bdf8" stroke-width="1"/>
+        <text x="8" y="70" fill="#38bdf8" text-anchor="middle" font-weight="700">3</text>
+        <text x="22" y="70" fill="#cbd5e1">Socket kept alive; SQL travels both ways</text>
+        <circle cx="8" cy="94" r="7" fill="#0369a1" fill-opacity="0.5" stroke="#38bdf8" stroke-width="1"/>
+        <text x="8" y="98" fill="#38bdf8" text-anchor="middle" font-weight="700">4</text>
+        <text x="22" y="98" fill="#cbd5e1">conn.close() releases socket</text>
+      </g>
+
+      <!-- Interview tip -->
+      <rect x="0" y="476" width="274" height="22" rx="4" fill="#1e3a5f" stroke="#38bdf8" stroke-opacity="0.4"/>
+      <text x="8" y="487" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#7dd3fc">💡 Opening a connection costs ~ms — use pools!</text>
+    </g>
+  </g>
+
+  <!-- ===== MIDDLE: Why Creating is Expensive ===== -->
+  <g transform="translate(376,108)" filter="url(#s1)">
+    <rect width="328" height="240" rx="12" fill="url(#card-amber)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="140" height="22" rx="4" fill="#92400e" fill-opacity="0.35" stroke="#f59e0b" stroke-width="1"/>
+      <text x="70" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#fbbf24" text-anchor="middle">WHY IT'S EXPENSIVE</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#f8fafc">Opening a connection = ~20ms</text>
+
+      <g transform="translate(0,54)" font-family="system-ui,sans-serif" font-size="10.5">
+        <rect x="0" y="0" width="290" height="148" rx="6" fill="#1c0f00" stroke="#d97706" stroke-width="1"/>
+        <text x="12" y="20" fill="#fde047" font-weight="700">Steps on every new connection:</text>
+        <text x="12" y="40" fill="#fbbf24">⚡ TCP 3-way handshake</text>
+        <text x="12" y="58" fill="#fbbf24">🔐 Username + password authentication</text>
+        <text x="12" y="76" fill="#fbbf24">💾 Memory allocation (buffers, session)</text>
+        <text x="12" y="94" fill="#fbbf24">📋 DB session creation (thread, locks ctx)</text>
+        <text x="12" y="116" fill="#94a3b8" font-size="9.5">Each step is a round-trip or OS call.</text>
+        <text x="12" y="132" fill="#94a3b8" font-size="9.5">Compared to a simple query (&lt;1ms) this is huge!</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- MIDDLE 2: DriverManager vs DataSource -->
+  <g transform="translate(376,368)" filter="url(#s1)">
+    <rect width="328" height="250" rx="12" fill="url(#card-green)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="160" height="22" rx="4" fill="#047857" fill-opacity="0.35" stroke="#10b981" stroke-width="1"/>
+      <text x="80" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">DriverManager vs DataSource</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc">DataSource = Connection Factory</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#a7f3d0">Spring injects DataSource; Hibernate calls getConnection()</text>
+
+      <rect x="0" y="76" width="290" height="118" rx="6" fill="#081a13" stroke="#059669" stroke-width="1"/>
+      <g transform="translate(12,76)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="18" fill="#6ee7b7">// Old way — creates a brand-new connection:</text>
+        <text y="34" fill="#f87171">Connection c = DriverManager.getConnection(url,u,p);</text>
+        <text y="58" fill="#6ee7b7">// Spring/Hibernate way — borrows from pool:</text>
+        <text y="74" fill="#34d399">@Autowired DataSource dataSource;</text>
+        <text y="90" fill="#a7f3d0">Connection c = dataSource.getConnection(); // fast!</text>
+        <text y="108" fill="#34d399">// Returns to pool, NOT closed</text>
+      </g>
+
+      <rect x="0" y="202" width="290" height="28" rx="4" fill="#064e3b" fill-opacity="0.5" stroke="#059669"/>
+      <text x="12" y="220" font-family="system-ui,sans-serif" font-size="10" fill="#6ee7b7" font-weight="600">HikariCP is Spring Boot's default DataSource pool</text>
+    </g>
+  </g>
+
+  <!-- ===== RIGHT: Hibernate stack ===== -->
+  <g transform="translate(724,108)" filter="url(#s1)">
+    <rect width="336" height="510" rx="12" fill="#0d0f1e" stroke="#a855f7" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="155" height="22" rx="4" fill="#581c87" fill-opacity="0.35" stroke="#a855f7" stroke-width="1"/>
+      <text x="77" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#c084fc" text-anchor="middle">WHERE HIBERNATE FITS</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#f8fafc">The Complete Stack</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#d8b4fe">Hibernate wraps JDBC. You call find(), it calls SQL.</text>
+
+      <!-- Stack diagram -->
+      <g transform="translate(30, 76)">
+        <!-- Layer 1 -->
+        <rect x="0" y="0" width="240" height="48" rx="8" fill="#1a0d2e" stroke="#c084fc" stroke-width="1.5"/>
+        <text x="120" y="22" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">Your Code</text>
+        <text x="120" y="38" font-family="'JetBrains Mono',monospace" font-size="9" fill="#d8b4fe" text-anchor="middle">repository.findById(1)</text>
+
+        <line x1="120" y1="52" x2="120" y2="74" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowB)"/>
+        <text x="145" y="66" font-family="system-ui,sans-serif" font-size="8.5" fill="#94a3b8">delegates to</text>
+
+        <!-- Layer 2 -->
+        <rect x="0" y="78" width="240" height="48" rx="8" fill="#241138" stroke="#c084fc" stroke-width="1.5"/>
+        <text x="120" y="100" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">EntityManager</text>
+        <text x="120" y="116" font-family="'JetBrains Mono',monospace" font-size="9" fill="#d8b4fe" text-anchor="middle">checks cache, manages entities</text>
+
+        <line x1="120" y1="130" x2="120" y2="152" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowB)"/>
+        <text x="145" y="144" font-family="system-ui,sans-serif" font-size="8.5" fill="#94a3b8">translates to</text>
+
+        <!-- Layer 3 -->
+        <rect x="0" y="156" width="240" height="48" rx="8" fill="#2d1348" stroke="#c084fc" stroke-width="1.5"/>
+        <text x="120" y="178" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">Hibernate ORM</text>
+        <text x="120" y="194" font-family="'JetBrains Mono',monospace" font-size="9" fill="#d8b4fe" text-anchor="middle">generates SQL, maps results</text>
+
+        <line x1="120" y1="208" x2="120" y2="230" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowB)"/>
+        <text x="145" y="222" font-family="system-ui,sans-serif" font-size="8.5" fill="#94a3b8">calls</text>
+
+        <!-- Layer 4 -->
+        <rect x="0" y="234" width="240" height="48" rx="8" fill="#18112d" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="120" y="256" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">JDBC</text>
+        <text x="120" y="272" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7dd3fc" text-anchor="middle">PreparedStatement.executeQuery()</text>
+
+        <line x1="120" y1="286" x2="120" y2="308" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowB)"/>
+        <text x="145" y="300" font-family="system-ui,sans-serif" font-size="8.5" fill="#94a3b8">borrows conn from</text>
+
+        <!-- Layer 5 -->
+        <rect x="0" y="312" width="240" height="48" rx="8" fill="#082b4a" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="120" y="334" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">HikariCP (DataSource)</text>
+        <text x="120" y="350" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7dd3fc" text-anchor="middle">Connection pool (default 10 conns)</text>
+
+        <line x1="120" y1="364" x2="120" y2="386" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowB)"/>
+        <text x="145" y="378" font-family="system-ui,sans-serif" font-size="8.5" fill="#94a3b8">TCP to</text>
+
+        <!-- Layer 6 -->
+        <rect x="0" y="390" width="240" height="48" rx="8" fill="#0f2b48" stroke="#34d399" stroke-width="1.5"/>
+        <text x="120" y="412" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#34d399" text-anchor="middle">MySQL / PostgreSQL</text>
+        <text x="120" y="428" font-family="'JetBrains Mono',monospace" font-size="9" fill="#a7f3d0" text-anchor="middle">The actual database server</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom note -->
+  <g transform="translate(40, 634)">
+    <rect width="1020" height="16" rx="8" fill="#1e293b" fill-opacity="0.5"/>
+    <text x="510" y="11" font-family="system-ui,sans-serif" font-size="9.5" fill="#64748b" text-anchor="middle">
+      A "database connection" = a live TCP socket that lets Spring Boot send SQL to MySQL and receive results — it stays open between requests (pooled) to avoid the ~20ms creation cost every time.
+    </text>
+  </g>
+</svg>

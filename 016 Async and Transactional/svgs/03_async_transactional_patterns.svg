@@ -1,149 +1,408 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 620" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 960" width="100%" height="100%">
   <defs>
+    <!-- Background Gradient -->
     <linearGradient id="bg-grad-16-3" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b0f19"/>
-      <stop offset="50%" stop-color="#111827"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+      <stop offset="0%" stop-color="#080c16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#090d1a"/>
     </linearGradient>
 
+    <!-- Card Backgrounds -->
     <linearGradient id="p1-card" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0f2922"/>
-      <stop offset="100%" stop-color="#0a1d18"/>
+      <stop offset="0%" stop-color="#0c231c"/>
+      <stop offset="60%" stop-color="#081813"/>
+      <stop offset="100%" stop-color="#05100d"/>
     </linearGradient>
     <linearGradient id="p2-card" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1b2438"/>
-      <stop offset="100%" stop-color="#111827"/>
+      <stop offset="0%" stop-color="#0e1f36"/>
+      <stop offset="60%" stop-color="#0a1626"/>
+      <stop offset="100%" stop-color="#060e19"/>
     </linearGradient>
     <linearGradient id="p3-card" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#241b35"/>
-      <stop offset="100%" stop-color="#150f24"/>
+      <stop offset="0%" stop-color="#1c1330"/>
+      <stop offset="60%" stop-color="#130d22"/>
+      <stop offset="100%" stop-color="#0b0714"/>
     </linearGradient>
 
-    <filter id="shadow-16-3" x="-5%" y="-5%" width="110%" height="115%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    <!-- Drop Shadows -->
+    <filter id="shadow-card" x="-4%" y="-3%" width="108%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.6"/>
     </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="arrow-emerald" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-sky" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#c084fc"/>
+    </marker>
   </defs>
 
-  <rect width="1060" height="620" rx="16" fill="url(#bg-grad-16-3)" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Background Base -->
+  <rect width="1480" height="960" rx="18" fill="url(#bg-grad-16-3)" stroke="#1e293b" stroke-width="1.5"/>
 
-  <!-- Header -->
-  <g transform="translate(40, 30)">
-    <rect x="0" y="0" width="170" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.3"/>
-    <text x="85" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">DESIGN PATTERNS</text>
-    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#f8fafc">
+  <!-- ================= TOP HEADER ================= -->
+  <g transform="translate(40, 26)">
+    <rect x="0" y="0" width="225" height="24" rx="12" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.35"/>
+    <text x="112.5" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600" fill="#38bdf8" text-anchor="middle">ENTERPRISE DESIGN PATTERNS</text>
+    <text x="0" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="700" fill="#f8fafc">
       The 3 Correct @Async + @Transactional Architectural Patterns
     </text>
-    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#94a3b8">
-      Proven enterprise patterns to combine asynchronous processing with transactional safety
+    <text x="0" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#94a3b8">
+      Proven Spring Boot architectures that safely decouple background tasks, preserve ACID transaction boundaries, and eliminate entity detachment traps.
     </text>
   </g>
 
-  <!-- 3 Column Cards -->
-  <g transform="translate(40, 125)">
-    <!-- Pattern 1: Separate (Safest) -->
-    <g filter="url(#shadow-16-3)">
-      <rect width="310" height="455" rx="12" fill="url(#p1-card)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
-      <g transform="translate(18, 18)">
-        <rect x="0" y="0" width="85" height="22" rx="4" fill="#047857" fill-opacity="0.3"/>
-        <text x="42.5" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">PATTERN 1</text>
-        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">Keep Them Separate</text>
-        <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#34d399">Simplest &amp; Safest (Fire &amp; Forget)</text>
+  <!-- ================= 3 COLUMN CARDS ================= -->
 
-        <!-- Code Block -->
-        <rect x="0" y="76" width="274" height="175" rx="6" fill="#081c17" stroke="#047857"/>
-        <g transform="translate(12, 76)" font-family="'JetBrains Mono', monospace" font-size="10">
-          <text y="20" fill="#a7f3d0">// Step 1: Main Thread</text>
-          <text y="36" fill="#34d399">@Transactional</text>
-          <text y="52" fill="#cbd5e1">saveOrder(req) {</text>
-          <text y="68" fill="#e2e8f0">  order = repo.save();</text>
-          <text y="84" fill="#94a3b8">  // TX1 commits here</text>
-          <text y="100" fill="#cbd5e1">}</text>
-          <text y="120" fill="#a7f3d0">// Step 2: Async Thread</text>
-          <text y="136" fill="#38bdf8">@Async</text>
-          <text y="154" fill="#cbd5e1">sendEmail(order.getId());</text>
-        </g>
+  <!-- #################### CARD 1: PATTERN 1 #################### -->
+  <g transform="translate(40, 114)" filter="url(#shadow-card)">
+    <rect width="446" height="742" rx="14" fill="url(#p1-card)" stroke="#10b981" stroke-opacity="0.45" stroke-width="1.5"/>
 
-        <!-- Steps -->
-        <text x="0" y="272" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">Execution Flow:</text>
-        <text x="0" y="292" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">1. Main thread writes DB and commits TX1.</text>
-        <text x="0" y="312" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">2. Fire async notification AFTER commit.</text>
-        <text x="0" y="332" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">3. Only pass entity ID (<tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">orderId</tspan>).</text>
+    <!-- 1. Header & Badge -->
+    <g transform="translate(16, 16)">
+      <rect x="0" y="0" width="82" height="22" rx="4" fill="#047857" fill-opacity="0.35" stroke="#10b981" stroke-width="1"/>
+      <text x="41" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">PATTERN 1</text>
 
-        <!-- Best For Pill Box -->
-        <rect x="0" y="352" width="274" height="64" rx="6" fill="#064e3b" fill-opacity="0.35" stroke="#059669"/>
-        <text x="12" y="374" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#6ee7b7">Best For:</text>
-        <text x="12" y="394" font-family="system-ui, sans-serif" font-size="10" fill="#d1fae5">Emails, SMS, push alerts, webhooks.</text>
+      <rect x="90" y="0" width="200" height="22" rx="4" fill="#064e3b" fill-opacity="0.3" stroke="#059669" stroke-opacity="0.4"/>
+      <text x="190" y="15" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#a7f3d0" text-anchor="middle">FIRE &amp; FORGET • NO ASYNC TX</text>
+
+      <text x="0" y="44" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Keep Them Separate</text>
+      <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#34d399">Caller Commits TX1 → Worker Non-Transactional</text>
+    </g>
+
+    <!-- 2. Architectural Flow Diagram -->
+    <g transform="translate(16, 88)">
+      <rect width="414" height="84" rx="8" fill="#051a14" stroke="#047857" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#6ee7b7">TIMELINE &amp; THREAD BOUNDARY</text>
+
+      <!-- Step 1: Main Thread -->
+      <rect x="12" y="28" width="168" height="46" rx="6" fill="#0c2e24" stroke="#10b981" stroke-width="1"/>
+      <text x="20" y="44" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">Main Thread (Caller)</text>
+      <text x="20" y="58" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#a7f3d0">saveOrder() → <tspan font-weight="700" fill="#34d399">TX1 Commit ✓</tspan></text>
+
+      <!-- Connecting Arrow -->
+      <path d="M 185 51 L 222 51" fill="none" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-emerald)"/>
+      <text x="204" y="42" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6ee7b7" text-anchor="middle">orderId</text>
+
+      <!-- Step 2: Async Thread -->
+      <rect x="230" y="28" width="172" height="46" rx="6" fill="#06241c" stroke="#059669" stroke-width="1"/>
+      <text x="238" y="44" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">Async Worker Pool</text>
+      <text x="238" y="58" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#94a3b8">sendEmail() → <tspan fill="#64748b">No DB TX</tspan></text>
+    </g>
+
+    <!-- 3. Full Complete Java Code Window -->
+    <g transform="translate(16, 182)">
+      <rect width="414" height="286" rx="8" fill="#051410" stroke="#047857" stroke-width="1"/>
+      <!-- Window Title Bar -->
+      <path d="M 0 8 Q 0 0 8 0 L 406 0 Q 414 0 414 8 L 414 26 L 0 26 Z" fill="#09241c"/>
+      <circle cx="16" cy="13" r="4.5" fill="#ef4444" opacity="0.85"/>
+      <circle cx="30" cy="13" r="4.5" fill="#eab308" opacity="0.85"/>
+      <circle cx="44" cy="13" r="4.5" fill="#22c55e" opacity="0.85"/>
+      <text x="60" y="17" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#a7f3d0">CheckoutService.java &amp; EmailService.java</text>
+
+      <!-- Code Text with Syntax Highlighting -->
+      <g transform="translate(12, 28)" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.6">
+        <text y="16" fill="#6ee7b7">// 1. CALLER / ORCHESTRATOR SERVICE</text>
+        <text y="30" fill="#fde047">@Service</text>
+        <text y="44" fill="#f8fafc"><tspan fill="#ec4899">public class</tspan> CheckoutService {</text>
+        <text y="58" fill="#94a3b8">  <tspan fill="#fde047">@Autowired</tspan> <tspan fill="#38bdf8">OrderService</tspan> orderService;</text>
+        <text y="72" fill="#94a3b8">  <tspan fill="#fde047">@Autowired</tspan> <tspan fill="#38bdf8">EmailService</tspan> emailService;</text>
+        <text y="90" fill="#f8fafc">  <tspan fill="#ec4899">public void</tspan> processCheckout(<tspan fill="#38bdf8">OrderRequest</tspan> req) {</text>
+        <text y="104" fill="#cbd5e1">    <tspan fill="#38bdf8">Order</tspan> order = orderService.saveOrder(req);</text>
+        <text y="118" fill="#64748b">    <tspan fill="#34d399">// TX1 commits here before async dispatch</tspan></text>
+        <text y="132" fill="#fde047">    emailService.sendEmail(order.getId()); <tspan fill="#6ee7b7">// Pass ID!</tspan></text>
+        <text y="146" fill="#f8fafc">  }</text>
+        <text y="160" fill="#f8fafc">}</text>
+
+        <text y="178" fill="#6ee7b7">// 2. ASYNC NOTIFICATION SERVICE</text>
+        <text y="192" fill="#fde047">@Service</text>
+        <text y="206" fill="#f8fafc"><tspan fill="#ec4899">public class</tspan> EmailService {</text>
+        <text y="220" fill="#38bdf8">  @Async <tspan fill="#64748b">// Dispatched to taskExecutor worker thread</tspan></text>
+        <text y="234" fill="#f8fafc">  <tspan fill="#ec4899">public void</tspan> sendEmail(<tspan fill="#38bdf8">Long</tspan> orderId) {</text>
+        <text y="248" fill="#cbd5e1">    emailClient.sendConfirmation(orderId); <tspan fill="#6ee7b7">// Safe!</tspan></text>
+        <text y="262" fill="#f8fafc">  }</text>
+        <text y="276" fill="#f8fafc">}</text>
       </g>
     </g>
 
-    <!-- Pattern 2: Independent Transaction (REQUIRES_NEW) -->
-    <g transform="translate(335, 0)" filter="url(#shadow-16-3)">
-      <rect width="310" height="455" rx="12" fill="url(#p2-card)" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
-      <g transform="translate(18, 18)">
-        <rect x="0" y="0" width="85" height="22" rx="4" fill="#0369a1" fill-opacity="0.3"/>
-        <text x="42.5" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">PATTERN 2</text>
-        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">Independent Transaction</text>
-        <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#38bdf8">Async Work Writes to Database</text>
+    <!-- 4. Key Architectural Principles -->
+    <g transform="translate(16, 478)">
+      <rect width="414" height="152" rx="8" fill="#061c16" stroke="#059669" stroke-opacity="0.35" stroke-width="1"/>
+      <text x="14" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">CORE ARCHITECTURAL PRINCIPLES:</text>
 
-        <!-- Code Block -->
-        <rect x="0" y="76" width="274" height="175" rx="6" fill="#0c1626" stroke="#0284c7"/>
-        <g transform="translate(12, 76)" font-family="'JetBrains Mono', monospace" font-size="9.5">
-          <text y="20" fill="#38bdf8">@Async</text>
-          <text y="36" fill="#fde047">@Transactional(</text>
-          <text y="52" fill="#fde047">  propagation=REQUIRES_NEW)</text>
-          <text y="70" fill="#cbd5e1">void logAndAudit(Long id) {</text>
-          <text y="88" fill="#e2e8f0">  // Reload fresh from DB</text>
-          <text y="104" fill="#38bdf8">  order = repo.findById(id);</text>
-          <text y="120" fill="#e2e8f0">  auditRepo.save(new Log());</text>
-          <text y="138" fill="#94a3b8">  // TX2 commits separately</text>
-          <text y="154" fill="#cbd5e1">}</text>
-        </g>
+      <g transform="translate(14, 38)" font-family="system-ui, sans-serif" font-size="10.2">
+        <text y="0" fill="#34d399" font-weight="700">✓ Strict Thread Separation:</text>
+        <text y="14" fill="#cbd5e1">Main thread finishes &amp; commits TX1 before email task starts.</text>
 
-        <!-- Steps -->
-        <text x="0" y="272" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#7dd3fc">Execution Flow:</text>
-        <text x="0" y="292" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">1. Async method opens fresh <tspan font-weight="700" fill="#fde047">TX2</tspan>.</text>
-        <text x="0" y="312" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">2. Loads entity by ID via fresh session.</text>
-        <text x="0" y="332" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">3. Writes audit data and commits TX2.</text>
+        <text y="34" fill="#34d399" font-weight="700">✓ Detachment Trap Avoided:</text>
+        <text y="48" fill="#cbd5e1">Passing primitive <tspan font-family="'JetBrains Mono', monospace" fill="#38bdf8">Long orderId</tspan> prevents LazyInitializationException.</text>
 
-        <!-- Best For Pill Box -->
-        <rect x="0" y="352" width="274" height="64" rx="6" fill="#075985" fill-opacity="0.3" stroke="#0284c7"/>
-        <text x="12" y="374" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#bae6fd">Best For:</text>
-        <text x="12" y="394" font-family="system-ui, sans-serif" font-size="10" fill="#e0f2fe">Audit logging, event sourcing, telemetry.</text>
+        <text y="68" fill="#34d399" font-weight="700">✓ Complete Failure Containment:</text>
+        <text y="82" fill="#cbd5e1">Email timeouts or SMTP errors cannot rollback the committed order.</text>
+
+        <text y="102" fill="#34d399" font-weight="700">✓ Zero Connection Waste:</text>
+        <text y="116" fill="#cbd5e1">Worker holds no JDBC connection, saving database pool slots.</text>
       </g>
     </g>
 
-    <!-- Pattern 3: CompletableFuture (Queries/Reports) -->
-    <g transform="translate(670, 0)" filter="url(#shadow-16-3)">
-      <rect width="310" height="455" rx="12" fill="url(#p3-card)" stroke="#c084fc" stroke-opacity="0.4" stroke-width="1.5"/>
-      <g transform="translate(18, 18)">
-        <rect x="0" y="0" width="85" height="22" rx="4" fill="#6b21a8" fill-opacity="0.3"/>
-        <text x="42.5" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#d8b4fe" text-anchor="middle">PATTERN 3</text>
-        <text x="0" y="44" font-family="system-ui, sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">CompletableFuture</text>
-        <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#c084fc">Caller Requires Async Result</text>
+    <!-- 5. Best For & Pro Tip Box -->
+    <g transform="translate(16, 640)">
+      <rect width="414" height="86" rx="8" fill="#04291f" stroke="#10b981" stroke-opacity="0.5" stroke-width="1"/>
+      <g transform="translate(14, 16)">
+        <text x="0" y="0" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#6ee7b7">RECOMMENDED USE CASES:</text>
+        <text x="0" y="16" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">Order confirmation emails, SMS alerts, push notifications, webhooks, CDN purge.</text>
 
-        <!-- Code Block -->
-        <rect x="0" y="76" width="274" height="175" rx="6" fill="#130e1f" stroke="#7e22ce"/>
-        <g transform="translate(12, 76)" font-family="'JetBrains Mono', monospace" font-size="9.5">
-          <text y="20" fill="#c084fc">@Async</text>
-          <text y="36" fill="#a855f7">@Transactional(readOnly=true)</text>
-          <text y="52" fill="#cbd5e1">CompletableFuture&lt;Report&gt;</text>
-          <text y="68" fill="#cbd5e1">fetchReportAsync(Long id) {</text>
-          <text y="86" fill="#e2e8f0">  Report r = repo.get(id);</text>
-          <text y="104" fill="#38bdf8">  return CompletableFuture</text>
-          <text y="120" fill="#38bdf8">    .completedFuture(r);</text>
-          <text y="138" fill="#cbd5e1">}</text>
-        </g>
+        <rect x="0" y="27" width="386" height="32" rx="4" fill="#063d2e" stroke="#059669" stroke-width="0.8"/>
+        <text x="8" y="42" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#fde047">PRO TIP:</text>
+        <text x="56" y="42" font-family="system-ui, sans-serif" font-size="9" fill="#d1fae5">Always invoke async method AFTER transactional method returns,</text>
+        <text x="8" y="54" font-family="system-ui, sans-serif" font-size="9" fill="#a7f3d0">or use Spring's <tspan font-family="'JetBrains Mono', monospace" fill="#6ee7b7">@TransactionalEventListener(AFTER_COMMIT)</tspan> for strict ordering.</text>
+      </g>
+    </g>
+  </g>
 
-        <!-- Steps -->
-        <text x="0" y="272" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#e9d5ff">Execution Flow:</text>
-        <text x="0" y="292" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">1. Query runs on background thread.</text>
-        <text x="0" y="312" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">2. Main thread continues other tasks.</text>
-        <text x="0" y="332" font-family="system-ui, sans-serif" font-size="10.5" fill="#cbd5e1">3. Joins or handles non-blockingly.</text>
+  <!-- #################### CARD 2: PATTERN 2 #################### -->
+  <g transform="translate(517, 114)" filter="url(#shadow-card)">
+    <rect width="446" height="742" rx="14" fill="url(#p2-card)" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.5"/>
 
-        <!-- Best For Pill Box -->
-        <rect x="0" y="352" width="274" height="64" rx="6" fill="#581c87" fill-opacity="0.3" stroke="#7e22ce"/>
-        <text x="12" y="374" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f3e8ff">Best For:</text>
-        <text x="12" y="394" font-family="system-ui, sans-serif" font-size="10" fill="#faf5ff">Heavy reports, dashboard aggregations.</text>
+    <!-- 1. Header & Badge -->
+    <g transform="translate(16, 16)">
+      <rect x="0" y="0" width="82" height="22" rx="4" fill="#0369a1" fill-opacity="0.35" stroke="#38bdf8" stroke-width="1"/>
+      <text x="41" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">PATTERN 2</text>
+
+      <rect x="90" y="0" width="220" height="22" rx="4" fill="#0c4a6e" fill-opacity="0.3" stroke="#0284c7" stroke-opacity="0.4"/>
+      <text x="200" y="15" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#bae6fd" text-anchor="middle">INDEPENDENT TX • REQUIRES_NEW</text>
+
+      <text x="0" y="44" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Independent Transaction</text>
+      <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#38bdf8">Worker Opens Autonomous TX2 (Async DB Writes)</text>
+    </g>
+
+    <!-- 2. Architectural Flow Diagram -->
+    <g transform="translate(16, 88)">
+      <rect width="414" height="84" rx="8" fill="#08182b" stroke="#0284c7" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#7dd3fc">TIMELINE &amp; THREAD BOUNDARY</text>
+
+      <!-- Step 1: Main Thread -->
+      <rect x="12" y="28" width="162" height="46" rx="6" fill="#0f2b48" stroke="#38bdf8" stroke-width="1"/>
+      <text x="20" y="44" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">Main Thread (Caller)</text>
+      <text x="20" y="58" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#bae6fd">saveOrder() → <tspan font-weight="700" fill="#38bdf8">TX1 (DB)</tspan></text>
+
+      <!-- Connecting Arrow -->
+      <path d="M 179 51 L 216 51" fill="none" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow-sky)"/>
+      <text x="198" y="42" font-family="'JetBrains Mono', monospace" font-size="8" fill="#7dd3fc" text-anchor="middle">orderId</text>
+
+      <!-- Step 2: Async Thread -->
+      <rect x="224" y="28" width="178" height="46" rx="6" fill="#0a2139" stroke="#0284c7" stroke-width="1"/>
+      <text x="232" y="44" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">Async Worker (TX2)</text>
+      <text x="232" y="58" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#fde047">REQUIRES_NEW → <tspan font-weight="700" fill="#38bdf8">Commit ✓</tspan></text>
+    </g>
+
+    <!-- 3. Full Complete Java Code Window -->
+    <g transform="translate(16, 182)">
+      <rect width="414" height="286" rx="8" fill="#061220" stroke="#0284c7" stroke-width="1"/>
+      <!-- Window Title Bar -->
+      <path d="M 0 8 Q 0 0 8 0 L 406 0 Q 414 0 414 8 L 414 26 L 0 26 Z" fill="#0c2540"/>
+      <circle cx="16" cy="13" r="4.5" fill="#ef4444" opacity="0.85"/>
+      <circle cx="30" cy="13" r="4.5" fill="#eab308" opacity="0.85"/>
+      <circle cx="44" cy="13" r="4.5" fill="#22c55e" opacity="0.85"/>
+      <text x="60" y="17" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#bae6fd">AuditService.java</text>
+
+      <!-- Code Text with Syntax Highlighting -->
+      <g transform="translate(12, 28)" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.6">
+        <text y="16" fill="#7dd3fc">// ASYNC WORKER SERVICE WITH INDEPENDENT DB TX</text>
+        <text y="30" fill="#fde047">@Service</text>
+        <text y="44" fill="#f8fafc"><tspan fill="#ec4899">public class</tspan> AuditService {</text>
+        <text y="58" fill="#94a3b8">  <tspan fill="#fde047">@Autowired</tspan> <tspan fill="#38bdf8">AuditLogRepository</tspan> auditRepo;</text>
+        <text y="72" fill="#94a3b8">  <tspan fill="#fde047">@Autowired</tspan> <tspan fill="#38bdf8">OrderRepository</tspan> orderRepo;</text>
+        <text y="90" fill="#38bdf8">  @Async <tspan fill="#64748b">// Dispatches to taskExecutor thread pool</tspan></text>
+        <text y="104" fill="#fde047">  @Transactional(propagation = Propagation.REQUIRES_NEW)</text>
+        <text y="118" fill="#f8fafc">  <tspan fill="#ec4899">public void</tspan> logAndAuditAsync(<tspan fill="#38bdf8">Long</tspan> orderId) {</text>
+        <text y="134" fill="#7dd3fc">    // 1. Fetch fresh entity in worker's own TX2 session:</text>
+        <text y="148" fill="#cbd5e1">    <tspan fill="#38bdf8">Order</tspan> order = orderRepo.findById(orderId)</text>
+        <text y="162" fill="#cbd5e1">        .orElseThrow(() -&gt; <tspan fill="#ec4899">new</tspan> <tspan fill="#38bdf8">NotFoundEx</tspan>(orderId));</text>
+        <text y="180" fill="#7dd3fc">    // 2. Write audit record &amp; commit TX2 independently:</text>
+        <text y="194" fill="#cbd5e1">    <tspan fill="#38bdf8">AuditLog</tspan> log = <tspan fill="#ec4899">new</tspan> <tspan fill="#38bdf8">AuditLog</tspan>(orderId, <tspan fill="#f59e0b">"ORDER_PLACED"</tspan>);</text>
+        <text y="208" fill="#cbd5e1">    auditRepo.save(log);</text>
+        <text y="226" fill="#64748b">    // TX2 commits here autonomously. TX1 is unaffected!</text>
+        <text y="240" fill="#f8fafc">  }</text>
+        <text y="254" fill="#f8fafc">}</text>
+      </g>
+    </g>
+
+    <!-- 4. Key Architectural Principles -->
+    <g transform="translate(16, 478)">
+      <rect width="414" height="152" rx="8" fill="#081e35" stroke="#0284c7" stroke-opacity="0.35" stroke-width="1"/>
+      <text x="14" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">CORE ARCHITECTURAL PRINCIPLES:</text>
+
+      <g transform="translate(14, 38)" font-family="system-ui, sans-serif" font-size="10.2">
+        <text y="0" fill="#38bdf8" font-weight="700">✓ Autonomous Transaction Boundary:</text>
+        <text y="14" fill="#cbd5e1"><tspan font-family="'JetBrains Mono', monospace" fill="#fde047">REQUIRES_NEW</tspan> instructs Spring to open fresh DB connection &amp; TX2.</text>
+
+        <text y="34" fill="#38bdf8" font-weight="700">✓ Fresh Persistence Context:</text>
+        <text y="48" fill="#cbd5e1">Reloading by ID ensures fresh entity state inside TX2's Hibernate session.</text>
+
+        <text y="68" fill="#38bdf8" font-weight="700">✓ Rollback Isolation:</text>
+        <text y="82" fill="#cbd5e1">If audit logging throws exception, main order in TX1 stays committed.</text>
+
+        <text y="102" fill="#38bdf8" font-weight="700">✓ Data Visibility Rule:</text>
+        <text y="116" fill="#cbd5e1">Caller should commit TX1 before TX2 fires so <tspan font-family="'JetBrains Mono', monospace" fill="#7dd3fc">findById()</tspan> can read it.</text>
+      </g>
+    </g>
+
+    <!-- 5. Best For & Pro Tip Box -->
+    <g transform="translate(16, 640)">
+      <rect width="414" height="86" rx="8" fill="#082b4a" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1"/>
+      <g transform="translate(14, 16)">
+        <text x="0" y="0" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#7dd3fc">RECOMMENDED USE CASES:</text>
+        <text x="0" y="16" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">Audit compliance trails, security event tracking, asynchronous billing telemetry.</text>
+
+        <rect x="0" y="27" width="386" height="32" rx="4" fill="#0b3860" stroke="#0284c7" stroke-width="0.8"/>
+        <text x="8" y="42" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#fde047">PRO TIP:</text>
+        <text x="56" y="42" font-family="system-ui, sans-serif" font-size="9" fill="#bae6fd">Watch HikariCP database pool limits! Each active</text>
+        <text x="8" y="54" font-family="system-ui, sans-serif" font-size="9" fill="#7dd3fc"><tspan font-family="'JetBrains Mono', monospace" fill="#fde047">REQUIRES_NEW</tspan> worker holds an independent DB connection until completion.</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- #################### CARD 3: PATTERN 3 #################### -->
+  <g transform="translate(994, 114)" filter="url(#shadow-card)">
+    <rect width="446" height="742" rx="14" fill="url(#p3-card)" stroke="#c084fc" stroke-opacity="0.45" stroke-width="1.5"/>
+
+    <!-- 1. Header & Badge -->
+    <g transform="translate(16, 16)">
+      <rect x="0" y="0" width="82" height="22" rx="4" fill="#6b21a8" fill-opacity="0.35" stroke="#c084fc" stroke-width="1"/>
+      <text x="41" y="15" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#c084fc" text-anchor="middle">PATTERN 3</text>
+
+      <rect x="90" y="0" width="220" height="22" rx="4" fill="#4c1d95" fill-opacity="0.3" stroke="#7e22ce" stroke-opacity="0.4"/>
+      <text x="200" y="15" font-family="system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#e9d5ff" text-anchor="middle">PARALLEL QUERY • READ-ONLY TX</text>
+
+      <text x="0" y="44" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">CompletableFuture Aggregation</text>
+      <text x="0" y="62" font-family="system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#c084fc">Caller Requires Async Result (Parallel Reads)</text>
+    </g>
+
+    <!-- 2. Architectural Flow Diagram -->
+    <g transform="translate(16, 88)">
+      <rect width="414" height="84" rx="8" fill="#150c22" stroke="#7e22ce" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#d8b4fe">TIMELINE &amp; THREAD BOUNDARY</text>
+
+      <!-- Step 1: Main Thread -->
+      <rect x="12" y="28" width="168" height="46" rx="6" fill="#25133d" stroke="#c084fc" stroke-width="1"/>
+      <text x="20" y="44" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">DashboardService</text>
+      <text x="20" y="58" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#e9d5ff">1. Fork async query</text>
+
+      <!-- Connecting Arrow -->
+      <path d="M 185 44 L 222 44" fill="none" stroke="#c084fc" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+      <path d="M 222 60 L 185 60" fill="none" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="2,2"/>
+      <text x="204" y="38" font-family="'JetBrains Mono', monospace" font-size="8" fill="#d8b4fe" text-anchor="middle">Future</text>
+
+      <!-- Step 2: Async Thread -->
+      <rect x="230" y="28" width="172" height="46" rx="6" fill="#1e0c33" stroke="#9333ea" stroke-width="1"/>
+      <text x="238" y="44" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc">ReportService (Worker)</text>
+      <text x="238" y="58" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#fde047">readOnly=true → <tspan font-weight="700" fill="#c084fc">Join ✓</tspan></text>
+    </g>
+
+    <!-- 3. Full Complete Java Code Window -->
+    <g transform="translate(16, 182)">
+      <rect width="414" height="286" rx="8" fill="#0d0817" stroke="#7e22ce" stroke-width="1"/>
+      <!-- Window Title Bar -->
+      <path d="M 0 8 Q 0 0 8 0 L 406 0 Q 414 0 414 8 L 414 26 L 0 26 Z" fill="#201138"/>
+      <circle cx="16" cy="13" r="4.5" fill="#ef4444" opacity="0.85"/>
+      <circle cx="30" cy="13" r="4.5" fill="#eab308" opacity="0.85"/>
+      <circle cx="44" cy="13" r="4.5" fill="#22c55e" opacity="0.85"/>
+      <text x="60" y="17" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#e9d5ff">ReportService.java &amp; DashboardService.java</text>
+
+      <!-- Code Text with Syntax Highlighting -->
+      <g transform="translate(12, 28)" font-family="'JetBrains Mono', Consolas, monospace" font-size="9.6">
+        <text y="16" fill="#d8b4fe">// 1. ASYNC QUERY SERVICE</text>
+        <text y="30" fill="#fde047">@Service</text>
+        <text y="44" fill="#f8fafc"><tspan fill="#ec4899">public class</tspan> ReportService {</text>
+        <text y="58" fill="#94a3b8">  <tspan fill="#fde047">@Autowired</tspan> <tspan fill="#38bdf8">OrderRepository</tspan> orderRepo;</text>
+        <text y="74" fill="#c084fc">  @Async</text>
+        <text y="88" fill="#fde047">  @Transactional(readOnly = true) <tspan fill="#64748b">// Optimizes query</tspan></text>
+        <text y="102" fill="#f8fafc">  <tspan fill="#ec4899">public</tspan> <tspan fill="#38bdf8">CompletableFuture</tspan>&lt;<tspan fill="#38bdf8">List</tspan>&lt;<tspan fill="#38bdf8">Order</tspan>&gt;&gt; fetchOrders(<tspan fill="#38bdf8">Long</tspan> uid) {</text>
+        <text y="116" fill="#cbd5e1">    <tspan fill="#38bdf8">List</tspan>&lt;<tspan fill="#38bdf8">Order</tspan>&gt; list = orderRepo.findByUserId(uid);</text>
+        <text y="130" fill="#ec4899">    return</text> <text x="46" y="130" fill="#38bdf8">CompletableFuture</text><text x="146" y="130" fill="#cbd5e1">.completedFuture(list);</text>
+        <text y="144" fill="#f8fafc">  }</text>
+        <text y="158" fill="#f8fafc">}</text>
+
+        <text y="178" fill="#d8b4fe">// 2. CONSUMER / CALLER (AGGREGATOR)</text>
+        <text y="192" fill="#cbd5e1"><tspan fill="#38bdf8">CompletableFuture</tspan>&lt;<tspan fill="#38bdf8">List</tspan>&lt;<tspan fill="#38bdf8">Order</tspan>&gt;&gt; fut = reportSvc.fetchOrders(uid);</text>
+        <text y="210" fill="#cbd5e1"><tspan fill="#38bdf8">UserProfile</tspan> profile = fetchProfile(uid); <tspan fill="#d8b4fe">// Concurrent task!</tspan></text>
+        <text y="228" fill="#64748b">// Await async result non-blockingly or join when ready:</text>
+        <text y="244" fill="#fde047"><tspan fill="#38bdf8">List</tspan>&lt;<tspan fill="#38bdf8">Order</tspan>&gt; orders = fut.join(); <tspan fill="#6ee7b7">// Safe join</tspan></text>
+        <text y="260" fill="#f8fafc"><tspan fill="#ec4899">return new</tspan> <tspan fill="#38bdf8">DashboardData</tspan>(profile, orders);</text>
+      </g>
+    </g>
+
+    <!-- 4. Key Architectural Principles -->
+    <g transform="translate(16, 478)">
+      <rect width="414" height="152" rx="8" fill="#180e29" stroke="#7e22ce" stroke-opacity="0.35" stroke-width="1"/>
+      <text x="14" y="20" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#d8b4fe">CORE ARCHITECTURAL PRINCIPLES:</text>
+
+      <g transform="translate(14, 38)" font-family="system-ui, sans-serif" font-size="10.2">
+        <text y="0" fill="#c084fc" font-weight="700">✓ Non-Blocking Parallelism:</text>
+        <text y="14" fill="#cbd5e1">Main thread and background worker execute CPU &amp; IO concurrently.</text>
+
+        <text y="34" fill="#c084fc" font-weight="700">✓ readOnly = true Performance Boost:</text>
+        <text y="48" fill="#cbd5e1">Disables Hibernate dirty-checking, reduces memory and DB lock times.</text>
+
+        <text y="68" fill="#c084fc" font-weight="700">✓ Robust Error Propagation:</text>
+        <text y="82" fill="#cbd5e1">Worker exceptions are safely captured inside the Future and caught on <tspan font-family="'JetBrains Mono', monospace" fill="#d8b4fe">.join()</tspan>.</text>
+
+        <text y="102" fill="#c084fc" font-weight="700">✓ Safe Return Handoff:</text>
+        <text y="116" fill="#cbd5e1">Returns collections or DTOs cleanly across threads without session leak.</text>
+      </g>
+    </g>
+
+    <!-- 5. Best For & Pro Tip Box -->
+    <g transform="translate(16, 640)">
+      <rect width="414" height="86" rx="8" fill="#26103d" stroke="#c084fc" stroke-opacity="0.5" stroke-width="1"/>
+      <g transform="translate(14, 16)">
+        <text x="0" y="0" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#d8b4fe">RECOMMENDED USE CASES:</text>
+        <text x="0" y="16" font-family="system-ui, sans-serif" font-size="10" fill="#e2e8f0">Heavy analytical queries, dashboard aggregation, parallel microservice lookups.</text>
+
+        <rect x="0" y="27" width="386" height="32" rx="4" fill="#381859" stroke="#7e22ce" stroke-width="0.8"/>
+        <text x="8" y="42" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#fde047">PRO TIP:</text>
+        <text x="56" y="42" font-family="system-ui, sans-serif" font-size="9" fill="#e9d5ff">Use <tspan font-family="'JetBrains Mono', monospace" fill="#fde047">CompletableFuture.allOf()</tspan> to fan out 5+ queries in</text>
+        <text x="8" y="54" font-family="system-ui, sans-serif" font-size="9" fill="#d8b4fe">parallel, collapsing multi-second dashboard load times down to sub-100ms!</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM DECISION MATRIX & GOLDEN RULES BANNER ================= -->
+  <g transform="translate(40, 872)">
+    <rect width="1400" height="72" rx="12" fill="#0d1527" stroke="#334155" stroke-width="1.2"/>
+
+    <g transform="translate(20, 16)">
+      <!-- Pillar 1 -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="320" height="42" rx="6" fill="#062e22" stroke="#059669" stroke-width="1"/>
+        <text x="12" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#34d399">RULE 1: PASS IDs ONLY (NEVER ENTITIES)</text>
+        <text x="12" y="32" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Passing entity objects causes LazyInitializationException.</text>
+      </g>
+
+      <!-- Pillar 2 -->
+      <g transform="translate(345, 0)">
+        <rect x="0" y="0" width="320" height="42" rx="6" fill="#082b4a" stroke="#0284c7" stroke-width="1"/>
+        <text x="12" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#38bdf8">RULE 2: ASYNC DB WRITES → REQUIRES_NEW</text>
+        <text x="12" y="32" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Opens autonomous TX2 that commits/rollbacks independently.</text>
+      </g>
+
+      <!-- Pillar 3 -->
+      <g transform="translate(690, 0)">
+        <rect x="0" y="0" width="330" height="42" rx="6" fill="#24113d" stroke="#7e22ce" stroke-width="1"/>
+        <text x="12" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#c084fc">RULE 3: ASYNC QUERIES → CompletableFuture</text>
+        <text x="12" y="32" font-family="system-ui, sans-serif" font-size="9.5" fill="#cbd5e1">Use @Transactional(readOnly=true) for max read throughput.</text>
+      </g>
+
+      <!-- Pillar 4 -->
+      <g transform="translate(1045, 0)">
+        <rect x="0" y="0" width="315" height="42" rx="6" fill="#3b0f1a" stroke="#ef4444" stroke-width="1"/>
+        <text x="12" y="16" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#f87171">RULE 4: MISSION CRITICAL? NO @Async!</text>
+        <text x="12" y="32" font-family="system-ui, sans-serif" font-size="9.5" fill="#fca5a5">If failure must rollback main DB, execute synchronously in TX1.</text>
       </g>
     </g>
   </g>

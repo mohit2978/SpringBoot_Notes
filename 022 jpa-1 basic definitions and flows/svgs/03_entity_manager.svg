@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 720" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="em-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1330"/>
+      <stop offset="100%" stop-color="#0b0714"/>
+    </linearGradient>
+    <linearGradient id="pc-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#082b4a"/>
+      <stop offset="100%" stop-color="#040f1c"/>
+    </linearGradient>
+    <filter id="s3" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <marker id="a3p" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#c084fc"/>
+    </marker>
+    <marker id="a3b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#38bdf8"/>
+    </marker>
+    <marker id="a3g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="1160" height="720" rx="16" fill="url(#bg3)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40,26)">
+    <rect x="0" y="0" width="205" height="24" rx="12" fill="#c084fc" fill-opacity="0.12" stroke="#c084fc" stroke-opacity="0.35"/>
+    <text x="102" y="16" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" fill="#c084fc" text-anchor="middle">ENTITYMANAGER · JPA · ORM</text>
+    <text x="0" y="52" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#f8fafc">EntityManager &amp; Persistence Context</text>
+    <text x="0" y="72" font-family="system-ui,sans-serif" font-size="13" fill="#94a3b8">The "office manager" that keeps Java objects in sync with database rows</text>
+  </g>
+
+  <!-- ===== CARD 1: EM as Manager analogy ===== -->
+  <g transform="translate(40,108)" filter="url(#s3)">
+    <rect width="340" height="575" rx="12" fill="url(#em-card)" stroke="#c084fc" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="130" height="22" rx="4" fill="#581c87" fill-opacity="0.35" stroke="#c084fc" stroke-width="1"/>
+      <text x="65" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#c084fc" text-anchor="middle">THE ANALOGY</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">Think of it as an Office Manager</text>
+
+      <!-- Office diagram -->
+      <rect x="0" y="56" width="302" height="132" rx="8" fill="#130e22" stroke="#7e22ce" stroke-width="1"/>
+      <text x="151" y="74" font-family="system-ui,sans-serif" font-size="10.5" fill="#94a3b8" text-anchor="middle">🗄️ Database = warehouse of millions of employees</text>
+      <line x1="151" y1="80" x2="151" y2="98" stroke="#c084fc" stroke-width="1.5" marker-end="url(#a3p)"/>
+      <text x="151" y="110" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#e9d5ff" text-anchor="middle">EntityManager = Office Manager</text>
+      <text x="151" y="126" font-family="system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">decides who to bring into the office</text>
+      <line x1="151" y1="132" x2="151" y2="150" stroke="#c084fc" stroke-width="1.5" marker-end="url(#a3p)"/>
+
+      <!-- Office (PC) box -->
+      <rect x="30" y="154" width="242" height="26" rx="6" fill="#1a0d30" stroke="#c084fc" stroke-width="1"/>
+      <text x="151" y="171" font-family="system-ui,sans-serif" font-size="11" fill="#e9d5ff" text-anchor="middle">Persistence Context = The office (RAM)</text>
+
+      <!-- CRUD operations -->
+      <text x="0" y="206" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#d8b4fe">EntityManager CRUD Methods:</text>
+      <rect x="0" y="214" width="302" height="192" rx="8" fill="#0d0817" stroke="#7e22ce" stroke-width="1"/>
+      <!-- Window titlebar -->
+      <path d="M 0 8 Q 0 0 8 0 L 294 0 Q 302 0 302 8 L 302 22 L 0 22 Z" fill="#1e0f38" transform="translate(0,214)"/>
+      <circle cx="16" cy="225" r="4" fill="#ef4444" opacity="0.8"/>
+      <circle cx="30" cy="225" r="4" fill="#eab308" opacity="0.8"/>
+      <circle cx="44" cy="225" r="4" fill="#22c55e" opacity="0.8"/>
+      <text x="60" y="229" font-family="'JetBrains Mono',monospace" font-size="9" fill="#d8b4fe">EntityManager methods</text>
+      <g transform="translate(12,236)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="14" fill="#94a3b8">// CREATE — schedules INSERT on flush</text>
+        <text y="30" fill="#c084fc">entityManager.<tspan fill="#f8fafc">persist</tspan>(employee);</text>
+        <text y="50" fill="#94a3b8">// READ — checks cache first, then SQL</text>
+        <text y="66" fill="#c084fc">Employee e = entityManager.<tspan fill="#f8fafc">find</tspan>(Employee.class, 1L);</text>
+        <text y="86" fill="#94a3b8">// UPDATE (auto via dirty checking!)</text>
+        <text y="102" fill="#c084fc">e.<tspan fill="#f8fafc">setName</tspan>(<tspan fill="#f59e0b">"Mohit"</tspan>); <tspan fill="#64748b">// just set — no save() needed</tspan></text>
+        <text y="122" fill="#94a3b8">// DELETE</text>
+        <text y="138" fill="#c084fc">entityManager.<tspan fill="#f8fafc">remove</tspan>(employee);</text>
+        <text y="158" fill="#94a3b8">// RE-ATTACH detached entity</text>
+        <text y="174" fill="#c084fc">entityManager.<tspan fill="#f8fafc">merge</tspan>(detachedEmployee);</text>
+      </g>
+
+      <!-- What EM does -->
+      <text x="0" y="426" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#d8b4fe">What EntityManager actually does:</text>
+      <g transform="translate(0,436)" font-family="system-ui,sans-serif" font-size="10">
+        <text y="14" fill="#e9d5ff">✓ Manages entity lifecycle (new → managed → detached)</text>
+        <text y="32" fill="#e9d5ff">✓ Owns the Persistence Context (first-level cache)</text>
+        <text y="50" fill="#e9d5ff">✓ Tracks changes (dirty checking)</text>
+        <text y="68" fill="#e9d5ff">✓ Coordinates with Hibernate to generate SQL</text>
+        <text y="86" fill="#e9d5ff">✓ Works within a transaction boundary</text>
+        <text y="104" fill="#e9d5ff">✓ Borrows DB connections via DataSource</text>
+      </g>
+
+      <!-- Interview -->
+      <rect x="0" y="548" width="302" height="18" rx="4" fill="#1e0d38" stroke="#7e22ce" stroke-opacity="0.4"/>
+      <text x="8" y="561" font-family="system-ui,sans-serif" font-size="9" fill="#d8b4fe" font-weight="600">💡 EM ≠ DB Connection. EM manages objects; HikariCP manages connections.</text>
+    </g>
+  </g>
+
+  <!-- ===== CARD 2: Persistence Context ===== -->
+  <g transform="translate(400,108)" filter="url(#s3)">
+    <rect width="360" height="575" rx="12" fill="url(#pc-card)" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="170" height="22" rx="4" fill="#0369a1" fill-opacity="0.35" stroke="#38bdf8" stroke-width="1"/>
+      <text x="85" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle">PERSISTENCE CONTEXT</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="14.5" font-weight="700" fill="#f8fafc">In-Memory Managed Object Store</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#7dd3fc">Like a Word doc open in RAM — the DB is the hard disk</text>
+
+      <!-- PC Map diagram -->
+      <rect x="0" y="76" width="322" height="168" rx="8" fill="#06101c" stroke="#0284c7" stroke-width="1"/>
+      <text x="161" y="96" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#7dd3fc" text-anchor="middle">Persistence Context (internal map):</text>
+
+      <rect x="12" y="104" width="298" height="26" rx="4" fill="#0f2b48" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="24" y="121" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#e9d5ff">(Employee, 1)  →  Employee{id=1, name="Mohit"}</text>
+
+      <rect x="12" y="136" width="298" height="26" rx="4" fill="#0f2b48" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="24" y="153" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#e9d5ff">(Employee, 2)  →  Employee{id=2, name="Rahul"}</text>
+
+      <rect x="12" y="168" width="298" height="26" rx="4" fill="#0f2b48" stroke="#38bdf8" stroke-width="0.8"/>
+      <text x="24" y="185" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#e9d5ff">(Department, 10) →  Department{id=10, name="IT"}</text>
+
+      <text x="161" y="218" font-family="system-ui,sans-serif" font-size="9" fill="#64748b" text-anchor="middle">Key = (EntityType, PrimaryKey) → Value = Java Object</text>
+
+      <!-- findById flow -->
+      <text x="0" y="258" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#7dd3fc">findById() flow:</text>
+      <rect x="0" y="268" width="322" height="182" rx="8" fill="#060e18" stroke="#0284c7" stroke-width="1"/>
+      <g transform="translate(14,280)" font-family="system-ui,sans-serif" font-size="10.2">
+        <rect x="0" y="0" width="294" height="26" rx="5" fill="#082b4a" stroke="#38bdf8"/>
+        <text x="147" y="17" fill="#f8fafc" text-anchor="middle" font-weight="700">repository.findById(1)  →  entityManager.find(Employee, 1)</text>
+
+        <line x1="147" y1="30" x2="147" y2="50" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#a3b)"/>
+        <text x="147" y="46" font-family="system-ui,sans-serif" font-size="9" fill="#64748b" text-anchor="middle"></text>
+
+        <rect x="20" y="52" width="254" height="24" rx="5" fill="#0c2540" stroke="#38bdf8"/>
+        <text x="147" y="67" fill="#7dd3fc" text-anchor="middle">Check: is (Employee,1) in Persistence Context?</text>
+
+        <line x1="60" y1="80" x2="60" y2="100" stroke="#22c55e" stroke-width="1.5" marker-end="url(#a3g)"/>
+        <text x="60" y="96" font-family="system-ui,sans-serif" font-size="8.5" fill="#64748b" text-anchor="middle">YES</text>
+        <rect x="0" y="102" width="116" height="26" rx="5" fill="#052e16" stroke="#22c55e"/>
+        <text x="58" y="119" fill="#86efac" text-anchor="middle" font-size="10">Return cached object</text>
+        <text x="58" y="134" fill="#4ade80" text-anchor="middle" font-size="9">No SQL query! ✓</text>
+
+        <line x1="234" y1="80" x2="234" y2="100" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#a3g)"/>
+        <text x="234" y="96" font-family="system-ui,sans-serif" font-size="8.5" fill="#64748b" text-anchor="middle">NO</text>
+        <rect x="174" y="102" width="120" height="26" rx="5" fill="#1c1200" stroke="#d97706"/>
+        <text x="234" y="119" fill="#fde068" text-anchor="middle" font-size="10">Run SQL SELECT</text>
+        <text x="234" y="134" fill="#fbbf24" text-anchor="middle" font-size="9">Store in PC → return</text>
+      </g>
+
+      <!-- PC lifetime -->
+      <text x="0" y="472" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#7dd3fc">Persistence Context lifetime:</text>
+      <rect x="0" y="482" width="322" height="70" rx="6" fill="#06101c" stroke="#0284c7" stroke-width="1"/>
+      <g transform="translate(12,494)" font-family="system-ui,sans-serif" font-size="10.2">
+        <text y="0" fill="#bae6fd">• Created when EntityManager is created (e.g. per request)</text>
+        <text y="18" fill="#bae6fd">• Lives for the duration of the transaction / request</text>
+        <text y="36" fill="#fca5a5">• Destroyed when EntityManager closes → cache gone!</text>
+        <text y="54" fill="#94a3b8">→ It is NOT a global application-level cache</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ===== CARD 3: Repository chain ===== -->
+  <g transform="translate(780,108)" filter="url(#s3)">
+    <rect width="340" height="575" rx="12" fill="#0c1820" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="175" height="22" rx="4" fill="#047857" fill-opacity="0.35" stroke="#10b981" stroke-width="1"/>
+      <text x="87" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">COMPLETE CALL CHAIN</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="13.5" font-weight="700" fill="#f8fafc">GET /employees/1</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#a7f3d0">From HTTP request all the way to the database</text>
+
+      <!-- Vertical chain -->
+      <g transform="translate(50,76)">
+        <rect x="0" y="0" width="202" height="38" rx="8" fill="#082b4a" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="101" y="24" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">HTTP Request</text>
+        <line x1="101" y1="40" x2="101" y2="62" stroke="#38bdf8" stroke-width="2" marker-end="url(#a3b)"/>
+
+        <rect x="0" y="64" width="202" height="38" rx="8" fill="#1a2535" stroke="#60a5fa" stroke-width="1.5"/>
+        <text x="101" y="88" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Controller</text>
+        <line x1="101" y1="104" x2="101" y2="126" stroke="#60a5fa" stroke-width="2" marker-end="url(#a3b)"/>
+
+        <rect x="0" y="128" width="202" height="38" rx="8" fill="#1a2535" stroke="#60a5fa" stroke-width="1.5"/>
+        <text x="101" y="152" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Service</text>
+        <line x1="101" y1="168" x2="101" y2="190" stroke="#60a5fa" stroke-width="2" marker-end="url(#a3b)"/>
+
+        <rect x="0" y="192" width="202" height="38" rx="8" fill="#1a2535" stroke="#60a5fa" stroke-width="1.5"/>
+        <text x="101" y="216" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#f8fafc" text-anchor="middle">Repository</text>
+        <line x1="101" y1="232" x2="101" y2="254" stroke="#a855f7" stroke-width="2" marker-end="url(#a3p)"/>
+
+        <rect x="0" y="256" width="202" height="38" rx="8" fill="#1a0d30" stroke="#c084fc" stroke-width="1.5"/>
+        <text x="101" y="280" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#e9d5ff" text-anchor="middle">EntityManager</text>
+        <line x1="101" y1="296" x2="101" y2="318" stroke="#a855f7" stroke-width="2" marker-end="url(#a3p)"/>
+
+        <rect x="0" y="320" width="202" height="38" rx="8" fill="#1a0d30" stroke="#c084fc" stroke-width="1.5"/>
+        <text x="101" y="344" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#e9d5ff" text-anchor="middle">Persistence Context</text>
+        <line x1="101" y1="360" x2="101" y2="382" stroke="#a855f7" stroke-width="2" marker-end="url(#a3p)"/>
+
+        <rect x="0" y="384" width="202" height="38" rx="8" fill="#1a0d30" stroke="#9333ea" stroke-width="1.5"/>
+        <text x="101" y="408" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#d8b4fe" text-anchor="middle">Hibernate ORM</text>
+        <line x1="101" y1="424" x2="101" y2="446" stroke="#38bdf8" stroke-width="2" marker-end="url(#a3b)"/>
+
+        <rect x="0" y="448" width="202" height="38" rx="8" fill="#082b4a" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="101" y="472" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#7dd3fc" text-anchor="middle">HikariCP → MySQL</text>
+      </g>
+
+      <!-- Interview answer -->
+      <rect x="0" y="545" width="302" height="24" rx="4" fill="#052e16" stroke="#10b981" stroke-opacity="0.5"/>
+      <text x="8" y="560" font-family="system-ui,sans-serif" font-size="9" fill="#a7f3d0" font-weight="600">💡 Repository → EM → PC (cache check) → Hibernate SQL → HikariCP conn → MySQL</text>
+    </g>
+  </g>
+
+  <!-- Bottom bar -->
+  <g transform="translate(40,694)">
+    <rect width="1080" height="16" rx="8" fill="#1e293b" fill-opacity="0.5"/>
+    <text x="540" y="11" font-family="system-ui,sans-serif" font-size="9.5" fill="#64748b" text-anchor="middle">
+      EntityManager manages entity lifecycle. Persistence Context = its in-memory map. It borrows DB connections from HikariCP only when needed, then returns them.
+    </text>
+  </g>
+</svg>

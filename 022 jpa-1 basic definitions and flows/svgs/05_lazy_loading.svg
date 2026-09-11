@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="s5" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <marker id="a5g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#34d399"/>
+    </marker>
+    <marker id="a5b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#38bdf8"/>
+    </marker>
+    <marker id="a5r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#f43f5e"/>
+    </marker>
+    <marker id="a5p" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8z" fill="#c084fc"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="720" rx="16" fill="url(#bg5)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(40,26)">
+    <rect x="0" y="0" width="210" height="24" rx="12" fill="#10b981" fill-opacity="0.12" stroke="#10b981" stroke-opacity="0.35"/>
+    <text x="105" y="16" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="600" fill="#10b981" text-anchor="middle">LAZY LOADING · PROXY · N+1</text>
+    <text x="0" y="52" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#f8fafc">Lazy Loading — On-Demand SQL via Proxy</text>
+    <text x="0" y="72" font-family="system-ui,sans-serif" font-size="13" fill="#94a3b8">Hibernate puts a proxy placeholder; SQL only fires when you access the actual data</text>
+  </g>
+
+  <!-- ===== CARD 1: Lazy Loading Explained ===== -->
+  <g transform="translate(40,108)" filter="url(#s5)">
+    <rect width="380" height="576" rx="12" fill="#0c1820" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="158" height="22" rx="4" fill="#047857" fill-opacity="0.35" stroke="#10b981" stroke-width="1"/>
+      <text x="79" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#34d399" text-anchor="middle">HOW LAZY LOADING WORKS</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#f8fafc">The Proxy Mechanism</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#a7f3d0">fetch = FetchType.LAZY → don't load related data until accessed</text>
+
+      <!-- Entity definition -->
+      <rect x="0" y="76" width="342" height="82" rx="6" fill="#081a13" stroke="#059669" stroke-width="1"/>
+      <g transform="translate(12,76)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="18" fill="#34d399">@Entity</text>
+        <text y="34" fill="#f8fafc"><tspan fill="#ec4899">public class</tspan> Employee {</text>
+        <text y="50" fill="#f8fafc">    <tspan fill="#fde047">@ManyToOne</tspan>(<tspan fill="#fbbf24">fetch = FetchType.LAZY</tspan>)</text>
+        <text y="66" fill="#f8fafc">    <tspan fill="#ec4899">private</tspan> Department department; <tspan fill="#64748b">// proxy!</tspan></text>
+      </g>
+
+      <!-- Proxy diagram -->
+      <text x="0" y="174" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">After findById(1), memory looks like:</text>
+      <rect x="0" y="184" width="342" height="100" rx="8" fill="#052e16" stroke="#059669" stroke-width="1"/>
+      <g transform="translate(16,196)">
+        <rect x="0" y="0" width="140" height="70" rx="6" fill="#0c2e1e" stroke="#10b981" stroke-width="1.2"/>
+        <text x="70" y="18" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700" fill="#f8fafc" text-anchor="middle">Employee</text>
+        <text x="70" y="34" font-family="'JetBrains Mono',monospace" font-size="9" fill="#a7f3d0" text-anchor="middle">id = 1</text>
+        <text x="70" y="48" font-family="'JetBrains Mono',monospace" font-size="9" fill="#a7f3d0" text-anchor="middle">name = "Rahul"</text>
+        <text x="70" y="62" font-family="'JetBrains Mono',monospace" font-size="9" fill="#fde047" text-anchor="middle">dept → [PROXY]</text>
+
+        <line x1="144" y1="35" x2="170" y2="35" stroke="#fde047" stroke-width="1.5" marker-end="url(#a5b)"/>
+
+        <rect x="174" y="0" width="148" height="70" rx="6" fill="#1c1200" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <text x="248" y="18" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700" fill="#fbbf24" text-anchor="middle">DeptProxy</text>
+        <text x="248" y="34" font-family="'JetBrains Mono',monospace" font-size="9" fill="#fde068" text-anchor="middle">id = 10 ✓</text>
+        <text x="248" y="50" font-family="'JetBrains Mono',monospace" font-size="9" fill="#fde068" text-anchor="middle">name = ???</text>
+        <text x="248" y="66" font-family="system-ui,sans-serif" font-size="8" fill="#d97706" text-anchor="middle">not loaded yet</text>
+      </g>
+
+      <!-- Access flow -->
+      <text x="0" y="300" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">SQL fires only when name is accessed:</text>
+      <rect x="0" y="310" width="342" height="152" rx="8" fill="#060e18" stroke="#047857" stroke-width="1"/>
+      <g transform="translate(14,322)" font-family="system-ui,sans-serif" font-size="10.2">
+        <rect x="0" y="0" width="314" height="24" rx="4" fill="#082b4a" stroke="#38bdf8"/>
+        <text x="157" y="16" fill="#7dd3fc" text-anchor="middle">employee.getDepartment()</text>
+        <line x1="157" y1="28" x2="157" y2="46" stroke="#d97706" stroke-width="1.5" marker-end="url(#a5b)"/>
+        <text x="157" y="42" font-family="system-ui,sans-serif" font-size="8.5" fill="#64748b" text-anchor="middle">returns proxy (no SQL yet)</text>
+
+        <rect x="0" y="48" width="314" height="24" rx="4" fill="#1c1200" stroke="#d97706"/>
+        <text x="157" y="64" fill="#fde047" text-anchor="middle">department.getId()   → returns 10 (no SQL)</text>
+
+        <line x1="157" y1="76" x2="157" y2="94" stroke="#10b981" stroke-width="1.5" marker-end="url(#a5g)"/>
+
+        <rect x="0" y="96" width="314" height="24" rx="4" fill="#14532d" stroke="#16a34a"/>
+        <text x="157" y="112" fill="#86efac" text-anchor="middle">department.getName()  → SQL fires! 🔥</text>
+
+        <text x="12" y="136" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#34d399">SELECT * FROM department WHERE id = 10;</text>
+      </g>
+
+      <!-- Cache help -->
+      <text x="0" y="478" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">First-Level Cache helps too:</text>
+      <rect x="0" y="488" width="342" height="56" rx="6" fill="#052e16" stroke="#059669" stroke-width="1"/>
+      <text x="14" y="506" font-family="system-ui,sans-serif" font-size="10" fill="#a7f3d0">If Department 10 was already loaded earlier in</text>
+      <text x="14" y="522" font-family="system-ui,sans-serif" font-size="10" fill="#a7f3d0">the same persistence context → proxy uses it directly.</text>
+      <text x="14" y="538" font-family="system-ui,sans-serif" font-size="10" fill="#34d399" font-weight="700">No additional SQL needed! ✓</text>
+    </g>
+  </g>
+
+  <!-- ===== CARD 2: LazyInitializationException ===== -->
+  <g transform="translate(440,108)" filter="url(#s5)">
+    <rect width="380" height="576" rx="12" fill="#1a0400" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="205" height="22" rx="4" fill="#881337" fill-opacity="0.35" stroke="#f43f5e" stroke-width="1"/>
+      <text x="102" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#f43f5e" text-anchor="middle">THE CLASSIC TRAP</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#f8fafc">LazyInitializationException</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#fca5a5">EntityManager closed → proxy can't fire SQL → crash!</text>
+
+      <!-- Code causing the exception -->
+      <rect x="0" y="76" width="342" height="120" rx="8" fill="#0d0400" stroke="#991b1b" stroke-width="1"/>
+      <path d="M0 8 Q0 0 8 0 L334 0 Q342 0 342 8 L342 22 L0 22Z" fill="#3b0a0a" transform="translate(0,76)"/>
+      <circle cx="16" cy="87" r="4" fill="#ef4444"/>
+      <circle cx="30" cy="87" r="4" fill="#eab308"/>
+      <circle cx="44" cy="87" r="4" fill="#22c55e"/>
+      <text x="60" y="91" font-family="'JetBrains Mono',monospace" font-size="9" fill="#fca5a5">BuggyService.java</text>
+      <g transform="translate(12,100)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="14" fill="#f8fafc">Employee emp = service.getEmployee(<tspan fill="#86efac">1L</tspan>);</text>
+        <text y="30" fill="#64748b">// ⚠ Transaction already ENDED here!</text>
+        <text y="46" fill="#64748b">// EntityManager is CLOSED</text>
+        <text y="66" fill="#f8fafc">String name = emp.getDepartment().</text>
+        <text y="82" fill="#fbbf24">                   getName(); <tspan fill="#f43f5e">// 💥 BOOM!</tspan></text>
+      </g>
+
+      <!-- Exception text -->
+      <rect x="0" y="206" width="342" height="72" rx="8" fill="#3b0a0a" stroke="#f43f5e" stroke-width="1.5"/>
+      <text x="14" y="226" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#f43f5e">LazyInitializationException:</text>
+      <text x="14" y="244" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#fca5a5">failed to lazily initialize a collection</text>
+      <text x="14" y="260" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="#fca5a5">could not initialize proxy - no Session</text>
+
+      <!-- Conceptually -->
+      <text x="0" y="300" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#fca5a5">Why this happens:</text>
+      <rect x="0" y="308" width="342" height="100" rx="6" fill="#0d0400" stroke="#991b1b" stroke-width="1"/>
+      <g transform="translate(12,322)" font-family="system-ui,sans-serif" font-size="10.2">
+        <rect x="0" y="0" width="318" height="24" rx="4" fill="#052e16" stroke="#16a34a"/>
+        <text x="159" y="16" fill="#86efac" text-anchor="middle">Proxy says: "I need Dept 10 data"</text>
+        <line x1="159" y1="28" x2="159" y2="46" stroke="#f43f5e" stroke-width="1.5" marker-end="url(#a5r)"/>
+        <rect x="0" y="48" width="318" height="24" rx="4" fill="#3b0a0a" stroke="#f43f5e"/>
+        <text x="159" y="64" fill="#fca5a5" text-anchor="middle">EntityManager is already CLOSED</text>
+        <line x1="159" y1="76" x2="159" y2="86" stroke="#f43f5e" stroke-width="1" marker-end="url(#a5r)"/>
+        <text x="159" y="82" fill="#64748b" text-anchor="middle" font-size="9.5"></text>
+      </g>
+
+      <!-- 4 Fixes -->
+      <text x="0" y="426" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#fca5a5">4 ways to fix it:</text>
+      <rect x="0" y="436" width="342" height="122" rx="6" fill="#0d0400" stroke="#d97706" stroke-width="1"/>
+      <g transform="translate(12,450)" font-family="system-ui,sans-serif" font-size="10">
+        <text y="0" fill="#fbbf24" font-weight="700">1. Access inside @Transactional (simplest):</text>
+        <text y="16" font-family="'JetBrains Mono',monospace" fill="#fde068">@Transactional public void go() { emp.getDept().getName(); }</text>
+        <text y="38" fill="#fbbf24" font-weight="700">2. JOIN FETCH (eager load in one query):</text>
+        <text y="54" font-family="'JetBrains Mono',monospace" fill="#fde068">"select e from Employee e join fetch e.department"</text>
+        <text y="76" fill="#fbbf24" font-weight="700">3. Entity Graph (@NamedEntityGraph)</text>
+        <text y="96" fill="#fbbf24" font-weight="700">4. Use a DTO projection (select only needed fields)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ===== CARD 3: N+1 Problem ===== -->
+  <g transform="translate(840,108)" filter="url(#s5)">
+    <rect width="320" height="576" rx="12" fill="#130e22" stroke="#c084fc" stroke-opacity="0.4" stroke-width="1.5"/>
+    <g transform="translate(18,18)">
+      <rect x="0" y="0" width="148" height="22" rx="4" fill="#581c87" fill-opacity="0.35" stroke="#c084fc" stroke-width="1"/>
+      <text x="74" y="15" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#c084fc" text-anchor="middle">N+1 PROBLEM</text>
+      <text x="0" y="44" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#f8fafc">The Hidden Performance Trap</text>
+      <text x="0" y="62" font-family="system-ui,sans-serif" font-size="10.5" fill="#d8b4fe">1 query for list + N queries for each related entity</text>
+
+      <!-- N+1 code -->
+      <rect x="0" y="76" width="282" height="128" rx="8" fill="#0d0817" stroke="#7e22ce" stroke-width="1"/>
+      <g transform="translate(12,76)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="18" fill="#94a3b8">// Looks innocent — but...</text>
+        <text y="36" fill="#f8fafc"><tspan fill="#38bdf8">List</tspan>&lt;<tspan fill="#38bdf8">Employee</tspan>&gt; emps = repo.findAll();</text>
+        <text y="52" fill="#f8fafc"><tspan fill="#ec4899">for</tspan> (Employee e : emps) {</text>
+        <text y="68" fill="#fca5a5">    e.getDepartment().<tspan fill="#f43f5e">getName</tspan>(); <tspan fill="#64748b">// N SQL!</tspan></text>
+        <text y="84" fill="#f8fafc">}</text>
+        <text y="104" fill="#94a3b8">// 1 query for all employees</text>
+        <text y="120" fill="#f43f5e">// + N queries for each department 💸</text>
+      </g>
+
+      <!-- SQL count -->
+      <rect x="0" y="214" width="282" height="90" rx="6" fill="#3b0a0a" stroke="#f43f5e" stroke-width="1"/>
+      <text x="14" y="234" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#f87171">100 employees = 101 SQL queries!</text>
+      <g transform="translate(14,242)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="14" fill="#fca5a5">SELECT * FROM employee;  ← 1 query</text>
+        <text y="30" fill="#fca5a5">SELECT * FROM dept WHERE id=1; ← </text>
+        <text y="46" fill="#fca5a5">SELECT * FROM dept WHERE id=2; ← N queries</text>
+        <text y="62" fill="#fca5a5">... × 100</text>
+      </g>
+
+      <!-- Fix -->
+      <text x="0" y="322" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#d8b4fe">Fix with JOIN FETCH:</text>
+      <rect x="0" y="332" width="282" height="88" rx="8" fill="#052e16" stroke="#16a34a" stroke-width="1.5"/>
+      <g transform="translate(12,332)" font-family="'JetBrains Mono',monospace" font-size="9.5">
+        <text y="18" fill="#6ee7b7">// Custom repository query:</text>
+        <text y="34" fill="#fde047">@Query(</text>
+        <text y="50" fill="#86efac">  "select e from Employee e</text>
+        <text y="66" fill="#86efac">   join fetch e.department"</text>
+        <text y="82" fill="#fde047">)</text>
+      </g>
+      <rect x="0" y="432" width="282" height="52" rx="6" fill="#052e16" stroke="#059669" stroke-width="1"/>
+      <text x="14" y="452" font-family="system-ui,sans-serif" font-size="10" fill="#34d399" font-weight="700">Result: 1 SQL query with INNER JOIN!</text>
+      <text x="14" y="468" font-family="'JetBrains Mono',monospace" font-size="9" fill="#a7f3d0">SELECT e.*, d.* FROM employee e</text>
+      <text x="14" y="483" font-family="'JetBrains Mono',monospace" font-size="9" fill="#a7f3d0">INNER JOIN department d ON e.dept_id=d.id</text>
+
+      <!-- Interview -->
+      <rect x="0" y="498" width="282" height="60" rx="6" fill="#1e0d38" stroke="#7e22ce" stroke-width="1"/>
+      <text x="14" y="516" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#d8b4fe">Interview tip:</text>
+      <text x="14" y="532" font-family="system-ui,sans-serif" font-size="9.5" fill="#e9d5ff">Lazy loading causes N+1 when looping.</text>
+      <text x="14" y="548" font-family="system-ui,sans-serif" font-size="9.5" fill="#e9d5ff">Fix: JOIN FETCH, EntityGraph, or DTO projections.</text>
+    </g>
+  </g>
+
+  <!-- Bottom bar -->
+  <g transform="translate(40,694)">
+    <rect width="1120" height="16" rx="8" fill="#1e293b" fill-opacity="0.5"/>
+    <text x="560" y="11" font-family="system-ui,sans-serif" font-size="9.5" fill="#64748b" text-anchor="middle">
+      Lazy loading = proxy defers SQL until data is needed. Risk: LazyInitializationException if EM closed. Risk 2: N+1 queries in loops. Fix: JOIN FETCH / @EntityGraph.
+    </text>
+  </g>
+</svg>
