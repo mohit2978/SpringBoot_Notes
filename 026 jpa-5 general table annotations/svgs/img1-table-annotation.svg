@@ -1,0 +1,17 @@
+<svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, monospace">
+<rect width="900" height="280" fill="#1e1e1e" rx="8"/>
+<text x="450" y="35" fill="#d4a017" font-weight="bold" font-size="18" text-anchor="middle" font-family="Segoe UI, Arial">Mapping Classes to Tables</text>
+<text x="450" y="70" fill="#e0e0e0" text-decoration="underline" font-weight="bold" font-size="15" text-anchor="middle" font-family="Segoe UI, Arial">@Table Annotation</text>
+<text x="30" y="100" fill="#e0e0e0" font-size="13" font-family="Segoe UI, Arial">- Optional field; if not defined, hibernate generates table name from entity name.</text>
+<text x="30" y="120" fill="#e0e0e0" font-size="13" font-family="Segoe UI, Arial">- Generally CamelCase -&gt; UPPER_SNAKE_CASE, e.g. UserDetails -&gt; USER_DETAILS</text>
+<g font-size="13">
+<text x="380" y="155" fill="#c586c0">@Target(<tspan fill="#ce9178">TYPE</tspan>)</text>
+<text x="380" y="173" fill="#c586c0">@Retention(<tspan fill="#ce9178">RUNTIME</tspan>)</text>
+<text x="380" y="191" fill="#dcdcaa">public @interface <tspan fill="#4ec9b0">Table</tspan>{</text>
+<text x="400" y="209" fill="#569cd6">String <tspan fill="#9cdcfe">name</tspan>() <tspan fill="#d19a66">default</tspan> "";</text>
+<text x="400" y="227" fill="#569cd6">String <tspan fill="#9cdcfe">schema</tspan>() <tspan fill="#d19a66">default</tspan>"";</text>
+<text x="400" y="245" fill="#4ec9b0">UniqueConstraint[] <tspan fill="#9cdcfe">uniqueConstraints</tspan>() <tspan fill="#d19a66">default</tspan>{};</text>
+<text x="400" y="263" fill="#4ec9b0">Index[] <tspan fill="#9cdcfe">indexes</tspan>() <tspan fill="#d19a66">default</tspan>{};</text>
+<text x="380" y="278" fill="#dcdcaa">}</text>
+</g>
+</svg>

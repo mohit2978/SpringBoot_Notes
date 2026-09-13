@@ -1,0 +1,49 @@
+<svg viewBox="0 0 950 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="950" height="300" fill="#1e1e1e" rx="8"/>
+<defs><marker id="o1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e0e0e0"/></marker></defs>
+
+<rect x="195" y="42" width="290" height="175" fill="none" stroke="#d4a017"/>
+<text x="340" y="34" fill="#e0e0e0" font-weight="bold" text-anchor="middle">ORM Framework</text>
+
+<rect x="45" y="78" width="110" height="62" fill="none" stroke="#e0e0e0"/>
+<text x="100" y="104" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Application</text>
+<text x="100" y="124" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Logic</text>
+
+<rect x="215" y="88" width="62" height="52" fill="none" stroke="#e0e0e0"/>
+<text x="246" y="120" fill="#e0e0e0" text-anchor="middle" font-weight="bold">JPA</text>
+<text x="246" y="164" fill="#e0e0e0" text-anchor="middle" font-size="11">(interface)</text>
+
+<rect x="330" y="80" width="120" height="60" fill="none" stroke="#e0e0e0"/>
+<text x="390" y="116" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Hibernate</text>
+<text x="390" y="164" fill="#e0e0e0" text-anchor="middle" font-size="11">(Implementation)</text>
+
+<rect x="518" y="88" width="82" height="52" fill="none" stroke="#e0e0e0"/>
+<text x="559" y="120" fill="#e0e0e0" text-anchor="middle" font-weight="bold">JDBC</text>
+<text x="559" y="164" fill="#e0e0e0" text-anchor="middle" font-size="11">(interface)</text>
+
+<rect x="655" y="78" width="98" height="62" fill="none" stroke="#e0e0e0"/>
+<text x="704" y="102" fill="#e0e0e0" text-anchor="middle" font-weight="bold" font-size="12">Specific</text>
+<text x="704" y="122" fill="#e0e0e0" text-anchor="middle" font-weight="bold" font-size="12">DB Driver</text>
+<text x="704" y="164" fill="#e0e0e0" text-anchor="middle" font-size="11">(Implementation)</text>
+
+<ellipse cx="835" cy="86" rx="48" ry="12" fill="none" stroke="#e0e0e0"/>
+<path d="M787,86 L787,132 A48,12 0 0,0 883,132 L883,86" fill="none" stroke="#e0e0e0"/>
+<text x="835" y="112" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Relational</text>
+<text x="835" y="130" fill="#e0e0e0" text-anchor="middle" font-weight="bold">DB</text>
+
+<g stroke="#e0e0e0" fill="none" marker-end="url(#o1)">
+<line x1="155" y1="96" x2="213" y2="96"/>
+<line x1="277" y1="96" x2="328" y2="96"/>
+<line x1="450" y1="96" x2="516" y2="96"/>
+<line x1="600" y1="96" x2="653" y2="96"/>
+<line x1="753" y1="96" x2="786" y2="96"/>
+<line x1="213" y1="126" x2="155" y2="126"/>
+<line x1="328" y1="126" x2="279" y2="126"/>
+<line x1="516" y1="126" x2="452" y2="126"/>
+<line x1="653" y1="126" x2="602" y2="126"/>
+<line x1="786" y1="140" x2="755" y2="140"/>
+</g>
+
+<text x="475" y="250" fill="#c586c0" font-size="15" font-style="italic" text-anchor="middle">Bridge B/w Java Object &amp; Table</text>
+<line x1="330" y1="258" x2="620" y2="258" stroke="#c586c0"/>
+</svg>

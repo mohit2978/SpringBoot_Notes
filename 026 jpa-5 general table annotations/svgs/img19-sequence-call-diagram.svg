@@ -1,0 +1,30 @@
+<svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="14">
+<rect width="900" height="400" fill="#1e1e1e" rx="8"/>
+<g font-family="Consolas, monospace" font-size="11" fill="#aaa">
+<text x="20" y="25">Hibernate: insert into user_details (name, phone, id) values (?, ?, ?)</text>
+<text x="20" y="60">Hibernate: insert into user_details (name, phone, id) values (?, ?, ?)</text>
+<text x="20" y="95">Hibernate: insert into user_details (name, phone, id) values (?, ?, ?)</text>
+<text x="20" y="130">Hibernate: insert into user_details (name, phone, id) values (?, ?, ?)</text>
+<text x="20" y="165">Hibernate: insert into user_details (name, phone, id) values (?, ?, ?)</text>
+<text x="20" y="200">Hibernate: select next value for db_seq_name</text>
+<text x="20" y="235">Hibernate: insert into user_details (name, phone, id) values (?, ?, ?)</text>
+</g>
+<g fill="#e0e0e0" font-weight="bold">
+<text x="600" y="25">1st call</text>
+<text x="600" y="60">2nd call</text>
+<text x="600" y="95">3rd call</text>
+<text x="600" y="130">4th call</text>
+<text x="600" y="165">5th call</text>
+<text x="620" y="200">After 5th call, hibernate will fetch another 5 values.</text>
+</g>
+<line x1="330" y1="20" x2="590" y2="20" stroke="#aaa" marker-end="url(#arrow)"/>
+<line x1="330" y1="55" x2="590" y2="55" stroke="#aaa" marker-end="url(#arrow)"/>
+<line x1="330" y1="90" x2="590" y2="90" stroke="#aaa" marker-end="url(#arrow)"/>
+<line x1="330" y1="125" x2="590" y2="125" stroke="#aaa" marker-end="url(#arrow)"/>
+<line x1="330" y1="160" x2="590" y2="160" stroke="#aaa" marker-end="url(#arrow)"/>
+<line x1="260" y1="195" x2="610" y2="195" stroke="#aaa" marker-end="url(#arrow)"/>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#aaa"/></marker>
+</defs>
+<text x="20" y="290" font-weight="bold">See after 5th call we get from Sequence Generator!!</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, monospace" font-size="13">
+<rect width="700" height="260" fill="#1e1e1e" rx="8"/>
+<rect x="20" y="20" width="660" height="30" fill="#2a2a2a" rx="4"/>
+<text x="30" y="40" fill="#d4a017" font-weight="bold">POST</text><text x="90" y="40" fill="#e0e0e0">localhost:8080/api/user</text>
+<text x="30" y="75" fill="#e0e0e0" font-family="Segoe UI, Arial">Body (raw JSON):</text>
+<text x="30" y="100" fill="#d4d4d4">{ "name": "sj", "phone": "1111" }</text>
+<text x="30" y="140" fill="#e0e0e0" font-family="Segoe UI, Arial">Response Body:</text>
+<text x="30" y="165" fill="#d4d4d4">{</text>
+<text x="50" y="185" fill="#d4d4d4">"id": <tspan fill="#4ec9b0">1</tspan>,</text>
+<text x="50" y="205" fill="#d4d4d4">"name": "sj",</text>
+<text x="50" y="225" fill="#d4d4d4">"phone": "1111"</text>
+<text x="30" y="245" fill="#d4d4d4">}</text>
+</svg>

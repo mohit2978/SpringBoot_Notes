@@ -1,0 +1,42 @@
+<svg viewBox="0 0 950 470" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="950" height="470" fill="#1e1e1e" rx="8"/>
+<rect x="25" y="20" width="500" height="430" fill="#fff" rx="3"/>
+<g font-family="Consolas, monospace" font-size="10.5">
+<text x="35" y="38" fill="#111">{</text>
+<text x="50" y="55" fill="#a31515">"userID"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="50" y="72" fill="#a31515">"name"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"SJ"</tspan><tspan fill="#111">,</tspan></text>
+<text x="50" y="89" fill="#a31515">"verifyStatus"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"UNVERIFIED"</tspan><tspan fill="#111">,</tspan></text>
+<text x="50" y="106" fill="#a31515">"links"<tspan fill="#111">: [</tspan></text>
+
+<text x="70" y="123" fill="#111">{</text>
+<text x="90" y="140" fill="#a31515">"rel"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"self"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="157" fill="#a31515">"href"<tspan fill="#111">: </tspan><tspan fill="#0451a5" text-decoration="underline">"http://localhost:8080/api/getUser/123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="174" fill="#a31515">"type"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"GET"</tspan></text>
+<text x="70" y="191" fill="#111">},</text>
+
+<text x="70" y="208" fill="#111">{</text>
+<text x="90" y="225" fill="#a31515">"rel"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"remove"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="242" fill="#a31515">"href"<tspan fill="#111">: </tspan><tspan fill="#0451a5" text-decoration="underline">"http://localhost:8080/api/removeuser/123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="259" fill="#a31515">"type"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"DELETE"</tspan></text>
+<text x="70" y="276" fill="#111">},</text>
+
+<text x="70" y="293" fill="#111">{</text>
+<text x="90" y="310" fill="#a31515">"rel"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"update"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="327" fill="#a31515">"href"<tspan fill="#111">: </tspan><tspan fill="#0451a5" text-decoration="underline">"http://localhost:8080/api/updateuser/123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="344" fill="#a31515">"type"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"PATCH"</tspan></text>
+<text x="70" y="361" fill="#111">},</text>
+
+<text x="70" y="378" fill="#111">{</text>
+<text x="90" y="395" fill="#a31515">"rel"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"verify-start"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="412" fill="#a31515">"href"<tspan fill="#111">: </tspan><tspan fill="#0451a5" text-decoration="underline">"http://localhost:8080/api/sms-verify-start/123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="90" y="429" fill="#a31515">"type"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"POST"</tspan></text>
+<text x="70" y="446" fill="#111">}, ... { "rel": "verify-finish", "href": ".../sms-verify-finish/123456", "type": "POST" } ]</text>
+</g>
+
+<text x="570" y="45" fill="#e0e0e0" font-size="15">Never Ever add all possible next set of</text>
+<text x="570" y="68" fill="#e0e0e0" font-size="15">actions (API) just like that.</text>
+<g stroke="#c0392b" stroke-width="3" fill="none">
+<line x1="590" y1="150" x2="690" y2="240"/>
+<line x1="690" y1="150" x2="590" y2="240"/>
+</g>
+</svg>

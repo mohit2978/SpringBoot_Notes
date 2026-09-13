@@ -1,0 +1,49 @@
+<svg viewBox="0 0 950 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="950" height="380" fill="#1e1e1e" rx="8"/>
+<rect x="270" y="30" width="240" height="140" fill="none" stroke="#d4a017"/>
+<text x="390" y="22" fill="#d4a017" text-anchor="middle" font-weight="bold">ORM Framework</text>
+
+<rect x="20" y="60" width="110" height="60" fill="none" stroke="#e0e0e0"/>
+<text x="75" y="85" fill="#e0e0e0" text-anchor="middle">Application</text>
+<text x="75" y="103" fill="#e0e0e0" text-anchor="middle">Logic</text>
+
+<rect x="180" y="60" width="80" height="60" fill="none" stroke="#e0e0e0"/>
+<text x="220" y="95" fill="#e0e0e0" text-anchor="middle">JPA</text>
+<text x="220" y="140" fill="#aaa" text-anchor="middle" font-size="11">(interface)</text>
+
+<rect x="330" y="60" width="110" height="60" fill="none" stroke="#e0e0e0"/>
+<text x="385" y="95" fill="#e0e0e0" text-anchor="middle">Hibernate</text>
+<text x="385" y="140" fill="#aaa" text-anchor="middle" font-size="11">(Implementation)</text>
+
+<rect x="500" y="60" width="90" height="60" fill="none" stroke="#e0e0e0"/>
+<text x="545" y="95" fill="#e0e0e0" text-anchor="middle">JDBC</text>
+<text x="545" y="140" fill="#aaa" text-anchor="middle" font-size="11">(interface)</text>
+
+<rect x="640" y="60" width="100" height="60" fill="none" stroke="#e0e0e0"/>
+<text x="690" y="88" fill="#e0e0e0" text-anchor="middle">Specific</text>
+<text x="690" y="106" fill="#e0e0e0" text-anchor="middle">DB Driver</text>
+<text x="690" y="140" fill="#aaa" text-anchor="middle" font-size="11">(Implementation)</text>
+
+<ellipse cx="810" cy="90" rx="55" ry="30" fill="none" stroke="#e0e0e0"/>
+<text x="810" y="95" fill="#e0e0e0" text-anchor="middle">Relational DB</text>
+
+<g stroke="#e0e0e0" fill="none" marker-end="url(#a1)">
+<line x1="130" y1="80" x2="178" y2="80"/>
+<line x1="260" y1="80" x2="328" y2="80"/>
+<line x1="440" y1="80" x2="498" y2="80"/>
+<line x1="590" y1="80" x2="638" y2="80"/>
+<line x1="740" y1="80" x2="757" y2="80"/>
+</g>
+<g stroke="#e0e0e0" fill="none" marker-end="url(#a1)">
+<line x1="178" y1="100" x2="130" y2="100"/>
+<line x1="328" y1="100" x2="260" y2="100"/>
+<line x1="498" y1="100" x2="440" y2="100"/>
+<line x1="638" y1="100" x2="590" y2="100"/>
+</g>
+<defs><marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e0e0e0"/></marker></defs>
+
+<text x="475" y="220" fill="#d4a017" font-weight="bold" text-decoration="underline" text-anchor="middle" font-size="15">ORM (Object-Relational Mapping)</text>
+<text x="40" y="255" fill="#e0e0e0">- Act as a bridge between Java Object and Database tables.</text>
+<text x="40" y="275" fill="#e0e0e0">- Unlike JDBC, where we have to work with SQL, with this, we can interact</text>
+<text x="55" y="293" fill="#e0e0e0">with database using Java Objects.</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, monospace" font-size="13">
+<rect width="900" height="380" fill="#1e1e1e" rx="8"/>
+<text x="20" y="30" fill="#dcdcaa">@RestController</text>
+<text x="20" y="50" fill="#dcdcaa">@RequestMapping(value = <tspan fill="#ce9178">"/api/"</tspan>)</text>
+<text x="20" y="70" fill="#dcdcaa">public class <tspan fill="#4ec9b0">UserController</tspan> {</text>
+<text x="45" y="100" fill="#569cd6">@Autowired</text>
+<text x="45" y="120" fill="#4ec9b0">User <tspan fill="#9cdcfe">user</tspan>;</text>
+<text x="45" y="150" fill="#569cd6">@PostMapping(path = <tspan fill="#ce9178">"/adduser"</tspan>)</text>
+<text x="45" y="170" fill="#dcdcaa">public ResponseEntity&lt;UserResponse&gt; <tspan fill="#dcdcaa">addUser</tspan>() {</text>
+<text x="70" y="200" fill="#4ec9b0">UserResponse response = user.getUser();</text>
+<text x="70" y="230" fill="#6a9955">//our business logic to determine which Verify API need to be invoked.</text>
+<text x="70" y="250" fill="#4ec9b0">Link verifyLink = WebMvcLinkBuilder.<tspan font-style="italic">linkTo</tspan>(UserController.class)</text>
+<text x="105" y="270" fill="#d4d4d4">.slash( <tspan fill="#888">object:</tspan> <tspan fill="#ce9178">"sms-verify-finish"</tspan>)</text>
+<text x="105" y="290" fill="#d4d4d4">.slash(response.getUserID())</text>
+<text x="105" y="310" fill="#d4d4d4">.withRel(<tspan fill="#9cdca8">"verify"</tspan>)</text>
+<text x="105" y="330" fill="#d4d4d4">.withType(<tspan fill="#9cdca8">"POST"</tspan>);</text>
+<text x="70" y="355" fill="#d4d4d4">response.addLink(verifyLink);  <tspan fill="#569cd6">return new</tspan> ResponseEntity&lt;&gt;(response, HttpStatus.<tspan font-style="italic">OK</tspan>);</text>
+<text x="20" y="375" fill="#dcdcaa">}</text>
+</svg>

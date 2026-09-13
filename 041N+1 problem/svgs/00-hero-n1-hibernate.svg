@@ -1,0 +1,58 @@
+<svg viewBox="0 0 1100 517" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect width="1100" height="517" fill="#f7f6ee"/>
+<polygon points="1000,0 1100,0 1100,120" fill="#e8e7d4"/>
+<polygon points="1050,140 1100,190 1100,90" fill="#ecebdb"/>
+
+<g transform="translate(60,55)">
+  <polygon points="0,14 14,0 30,8 30,30 14,40 0,32" fill="#3d4f52"/>
+  <polygon points="14,0 30,8 30,30 14,22" fill="#8f9350"/>
+  <text x="48" y="33" font-size="36" font-weight="bold" fill="#3d4f52">HIBER<tspan fill="#8f9350">NATE</tspan></text>
+</g>
+
+<text x="60" y="215" font-size="52" font-weight="bold" fill="#8f9350">N+1 <tspan fill="#3d4f52">in Hibernate</tspan></text>
+<text x="60" y="285" font-size="52" font-weight="bold" fill="#3d4f52">Is Not a Bug.</text>
+<text x="60" y="355" font-size="52" font-weight="bold" fill="#8f9350">It's a Default.</text>
+
+<text x="60" y="415" font-size="19" fill="#5d6b6d">Fetch join, EntityGraph, batch size,</text>
+<text x="60" y="443" font-size="19" fill="#5d6b6d">projections: what to use, when —</text>
+<text x="60" y="471" font-size="19" fill="#5d6b6d">and how to prove it in a test.</text>
+
+<g transform="translate(700,80)">
+  <ellipse cx="55" cy="14" rx="55" ry="14" fill="#a8ab63"/>
+  <path d="M0,14 L0,76 A55,14 0 0,0 110,76 L110,14 A55,14 0 0,1 0,14 Z" fill="#3d4f52"/>
+  <ellipse cx="55" cy="40" rx="55" ry="13" fill="none" stroke="#f7f6ee" stroke-width="3"/>
+  <ellipse cx="55" cy="62" rx="55" ry="13" fill="none" stroke="#f7f6ee" stroke-width="3"/>
+</g>
+<g stroke="#5d6b6d" stroke-dasharray="7,6" fill="none">
+  <line x1="825" y1="110" x2="890" y2="45"/>
+  <line x1="825" y1="130" x2="890" y2="95"/>
+  <line x1="825" y1="150" x2="890" y2="145"/>
+  <line x1="825" y1="170" x2="890" y2="195"/>
+</g>
+<g font-family="Consolas, monospace" font-size="13" fill="#f7f6ee">
+  <rect x="895" y="28" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="50">SELECT ...</text>
+  <rect x="895" y="78" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="100">SELECT ...</text>
+  <rect x="895" y="128" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="150">SELECT ...</text>
+  <rect x="895" y="178" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="200">SELECT ...</text>
+</g>
+
+<rect x="640" y="240" width="190" height="200" rx="10" fill="#eef0e2"/>
+<circle cx="722" cy="285" r="22" fill="#8f9350"/>
+<rect x="662" y="350" width="52" height="62" rx="6" fill="#8f9350"/>
+<rect x="736" y="350" width="52" height="62" rx="6" fill="#8f9350"/>
+<g stroke="#3d4f52" stroke-width="2.5" fill="none" marker-end="url(#hm)">
+<path d="M712,312 L690,345"/><path d="M732,312 L756,345"/>
+</g>
+<defs><marker id="hm" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3d4f52"/></marker></defs>
+
+<g font-size="13" fill="#3d4f52" font-weight="600">
+<rect x="860" y="270" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="294">JOIN FETCH</text>
+<rect x="860" y="318" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="342">EntityGraph</text>
+<rect x="860" y="366" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="390">BATCH SIZE</text>
+<rect x="860" y="414" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="438">PROJECTIONS</text>
+</g>
+<g fill="#8f9350">
+<rect x="872" y="278" width="26" height="22" rx="4"/><rect x="872" y="326" width="26" height="22" rx="4"/>
+<rect x="872" y="374" width="26" height="22" rx="4"/><rect x="872" y="422" width="26" height="22" rx="4"/>
+</g>
+</svg>

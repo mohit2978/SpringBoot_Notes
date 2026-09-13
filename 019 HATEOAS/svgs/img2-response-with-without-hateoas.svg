@@ -1,0 +1,33 @@
+<svg viewBox="0 0 950 330" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="12">
+<rect width="950" height="330" fill="#1e1e1e" rx="8"/>
+<text x="475" y="28" fill="#e0e0e0" text-anchor="middle">API Response, after <tspan font-style="italic">"Unverified User Added"</tspan> POST: /adduser API</text>
+<path d="M475,40 L475,60 L200,60 L200,80" stroke="#aaa" fill="none" marker-end="url(#ar2)"/>
+<path d="M475,60 L730,60 L730,80" stroke="#aaa" fill="none" marker-end="url(#ar2)"/>
+<defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#aaa"/></marker></defs>
+
+<text x="120" y="100" fill="#e0e0e0">Without <tspan font-style="italic">HATEOAS</tspan> link</text>
+<rect x="30" y="115" width="380" height="115" fill="#fff" rx="3"/>
+<g font-family="Consolas, monospace" font-size="13">
+<text x="45" y="135" fill="#111">{</text>
+<text x="65" y="157" fill="#a31515">"userID"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="65" y="179" fill="#a31515">"name"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"SJ"</tspan><tspan fill="#111">,</tspan></text>
+<text x="65" y="201" fill="#a31515">"verifyStatus"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"UNVERIFIED"</tspan></text>
+<text x="45" y="223" fill="#111">}</text>
+</g>
+
+<text x="660" y="100" fill="#e0e0e0">With <tspan font-style="italic">HATEOAS</tspan> link</text>
+<rect x="460" y="115" width="470" height="185" fill="#fff" rx="3"/>
+<g font-family="Consolas, monospace" font-size="11">
+<text x="472" y="133" fill="#111">{</text>
+<text x="485" y="150" fill="#a31515">"userID"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="485" y="167" fill="#a31515">"name"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"SJ"</tspan><tspan fill="#111">,</tspan></text>
+<text x="485" y="184" fill="#a31515">"verifyStatus"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"UNVERIFIED"</tspan><tspan fill="#111">,</tspan></text>
+<text x="485" y="201" fill="#a31515">"links"<tspan fill="#111">: [</tspan></text>
+<text x="505" y="218" fill="#111">{</text>
+<text x="525" y="235" fill="#a31515">"rel"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"self"</tspan><tspan fill="#111">,</tspan></text>
+<text x="525" y="252" fill="#a31515">"href"<tspan fill="#111">: </tspan><tspan fill="#0451a5" text-decoration="underline">"http://localhost:8080/api/getUser/123456"</tspan><tspan fill="#111">,</tspan></text>
+<text x="525" y="269" fill="#a31515">"type"<tspan fill="#111">: </tspan><tspan fill="#0451a5">"GET"</tspan></text>
+<text x="505" y="286" fill="#111">}</text>
+<text x="485" y="297" fill="#111">]</text>
+</g>
+</svg>

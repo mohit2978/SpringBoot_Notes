@@ -1,0 +1,35 @@
+<svg viewBox="0 0 950 400" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, monospace" font-size="11.5">
+<rect width="950" height="400" fill="#1e1e1e" rx="8"/>
+<text x="20" y="30" fill="#dcdcaa">@RestController</text>
+<text x="20" y="48" fill="#dcdcaa">@RequestMapping(value = "/api/")</text>
+<text x="20" y="66" fill="#dcdcaa">public class <tspan fill="#4ec9b0">UserController</tspan> {</text>
+<text x="40" y="92" fill="#569cd6">@Autowired</text>
+<text x="40" y="110" fill="#4ec9b0">User <tspan fill="#9cdcfe">user</tspan>;</text>
+<text x="40" y="136" fill="#569cd6">@PostMapping(path = "/adduser")</text>
+<text x="40" y="154" fill="#dcdcaa">public ResponseEntity&lt;UserResponse&gt; <tspan fill="#dcdcaa">addUser</tspan>() {</text>
+<text x="60" y="180" fill="#4ec9b0">UserResponse response = user.getUser();</text>
+<text x="60" y="206" fill="#6a9955">//our business logic to determine which Verify API need to be invoked.</text>
+<text x="60" y="224" fill="#4ec9b0">Link verifyLink = WebMvcLinkBuilder.<tspan font-style="italic">linkTo</tspan>(UserController.class)</text>
+<text x="90" y="242" fill="#d4d4d4">.slash( object: <tspan fill="#ce9178">"sms-verify-finish"</tspan>)</text>
+<text x="90" y="260" fill="#d4d4d4">.slash(response.getUserID())</text>
+<text x="90" y="278" fill="#d4d4d4">.withRel(<tspan fill="#ce9178">"verify"</tspan>)</text>
+<text x="90" y="296" fill="#d4d4d4">.withType(<tspan fill="#ce9178">"POST"</tspan>);</text>
+<text x="60" y="322" fill="#d4d4d4">response.addLink(verifyLink);</text>
+<text x="60" y="348" fill="#569cd6">return new ResponseEntity&lt;&gt;(response, HttpStatus.<tspan font-style="italic">OK</tspan>);</text>
+<text x="40" y="366" fill="#dcdcaa">}</text>
+<text x="20" y="384" fill="#dcdcaa">}</text>
+
+<text x="560" y="30" fill="#dcdcaa">public class <tspan fill="#4ec9b0">HateoasLinks</tspan> {</text>
+<text x="580" y="56" fill="#4ec9b0">private List&lt;Link&gt; <tspan fill="#9cdcfe">links</tspan> = <tspan fill="#569cd6">new</tspan> ArrayList&lt;&gt;();</text>
+<text x="580" y="82" fill="#dcdcaa">public void <tspan fill="#dcdcaa">addLink</tspan>(Link link) {</text>
+<text x="600" y="100" fill="#d4d4d4">links.add(link);</text>
+<text x="580" y="118" fill="#dcdcaa">}</text>
+<text x="560" y="136" fill="#dcdcaa">}</text>
+
+<text x="560" y="196" fill="#dcdcaa">public class <tspan fill="#4ec9b0">UserResponse</tspan> extends <tspan fill="#4ec9b0">HateosLinks</tspan> {</text>
+<text x="580" y="222" fill="#569cd6">private String <tspan fill="#9cdcfe">userID</tspan>;</text>
+<text x="580" y="240" fill="#569cd6">private String <tspan fill="#9cdcfe">name</tspan>;</text>
+<text x="580" y="258" fill="#569cd6">private String <tspan fill="#9cdcfe">verifyStatus</tspan>;</text>
+<text x="580" y="284" fill="#6a9955">//getters and setters here</text>
+<text x="560" y="302" fill="#dcdcaa">}</text>
+</svg>

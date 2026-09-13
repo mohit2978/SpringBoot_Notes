@@ -1,0 +1,18 @@
+<svg viewBox="0 0 950 400" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="950" height="400" fill="#1e1e1e" rx="8"/>
+<text x="30" y="35" fill="#e0e0e0">Before understanding <tspan fill="#f14c4c">HOW</tspan> to do this, lets understand <tspan fill="#569cd6">WHEN</tspan> to use and <tspan fill="#9cdca8">WHY</tspan> to use HATEOS link?</text>
+
+<text x="40" y="90" fill="#e0e0e0">2 Major Purpose of using HATEOAS link is to achieve</text>
+<text x="55" y="120" fill="#e0e0e0">- "<tspan fill="#d4a017">LOOSE COUPLING</tspan>" and</text>
+<text x="55" y="140" fill="#e0e0e0">- "<tspan fill="#d4a017">API DISCOVERY</tspan>"</text>
+
+<text x="30" y="190" fill="#e0e0e0">To achieve above, server provides the next set of APIs (actions) in the Response itself, which client can</text>
+<text x="30" y="210" fill="#e0e0e0">take. So that client have less business logic around APIs (which API to invoke, when to invoke, how to</text>
+<text x="30" y="230" fill="#e0e0e0">invoke etc....)</text>
+
+<text x="50" y="290" fill="#e0e0e0">But, Adding all next set of ACTIONS can make our API Response Bloat up and has</text>
+<text x="50" y="310" fill="#e0e0e0">several disadvantages:</text>
+<text x="60" y="340" fill="#e0e0e0">- Increase complexity at server side.</text>
+<text x="60" y="360" fill="#e0e0e0">- Latency impact.</text>
+<text x="60" y="380" fill="#e0e0e0">- Increase Payload size.</text>
+</svg>

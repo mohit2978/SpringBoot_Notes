@@ -1,0 +1,25 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect width="900" height="420" fill="#1e1e1e" rx="8"/>
+<text x="450" y="28" fill="#d4a017" font-weight="bold" font-size="15" text-decoration="underline" text-anchor="middle">@Id Annotation and @GeneratedValue Annotation</text>
+
+<text x="20" y="60" fill="#9cdca8" font-weight="bold" font-size="13">Primary Key:</text>
+<text x="130" y="60" fill="#e0e0e0" font-size="13">must be unique, not null, uniquely identifies each record.</text>
+<text x="40" y="80" fill="#e0e0e0" font-size="13">- @Id marks the field as primary key.</text>
+<text x="40" y="98" fill="#e0e0e0" font-size="13">- Each entity can have only 1 primary key.</text>
+<text x="40" y="116" fill="#e0e0e0" font-size="13">- Only 1 field can be annotated with @Id.</text>
+
+<text x="20" y="165" fill="#9cdca8" font-weight="bold" font-size="13">Composite Primary key:</text>
+<text x="195" y="165" fill="#e0e0e0" font-size="13">combination of two or more columns to form a primary key.</text>
+
+<line x1="450" y1="185" x2="300" y2="235" stroke="#aaa"/>
+<line x1="450" y1="185" x2="600" y2="235" stroke="#aaa"/>
+<text x="60" y="255" fill="#e0e0e0" font-size="13">Using <tspan fill="#d4a017" font-weight="bold">@Embeddable</tspan> and <tspan fill="#d4a017" font-weight="bold">@EmbeddedId</tspan> annotation.</text>
+<text x="560" y="255" fill="#e0e0e0" font-size="13">Using <tspan fill="#d4a017" font-weight="bold">@IdClass</tspan> and <tspan fill="#d4a017" font-weight="bold">@Id</tspan> annotation</text>
+
+<rect x="20" y="290" width="860" height="115" fill="#262626" rx="6"/>
+<text x="450" y="315" fill="#e0e0e0" font-size="14" text-decoration="underline" text-anchor="middle">Rules to follow for both the approach:</text>
+<text x="40" y="340" fill="#e0e0e0" font-size="13">- Must be a public class.</text>
+<text x="40" y="358" fill="#e0e0e0" font-size="13">- Must implement the Serializable interface.</text>
+<text x="40" y="376" fill="#e0e0e0" font-size="13">- Must have no-arg constructor.</text>
+<text x="40" y="394" fill="#e0e0e0" font-size="13">- Must override equals() and hashCode() methods.</text>
+</svg>

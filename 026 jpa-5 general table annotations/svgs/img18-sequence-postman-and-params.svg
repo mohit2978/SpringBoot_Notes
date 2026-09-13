@@ -1,0 +1,22 @@
+<svg viewBox="0 0 950 460" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect width="950" height="460" fill="#1e1e1e" rx="8"/>
+<g font-family="Consolas, monospace" font-size="13">
+<text x="30" y="30" fill="#d4a017" font-weight="bold">POST</text><text x="90" y="30" fill="#e0e0e0">localhost:8080/api/user</text>
+<text x="30" y="55" fill="#d4d4d4">{ "name":"ap", "phone":"1111" }</text><text x="30" y="80" fill="#d4d4d4">-&gt; { "id":100, "name":"ap", "phone":"1111" }</text>
+
+<text x="500" y="30" fill="#d4a017" font-weight="bold">POST</text><text x="560" y="30" fill="#e0e0e0">localhost:8080/api/user</text>
+<text x="500" y="55" fill="#d4d4d4">{ "name":"bp", "phone":"1111" }</text><text x="500" y="80" fill="#d4d4d4">-&gt; { "id":101, "name":"bp", "phone":"1111" }</text>
+</g>
+<rect x="20" y="110" width="660" height="120" fill="#f5f0dc" rx="4"/>
+<text x="35" y="135" fill="#111" font-family="Consolas, monospace" font-size="13">SELECT * FROM USER_DETAILS;</text>
+<text x="35" y="160" fill="#0033cc" font-family="Consolas, monospace" font-size="13">ID   NAME   PHONE</text>
+<text x="35" y="180" fill="#111" font-family="Consolas, monospace" font-size="13">100  ap     1111</text>
+<text x="35" y="200" fill="#111" font-family="Consolas, monospace" font-size="13">101  bp     1111</text>
+
+<text x="20" y="270" fill="#e0e0e0" font-size="13"><tspan font-style="italic">name</tspan>: unique name, internal for JPA, reusable across entities.</text>
+<text x="20" y="290" fill="#e0e0e0" font-size="13"><tspan font-style="italic">sequenceName</tspan>: the sequence created in DB (or the manually created one to reuse).</text>
+<text x="20" y="310" fill="#e0e0e0" font-size="13"><tspan font-style="italic">initialValue</tspan>: sequence number starts from.</text>
+<text x="20" y="330" fill="#e0e0e0" font-size="13"><tspan font-style="italic">allocationSize</tspan>: cache size — hibernate prefetches this many ids beforehand so it</text>
+<text x="20" y="348" fill="#e0e0e0" font-size="13">will not query DB again and again.</text>
+<text x="20" y="385" fill="#e0e0e0" font-size="14" font-weight="bold" font-style="italic">We have given allocationSize = 5, so after 5 calls only, next db call will be made for sequence</text>
+</svg>

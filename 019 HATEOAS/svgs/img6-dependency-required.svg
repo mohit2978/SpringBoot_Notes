@@ -1,0 +1,11 @@
+<svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect width="900" height="250" fill="#1e1e1e" rx="8"/>
+<text x="450" y="45" fill="#e0e0e0" font-size="24" text-anchor="middle">Dependency Required:</text>
+<g font-size="20" fill="#c8a165">
+<text x="120" y="110">&lt;dependency&gt;</text>
+<text x="120" y="142">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</text>
+<text x="120" y="174">&lt;artifactId&gt;spring-boot-starter-hateoas&lt;/artifactId&gt;</text>
+<text x="120" y="206">&lt;version&gt;2.6.4&lt;/version&gt;</text>
+<text x="120" y="238">&lt;/dependency&gt;</text>
+</g>
+</svg>

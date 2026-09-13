@@ -1,0 +1,7 @@
+<svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<rect width="900" height="200" fill="#1e1e1e" rx="8"/>
+<text x="450" y="45" fill="#d4a017" font-weight="bold" font-size="24" text-anchor="middle">HATEOAS</text>
+<text x="450" y="85" fill="#e0e0e0" font-size="17" text-anchor="middle"><tspan fill="#d4a017">H</tspan>ypermedia <tspan fill="#d4a017">A</tspan>s <tspan fill="#d4a017">T</tspan>he <tspan fill="#d4a017">E</tspan>ngine <tspan fill="#d4a017">O</tspan>f <tspan fill="#d4a017">A</tspan>pplication <tspan fill="#d4a017">S</tspan>tate</text>
+<text x="450" y="135" fill="#e0e0e0" font-size="16" text-anchor="middle">It tells the client, what the next action you can perform on particular item.</text>
+<text x="40" y="180" fill="#e0e0e0" font-size="16" text-decoration="underline">For example:</text>
+</svg>

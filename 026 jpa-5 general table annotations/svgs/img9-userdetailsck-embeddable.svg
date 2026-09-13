@@ -1,0 +1,18 @@
+<svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, monospace" font-size="13">
+<rect width="900" height="300" fill="#1e1e1e" rx="8"/>
+<text x="20" y="25" fill="#4ec9b0">@Embeddable</text>
+<text x="20" y="43" fill="#dcdcaa">public class <tspan fill="#4ec9b0">UserDetailsCK</tspan> implements <tspan fill="#4ec9b0">Serializable</tspan> {</text>
+<text x="40" y="61" fill="#569cd6">private String <tspan fill="#ce9178">name</tspan>;</text>
+<text x="40" y="79" fill="#569cd6">private String <tspan fill="#ce9178">address</tspan>;</text>
+<text x="40" y="107" fill="#dcdcaa">public <tspan fill="#4ec9b0">UserDetailsCK</tspan>() { }</text>
+<text x="40" y="135" fill="#dcdcaa">@Override</text>
+<text x="40" y="153" fill="#569cd6">public boolean <tspan fill="#dcdcaa">equals</tspan>(Object obj) {</text>
+<text x="60" y="171" fill="#d4d4d4">if (this == obj) return true;</text>
+<text x="60" y="189" fill="#d4d4d4">if (!(obj instanceof UserDetailsCK)) { return false; }</text>
+<text x="60" y="207" fill="#d4d4d4">UserDetailsCK userCK = (UserDetailsCK) obj;</text>
+<text x="60" y="225" fill="#d4d4d4">return this.name.equals(userCK.name) &amp;&amp; this.address.equals(userCK.address);</text>
+<text x="40" y="243" fill="#dcdcaa">}</text>
+<text x="40" y="261" fill="#dcdcaa">@Override</text>
+<text x="40" y="279" fill="#569cd6">public int <tspan fill="#dcdcaa">hashCode</tspan>() { return Objects.hash(name, address); }</text>
+<text x="20" y="297" fill="#dcdcaa">}</text>
+</svg>
