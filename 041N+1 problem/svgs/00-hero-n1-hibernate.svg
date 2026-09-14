@@ -1,58 +1,154 @@
-<svg viewBox="0 0 1100 517" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-<rect width="1100" height="517" fill="#f7f6ee"/>
-<polygon points="1000,0 1100,0 1100,120" fill="#e8e7d4"/>
-<polygon points="1050,140 1100,190 1100,90" fill="#ecebdb"/>
+<svg viewBox="0 0 1100 520" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+    
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
 
-<g transform="translate(60,55)">
-  <polygon points="0,14 14,0 30,8 30,30 14,40 0,32" fill="#3d4f52"/>
-  <polygon points="14,0 30,8 30,30 14,22" fill="#8f9350"/>
-  <text x="48" y="33" font-size="36" font-weight="bold" fill="#3d4f52">HIBER<tspan fill="#8f9350">NATE</tspan></text>
-</g>
+    <linearGradient id="dangerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.05"/>
+    </linearGradient>
 
-<text x="60" y="215" font-size="52" font-weight="bold" fill="#8f9350">N+1 <tspan fill="#3d4f52">in Hibernate</tspan></text>
-<text x="60" y="285" font-size="52" font-weight="bold" fill="#3d4f52">Is Not a Bug.</text>
-<text x="60" y="355" font-size="52" font-weight="bold" fill="#8f9350">It's a Default.</text>
+    <linearGradient id="successGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.05"/>
+    </linearGradient>
 
-<text x="60" y="415" font-size="19" fill="#5d6b6d">Fetch join, EntityGraph, batch size,</text>
-<text x="60" y="443" font-size="19" fill="#5d6b6d">projections: what to use, when —</text>
-<text x="60" y="471" font-size="19" fill="#5d6b6d">and how to prove it in a test.</text>
+    <!-- Filters -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
 
-<g transform="translate(700,80)">
-  <ellipse cx="55" cy="14" rx="55" ry="14" fill="#a8ab63"/>
-  <path d="M0,14 L0,76 A55,14 0 0,0 110,76 L110,14 A55,14 0 0,1 0,14 Z" fill="#3d4f52"/>
-  <ellipse cx="55" cy="40" rx="55" ry="13" fill="none" stroke="#f7f6ee" stroke-width="3"/>
-  <ellipse cx="55" cy="62" rx="55" ry="13" fill="none" stroke="#f7f6ee" stroke-width="3"/>
-</g>
-<g stroke="#5d6b6d" stroke-dasharray="7,6" fill="none">
-  <line x1="825" y1="110" x2="890" y2="45"/>
-  <line x1="825" y1="130" x2="890" y2="95"/>
-  <line x1="825" y1="150" x2="890" y2="145"/>
-  <line x1="825" y1="170" x2="890" y2="195"/>
-</g>
-<g font-family="Consolas, monospace" font-size="13" fill="#f7f6ee">
-  <rect x="895" y="28" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="50">SELECT ...</text>
-  <rect x="895" y="78" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="100">SELECT ...</text>
-  <rect x="895" y="128" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="150">SELECT ...</text>
-  <rect x="895" y="178" width="115" height="34" rx="5" fill="#3d4f52"/><text x="912" y="200">SELECT ...</text>
-</g>
+  <!-- Background Base -->
+  <rect width="1100" height="520" rx="16" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle decorative grid lines -->
+  <g stroke="#334155" stroke-opacity="0.2" stroke-width="1">
+    <line x1="0" y1="80" x2="1100" y2="80"/>
+    <line x1="0" y1="160" x2="1100" y2="160"/>
+    <line x1="0" y1="240" x2="1100" y2="240"/>
+    <line x1="0" y1="320" x2="1100" y2="320"/>
+    <line x1="0" y1="400" x2="1100" y2="400"/>
+    <line x1="220" y1="0" x2="220" y2="520"/>
+    <line x1="440" y1="0" x2="440" y2="520"/>
+    <line x1="660" y1="0" x2="660" y2="520"/>
+    <line x1="880" y1="0" x2="880" y2="520"/>
+  </g>
 
-<rect x="640" y="240" width="190" height="200" rx="10" fill="#eef0e2"/>
-<circle cx="722" cy="285" r="22" fill="#8f9350"/>
-<rect x="662" y="350" width="52" height="62" rx="6" fill="#8f9350"/>
-<rect x="736" y="350" width="52" height="62" rx="6" fill="#8f9350"/>
-<g stroke="#3d4f52" stroke-width="2.5" fill="none" marker-end="url(#hm)">
-<path d="M712,312 L690,345"/><path d="M732,312 L756,345"/>
-</g>
-<defs><marker id="hm" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3d4f52"/></marker></defs>
+  <!-- Header Section -->
+  <g transform="translate(60, 50)">
+    <!-- Pill Badge -->
+    <rect x="0" y="0" width="280" height="28" rx="14" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <circle cx="14" cy="14" r="4" fill="#38bdf8"/>
+    <text x="26" y="19" font-size="12" font-weight="600" fill="#38bdf8" letter-spacing="0.5">SPRING BOOT 3 &amp; 4 • HIBERNATE 7</text>
 
-<g font-size="13" fill="#3d4f52" font-weight="600">
-<rect x="860" y="270" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="294">JOIN FETCH</text>
-<rect x="860" y="318" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="342">EntityGraph</text>
-<rect x="860" y="366" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="390">BATCH SIZE</text>
-<rect x="860" y="414" width="175" height="38" rx="7" fill="#eef0e2" stroke="#c9cdaa"/><text x="920" y="438">PROJECTIONS</text>
-</g>
-<g fill="#8f9350">
-<rect x="872" y="278" width="26" height="22" rx="4"/><rect x="872" y="326" width="26" height="22" rx="4"/>
-<rect x="872" y="374" width="26" height="22" rx="4"/><rect x="872" y="422" width="26" height="22" rx="4"/>
-</g>
+    <!-- Main Title -->
+    <text x="0" y="75" font-size="38" font-weight="800" fill="#f8fafc" letter-spacing="-0.5">
+      The <tspan fill="url(#accentGrad)">N+1 Query Problem</tspan>
+    </text>
+    <text x="0" y="112" font-size="22" font-weight="600" fill="#94a3b8">
+      It Is Not a Bug — It Is a <tspan fill="#f43f5e">Default Behavior</tspan>
+    </text>
+
+    <text x="0" y="148" font-size="14" fill="#64748b" line-height="1.5">
+      Understanding lazy proxy mechanics, query multiplication, connection pool exhaustion,
+    </text>
+    <text x="0" y="168" font-size="14" fill="#64748b">
+      and the 4 production-grade mitigation strategies.
+    </text>
+  </g>
+
+  <!-- Left Card: The Naive Disaster (Red / Warning) -->
+  <g transform="translate(60, 240)" filter="url(#cardShadow)">
+    <rect width="460" height="230" rx="12" fill="url(#dangerGrad)" stroke="#ef4444" stroke-width="1.5"/>
+    
+    <!-- Card Header -->
+    <rect x="20" y="18" width="10" height="10" rx="2" fill="#ef4444"/>
+    <text x="38" y="27" font-size="15" font-weight="700" fill="#fca5a5" letter-spacing="0.5">THE NAIVE LAZY TRAP</text>
+    <text x="375" y="27" font-size="12" font-weight="700" fill="#f87171">151+ QUERIES</text>
+
+    <line x1="20" y1="42" x2="440" y2="42" stroke="#ef4444" stroke-opacity="0.3" stroke-width="1"/>
+
+    <!-- Query flow list -->
+    <g transform="translate(20, 58)" font-family="Consolas, Monaco, monospace" font-size="12">
+      <!-- 1 -->
+      <rect x="0" y="0" width="22" height="20" rx="4" fill="#334155"/>
+      <text x="11" y="14" fill="#94a3b8" text-anchor="middle" font-weight="700">1</text>
+      <text x="32" y="14" fill="#f1f5f9">SELECT * FROM orders LIMIT 50</text>
+      
+      <!-- 50 -->
+      <rect x="0" y="28" width="22" height="20" rx="4" fill="#7f1d1d"/>
+      <text x="11" y="42" fill="#fca5a5" text-anchor="middle" font-weight="700">+N</text>
+      <text x="32" y="42" fill="#f87171">SELECT * FROM customer WHERE id = ?</text>
+      <text x="380" y="42" fill="#fca5a5" font-size="10">(x50)</text>
+
+      <!-- 50 -->
+      <rect x="0" y="56" width="22" height="20" rx="4" fill="#7f1d1d"/>
+      <text x="11" y="70" fill="#fca5a5" text-anchor="middle" font-weight="700">+N</text>
+      <text x="32" y="70" fill="#f87171">SELECT * FROM order_line WHERE order_id = ?</text>
+      <text x="380" y="70" fill="#fca5a5" font-size="10">(x50)</text>
+
+      <!-- 50 -->
+      <rect x="0" y="84" width="22" height="20" rx="4" fill="#991b1b"/>
+      <text x="11" y="98" fill="#fca5a5" text-anchor="middle" font-weight="700">+M</text>
+      <text x="32" y="98" fill="#fda4af">SELECT * FROM product WHERE id = ?</text>
+      <text x="380" y="98" fill="#fda4af" font-size="10">(x50+)</text>
+    </g>
+
+    <!-- Warning Footer Box -->
+    <rect x="20" y="175" width="420" height="38" rx="6" fill="#1e1e2d" stroke="#f43f5e" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="32" y="198" font-size="12" font-weight="600" fill="#fca5a5">
+      ⚠️ HikariCP Saturated • 2.4s Latency • Jackson OSIV Leak
+    </text>
+  </g>
+
+  <!-- Right Card: The 4 Solutions (Green / Emerald) -->
+  <g transform="translate(560, 240)" filter="url(#cardShadow)">
+    <rect width="480" height="230" rx="12" fill="url(#successGrad)" stroke="#10b981" stroke-width="1.5"/>
+    
+    <!-- Card Header -->
+    <rect x="20" y="18" width="10" height="10" rx="2" fill="#10b981"/>
+    <text x="38" y="27" font-size="15" font-weight="700" fill="#6ee7b7" letter-spacing="0.5">THE 4 PRODUCTION REMEDIES</text>
+    <text x="385" y="27" font-size="12" font-weight="700" fill="#34d399">1 TO 9 QUERIES</text>
+
+    <line x1="20" y1="42" x2="460" y2="42" stroke="#10b981" stroke-opacity="0.3" stroke-width="1"/>
+
+    <!-- 4 Pills / Grid -->
+    <g transform="translate(20, 55)">
+      <!-- Solution 1 -->
+      <rect x="0" y="0" width="210" height="48" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="20" font-size="13" font-weight="700" fill="#38bdf8">1. JOIN FETCH</text>
+      <text x="14" y="36" font-size="11" fill="#94a3b8">1 SQL query via SQL JOIN</text>
+
+      <!-- Solution 2 -->
+      <rect x="230" y="0" width="210" height="48" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="244" y="20" font-size="13" font-weight="700" fill="#a78bfa">2. EntityGraph</text>
+      <text x="244" y="36" font-size="11" fill="#94a3b8">Reusable, declarative fetch plans</text>
+
+      <!-- Solution 3 -->
+      <rect x="0" y="58" width="210" height="48" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="78" font-size="13" font-weight="700" fill="#34d399">3. @BatchSize (50)</text>
+      <text x="14" y="94" font-size="11" fill="#94a3b8">Global safety net (WHERE id IN ...)</text>
+
+      <!-- Solution 4 -->
+      <rect x="230" y="58" width="210" height="48" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="244" y="78" font-size="13" font-weight="700" fill="#fbbf24">4. DTO Projections</text>
+      <text x="244" y="94" font-size="11" fill="#94a3b8">Zero entity overhead for read APIs</text>
+    </g>
+
+    <!-- Success Footer Box -->
+    <rect x="20" y="175" width="440" height="38" rx="6" fill="#064e3b" stroke="#10b981" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="32" y="198" font-size="12" font-weight="600" fill="#a7f3d0">
+      ⚡ Constant Latency (11-28ms) • Zero Connection Saturation
+    </text>
+  </g>
 </svg>

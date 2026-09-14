@@ -1,79 +1,168 @@
-<svg viewBox="0 0 1100 628" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-<rect width="1100" height="628" fill="#f7f6ee"/>
-<polygon points="960,0 1100,0 1100,140" fill="#e9e8d6"/>
-<polygon points="1040,150 1100,210 1100,90" fill="#eeeddd"/>
-<polygon points="0,560 60,628 0,628" fill="#e9e8d6"/>
-<defs>
-  <marker id="d" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#4a5c5e"/></marker>
-  <g id="db4"><ellipse cx="27" cy="8" rx="27" ry="8" fill="#a8ab63"/>
-    <path d="M0,8 L0,44 A27,8 0 0,0 54,44 L54,8 A27,8 0 0,1 0,8 Z" fill="#3d4f52"/>
-    <ellipse cx="27" cy="22" rx="27" ry="7" fill="none" stroke="#f7f6ee" stroke-width="2.5"/>
-    <ellipse cx="27" cy="36" rx="27" ry="7" fill="none" stroke="#f7f6ee" stroke-width="2.5"/></g>
-  <g id="tbl4"><rect x="0" y="0" width="32" height="32" rx="4" fill="none" stroke="#3d4f52" stroke-width="2.5"/>
-    <line x1="0" y1="10" x2="32" y2="10" stroke="#3d4f52" stroke-width="2.5"/>
-    <line x1="11" y1="10" x2="11" y2="32" stroke="#3d4f52" stroke-width="2.5"/></g>
-</defs>
+<svg viewBox="0 0 1100 650" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d141e"/>
+      <stop offset="50%" stop-color="#111c2e"/>
+      <stop offset="100%" stop-color="#06090f"/>
+    </linearGradient>
 
-<g transform="translate(45,38)">
-  <polygon points="0,13 13,0 28,7 28,28 13,37 0,30" fill="#3d4f52"/>
-  <polygon points="13,0 28,7 28,28 13,21" fill="#8f9350"/>
-  <text x="44" y="31" font-size="33" font-weight="bold" fill="#3d4f52">HIBER<tspan fill="#8f9350">NATE</tspan></text>
-</g>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
 
-<rect x="105" y="108" width="618" height="62" rx="12" fill="#f2f2e6"/>
-<circle cx="141" cy="138" r="20" fill="#8f9350"/><text x="141" y="145" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">1</text>
-<rect x="176" y="118" width="518" height="40" rx="7" fill="#36474a"/>
-<text x="196" y="145" fill="#eef0e2" font-size="16" font-family="Consolas, monospace">SELECT * FROM orders LIMIT 100</text>
-<line x1="712" y1="138" x2="738" y2="138" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#db4" x="742" y="112"/>
-<line x1="812" y1="138" x2="838" y2="138" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#tbl4" x="846" y="126"/>
-<text x="888" y="150" fill="#3d4f52" font-size="18" font-weight="600">orders</text>
+    <filter id="cardShadow5" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
 
-<line x1="176" y1="176" x2="176" y2="198" stroke="#9aa3a4" stroke-width="2.5" marker-end="url(#d)"/>
-<text x="196" y="192" fill="#4a5c5e" font-size="16">order.getLines() on the first order</text>
+    <marker id="arrowEmerald" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#10b981"/>
+    </marker>
+  </defs>
 
-<rect x="105" y="204" width="618" height="112" rx="12" fill="#f2f2e6"/>
-<circle cx="141" cy="239" r="20" fill="#8f9350"/><text x="141" y="246" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">2</text>
-<rect x="176" y="219" width="528" height="40" rx="7" fill="#36474a"/>
-<text x="196" y="246" fill="#eef0e2" font-size="16" font-family="Consolas, monospace">SELECT * FROM order_line WHERE order_id IN (1..50)</text>
-<circle cx="141" cy="285" r="20" fill="#8f9350"/><text x="141" y="292" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">3</text>
-<rect x="176" y="265" width="528" height="40" rx="7" fill="#36474a"/>
-<text x="196" y="292" fill="#eef0e2" font-size="16" font-family="Consolas, monospace">SELECT * FROM order_line WHERE order_id IN (51..100)</text>
-<line x1="726" y1="260" x2="752" y2="260" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#db4" x="756" y="234"/>
-<line x1="826" y1="260" x2="852" y2="260" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#tbl4" x="860" y="248"/>
-<text x="902" y="272" fill="#3d4f52" font-size="18" font-weight="600">order_line</text>
+  <!-- Background Base -->
+  <rect width="1100" height="650" rx="16" fill="url(#bgGrad5)"/>
 
-<line x1="176" y1="322" x2="176" y2="344" stroke="#9aa3a4" stroke-width="2.5" marker-end="url(#d)"/>
-<text x="196" y="340" fill="#4a5c5e" font-size="16">line.getProduct()</text>
+  <!-- Subtle grid -->
+  <g stroke="#334155" stroke-opacity="0.15" stroke-width="1">
+    <line x1="0" y1="120" x2="1100" y2="120"/>
+    <line x1="0" y1="230" x2="1100" y2="230"/>
+    <line x1="0" y1="360" x2="1100" y2="360"/>
+    <line x1="0" y1="490" x2="1100" y2="490"/>
+    <line x1="0" y1="560" x2="1100" y2="560"/>
+  </g>
 
-<rect x="105" y="352" width="618" height="118" rx="12" fill="#f2f2e6"/>
-<circle cx="143" cy="388" r="22" fill="#8f9350"/><text x="143" y="394" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">4-7</text>
-<rect x="180" y="368" width="514" height="40" rx="7" fill="#36474a"/>
-<text x="200" y="395" fill="#eef0e2" font-size="16" font-family="Consolas, monospace">SELECT * FROM product WHERE id IN (...50 ids...)</text>
-<circle cx="143" cy="440" r="22" fill="#8f9350"/><text x="143" y="446" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">8-9</text>
-<rect x="180" y="420" width="514" height="40" rx="7" fill="#36474a"/>
-<text x="200" y="447" fill="#eef0e2" font-size="16" font-family="Consolas, monospace">SELECT * FROM customer WHERE id IN (...50 ids...)</text>
+  <!-- Header Section -->
+  <g transform="translate(50, 32)">
+    <rect x="0" y="0" width="230" height="24" rx="6" fill="#065f46" fill-opacity="0.3" stroke="#059669" stroke-width="1"/>
+    <text x="115" y="16" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="0.5">FIX 3: BATCH FETCHING (SIZE 50)</text>
+    
+    <text x="0" y="52" fill="#f8fafc" font-size="26" font-weight="800">
+      The Global Safety Net: <tspan fill="#34d399">Collapsing 401 Queries into Just 9</tspan>
+    </text>
+    <text x="0" y="74" fill="#94a3b8" font-size="13">
+      Keep associations lazy. When one proxy is accessed, Hibernate gathers up to 50 uninitialized IDs in the Session and fetches them together.
+    </text>
+  </g>
 
-<path d="M706,388 q16,0 16,16 L722,404 q0,16 16,16 q-16,0 -16,16 L722,424 q0,16 -16,16" stroke="#9aa3a4" stroke-width="2" fill="none"/>
-<line x1="742" y1="378" x2="762" y2="372" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#db4" x="766" y="344"/>
-<line x1="836" y1="370" x2="860" y2="370" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#tbl4" x="866" y="358"/>
-<text x="908" y="382" fill="#3d4f52" font-size="18" font-weight="600">product</text>
-<line x1="742" y1="440" x2="762" y2="446" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#db4" x="766" y="418"/>
-<line x1="836" y1="442" x2="860" y2="442" stroke="#4a5c5e" stroke-width="2" marker-end="url(#d)"/>
-<use href="#tbl4" x="866" y="430"/>
-<text x="908" y="454" fill="#3d4f52" font-size="18" font-weight="600">customer</text>
+  <!-- CONFIG CALLOUT PILL (Top Right) -->
+  <g transform="translate(680, 42)">
+    <rect width="370" height="42" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="18" fill="#94a3b8" font-size="10" font-weight="700">GLOBAL APPLICATION.YML CONFIGURATION</text>
+    <text x="14" y="34" fill="#38bdf8" font-family="Consolas, monospace" font-size="11">
+      spring.jpa.properties.hibernate.default_batch_fetch_size: 50
+    </text>
+  </g>
 
-<rect x="105" y="500" width="888" height="78" rx="12" fill="#eeeee2"/>
-<g transform="translate(148,524)" fill="#8f9350">
-<polygon points="18,0 36,9 18,18 0,9"/><polygon points="18,12 36,21 18,30 0,21" opacity="0.8"/>
-</g>
-<line x1="216" y1="514" x2="216" y2="564" stroke="#c4c8b4" stroke-width="2"/>
-<text x="248" y="536" fill="#3d4f52" font-size="21" font-weight="600">1 + 2 (lines) + 4 (products) + 2 (customers) = 9 queries,</text>
-<text x="248" y="564" fill="#3d4f52" font-size="21" font-weight="600">not 401.</text>
+  <!-- ================= TIMELINE OF 9 BATCHED STATEMENTS ================= -->
+  <g transform="translate(50, 120)">
+    
+    <!-- STEP 1: Root Orders (1 Query) -->
+    <g transform="translate(0, 0)" filter="url(#cardShadow5)">
+      <rect width="1000" height="85" rx="10" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+      <rect x="18" y="14" width="28" height="28" rx="6" fill="#0284c7"/>
+      <text x="32" y="33" fill="#ffffff" font-size="14" font-weight="800" text-anchor="middle">1</text>
+      
+      <text x="56" y="26" fill="#38bdf8" font-size="13" font-weight="700">ROOT QUERY: 100 ORDERS</text>
+      <text x="56" y="40" fill="#94a3b8" font-size="11">Initial find query executed by service or controller</text>
+
+      <rect x="56" y="48" width="680" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <text x="70" y="66" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">
+        SELECT o1_0.id, o1_0.created_at, o1_0.customer_id FROM orders o1_0 LIMIT 100;
+      </text>
+
+      <!-- Right Result Badge -->
+      <g transform="translate(760, 20)">
+        <rect width="220" height="48" rx="6" fill="#1e293b" stroke="#334155"/>
+        <text x="110" y="20" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle">1 Statement Executed</text>
+        <text x="110" y="36" fill="#94a3b8" font-size="10" text-anchor="middle">100 Orders loaded into Session</text>
+      </g>
+    </g>
+
+    <!-- STEP 2: Batched Collections (2 Queries) -->
+    <g transform="translate(0, 100)" filter="url(#cardShadow5)">
+      <rect width="1000" height="110" rx="10" fill="#111827" stroke="#34d399" stroke-width="1.5"/>
+      <rect x="18" y="16" width="38" height="28" rx="6" fill="#059669"/>
+      <text x="37" y="35" fill="#ffffff" font-size="13" font-weight="800" text-anchor="middle">2-3</text>
+
+      <text x="66" y="26" fill="#34d399" font-size="13" font-weight="700">BATCHED COLLECTION FETCH: ORDER LINES (PersistentBag)</text>
+      <text x="66" y="40" fill="#94a3b8" font-size="11">First order.getLines() triggers batch lookup for all 100 order IDs split into chunks of 50</text>
+
+      <!-- Query 2 -->
+      <rect x="66" y="48" width="670" height="24" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <text x="80" y="65" fill="#a7f3d0" font-family="Consolas, monospace" font-size="11">
+        Q2: SELECT * FROM order_line WHERE order_id IN (1, 2, 3 ... 50);
+      </text>
+
+      <!-- Query 3 -->
+      <rect x="66" y="76" width="670" height="24" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <text x="80" y="93" fill="#a7f3d0" font-family="Consolas, monospace" font-size="11">
+        Q3: SELECT * FROM order_line WHERE order_id IN (51, 52, 53 ... 100);
+      </text>
+
+      <!-- Right Result Badge -->
+      <g transform="translate(760, 30)">
+        <rect width="220" height="52" rx="6" fill="#064e3b" stroke="#10b981"/>
+        <text x="110" y="22" fill="#a7f3d0" font-size="11" font-weight="700" text-anchor="middle">2 Statements (was 100!)</text>
+        <text x="110" y="38" fill="#ffffff" font-size="10" text-anchor="middle">All 1,000 order lines loaded</text>
+      </g>
+    </g>
+
+    <!-- STEP 3: Batched Entity Proxies (4 Queries for Products + 2 for Customers) -->
+    <g transform="translate(0, 225)" filter="url(#cardShadow5)">
+      <rect width="1000" height="125" rx="10" fill="#111827" stroke="#a78bfa" stroke-width="1.5"/>
+      <rect x="18" y="16" width="38" height="28" rx="6" fill="#7c3aed"/>
+      <text x="37" y="35" fill="#ffffff" font-size="13" font-weight="800" text-anchor="middle">4-9</text>
+
+      <text x="66" y="26" fill="#c084fc" font-size="13" font-weight="700">BATCHED ENTITY PROXIES: PRODUCTS (4 QUERIES) &amp; CUSTOMERS (2 QUERIES)</text>
+      <text x="66" y="40" fill="#94a3b8" font-size="11">Hibernate identifies ~200 distinct product proxy IDs and 100 customer IDs, querying each in batches of 50</text>
+
+      <!-- Product Queries -->
+      <rect x="66" y="48" width="670" height="30" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <text x="80" y="68" fill="#e9d5ff" font-family="Consolas, monospace" font-size="11">
+        Q4..Q7: SELECT * FROM product WHERE id IN (...50 product IDs...);  [4 queries for 200 IDs]
+      </text>
+
+      <!-- Customer Queries -->
+      <rect x="66" y="82" width="670" height="30" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <text x="80" y="102" fill="#e9d5ff" font-family="Consolas, monospace" font-size="11">
+        Q8..Q9: SELECT * FROM customer WHERE id IN (...50 customer IDs...); [2 queries for 100 IDs]
+      </text>
+
+      <!-- Right Result Badge -->
+      <g transform="translate(760, 36)">
+        <rect width="220" height="52" rx="6" fill="#3b0764" stroke="#a855f7"/>
+        <text x="110" y="22" fill="#e9d5ff" font-size="11" font-weight="700" text-anchor="middle">6 Statements (was 300!)</text>
+        <text x="110" y="38" fill="#ffffff" font-size="10" text-anchor="middle">All to-one proxies resolved</text>
+      </g>
+    </g>
+
+    <!-- POSTGRESQL DIALECT OPTIMIZATION CALLOUT -->
+    <g transform="translate(0, 365)" filter="url(#cardShadow5)">
+      <rect width="1000" height="60" rx="10" fill="#090d16" stroke="#334155" stroke-width="1"/>
+      <text x="24" y="25" fill="#38bdf8" font-size="12" font-weight="700">💡 POSTGRESQL DIALECT ARRAY OPTIMIZATION (= ANY (?)):</text>
+      <text x="24" y="44" fill="#94a3b8" font-size="11">
+        Postgres sends the entire ID batch as a single array parameter: <tspan fill="#f1f5f9" font-family="Consolas, monospace">WHERE id = ANY(?)</tspan>. Keeps JDBC prepared statement cache hot and eliminates query plan recompilation!
+      </text>
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM SCOREBOARD BANNER ================= -->
+  <g transform="translate(50, 565)" filter="url(#cardShadow5)">
+    <rect width="1000" height="60" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+    <g transform="translate(25, 20)">
+      <text x="0" y="14" fill="#ffffff" font-size="15" font-weight="800">
+        FINAL STATEMENT SCOREBOARD:
+      </text>
+      <text x="250" y="14" fill="#a7f3d0" font-size="13" font-weight="600">
+        1 (orders) + 2 (lines) + 4 (products) + 2 (customers) = <tspan fill="#ffffff" font-weight="800">EXACTLY 9 QUERIES</tspan> (vs 401 unbatched)
+      </text>
+    </g>
+    <g transform="translate(850, 14)">
+      <rect width="130" height="32" rx="6" fill="#047857" stroke="#34d399" stroke-width="1"/>
+      <text x="65" y="21" fill="#ffffff" font-size="11" font-weight="800" text-anchor="middle">
+        97.8% QUERY DROP
+      </text>
+    </g>
+  </g>
 </svg>

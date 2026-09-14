@@ -1,73 +1,208 @@
-<svg viewBox="0 0 790 780" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-<rect width="790" height="780" fill="#f7f6ee"/>
-<defs>
-  <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#4a5c5e"/></marker>
-  <g id="db">
-    <ellipse cx="42" cy="12" rx="42" ry="12" fill="#a8ab63"/>
-    <path d="M0,12 L0,62 A42,12 0 0,0 84,62 L84,12 A42,12 0 0,1 0,12 Z" fill="#3d4f52"/>
-    <ellipse cx="42" cy="33" rx="42" ry="11" fill="none" stroke="#f7f6ee" stroke-width="3"/>
-    <ellipse cx="42" cy="52" rx="42" ry="11" fill="none" stroke="#f7f6ee" stroke-width="3"/>
+<svg viewBox="0 0 920 860" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+
+    <linearGradient id="stepGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <linearGradient id="stepGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="stepGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+
+    <filter id="boxShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="920" height="860" rx="16" fill="url(#bgGrad2)"/>
+
+  <!-- Subtle grid -->
+  <g stroke="#334155" stroke-opacity="0.15" stroke-width="1">
+    <line x1="0" y1="90" x2="920" y2="90"/>
+    <line x1="0" y1="280" x2="920" y2="280"/>
+    <line x1="0" y1="580" x2="920" y2="580"/>
+    <line x1="0" y1="760" x2="920" y2="760"/>
   </g>
-  <g id="tbl">
-    <rect x="0" y="0" width="34" height="34" rx="4" fill="none" stroke="#3d4f52" stroke-width="2.5"/>
-    <line x1="0" y1="11" x2="34" y2="11" stroke="#3d4f52" stroke-width="2.5"/>
-    <line x1="12" y1="11" x2="12" y2="34" stroke="#3d4f52" stroke-width="2.5"/>
+
+  <!-- HTTP Request Header Banner -->
+  <g transform="translate(40, 30)">
+    <rect width="840" height="60" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#boxShadow)"/>
+    
+    <!-- Method Badge -->
+    <rect x="20" y="15" width="60" height="30" rx="6" fill="#10b981"/>
+    <text x="50" y="35" fill="#ffffff" font-size="14" font-weight="800" text-anchor="middle" font-family="Consolas, monospace">GET</text>
+    
+    <!-- Endpoint URL -->
+    <text x="95" y="36" fill="#f8fafc" font-size="17" font-weight="600" font-family="Consolas, monospace">/api/orders?limit=100</text>
+    
+    <!-- Callout on right -->
+    <rect x="610" y="15" width="210" height="30" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="715" y="34" fill="#94a3b8" font-size="12" font-weight="600" text-anchor="middle">Single Client HTTP Call</text>
   </g>
-</defs>
 
-<rect x="28" y="22" width="400" height="52" rx="14" fill="#eef0e2"/>
-<rect x="44" y="34" width="72" height="30" rx="8" fill="#8f9350"/>
-<text x="80" y="55" fill="#fff" font-size="17" font-weight="bold" text-anchor="middle" font-family="Consolas, monospace">GET</text>
-<text x="132" y="57" fill="#3d4f52" font-size="20" font-family="Consolas, monospace">/orders?limit=100</text>
+  <!-- Arrow down to Step 1 -->
+  <line x1="460" y1="90" x2="460" y2="120" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 
-<circle cx="50" cy="146" r="21" fill="#8f9350"/>
-<text x="50" y="153" fill="#fff" font-size="16" font-weight="bold" text-anchor="middle">1</text>
-<rect x="90" y="118" width="336" height="58" rx="9" fill="#3d4f52"/>
-<text x="110" y="142" fill="#eef0e2" font-size="15" font-family="Consolas, monospace">SELECT * FROM orders</text>
-<text x="110" y="164" fill="#eef0e2" font-size="15" font-family="Consolas, monospace">LIMIT 100</text>
-<line x1="440" y1="146" x2="486" y2="146" stroke="#4a5c5e" stroke-width="2" marker-end="url(#a)"/>
-<use href="#db" x="500" y="105"/>
-<use href="#tbl" x="622" y="118"/>
-<text x="639" y="170" fill="#3d4f52" font-size="17" font-weight="600">orders</text>
+  <!-- ================= STEP 1: Root Orders Query ================= -->
+  <g transform="translate(40, 125)" filter="url(#boxShadow)">
+    <rect width="840" height="120" rx="12" fill="#1e293b" stroke="#0284c7" stroke-width="1.5"/>
+    
+    <!-- Step Badge -->
+    <rect x="20" y="18" width="36" height="36" rx="8" fill="url(#stepGrad1)"/>
+    <text x="38" y="42" fill="#ffffff" font-size="18" font-weight="800" text-anchor="middle">1</text>
+    
+    <!-- Title & Description -->
+    <text x="70" y="34" fill="#38bdf8" font-size="15" font-weight="700">QUERY 1: ROOT ORDERS FETCH</text>
+    <text x="70" y="52" fill="#94a3b8" font-size="12">Executed by ordersRepository.findAll() or JPQL query "SELECT o FROM Order o"</text>
+    
+    <!-- SQL Box -->
+    <g transform="translate(20, 68)">
+      <rect width="570" height="36" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="16" y="23" fill="#38bdf8" font-family="Consolas, monospace" font-size="13">SELECT o1_0.id, o1_0.created_at, o1_0.customer_id FROM orders o1_0 LIMIT 100;</text>
+    </g>
 
-<line x1="55" y1="196" x2="55" y2="228" stroke="#9aa3a4" stroke-width="3" marker-end="url(#a)"/>
-<text x="90" y="226" fill="#4a5c5e" font-size="17">for each order → order.getLines()</text>
+    <!-- Result DB Indicator -->
+    <g transform="translate(615, 68)">
+      <rect width="205" height="36" rx="6" fill="#0369a1" fill-opacity="0.2" stroke="#0284c7" stroke-width="1"/>
+      <text x="102" y="23" fill="#e0f2fe" font-size="12" font-weight="600" text-anchor="middle">✓ Returns 100 Order entities</text>
+    </g>
+  </g>
 
-<rect x="28" y="248" width="722" height="272" rx="14" fill="#f2f2e6"/>
-<circle cx="68" cy="290" r="19" fill="#8f9350"/><text x="68" y="296" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">2</text>
-<rect x="105" y="264" width="390" height="54" rx="8" fill="#46585a"/>
-<text x="128" y="286" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">SELECT * FROM order_line</text>
-<text x="128" y="306" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">WHERE order_id = 1</text>
+  <!-- Loop transition line -->
+  <g transform="translate(40, 245)">
+    <line x1="420" y1="0" x2="420" y2="35" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowAmber)"/>
+    <rect x="290" y="12" width="260" height="24" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+    <text x="420" y="28" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle">LOOP: for each Order → order.getLines()</text>
+  </g>
 
-<circle cx="68" cy="365" r="19" fill="#8f9350"/><text x="68" y="371" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">3</text>
-<rect x="105" y="339" width="390" height="54" rx="8" fill="#46585a"/>
-<text x="128" y="361" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">SELECT * FROM order_line</text>
-<text x="128" y="381" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">WHERE order_id = 2</text>
+  <!-- ================= STEP 2: The +100 Queries for Order Lines ================= -->
+  <g transform="translate(40, 285)" filter="url(#boxShadow)">
+    <rect width="840" height="250" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+    
+    <!-- Step Badge -->
+    <rect x="20" y="18" width="56" height="36" rx="8" fill="url(#stepGrad2)"/>
+    <text x="48" y="42" fill="#ffffff" font-size="16" font-weight="800" text-anchor="middle">+100</text>
 
-<text x="112" y="430" fill="#4a5c5e" font-size="22" font-weight="bold">...</text>
+    <!-- Title & Description -->
+    <text x="90" y="34" fill="#fbbf24" font-size="15" font-weight="700">QUERIES 2..101: LAZY COLLECTION INITIALIZATION (PersistentBag)</text>
+    <text x="90" y="52" fill="#94a3b8" font-size="12">Each order has an uninitialized PersistentBag; accessing it triggers a separate round-trip to the DB</text>
 
-<circle cx="68" cy="475" r="21" fill="#8f9350"/><text x="68" y="481" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">101</text>
-<rect x="105" y="449" width="390" height="54" rx="8" fill="#46585a"/>
-<text x="128" y="471" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">SELECT * FROM order_line</text>
-<text x="128" y="491" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">WHERE order_id = 100</text>
+    <!-- Multiple queries listed -->
+    <g transform="translate(20, 68)" font-family="Consolas, monospace" font-size="12">
+      <!-- Query 2 -->
+      <rect x="0" y="0" width="570" height="32" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="21" fill="#fcd34d">Query 2:   SELECT * FROM order_line WHERE order_id = 1;</text>
 
-<path d="M512,268 q14,0 14,16 L526,368 q0,12 14,12 q-14,0 -14,12 L526,488 q0,16 -14,16" stroke="#9aa3a4" stroke-width="2" fill="none"/>
-<line x1="542" y1="380" x2="566" y2="380" stroke="#4a5c5e" stroke-width="2" marker-end="url(#a)"/>
-<use href="#db" x="576" y="338"/>
-<use href="#tbl" x="688" y="358"/>
-<text x="660" y="422" fill="#3d4f52" font-size="15" font-weight="600">order_line</text>
+      <!-- Query 3 -->
+      <rect x="0" y="38" width="570" height="32" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="59" fill="#fcd34d">Query 3:   SELECT * FROM order_line WHERE order_id = 2;</text>
 
-<line x1="55" y1="540" x2="55" y2="572" stroke="#9aa3a4" stroke-width="3" marker-end="url(#a)"/>
-<text x="90" y="570" fill="#4a5c5e" font-size="17">for each line → line.getProduct()</text>
+      <!-- Ellipsis -->
+      <rect x="0" y="76" width="570" height="24" rx="4" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+      <text x="285" y="93" fill="#64748b" text-anchor="middle" font-weight="700">• • • 97 More Identical Statements Fired Sequentially • • •</text>
 
-<rect x="28" y="592" width="722" height="162" rx="14" fill="#f2f2e6"/>
-<rect x="80" y="608" width="176" height="32" rx="8" fill="#e3e6cf"/>
-<text x="96" y="630" fill="#3d4f52" font-size="15">up to 1,000 more:</text>
-<rect x="80" y="652" width="366" height="56" rx="8" fill="#46585a"/>
-<text x="102" y="675" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">SELECT * FROM product</text>
-<text x="102" y="695" fill="#eef0e2" font-size="14" font-family="Consolas, monospace">WHERE id = ?</text>
-<path d="M466,652 q14,0 14,14 L480,680 q0,14 -14,14 q14,0 14,14 L480,708 q0,0 -14,0" stroke="#9aa3a4" stroke-width="2" fill="none"/>
-<use href="#db" x="540" y="640"/>
-<use href="#tbl" x="654" y="650"/>
-<text x="640" y="720" fill="#3d4f52" font-size="15" font-weight="600">product</text>
+      <!-- Query 101 -->
+      <rect x="0" y="106" width="570" height="32" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="127" fill="#fcd34d">Query 101: SELECT * FROM order_line WHERE order_id = 100;</text>
+    </g>
+
+    <!-- Right Side Diagnostic Card -->
+    <g transform="translate(615, 68)">
+      <rect width="205" height="138" rx="8" fill="#78350f" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+      <text x="20" y="28" fill="#fef3c7" font-size="13" font-weight="700">100 ROUND-TRIPS</text>
+      <text x="20" y="50" fill="#fde68a" font-size="11">Average order: 10 lines</text>
+      <text x="20" y="70" fill="#fde68a" font-size="11">Total lines: ~1,000 rows</text>
+      <line x1="20" y1="84" x2="185" y2="84" stroke="#f59e0b" stroke-opacity="0.3"/>
+      <text x="20" y="104" fill="#fbbf24" font-size="11" font-weight="600">Network Latency:</text>
+      <text x="20" y="122" fill="#ffffff" font-size="12" font-weight="700">100 × 0.8ms = 80ms</text>
+    </g>
+
+    <!-- Warning Pill at bottom -->
+    <rect x="20" y="215" width="800" height="24" rx="4" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+    <text x="420" y="231" fill="#fed7aa" font-size="11" font-weight="600" text-anchor="middle">
+      ⚠️ HikariCP connection held for entire iteration loop duration, choking other threads!
+    </text>
+  </g>
+
+  <!-- Second Loop transition line -->
+  <g transform="translate(40, 535)">
+    <line x1="420" y1="0" x2="420" y2="35" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowRed)"/>
+    <rect x="270" y="12" width="300" height="24" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1"/>
+    <text x="420" y="28" fill="#f87171" font-size="11" font-weight="700" text-anchor="middle">NESTED LOOP: for each Line → line.getProduct()</text>
+  </g>
+
+  <!-- ================= STEP 3: Up to 1,000 Queries for Products ================= -->
+  <g transform="translate(40, 575)" filter="url(#boxShadow)">
+    <rect width="840" height="155" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+    
+    <!-- Step Badge -->
+    <rect x="20" y="18" width="70" height="36" rx="8" fill="url(#stepGrad3)"/>
+    <text x="55" y="42" fill="#ffffff" font-size="15" font-weight="800" text-anchor="middle">+1,000</text>
+
+    <!-- Title & Description -->
+    <text x="105" y="34" fill="#f87171" font-size="15" font-weight="700">QUERIES 102..1101: NESTED N+1 PROXY RESOLUTION (ByteBuddy)</text>
+    <text x="105" y="52" fill="#94a3b8" font-size="12">Each OrderLine points to a Product proxy; accessing product.getName() triggers an individual SELECT</text>
+
+    <!-- Query Box -->
+    <g transform="translate(20, 68)" font-family="Consolas, monospace" font-size="12">
+      <rect width="570" height="42" rx="6" fill="#0f172a" stroke="#7f1d1d" stroke-width="1"/>
+      <text x="14" y="26" fill="#fca5a5">SELECT id, name, sku FROM product WHERE id = ?;  [fired up to 1,000×]</text>
+    </g>
+
+    <!-- Right Side Diagnostic Card -->
+    <g transform="translate(615, 68)">
+      <rect width="205" height="42" rx="8" fill="#7f1d1d" fill-opacity="0.3" stroke="#ef4444" stroke-width="1"/>
+      <text x="102" y="26" fill="#fca5a5" font-size="12" font-weight="700" text-anchor="middle">💥 N+1 INSIDE N+1</text>
+    </g>
+
+    <!-- Critical alert banner -->
+    <rect x="20" y="120" width="800" height="24" rx="4" fill="#7f1d1d" fill-opacity="0.4" stroke="#dc2626" stroke-width="1"/>
+    <text x="420" y="136" fill="#fecaca" font-size="11" font-weight="700" text-anchor="middle">
+      🚨 Cascading Query Storm: 1 + 100 + 1,000 = 1,101 round-trips for a single web page!
+    </text>
+  </g>
+
+  <!-- ================= TOTAL SUMMARY FOOTER ================= -->
+  <g transform="translate(40, 755)" filter="url(#boxShadow)">
+    <rect width="840" height="75" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    
+    <g transform="translate(30, 22)">
+      <text x="0" y="20" fill="#f8fafc" font-size="16" font-weight="700">Total Damage for 1 Request:</text>
+      <text x="0" y="42" fill="#94a3b8" font-size="13">1 Initial Query + 100 Collection Queries + 1,000 Entity Proxies</text>
+    </g>
+
+    <!-- Big Stat Badges -->
+    <g transform="translate(560, 16)">
+      <rect x="0" y="0" width="125" height="44" rx="8" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
+      <text x="62" y="20" fill="#fca5a5" font-size="10" font-weight="700" text-anchor="middle">TOTAL QUERIES</text>
+      <text x="62" y="38" fill="#ffffff" font-size="16" font-weight="800" text-anchor="middle">1,101 SQL</text>
+
+      <rect x="140" y="0" width="125" height="44" rx="8" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
+      <text x="202" y="20" fill="#fca5a5" font-size="10" font-weight="700" text-anchor="middle">LATENCY</text>
+      <text x="202" y="38" fill="#ffffff" font-size="16" font-weight="800" text-anchor="middle">2.4+ SEC</text>
+    </g>
+  </g>
 </svg>
