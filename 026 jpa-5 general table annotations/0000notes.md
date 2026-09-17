@@ -518,3 +518,85 @@ See after 5th call we get from Sequence Generator!!
 Very less efficient we have table_Generator here!
 
 Need to put lock if multiple tables using it!! So additional overhead here!!
+
+---
+
+### **Difference between `@Entity` vs `@Table` Annotation**
+
+Both `@Entity` and `@Table` are JPA annotations (from `jakarta.persistence` / `javax.persistence`) placed at the class level, but they serve completely different purposes:
+
+| Feature | `@Entity` | `@Table` |
+| :--- | :--- | :--- |
+| **Purpose** | Marks a Java class as a persistent entity. Tells JPA/Hibernate to manage instances of this class in the persistence context. | Customizes the physical database table mapping (name, schema, constraints, indexes). |
+| **Requirement** | **Mandatory** — Every entity class must have `@Entity`. Without it, Hibernate ignores the class. | **Optional** — If omitted, JPA uses default naming strategies based on the entity class name. |
+| **Abstraction Level** | **Logical / Object layer** (Java & JPA / JPQL level). | **Physical / Relational layer** (Database / SQL level). |
+| **JPQL / HQL Queries** | Entity name used in JPQL queries is defined by `@Entity(name = "...")`. | Not used in JPQL; only used in native SQL queries and DB schema generation. |
+| **Supported Attributes** | `name` (Entity name for JPQL queries) | `name`, `schema`, `catalog`, `uniqueConstraints`, `indexes` |
+
+---
+
+#### 1. When to use what?
+
+- **Only `@Entity`**: When the default database table name (derived from the class name) and default schema are acceptable.
+  ```java
+  @Entity
+  public class User {
+      @Id
+      private Long id;
+      private String name;
+  }
+  ```
+  - **JPQL Query:** `SELECT u FROM User u`
+  - **Generated DB Table:** `user` (or `USER` depending on naming strategy)
+
+- **Both `@Entity` and `@Table`**: When you need to specify a custom table name (e.g., reserved SQL keyword, legacy DB table), schema, indexes, or composite unique constraints.
+  ```java
+  @Entity
+  @Table(name = "app_users", schema = "auth_schema")
+  public class User {
+      @Id
+      private Long id;
+      private String name;
+  }
+  ```
+  - **JPQL Query:** `SELECT u FROM User u` (uses class/entity name)
+  - **Generated DB Table:** `auth_schema.app_users`
+
+---
+
+#### 2. Key Confusion: `@Entity(name = "...")` vs `@Table(name = "...")`
+
+This is a common interview question and area of confusion:
+
+```java
+@Entity(name = "AppUser")          // Entity name for JPQL/HQL queries
+@Table(name = "tbl_user_records")  // Physical DB table name
+public class User {
+    @Id
+    private Long id;
+    private String name;
+}
+```
+
+- **In JPQL / HQL:** You **must** use the entity name `AppUser`:
+  ```java
+  // Correct JPQL:
+  entityManager.createQuery("SELECT u FROM AppUser u", User.class);
+
+  // WRONG (will throw IllegalArgumentException / org.hibernate.hql.internal.ast.QuerySyntaxException):
+  // entityManager.createQuery("SELECT u FROM tbl_user_records u", User.class);
+  ```
+
+- **In Native SQL / Database:** The actual table created or queried in the database is `tbl_user_records`:
+  ```sql
+  SELECT * FROM tbl_user_records;
+  ```
+
+---
+
+#### Quick Summary:
+1. **Can we have `@Table` without `@Entity`?**
+   - **No.** `@Table` has no effect on its own. JPA only processes it if `@Entity` is present on the class.
+2. **Can we have `@Entity` without `@Table`?**
+   - **Yes.** JPA will automatically map it to a table using the class name.
+
