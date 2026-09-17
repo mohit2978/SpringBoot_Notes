@@ -12,7 +12,42 @@ From previous video, First level caching, we already know that, for each **HTTP 
 Now let us see **L2 cache** or **level 2 cache**!!
 
 ---
+## Is L2 cache same as putting redis as cache?
+No, they are different. L2 cache is specific to Hibernate/JPA and is used to cache entity data. Redis, on the other hand, is a general-purpose in-memory data store that can be used as a cache, message broker, and more. Redis is external to Hibernate, while L2 cache is internal to Hibernate.
 
+
+No — they're related in *purpose* (both cache data to avoid expensive re-fetches) but very different in **scope, mechanism, and level**. Let's break down the distinction clearly.
+
+**Hibernate L2 Cache (Second-Level Cache)**
+
+- This is specifically about **JPA/Hibernate entity caching** — it caches **database entity objects** (the results of your `EntityManager`/repository queries) so that repeated lookups for the same entity don't hit the database again.
+- **Scope:** shared across **all sessions/transactions within a single application instance** (that's what makes it "second-level" — the "first-level cache" is per-`EntityManager`/session, and L2 sits above that, shared app-wide within one JVM).
+- **Where it lives:** typically in-memory within the same JVM as your application (using providers like **Ehcache**, **Caffeine**, or **Infinispan** as the underlying storage).
+- **What it caches:** entity objects by primary key (`User` by `id`), and sometimes query results (`@QueryHints` for query caching).
+- **Enabled via:** `@Cacheable` annotation on entities + Hibernate second-level cache configuration (`hibernate.cache.use_second_level_cache=true`).
+
+**Redis as a cache**
+
+- This is a **general-purpose, distributed, external cache** — a separate service entirely, not tied to Hibernate/JPA at all.
+- **Scope:** shared across **multiple application instances/services** (since it's an external process, not living inside any single JVM) — this is the big structural difference.
+- **What it caches:** anything you explicitly choose to store — DTOs, computed results, session data, rate limiter counters (as you've used it), serialized objects, HTML fragments — completely independent of your ORM/entity layer.
+- **How it's used:** you explicitly write code to check Redis first, then fall back to DB on a cache miss (cache-aside pattern), or use Spring's `@Cacheable` with a Redis-backed `CacheManager` to make it feel automatic.
+
+**Key differences, side by side**
+
+| | Hibernate L2 Cache | Redis |
+|---|---|---|
+| Scope | Single JVM (per app instance) | Shared across all instances |
+| Tied to ORM? | Yes — entity/query-specific | No — completely general purpose |
+| Survives app restart? | No (in-memory, local) | Yes (separate process, persists independently) |
+| Works in microservices (multi-instance)? | No — each instance has its own separate L2 cache, so they can go **out of sync** with each other | Yes — this is exactly why Redis is preferred in distributed/microservices setups |
+| Use case | Reduce DB load within one app instance for entity lookups | Reduce DB/computation load across the whole distributed system, plus general caching, rate limiting, distributed locks, session storage |
+
+
+**One-line interview answer:**
+"Hibernate's L2 cache is a JVM-local, ORM-specific cache for entity/query results, shared only within one application instance — it can go stale across multiple instances in a microservices setup. Redis is an external, distributed, general-purpose cache shared across all instances, making it the better choice when you need cache consistency across a horizontally-scaled service — though you could technically configure Hibernate's L2 cache to use a distributed provider like Infinispan in clustered mode to get similar cross-instance consistency, at added complexity."
+
+---
 ## Second Level Cache (L2 Cache)
 
 Now, in **Second Level caching** or **L2 caching**, we will achieve something like this:
