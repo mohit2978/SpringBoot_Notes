@@ -1,6 +1,6 @@
  ![svg](<svgs/img1-orm-framework-diagram.svg>)
 
-Diagram: Application Logic ↔ [ORM Framework: JPA (interface) ↔ Hibernate (Implementation)] ↔ JDBC (interface) ↔ Specific DB Driver (Implementation) ↔ Relational DB
+
 
 ORM Framework → Bridge B/w Java Object & Table
 

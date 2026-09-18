@@ -467,19 +467,75 @@ Here is the exact journey of an HTTP request updating an entity in a Spring Boot
 ### Q1: What is the difference between a Database Connection and an EntityManager?
 > **Answer:** A **Database Connection** is a low-level physical TCP/IP network socket between the application and the database server (managed by HikariCP). An **EntityManager** is a high-level JPA interface that manages Java entity objects in memory (Persistence Context), performs dirty checking, handles first-level caching, and translates object operations into SQL statements executed through a borrowed connection.
 
-### Q2: How does HikariCP handle connection sizing, and what happens when all connections are busy?
+### Q2: What happens if EntityManager doesn't exist? What does it help us do?
+> **Answer:** Without `EntityManager`, you would have to manually handle **every aspect** of database interaction yourself using raw JDBC. This means manually opening/closing connections, writing SQL strings, mapping `ResultSet` rows to Java objects field by field, tracking which fields changed (no automatic dirty checking), and managing transactions with explicit `commit()` / `rollback()` calls. The `EntityManager` abstracts all of this away — it provides automatic object-relational mapping, first-level caching, dirty checking, lazy loading, and declarative transaction support.
+>
+> **Example — Without EntityManager (Raw JDBC):**
+> ```java
+> Connection conn = dataSource.getConnection();
+> try {
+>     conn.setAutoCommit(false);
+>
+>     // 1. Manually write SQL
+>     PreparedStatement ps = conn.prepareStatement(
+>         "SELECT id, name, salary FROM employee WHERE id = ?"
+>     );
+>     ps.setLong(1, 1L);
+>     ResultSet rs = ps.executeQuery();
+>
+>     // 2. Manually map each column to a Java object
+>     Employee emp = null;
+>     if (rs.next()) {
+>         emp = new Employee();
+>         emp.setId(rs.getLong("id"));
+>         emp.setName(rs.getString("name"));
+>         emp.setSalary(rs.getDouble("salary"));
+>     }
+>
+>     // 3. Modify and manually write UPDATE SQL
+>     emp.setName("Rahul");
+>     PreparedStatement update = conn.prepareStatement(
+>         "UPDATE employee SET name = ? WHERE id = ?"
+>     );
+>     update.setString(1, emp.getName());
+>     update.setLong(2, emp.getId());
+>     update.executeUpdate();
+>
+>     // 4. Manually commit
+>     conn.commit();
+> } catch (Exception e) {
+>     conn.rollback(); // 5. Manually rollback on error
+>     throw e;
+> } finally {
+>     conn.close(); // 6. Manually close connection
+> }
+> ```
+>
+> **Same operation With EntityManager (JPA):**
+> ```java
+> @Transactional
+> public void updateName() {
+>     Employee emp = employeeRepository.findById(1L).orElseThrow();
+>     emp.setName("Rahul");
+>     // That's it! No SQL, no manual mapping, no commit/rollback/close needed.
+> }
+> ```
+>
+> The EntityManager handles connection borrowing, SQL generation, result mapping, dirty checking (`name` changed from `"Mohit"` → `"Rahul"`), automatic `UPDATE` generation at flush time, transaction commit, and connection return — all behind the scenes.
+
+### Q3: How does HikariCP handle connection sizing, and what happens when all connections are busy?
 > **Answer:** HikariCP defaults to a `maximum-pool-size` of 10. When all 10 connections are in use, incoming requests queue up until a connection is returned. If no connection becomes free before `connection-timeout` (default 30 seconds) expires, HikariCP throws a `SQLTransientConnectionException`.
 
-### Q3: Why don't you need to call `repository.save()` when updating an entity inside a `@Transactional` method?
+### Q4: Why don't you need to call `repository.save()` when updating an entity inside a `@Transactional` method?
 > **Answer:** Because of **Dirty Checking**. When an entity is loaded inside an active transaction, it becomes *managed* within the Persistence Context, and Hibernate preserves an initial snapshot of its state. When the transaction finishes, Hibernate flushes the context, compares the current object state against the snapshot, and automatically executes an `UPDATE` query for any modified fields.
 
-### Q4: What causes a `LazyInitializationException` and how do you resolve it?
+### Q5: What causes a `LazyInitializationException` and how do you resolve it?
 > **Answer:** It occurs when your code attempts to access an uninitialized lazy association or collection after the `EntityManager` / Hibernate session has closed (e.g., in a controller or view layer outside `@Transactional`). Because the proxy cannot borrow a connection to load the data, it fails. Solutions include:
 > 1. Fetching the relationship eagerly using **`JOIN FETCH`** in JPQL.
 > 2. Using Spring Data JPA **`@EntityGraph`**.
 > 3. Loading required attributes inside a `@Transactional` service boundary or mapping to a DTO directly.
 
-### Q5: What is the Persistence Context, and does it act as a global cache?
+### Q6: What is the Persistence Context, and does it act as a global cache?
 > **Answer:** No, the Persistence Context (First-Level Cache) is **not** global. It is bound to a single `EntityManager` / transaction lifecycle. Its purpose is to guarantee entity identity within a single unit of work (so `id=1` is never instantiated as two different Java objects) and to batch/delay SQL executions until flush time.
 
 ---
