@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="790" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arr-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#60a5fa"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="790" fill="#0f172a" rx="12"/>
+
+  <!-- Title -->
+  <text x="460" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#f1f5f9">OAuth 2.0 — Authorization Code Grant Flow</text>
+  <text x="460" y="46" text-anchor="middle" font-size="11" fill="#94a3b8">Browser vs Server | Visual Sequence Diagram</text>
+
+  <!-- Legend -->
+  <rect x="125" y="53" width="12" height="10" fill="#f59e0b" rx="2"/>
+  <text x="141" y="63" font-size="10" fill="#f59e0b">User Action</text>
+
+  <rect x="235" y="53" width="12" height="10" fill="#60a5fa" rx="2"/>
+  <text x="251" y="63" font-size="10" fill="#60a5fa">Browser / Front-Channel</text>
+
+  <rect x="430" y="53" width="12" height="10" fill="#34d399" rx="2"/>
+  <text x="446" y="63" font-size="10" fill="#34d399">Server / Back-Channel</text>
+
+  <rect x="590" y="53" width="12" height="10" fill="#64748b" rx="2"/>
+  <text x="606" y="63" font-size="10" fill="#64748b">Automatic Response</text>
+
+  <!-- ===== ACTOR BOXES TOP ===== -->
+  <!-- Centers: USER=75, BROWSER=235, CLIENT=435, AUTH=635, RESOURCE=827 -->
+
+  <rect x="18"  y="72" width="114" height="34" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="75"  y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#f59e0b">USER</text>
+
+  <rect x="160" y="72" width="150" height="34" rx="6" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="235" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#60a5fa">BROWSER</text>
+
+  <rect x="352" y="72" width="166" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+  <text x="435" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#34d399">CLIENT SERVER</text>
+
+  <rect x="550" y="72" width="170" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+  <text x="635" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#34d399">AUTH SERVER</text>
+
+  <rect x="752" y="72" width="150" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+  <text x="827" y="88"  text-anchor="middle" font-size="10" font-weight="bold" fill="#34d399">RESOURCE</text>
+  <text x="827" y="102" text-anchor="middle" font-size="10" font-weight="bold" fill="#34d399">SERVER</text>
+
+  <!-- ===== LIFELINES ===== -->
+  <line x1="75"  y1="106" x2="75"  y2="693" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="235" y1="106" x2="235" y2="693" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="435" y1="106" x2="435" y2="693" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="635" y1="106" x2="635" y2="693" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="827" y1="106" x2="827" y2="693" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ===== PRE-FLOW: Steps 1 and 2 ===== -->
+  <rect x="350" y="112" width="385" height="20" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="542" y="126" text-anchor="middle" font-size="9.5" fill="#64748b">Steps 1 &amp; 2: Developer registers app and receives Client ID &amp; Secret  [Server, one-time setup]</text>
+
+  <!-- ===== STEP 3 (y=158): USER to BROWSER ===== -->
+  <line x1="77"  y1="158" x2="229" y2="158" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr-amber)"/>
+  <text x="152" y="151" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#f59e0b">Step 3: Clicks "Sign In with Gmail"</text>
+
+  <!-- ===== STEP 4 (y=203): BROWSER to AUTH SERVER (redirect) ===== -->
+  <line x1="237" y1="203" x2="629" y2="203" stroke="#60a5fa" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <!-- dot at CLIENT SERVER position shows it triggers redirect -->
+  <circle cx="435" cy="203" r="3.5" fill="#60a5fa" opacity="0.9"/>
+  <text x="432" y="196" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#60a5fa">Step 4: Browser redirected to Auth Server login page (URL changes)</text>
+  <text x="435" y="214" text-anchor="middle" font-size="8.5" fill="#3b82f6">Client generates the redirect URL, browser follows it to Auth Server</text>
+
+  <!-- ===== AUTH PAGE RETURNED (y=253): AUTH SERVER to BROWSER ===== -->
+  <line x1="633" y1="253" x2="240" y2="253" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-gray)"/>
+  <text x="435" y="246" text-anchor="middle" font-size="9.5" fill="#64748b">Auth Server sends login + consent page back to browser</text>
+
+  <!-- ===== STEP 5 (y=298): USER to AUTH SERVER ===== -->
+  <line x1="77"  y1="298" x2="629" y2="298" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr-amber)"/>
+  <text x="352" y="291" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#f59e0b">Step 5: User types credentials + clicks "Allow" on Consent screen</text>
+
+  <!-- ===== STEP 6 (y=343): AUTH SERVER to BROWSER ===== -->
+  <line x1="633" y1="343" x2="240" y2="343" stroke="#60a5fa" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <circle cx="435" cy="343" r="3.5" fill="#60a5fa" opacity="0.9"/>
+  <text x="435" y="336" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#60a5fa">Step 6: Redirect to redirect_uri?code=AUTH_CODE   (visible in URL bar)</text>
+  <text x="435" y="356" text-anchor="middle" font-size="8.5" fill="#f87171">Auth Code in URL, browser history &amp; logs — safe only because it's short-lived &amp; single-use</text>
+
+  <!-- ===== SECTION DIVIDER ===== -->
+  <line x1="18"  y1="370" x2="902" y2="370" stroke="#1e3a8a" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="460" y="381" text-anchor="middle" font-size="9" fill="#3b82f6">Server-to-Server (Back-Channel) — Steps below are completely hidden from browser</text>
+
+  <!-- ===== STEP 7 (y=400): CLIENT SERVER to AUTH SERVER ===== -->
+  <line x1="437" y1="400" x2="629" y2="400" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="533" y="393" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#34d399">Step 7: POST Auth Code + Client Secret  (HTTPS, hidden from browser)</text>
+
+  <!-- ===== STEP 8 (y=438): AUTH SERVER to CLIENT SERVER ===== -->
+  <line x1="633" y1="438" x2="441" y2="438" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="533" y="431" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#34d399">Step 8: Access Token + Refresh Token  (hidden from browser)</text>
+
+  <!-- ===== STEP 9 (y=476): CLIENT SERVER to RESOURCE SERVER ===== -->
+  <line x1="437" y1="476" x2="821" y2="476" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="629" y="469" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#34d399">Step 9: API Call with Bearer Token  (hidden from browser)</text>
+
+  <!-- ===== STEP 10 (y=514): RESOURCE SERVER to AUTH SERVER ===== -->
+  <line x1="825" y1="514" x2="641" y2="514" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="731" y="507" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#34d399">Step 10: Validate Token  (hidden)</text>
+
+  <!-- ===== STEP 11 (y=551): AUTH SERVER to RESOURCE SERVER ===== -->
+  <line x1="637" y1="551" x2="821" y2="551" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="729" y="544" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#34d399">Step 11: Valid / Invalid  (hidden)</text>
+
+  <!-- ===== STEP 12 (y=590): RESOURCE SERVER to CLIENT SERVER ===== -->
+  <line x1="825" y1="590" x2="441" y2="590" stroke="#34d399" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="631" y="583" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#34d399">Step 12: Protected Data returned  (or 4xx Error)  (hidden)</text>
+
+  <!-- ===== STEP 13a (y=630): CLIENT SERVER to BROWSER ===== -->
+  <line x1="433" y1="630" x2="241" y2="630" stroke="#60a5fa" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="337" y="623" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#60a5fa">Step 13: Login response sent to browser</text>
+
+  <!-- ===== STEP 13b (y=668): BROWSER to USER ===== -->
+  <line x1="233" y1="668" x2="81"  y2="668" stroke="#60a5fa" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="155" y="661" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#60a5fa">Step 13: Login Success  /  Failure shown</text>
+
+  <!-- ===== ACTOR BOXES BOTTOM ===== -->
+  <rect x="18"  y="693" width="114" height="34" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="75"  y="714" text-anchor="middle" font-size="11" font-weight="bold" fill="#f59e0b">USER</text>
+
+  <rect x="160" y="693" width="150" height="34" rx="6" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="235" y="714" text-anchor="middle" font-size="11" font-weight="bold" fill="#60a5fa">BROWSER</text>
+
+  <rect x="352" y="693" width="166" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+  <text x="435" y="714" text-anchor="middle" font-size="11" font-weight="bold" fill="#34d399">CLIENT SERVER</text>
+
+  <rect x="550" y="693" width="170" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+  <text x="635" y="714" text-anchor="middle" font-size="11" font-weight="bold" fill="#34d399">AUTH SERVER</text>
+
+  <rect x="752" y="693" width="150" height="34" rx="6" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+  <text x="827" y="710" text-anchor="middle" font-size="10" font-weight="bold" fill="#34d399">RESOURCE</text>
+  <text x="827" y="723" text-anchor="middle" font-size="10" font-weight="bold" fill="#34d399">SERVER</text>
+
+  <!-- Footer -->
+  <text x="460" y="772" text-anchor="middle" font-size="9" fill="#334155">OAuth 2.0 Authorization Code Grant — Sequence Diagram</text>
+</svg>
