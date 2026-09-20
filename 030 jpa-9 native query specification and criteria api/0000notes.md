@@ -1,5 +1,81 @@
 ## JPA - Part 9 & 10 (Specification and Criteria API)
-![alt text](image.png)
+
+
+## JPQL vs Native Query
+
+| Feature | JPQL | Native Query |
+|---|---|---|
+| **Query Language** | Uses entity/field names (Java objects) | Uses actual table/column names (SQL) |
+| **Database Dependent** | ❌ No – works with any DB | ✅ Yes – tied to specific DB |
+| **Caching** | ✅ Supports first/second level cache | ❌ No caching |
+| **Lazy Loading** | ✅ Supported | ❌ Not supported |
+| **Complex DB Features** | ❌ Limited (no JSONB, LATERAL JOIN, etc.) | ✅ Full DB-specific feature support |
+| **Entity Lifecycle** | ✅ Managed by JPA | ❌ Not managed |
+| **Type Safety** | ✅ Partially (via Criteria API) | ❌ Raw strings |
+
+---
+
+### JPQL Example
+
+```java
+// Entity class:
+// - Java class name: UserDetails
+// - Java field name: name  (mapped to DB column: user_name)
+
+@Repository
+public interface UserDetailsRepository extends JpaRepository<UserDetails, Long> {
+
+    // JPQL: uses entity class name and field name, NOT table/column name
+    @Query("SELECT u FROM UserDetails u WHERE u.name = :userName")
+    List<UserDetails> findByNameJPQL(@Param("userName") String name);
+}
+```
+
+**Key Points about JPQL:**
+- `UserDetails` → Java entity class name (NOT DB table name `user_details`)
+- `u.name` → Java field name (NOT DB column `user_name`)
+- JPA translates this to SQL automatically: `SELECT * FROM user_details WHERE user_name = ?`
+- If you change the database (MySQL → PostgreSQL), JPQL still works ✅
+
+---
+
+### Native Query Example
+
+```java
+@Repository
+public interface UserDetailsRepository extends JpaRepository<UserDetails, Long> {
+
+    // Native Query: uses actual DB table and column names
+    @Query(value = "SELECT * FROM user_details WHERE user_name = :userName", nativeQuery = true)
+    List<UserDetails> findByNameNative(@Param("userName") String name);
+}
+```
+
+**Key Points about Native Query:**
+- `user_details` → actual DB table name
+- `user_name` → actual DB column name
+- If you switch database, this query may BREAK ❌
+- Supports DB-specific features like `JSONB`, `LATERAL JOIN`, `RETURNING`, etc.
+
+---
+
+### When to use JPQL vs Native Query?
+
+```
+Use JPQL when:
+  ✅ Standard CRUD operations
+  ✅ Want DB portability (MySQL → PostgreSQL)
+  ✅ Need caching, lazy loading, entity lifecycle
+
+Use Native Query when:
+  ✅ Complex DB-specific SQL (JSONB, LATERAL JOIN, etc.)
+  ✅ Bulk operations for performance
+  ✅ Fetching non-entity results (partial columns, joins without relationships)
+```
+
+---
+
+
 ### Native Query
 
 - Plain SQL queries.
