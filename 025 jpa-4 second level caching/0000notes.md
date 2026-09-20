@@ -1,4 +1,4 @@
-﻿
+
 ## First Level Cache Recap
 
 From previous video, First level caching, we already know that, for each **HTTP REQUEST**, different EntityManager Object (session) is created and it has its own Persistence context (1st level cache).
@@ -55,6 +55,298 @@ Now, in **Second Level caching** or **L2 caching**, we will achieve something li
 ![L2 Cache Architecture](svg/img2_l2_cache_diagram.svg)
 
 Now between PersistanceContext and DB we have **Another layer** called as **2nd level cache**!! Now every persistence Context shares L2 cache!!
+
+---
+
+### **Is Hibernate L2 Cache the same as Spring Boot's Default Cache (`@Cacheable`)?**
+
+> **Short Answer: NO!** They operate at **completely different architectural layers**, solve different problems, and work completely differently under the hood.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Client Request                         │
+└─────────────────────────────┬───────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     Controller Layer                        │
+└─────────────────────────────┬───────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      Service Layer                          │
+│                                                             │
+│   ⭐ 1. SPRING BOOT CACHE (@Cacheable)                       │
+│      - Intercepts Java method execution via Spring AOP      │
+│      - Caches ANY method return value (DTO, String, List)   │
+│      - Skips service method entirely on cache HIT           │
+└─────────────────────────────┬───────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Repository / ORM Layer                   │
+│                                                             │
+│   ⭐ 2. HIBERNATE L1 CACHE (Persistence Context / Session)  │
+│      - Transaction-scoped (lives & dies with transaction)   │
+│                              │                              │
+│                              ▼                              │
+│   ⭐ 3. HIBERNATE L2 CACHE (SessionFactory / Process-wide)   │
+│      - Shared across ALL Persistence Contexts               │
+│      - Caches dehydrated entity data (raw column values)    │
+│      - Only skips the SQL query to DB, NOT service code     │
+└─────────────────────────────┬───────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     Database (RDBMS)                        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+#### **Key Differences Explained with Examples**
+
+##### **1. Where do they intercept?**
+* **Spring `@Cacheable`**: Intercepts **method calls** via Spring AOP.
+  ```java
+  @Service
+  public class OrderService {
+      // 🟢 Spring Cache:
+      // If orderId=10 is in cache, this ENTIRE METHOD is skipped!
+      // No calculations, no repository calls, no DB touches.
+      @Cacheable(value = "orderSummaries", key = "#orderId")
+      public OrderSummaryDTO getOrderSummary(Long orderId) {
+          // Expensive calculation / multi-table joins:
+          Order order = orderRepository.findById(orderId).orElseThrow();
+          return new OrderSummaryDTO(order, calculateDiscounts(order));
+      }
+  }
+  ```
+* **Hibernate L2 Cache**: Intercepts **ORM entity queries** before hitting the database.
+  ```java
+  @Service
+  public class OrderService {
+      public Order getOrder(Long orderId) {
+          // 🔵 Hibernate L2 Cache:
+          // The service method ALWAYS runs.
+          // Inside orderRepository.findById(orderId):
+          // 1. Checks L1 cache. Miss?
+          // 2. Checks L2 cache. If HIT -> Reconstructs Order entity from cached data!
+          // 3. No SQL "SELECT * FROM orders WHERE id=?" sent to DB.
+          return orderRepository.findById(orderId).orElseThrow();
+      }
+  }
+  ```
+
+---
+
+##### **2. Cache Invalidation & Stale Data (The BIGGEST Difference!)**
+* **Spring `@Cacheable` is DUMB regarding DB changes:**
+  Spring has no clue if an entity was modified in the database. You **must manually evict** the cache using `@CacheEvict` or `@CachePut`:
+  ```java
+  @Transactional
+  @CacheEvict(value = "orderSummaries", key = "#orderId") // ⚠️ If you forget this, cache stays STALE!
+  public void updateOrderStatus(Long orderId, String status) {
+      Order order = orderRepository.findById(orderId).orElseThrow();
+      order.setStatus(status);
+      orderRepository.save(order);
+  }
+  ```
+* **Hibernate L2 Cache is ORM-AWARE (Automatic Eviction):**
+  Hibernate tracks entity mutations directly in its lifecycle. When you update an entity:
+  ```java
+  @Transactional
+  public void updateOrderStatus(Long orderId, String status) {
+      Order order = orderRepository.findById(orderId).orElseThrow();
+      order.setStatus(status); 
+      // When the transaction commits, Hibernate AUTOMATICALLY updates
+      // or invalidates the L2 cache entry for this Order entity!
+      // No manual @CacheEvict annotation needed!
+  }
+  ```
+
+---
+
+##### **3. What actually gets stored in memory?**
+* **Spring `@Cacheable`**: Stores the exact **Java return object** (e.g. `OrderSummaryDTO`, a `List<Product>`, or raw JSON).
+* **Hibernate L2 Cache**: Does **NOT** store actual Java entity instances (to prevent threading and reference mutation issues). Instead, it stores **"dehydrated" raw property arrays**:
+  ```
+  Cached Data: [id: 10, status: "PENDING", totalAmount: 250.00, customerId: 4]
+  ```
+  When fetched, Hibernate creates a *new managed Java object* inside the current transaction's `PersistenceContext` (L1 cache) and inflates it with these cached values.
+
+---
+
+#### **Side-by-Side Comparison Table**
+
+| Aspect | Spring Boot Cache (`@Cacheable`) | Hibernate Second Level Cache (L2) |
+|---|---|---|
+| **Layer** | **Application / Service Layer** (via Spring AOP) | **ORM / Persistence Layer** (inside Hibernate) |
+| **Annotation** | `org.springframework.cache.annotation.Cacheable` | `jakarta.persistence.Cacheable` & `org.hibernate.annotations.Cache` |
+| **What is Cached?** | Any method return value (DTO, POJO, primitive, List, etc.) | Entity column values, collections, query cache |
+| **What is Skipped on Hit?** | The **entire method body** (no service code executes) | Only the **SQL `SELECT` statement** to the DB |
+| **Cache Invalidation** | **Manual** (must use `@CacheEvict` or `@CachePut`) | **Automatic** (Hibernate tracks entity changes on commit) |
+| **Default Provider** | Spring provides a simple default (`ConcurrentMapCacheManager`) | **None** (must explicitly configure Ehcache, Hazelcast, Infinispan, etc.) |
+| **Best Used For** | Caching DTOs, external REST API responses, heavy business calculations | Caching frequently read, infrequently updated JPA Entities across multiple sessions |
+
+---
+
+### **Visual Example: What Does L2 Cache Actually Track When You Hit an API?**
+
+Let's trace a realistic example to see **what the client sees**, **what SQL runs**, and **the exact data structure Hibernate L2 Cache stores in memory**.
+
+#### **The Scenario:**
+```java
+@Entity
+@Table(name = "users")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class User {
+    @Id
+    private Long id;
+    private String name;
+    private String email;
+    private String role;
+    private String department;
+    // getters, setters...
+}
+```
+
+---
+
+#### **Step 1: First Request (Cache MISS)**
+
+1. **Client sends HTTP Request:**
+   ```http
+   GET /api/v1/users/1
+   ```
+
+2. **HTTP JSON Response returned to Client:**
+   ```json
+   {
+     "id": 1,
+     "name": "Mohit Sharma",
+     "email": "mohit@example.com",
+     "role": "ADMIN",
+     "department": "Engineering"
+   }
+   ```
+
+3. **What Hibernate does behind the scenes:**
+   - Checks **L1 Cache (Persistence Context)** ➡️ **MISS** (Fresh HTTP request = new Session)
+   - Checks **L2 Cache (Ehcache / Redis)** ➡️ **MISS**
+   - Sends SQL query to Database:
+     ```sql
+     /* SQL Query Fired to DB */
+     SELECT id, name, email, role, department FROM users WHERE id = 1;
+     ```
+
+4. **👉 WHAT GETS CACHED IN L2 CACHE?**
+   > [!IMPORTANT]
+   > **What L2 Cache does NOT store:**
+   > - ❌ It does **NOT** store the HTTP JSON response.
+   > - ❌ It does **NOT** store any `UserDTO` or Java controller wrapper.
+   > - ❌ It does **NOT** store the Java `User` entity instance pointer (storing live Java objects would cause thread safety and dirty-state corruption issues across concurrent requests).
+   >
+   > **What L2 Cache ACTUALLY stores (Dehydrated Entity State):**
+   > It decomposes the entity into a serialized **key-value pair** consisting of the **Primary Key** and an **array of raw column values**:
+
+   ```json
+   /* Actual Representation stored inside L2 Cache (e.g. Ehcache) */
+   Region : "com.example.entity.User"
+   Key    : 1
+   Value  : {
+     "entity": "com.example.entity.User",
+     "id": 1,
+     "version": 0,
+     "state": [
+       "Mohit Sharma",        /* index 0: name */
+       "mohit@example.com",   /* index 1: email */
+       "ADMIN",               /* index 2: role */
+       "Engineering"          /* index 3: department */
+     ]
+   }
+   ```
+
+---
+
+#### **Step 2: Second Request (Cache HIT 🚀)**
+
+1. **Another user/thread sends the same HTTP Request:**
+   ```http
+   GET /api/v1/users/1
+   ```
+
+2. **What Hibernate does behind the scenes:**
+   - Checks **L1 Cache** ➡️ **MISS** (Different HTTP request has its own new Session)
+   - Checks **L2 Cache** for key `User#1` ➡️ **🎯 CACHE HIT!**
+   - **Hibernate reconstitutes the entity:** It creates a *brand-new Java `User` object* in the current Session's L1 cache and "hydrates" it with the cached values `["Mohit Sharma", "mohit@example.com", "ADMIN", "Engineering"]`.
+   - **Database SQL Query:** **ZERO SQL FIRED!** (Database is never touched).
+
+3. **HTTP JSON Response returned to Client:**
+   Identical JSON returned instantly with zero DB load:
+   ```json
+   {
+     "id": 1,
+     "name": "Mohit Sharma",
+     "email": "mohit@example.com",
+     "role": "ADMIN",
+     "department": "Engineering"
+   }
+   ```
+
+---
+
+#### **Step 3: Update Request (How L2 Cache Tracks Mutations)**
+
+What happens when someone modifies user #1?
+
+1. **Client sends HTTP PUT Request:**
+   ```http
+   PUT /api/v1/users/1
+   Content-Type: application/json
+
+   {
+     "role": "SUPER_ADMIN"
+   }
+   ```
+
+2. **Inside Service:**
+   ```java
+   @Transactional
+   public void updateUserRole(Long id, String newRole) {
+       User user = userRepository.findById(id).orElseThrow();
+       user.setRole(newRole); // Dirty checking detects modification
+   }
+   ```
+
+3. **On Transaction Commit:**
+   - **Database:** Hibernate writes the update:
+     ```sql
+     UPDATE users SET role = 'SUPER_ADMIN' WHERE id = 1;
+     ```
+   - **L2 Cache Invalidation:** Hibernate's cache interceptor automatically updates or invalidates the cached entry for `User#1`:
+     ```diff
+      Value : {
+        "id": 1,
+        "state": [
+          "Mohit Sharma",
+          "mohit@example.com",
+     -    "ADMIN",
+     +    "SUPER_ADMIN",
+          "Engineering"
+        ]
+      }
+     ```
+   - The next `GET /api/v1/users/1` immediately receives `"role": "SUPER_ADMIN"`, preventing stale data without any manual `@CacheEvict` annotations!
+
+---
+
+#### **What about `@OneToMany` Relationships (Collections)?**
+If `User` has `List<Order> orders`:
+- **By default, L2 cache does NOT cache child collections** unless annotated with `@Cache` on the collection property itself.
+- When cached, L2 cache does **not** store child entity objects; it stores **only an array of child IDs**:
+  ```json
+  Region : "com.example.entity.User.orders"
+  Key    : 1
+  Value  : [101, 102, 103]   /* Just foreign key IDs! */
+  ```
 
 ---
 
@@ -536,3 +828,187 @@ Transactional is more strict!!
 If lock on read then Will read from DB!!
 
 If on lock write operation comes it has to wait!!
+
+---
+
+# 🎯 Top Hibernate / JPA Second Level (L2) Cache Interview Questions
+
+---
+
+### **Category 1: Core Architecture & Fundamentals**
+
+#### **Q1. What is the difference between First-Level (L1) and Second-Level (L2) Cache in Hibernate?**
+| Feature | First-Level (L1) Cache | Second-Level (L2) Cache |
+|---|---|---|
+| **Scope** | **Session / Transaction** (`EntityManager` level) | **SessionFactory / Application-wide** (shared by all sessions) |
+| **Default Status** | **Always ON** (Mandatory, cannot be disabled) | **Always OFF** (Optional, must configure external provider) |
+| **Physical Location** | In-memory inside current Java thread/Session | In-memory / Off-heap / Distributed (Ehcache, Redis, Hazelcast) |
+| **Lifetime** | Dies when transaction / session closes | Lives for the entire application lifecycle (or until TTL/eviction) |
+| **What is Stored** | Live Java Entity object references | Dehydrated entity state (raw column values array) |
+
+> **Punchy Interview Line:**
+> *"L1 cache prevents repeat SQL queries within a single transaction; L2 cache prevents repeat SQL queries across different transactions and users."*
+
+---
+
+#### **Q2. Is L2 Cache enabled by default in Spring Boot? Why or why not?**
+* **Answer:** **No, it is disabled by default.**
+* **Why:**
+  1. Hibernate does not bundle a caching engine by default; you must supply a provider (e.g., Ehcache, Infinispan, Hazelcast).
+  2. In modern horizontally scaled microservices (multiple instances), an in-memory L2 cache can easily go out-of-sync and serve stale data unless configured in distributed/clustered mode.
+
+---
+
+#### **Q3. What does L2 Cache actually store in memory? Does it store the Java Entity object?**
+* **Answer:** **NO, it does NOT store the Java Entity instance!**
+* **Why:** Storing live entity references would break thread safety and cause concurrency corruption (e.g., Thread A mutates an entity while Thread B is reading it).
+* **What it stores:** It stores a **"dehydrated" array of raw property/column values** indexed by Entity Class and Primary Key:
+  ```json
+  Key: User#101
+  Value: ["Mohit", "mohit@example.com", "ADMIN", version: 2]
+  ```
+  When an entity is retrieved from L2 cache, Hibernate constructs a **brand-new Java object** in the calling session's L1 cache and populates it with the cached values.
+
+---
+
+#### **Q4. Why must Entities implement `java.io.Serializable` when using L2 Cache?**
+* **Answer:** 
+  Even though local in-memory providers like simple Ehcache can store raw arrays, L2 cache providers frequently:
+  1. **Overflow to disk** when heap memory runs low.
+  2. **Replicate across nodes** in a cluster / distributed cache (e.g., Hazelcast, Infinispan, Redis).
+  Both disk serialization and network transmission require the cached data and composite keys to be `Serializable`.
+
+---
+
+### **Category 2: Entity Cache vs Collection Cache vs Query Cache**
+
+#### **Q5. If I annotate an Entity with `@Cacheable`, are its `@OneToMany` collections also cached automatically?**
+* **Answer:** **NO! This is a classic trap.**
+* By default, Hibernate **only caches the direct attributes** (columns) of that entity.
+* Child collections (`@OneToMany`, `@ManyToMany`) are **NOT** cached unless you explicitly put `@Cache` directly on the collection field:
+  ```java
+  @Entity
+  @Cacheable
+  public class Department {
+      @Id
+      private Long id;
+      private String name;
+
+      // ⚠️ Without @Cache here, accessing employees ALWAYS triggers a SQL query!
+      @OneToMany(mappedBy = "department")
+      @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+      private List<Employee> employees = new ArrayList<>();
+  }
+  ```
+* **What does the collection cache store?**
+  It does **not** store Employee data. It stores **only the list of foreign key IDs** (e.g., `[101, 102, 103]`). To resolve those IDs into entities without hitting the DB, the `Employee` entity must **also** have its own L2 cache enabled!
+
+---
+
+#### **Q6. Does `userRepository.findById(1)` and `userRepository.findAll()` use L2 cache in the same way?**
+* **Answer:** **NO!**
+  * `findById(1)` lookups use the **Entity Cache** (keyed directly by primary key `User#1`). It hits L2 cache directly without any SQL.
+  * `findAll()`, JPQL (`SELECT u FROM User u WHERE u.age > 20`), or Native queries **DO NOT use L2 cache by default!** They will always fire SQL queries to the database unless the **Query Cache** is also explicitly enabled and queried with cache hints.
+
+---
+
+#### **Q7. What is Hibernate Query Cache and how does it work with L2 Cache?**
+* **Answer:** 
+  The **Query Cache** caches the *results of specific queries* (JPQL / Criteria).
+* **What it stores:**
+  - Key: `(SQL/JPQL string + parameter values + pagination offsets)`
+  - Value: A list of **Entity Primary Keys** only! (e.g., `[1, 5, 12, 44]`), **NOT** entity data.
+* **How it interacts with L2 Cache:**
+  1. Query Cache returns IDs: `[1, 5, 12]`.
+  2. Hibernate looks up each ID in the **L2 Entity Cache**.
+  3. If all IDs are in L2 cache: **0 SQL queries fired!**
+  4. **The Dangerous Gotcha (N+1 Query Explosion):** If Query Cache is enabled, but the Entity itself is **NOT** cached in L2 cache, Hibernate executes 1 query for the IDs and then **N individual `SELECT` queries** for each ID!
+
+---
+
+### **Category 3: Concurrency Strategies & Locking**
+
+#### **Q8. Explain the 4 Cache Concurrency Strategies in Hibernate. When do you use each?**
+
+| Strategy | Read Lock? | Write Lock? | Stale Reads Possible? | Best Use Case |
+|---|---|---|---|---|
+| **`READ_ONLY`** | No | No | No (data never changes) | Reference/Lookup data that is never updated (e.g., Country codes, Currencies). Best performance. |
+| **`READ_WRITE`** | No | Yes (Soft Lock) | No | Read-heavy entities with occasional updates where strong read-write consistency is required. Uses versioning. |
+| **`NONSTRICT_READ_WRITE`** | No | No | **Yes** (temporary) | Entities where data changes infrequently and occasional stale reads are acceptable. Invalidates cache on commit. |
+| **`TRANSACTIONAL`** | Yes | Yes | No | Full JTA / XA distributed transaction environments (requires JCache / Infinispan). Highest isolation, lowest throughput. |
+
+---
+
+#### **Q9. What is a "Soft Lock" in `READ_WRITE` strategy?**
+* **Answer:** 
+  In `READ_WRITE` strategy, when a transaction starts updating an entity:
+  1. It places a **"soft lock"** (a marker entry) in the L2 cache for that entity ID instead of immediately deleting it.
+  2. Any concurrent transaction trying to read that entity will see the soft lock and **bypass the cache to read directly from the DB** to guarantee consistency.
+  3. Once the updating transaction commits successfully, the soft lock is released and the cache entry is refreshed/invalidated.
+
+---
+
+### **Category 4: Distributed Systems & Stale Data Pitfalls**
+
+#### **Q10. What is the biggest danger of using Hibernate L2 Cache in a Microservices / Clustered setup?**
+* **Answer:** **Cache Desynchronization (Stale Data across nodes).**
+* **Scenario:**
+  - You have 2 instances of `OrderService` (Instance A and Instance B), each with its own local in-memory Ehcache.
+  - Instance A receives a request: `UPDATE order SET status = 'CANCELLED' WHERE id = 5`.
+  - Instance A updates the DB and invalidates its **own** local L2 cache.
+  - Instance B knows nothing about this update. Its local L2 cache still has `status = 'PENDING'`.
+  - Next user request hits Instance B ➡️ **Serves stale data!**
+* **Solutions:**
+  1. Use a **Distributed Cache Provider** like **Redis** (via Redisson) or **Infinispan** in clustered/replicated mode.
+  2. Use Spring's `@Cacheable` with a centralized Redis instance instead of ORM-level L2 cache.
+
+---
+
+#### **Q11. What happens if someone modifies the database directly using a SQL script, stored procedure, or batch job outside Hibernate?**
+* **Answer:** 
+  Hibernate L2 Cache **has NO WAY of knowing** that external changes occurred!
+  - It will continue serving stale cached entities until:
+    1. The entry expires based on TTL (Time-To-Live).
+    2. An update is performed on that entity through Hibernate.
+    3. The cache is manually evicted programmatically.
+* **How to fix:**
+  Evict the cache via code:
+  ```java
+  @Autowired
+  private EntityManagerFactory entityManagerFactory;
+
+  public void clearCache() {
+      entityManagerFactory.getCache().evict(User.class); // Evict specific entity
+      // OR
+      entityManagerFactory.getCache().evictAll(); // Evict entire L2 cache
+  }
+  ```
+
+---
+
+### **Category 5: Configuration & Practical Rules of Thumb**
+
+#### **Q12. What are the 4 values of `shared-cache-mode` in JPA? Which is recommended?**
+* Configured via `spring.jpa.properties.jakarta.persistence.sharedCache.mode`:
+  1. **`ENABLE_SELECTIVE` (Recommended standard):** Only entities explicitly annotated with `@Cacheable(true)` are cached.
+  2. **`DISABLE_SELECTIVE`:** All entities are cached EXCEPT those marked `@Cacheable(false)`.
+  3. **`ALL`:** Every entity is cached unconditionally (dangerous for memory!).
+  4. **`NONE`:** L2 cache is completely disabled.
+
+---
+
+#### **Q13. When should you AVOID using Hibernate L2 Cache?**
+* **Avoid L2 cache when:**
+  1. **Write-Heavy tables:** If updates/inserts are frequent, cache churn and continuous invalidations create more CPU/lock overhead than reading from DB.
+  2. **Tables with high volume of rows accessed randomly:** Causes frequent cache misses and high memory thrashing.
+  3. **Data modified by external systems / raw JDBC:** High risk of persistent stale data.
+  4. **Multi-node deployments without a distributed cache:** Leads to cross-instance data inconsistency.
+
+---
+
+#### **Q14. Rapid-Fire Summary: When is L2 Cache the PERFECT fit?**
+1. Read-to-write ratio is high (**80%+ reads, 20% or fewer writes**).
+2. Lookups are frequently done by **Primary Key (`findById`)**.
+3. Small to medium-sized reference datasets (Countries, Plans, Categories, Configurations, Roles).
+4. Predictable data access patterns where DB query offloading is critical.
+

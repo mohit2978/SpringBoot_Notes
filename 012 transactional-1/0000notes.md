@@ -461,4 +461,77 @@ public class UserService {
 | **Priority** | Lower (acts as fallback / default baseline). | **Highest priority** (overrides class settings). |
 | **Best Use Case** | Setting baseline settings like `readOnly = true` or standard rollback rules across the service. | Customizing write operations, setting `REQUIRES_NEW`, custom timeouts, or specific `rollbackFor` rules. |
 
+---
+
+### **4. What does `@Transactional(readOnly = true)` do?**
+
+`@Transactional(readOnly = true)` acts as a **strong hint and optimization flag** across three layers: **Spring**, **Hibernate (JPA)**, and the **Underlying Database (JDBC)**.
+
+```
+       [ Client Request ]
+               │
+               ▼
+┌──────────────────────────────┐
+│  Spring Transaction Manager  │ ──► Marks transaction as read-only
+└──────────────┬───────────────┘
+               │
+       ┌───────┴───────────────────┐
+       ▼                           ▼
+┌─────────────────────────┐  ┌─────────────────────────┐
+│   Hibernate / JPA       │  │   JDBC Connection / DB  │
+│ - FlushMode.MANUAL      │  │ - connection.setReadOnly │
+│ - Disables dirty check  │  │ - Routes to Read Replica │
+│ - Memory & CPU savings  │  │ - Prevents DML lock ops  │
+└─────────────────────────┘  └─────────────────────────┘
+```
+
+---
+
+#### **1. Hibernate / JPA Layer (Biggest Performance Benefit 🚀)**
+When Spring detects `readOnly = true` with a JPA/Hibernate provider:
+- **Disables Dirty-Checking Snapshots:**
+  By default, Hibernate maintains a copy (snapshot) of every entity loaded into the First-Level Cache (Persistence Context) so it can detect changes during flush time. With `readOnly = true`, Hibernate sets `FlushMode.MANUAL` — it **skips snapshot creation and dirty checking**, drastically reducing CPU and memory overhead.
+- **Flushing is Skipped:**
+  Hibernate will not automatically flush pending changes to the database at commit time, avoiding unnecessary SQL write operations.
+
+---
+
+#### **2. JDBC Driver & Database Layer**
+- **Calls `connection.setReadOnly(true)`:**
+  Spring invokes `connection.setReadOnly(true)` on the underlying JDBC connection before executing queries.
+- **Database Optimizations:**
+  - Many databases (e.g., MySQL, Postgres, Oracle) optimize transactions that are read-only by avoiding transaction ID allocation, lock acquisitions, and undo log tracking.
+  - If a write statement (`INSERT`, `UPDATE`, `DELETE`) is attempted while the connection is read-only, some JDBC drivers or databases will directly throw an exception:
+    ```
+    SQLException: Connection is read-only. Queries leading to data modification are not allowed.
+    ```
+
+---
+
+#### **3. Routing to Read Replicas (Master-Replica Architecture)**
+In systems with primary-replica database configurations:
+- Spring's `AbstractRoutingDataSource` can inspect:
+  ```java
+  TransactionSynchronizationManager.isCurrentTransactionReadOnly();
+  ```
+- If `true`, the query is automatically routed to a **Read Replica (Slave)**.
+- If `false`, the query goes to the **Primary (Master)** database.
+
+---
+
+#### **Summary Checklist: What `readOnly = true` Gives You**
+
+| Feature | Effect |
+|---|---|
+| **Dirty Checking** | **Turned OFF** in Hibernate (significant speedup & memory savings). |
+| **Flush Mode** | Set to `FlushMode.MANUAL` (no accidental auto-flushes on commit). |
+| **JDBC Connection** | `connection.setReadOnly(true)` is called. |
+| **Read Replicas** | Enables automated read-traffic routing to replica databases. |
+| **Code Intent** | Explicitly documents to developers that the method is read-only. |
+
+> [!WARNING]
+> **Gotcha with Nested Transactions (`REQUIRED`):**
+> If an outer method is `@Transactional` (`readOnly = false`) and calls an inner method marked `@Transactional(readOnly = true)`, the inner method joins the existing outer transaction and inherits `readOnly = false` unless `propagation = Propagation.REQUIRES_NEW` is specified.
+
+
 
