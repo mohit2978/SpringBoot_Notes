@@ -1,0 +1,72 @@
+<svg viewBox="0 0 1040 620" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1040" height="620" fill="#1e1e1e" rx="8"/>
+<defs><marker id="p1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa3a4"/></marker></defs>
+
+<text x="520" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">Every Spring Boot app runs several INDEPENDENT thread pools</text>
+<text x="520" y="54" fill="#aaa" font-size="12" text-anchor="middle">They do not share threads. Tuning one does not tune the others.</text>
+
+<!-- 1 Tomcat -->
+<rect x="30" y="78" width="310" height="150" rx="8" fill="#2a3a4a" stroke="#569cd6" stroke-width="2"/>
+<text x="185" y="102" fill="#9cdcfe" text-anchor="middle" font-weight="bold" font-size="15">1. HTTP worker pool (Tomcat)</text>
+<text x="46" y="126" fill="#e0e0e0" font-family="Consolas, monospace" font-size="11.5">http-nio-8080-exec-1 … exec-200</text>
+<text x="46" y="150" fill="#e0e0e0" font-size="12">Serves every incoming HTTP request.</text>
+<text x="46" y="172" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">server.tomcat.threads.max = 200</text>
+<text x="46" y="192" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">server.tomcat.threads.min-spare = 10</text>
+<text x="46" y="216" fill="#f14c4c" font-size="11.5">This is the one people mean by "max threads".</text>
+
+<!-- 2 Async -->
+<rect x="364" y="78" width="310" height="150" rx="8" fill="#234a3e" stroke="#4ec9b0" stroke-width="2"/>
+<text x="519" y="102" fill="#9ae6d0" text-anchor="middle" font-weight="bold" font-size="15">2. @Async pool</text>
+<text x="380" y="126" fill="#e0e0e0" font-family="Consolas, monospace" font-size="11.5">task-1, task-2, …</text>
+<text x="380" y="150" fill="#e0e0e0" font-size="12">Bean: applicationTaskExecutor</text>
+<text x="380" y="172" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">spring.task.execution.pool.core-size = 8</text>
+<text x="380" y="192" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">max-size / queue-capacity = unbounded</text>
+<text x="380" y="216" fill="#f14c4c" font-size="11.5">Unbounded queue ⇒ max-size is never reached.</text>
+
+<!-- 3 Scheduling -->
+<rect x="698" y="78" width="312" height="150" rx="8" fill="#4a3a1a" stroke="#d4a017" stroke-width="2"/>
+<text x="854" y="102" fill="#f0d68a" text-anchor="middle" font-weight="bold" font-size="15">3. @Scheduled pool</text>
+<text x="714" y="126" fill="#e0e0e0" font-family="Consolas, monospace" font-size="11.5">scheduling-1</text>
+<text x="714" y="150" fill="#e0e0e0" font-size="12">Bean: taskScheduler</text>
+<text x="714" y="172" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">spring.task.scheduling.pool.size = 1</text>
+<text x="714" y="196" fill="#f14c4c" font-size="11.5">ONE thread by default — a slow job delays</text>
+<text x="714" y="214" fill="#f14c4c" font-size="11.5">every other @Scheduled job in the app.</text>
+
+<!-- 4 Hikari -->
+<rect x="30" y="250" width="310" height="140" rx="8" fill="#2a2a2a" stroke="#888" stroke-width="2"/>
+<text x="185" y="274" fill="#e0e0e0" text-anchor="middle" font-weight="bold" font-size="15">4. HikariCP connections</text>
+<text x="46" y="298" fill="#aaa" font-size="12">Not threads — DB connections,</text>
+<text x="46" y="316" fill="#aaa" font-size="12">but threads queue up waiting for them.</text>
+<text x="46" y="340" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">spring.datasource.hikari</text>
+<text x="46" y="358" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">  .maximum-pool-size = 10</text>
+<text x="46" y="380" fill="#f14c4c" font-size="11.5">200 threads fighting over 10 connections!</text>
+
+<!-- 5 messaging -->
+<rect x="364" y="250" width="310" height="140" rx="8" fill="#2a2a2a" stroke="#888" stroke-width="2"/>
+<text x="519" y="274" fill="#e0e0e0" text-anchor="middle" font-weight="bold" font-size="15">5. Messaging listener pools</text>
+<text x="380" y="298" fill="#e0e0e0" font-family="Consolas, monospace" font-size="11.5">kafka-listener, org.springframework.jms…</text>
+<text x="380" y="322" fill="#aaa" font-size="12">Kafka: 1 thread per consumer,</text>
+<text x="380" y="340" fill="#aaa" font-size="12">set by concurrency = N</text>
+<text x="380" y="368" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">@KafkaListener(concurrency = "3")</text>
+
+<!-- 6 misc -->
+<rect x="698" y="250" width="312" height="140" rx="8" fill="#2a2a2a" stroke="#888" stroke-width="2"/>
+<text x="854" y="274" fill="#e0e0e0" text-anchor="middle" font-weight="bold" font-size="15">6. JVM / library threads</text>
+<text x="714" y="298" fill="#aaa" font-size="12">GC threads, JIT compiler, Finalizer,</text>
+<text x="714" y="316" fill="#aaa" font-size="12">common ForkJoinPool, Netty, logging</text>
+<text x="714" y="340" fill="#aaa" font-size="12">async appenders, HTTP client pools…</text>
+<text x="714" y="368" fill="#f14c4c" font-size="11.5">Easily 30–60 threads before your code runs.</text>
+
+<line x1="30" y1="412" x2="1010" y2="412" stroke="#444"/>
+
+<text x="520" y="444" fill="#e0e0e0" font-size="15" font-weight="bold" text-anchor="middle">Total threads in a typical REST app at full load</text>
+
+<g font-family="Consolas, monospace" font-size="13">
+<text x="300" y="478" fill="#9cdcfe">200</text><text x="360" y="478" fill="#e0e0e0">Tomcat workers</text>
+<text x="300" y="502" fill="#9ae6d0">  8</text><text x="360" y="502" fill="#e0e0e0">@Async</text>
+<text x="300" y="526" fill="#f0d68a">  1</text><text x="360" y="526" fill="#e0e0e0">@Scheduled</text>
+<text x="300" y="550" fill="#aaa">~45</text><text x="360" y="550" fill="#e0e0e0">JVM internals, GC, Hikari housekeeping, logging</text>
+<line x1="290" y1="562" x2="700" y2="562" stroke="#666"/>
+<text x="290" y="586" fill="#d4a017" font-weight="bold">~254</text><text x="360" y="586" fill="#d4a017" font-weight="bold">platform threads ≈ 254 MB of stack memory (native, NOT heap)</text>
+</g>
+</svg>

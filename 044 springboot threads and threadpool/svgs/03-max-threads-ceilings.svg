@@ -1,0 +1,49 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1040" height="660" fill="#1e1e1e" rx="8"/>
+
+<text x="520" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">"What is the max number of threads?" — there are four different ceilings</text>
+<text x="520" y="54" fill="#aaa" font-size="12" text-anchor="middle">The lowest one wins. Usually it is the last one.</text>
+
+<!-- 1 -->
+<rect x="40" y="76" width="960" height="104" rx="8" fill="#252525" stroke="#569cd6" stroke-width="2"/>
+<circle cx="76" cy="112" r="18" fill="#569cd6"/><text x="76" y="118" fill="#1e1e1e" text-anchor="middle" font-weight="bold" font-size="15">1</text>
+<text x="108" y="106" fill="#9cdcfe" font-size="15" font-weight="bold">Framework ceiling — what YOU configure</text>
+<text x="108" y="130" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">server.tomcat.threads.max = 200   (Jetty 200, Undertow = io-threads × 8)</text>
+<text x="108" y="152" fill="#e0e0e0" font-size="12.5">A hard cap you set. Raising it is one line — but see ceiling 4 before you do.</text>
+<text x="108" y="172" fill="#4ec9b0" font-size="12">Typical sane range for a REST service: <tspan font-family="Consolas, monospace">100 – 400</tspan>.</text>
+
+<!-- 2 -->
+<rect x="40" y="192" width="960" height="122" rx="8" fill="#252525" stroke="#4ec9b0" stroke-width="2"/>
+<circle cx="76" cy="228" r="18" fill="#4ec9b0"/><text x="76" y="234" fill="#1e1e1e" text-anchor="middle" font-weight="bold" font-size="15">2</text>
+<text x="108" y="222" fill="#9ae6d0" font-size="15" font-weight="bold">JVM memory ceiling — stack size × thread count</text>
+<text x="108" y="246" fill="#e0e0e0" font-size="12.5">Each platform thread gets its own stack in NATIVE memory (not the heap). Default <tspan font-family="Consolas, monospace" fill="#d4a017">-Xss = 1 MB</tspan> on 64-bit Linux.</text>
+<rect x="108" y="258" width="600" height="46" rx="6" fill="#1a1a1a"/>
+<text x="124" y="278" fill="#d4a017" font-family="Consolas, monospace" font-size="12.5">max threads ≈ (RAM − heap − metaspace − code cache) / -Xss</text>
+<text x="124" y="296" fill="#aaa" font-family="Consolas, monospace" font-size="11.5">8 GB box, -Xmx4g, ~0.5 GB other  →  3.5 GB / 1 MB  ≈  3500 threads</text>
+<text x="730" y="278" fill="#f14c4c" font-size="12">Exceed it and you get:</text>
+<text x="730" y="298" fill="#f14c4c" font-family="Consolas, monospace" font-size="11">OutOfMemoryError:</text>
+<text x="730" y="312" fill="#f14c4c" font-family="Consolas, monospace" font-size="11">unable to create native thread</text>
+
+<!-- 3 -->
+<rect x="40" y="326" width="960" height="112" rx="8" fill="#252525" stroke="#d4a017" stroke-width="2"/>
+<circle cx="76" cy="362" r="18" fill="#d4a017"/><text x="76" y="368" fill="#1e1e1e" text-anchor="middle" font-weight="bold" font-size="15">3</text>
+<text x="108" y="356" fill="#f0d68a" font-size="15" font-weight="bold">OS ceiling — the kernel will not give you more</text>
+<text x="108" y="382" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">ulimit -u                        max processes/threads per user</text>
+<text x="108" y="402" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">/proc/sys/kernel/threads-max     system-wide cap (often ~100k+)</text>
+<text x="108" y="422" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">/proc/sys/vm/max_map_count       each stack needs a memory mapping</text>
+<text x="700" y="392" fill="#aaa" font-size="12">In containers also check</text>
+<text x="700" y="412" fill="#aaa" font-size="12">cgroup pids.max limits.</text>
+
+<!-- 4 -->
+<rect x="40" y="450" width="960" height="130" rx="8" fill="#3a2a2a" stroke="#f14c4c" stroke-width="2"/>
+<circle cx="76" cy="486" r="18" fill="#f14c4c"/><text x="76" y="492" fill="#1e1e1e" text-anchor="middle" font-weight="bold" font-size="15">4</text>
+<text x="108" y="480" fill="#ffb3b3" font-size="15" font-weight="bold">Practical ceiling — the one that actually bites  ⟵ THE REAL ANSWER</text>
+<text x="108" y="506" fill="#e0e0e0" font-size="12.5">Long before memory runs out, context switching destroys you. The CPU spends its time swapping threads</text>
+<text x="108" y="526" fill="#e0e0e0" font-size="12.5">instead of running them, and every downstream resource (DB pool, remote API) becomes the real bottleneck.</text>
+<text x="108" y="552" fill="#f14c4c" font-size="13" font-weight="bold">Realistic platform-thread limit: a few hundred, rarely useful beyond ~1000.</text>
+<text x="108" y="572" fill="#aaa" font-size="12">Going 200 → 2000 threads normally makes throughput WORSE, not better.</text>
+
+<rect x="40" y="592" width="960" height="52" rx="8" fill="#234a3e" stroke="#4ec9b0" stroke-width="2"/>
+<text x="60" y="616" fill="#9ae6d0" font-weight="bold" font-size="14">Virtual threads (Java 21+) remove ceilings 2, 3 and 4</text>
+<text x="60" y="636" fill="#e0e0e0" font-size="12.5">They are heap objects (~a few hundred bytes), not OS threads — <tspan fill="#4ec9b0" font-weight="bold">millions</tspan> are fine. Only ceiling 1 (your config) still applies.</text>
+</svg>

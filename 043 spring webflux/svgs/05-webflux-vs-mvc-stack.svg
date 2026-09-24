@@ -1,0 +1,60 @@
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1000" height="560" fill="#1e1e1e" rx="8"/>
+
+<text x="500" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">The two parallel stacks — pick one per application</text>
+<line x1="500" y1="48" x2="500" y2="540" stroke="#444" stroke-dasharray="6,6"/>
+
+<text x="250" y="74" fill="#f14c4c" font-size="16" font-weight="bold" text-anchor="middle">Spring MVC  (servlet stack)</text>
+<text x="750" y="74" fill="#4ec9b0" font-size="16" font-weight="bold" text-anchor="middle">Spring WebFlux  (reactive stack)</text>
+
+<g font-size="13" text-anchor="middle">
+<rect x="80" y="96" width="340" height="46" rx="6" fill="#3a2a2a" stroke="#f14c4c"/>
+<text x="250" y="118" fill="#ffb3b3" font-weight="bold">@Controller / @RestController</text>
+<text x="250" y="135" fill="#bbb" font-size="11">returns User, List&lt;User&gt;</text>
+
+<rect x="580" y="96" width="340" height="46" rx="6" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="750" y="118" fill="#9ae6d0" font-weight="bold">@RestController  or  RouterFunction</text>
+<text x="750" y="135" fill="#bbb" font-size="11">returns Mono&lt;User&gt;, Flux&lt;User&gt;</text>
+
+<rect x="80" y="160" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="250" y="185" fill="#e0e0e0">Spring MVC — DispatcherServlet</text>
+
+<rect x="580" y="160" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="750" y="185" fill="#e0e0e0">Spring WebFlux — DispatcherHandler</text>
+
+<rect x="80" y="218" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="250" y="243" fill="#e0e0e0">Servlet API  (blocking I/O)</text>
+
+<rect x="580" y="218" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="750" y="243" fill="#e0e0e0">Reactive Streams / HttpHandler</text>
+
+<rect x="80" y="276" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="250" y="301" fill="#e0e0e0">Tomcat / Jetty / Undertow</text>
+
+<rect x="580" y="276" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="750" y="301" fill="#e0e0e0">Netty  (also Tomcat/Jetty/Undertow 3.1+)</text>
+
+<rect x="80" y="334" width="340" height="46" rx="6" fill="#3a2a2a" stroke="#f14c4c"/>
+<text x="250" y="356" fill="#ffb3b3" font-weight="bold">Data: JPA / Hibernate / JDBC</text>
+<text x="250" y="373" fill="#f14c4c" font-size="11">BLOCKING — no reactive version exists</text>
+
+<rect x="580" y="334" width="340" height="46" rx="6" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="750" y="356" fill="#9ae6d0" font-weight="bold">Data: R2DBC / Reactive Mongo / Redis</text>
+<text x="750" y="373" fill="#4ec9b0" font-size="11">NON-BLOCKING drivers, top to bottom</text>
+
+<rect x="80" y="398" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="250" y="423" fill="#e0e0e0">HTTP client: RestClient / RestTemplate</text>
+
+<rect x="580" y="398" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="750" y="423" fill="#e0e0e0">HTTP client: WebClient</text>
+
+<rect x="80" y="456" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="250" y="481" fill="#e0e0e0">Test: MockMvc</text>
+
+<rect x="580" y="456" width="340" height="40" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="750" y="481" fill="#e0e0e0">Test: WebTestClient + StepVerifier</text>
+</g>
+
+<rect x="80" y="512" width="840" height="34" rx="6" fill="#4a3a1a" stroke="#d4a017"/>
+<text x="500" y="534" fill="#f0d68a" text-anchor="middle" font-size="13">Golden rule: the chain is only as reactive as its slowest blocking link. One JDBC call inside WebFlux destroys the whole benefit.</text>
+</svg>

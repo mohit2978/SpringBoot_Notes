@@ -1,0 +1,57 @@
+<svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1000" height="520" fill="#1e1e1e" rx="8"/>
+<defs><marker id="m1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#888"/></marker></defs>
+
+<text x="500" y="34" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">Mono vs Flux — the only two publishers you use in Reactor</text>
+
+<!-- MONO -->
+<text x="40" y="84" fill="#c586c0" font-size="16" font-weight="bold" font-family="Consolas, monospace">Mono&lt;T&gt;</text>
+<text x="150" y="84" fill="#e0e0e0" font-size="13">0 or 1 item, then completes.  Use for: one user, one save, one HTTP call.</text>
+
+<line x1="60" y1="130" x2="900" y2="130" stroke="#888" stroke-width="2" marker-end="url(#m1)"/>
+<circle cx="300" cy="130" r="16" fill="#c586c0"/>
+<text x="300" y="136" fill="#1e1e1e" text-anchor="middle" font-weight="bold" font-size="12">U</text>
+<line x1="420" y1="108" x2="420" y2="152" stroke="#4ec9b0" stroke-width="4"/>
+<text x="300" y="168" fill="#aaa" text-anchor="middle" font-size="11">onNext(user)</text>
+<text x="420" y="168" fill="#4ec9b0" text-anchor="middle" font-size="11">onComplete()</text>
+<text x="920" y="135" fill="#888" font-size="11">time</text>
+
+<text x="60" y="200" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">Mono&lt;User&gt; user = repo.findById(1);</text>
+<text x="500" y="200" fill="#888" font-family="Consolas, monospace" font-size="12">// Mono.empty() = 0 items, just onComplete</text>
+
+<line x1="40" y1="228" x2="960" y2="228" stroke="#444"/>
+
+<!-- FLUX -->
+<text x="40" y="272" fill="#569cd6" font-size="16" font-weight="bold" font-family="Consolas, monospace">Flux&lt;T&gt;</text>
+<text x="150" y="272" fill="#e0e0e0" font-size="13">0 to N items (can be infinite).  Use for: lists, streams, SSE, paged data.</text>
+
+<line x1="60" y1="318" x2="900" y2="318" stroke="#888" stroke-width="2" marker-end="url(#m1)"/>
+<g fill="#569cd6">
+<circle cx="180" cy="318" r="16"/><circle cx="300" cy="318" r="16"/>
+<circle cx="420" cy="318" r="16"/><circle cx="540" cy="318" r="16"/>
+</g>
+<g fill="#1e1e1e" font-weight="bold" font-size="12" text-anchor="middle">
+<text x="180" y="324">1</text><text x="300" y="324">2</text><text x="420" y="324">3</text><text x="540" y="324">4</text>
+</g>
+<line x1="660" y1="296" x2="660" y2="340" stroke="#4ec9b0" stroke-width="4"/>
+<text x="660" y="356" fill="#4ec9b0" text-anchor="middle" font-size="11">onComplete()</text>
+<text x="300" y="356" fill="#aaa" text-anchor="middle" font-size="11">onNext × N</text>
+
+<text x="60" y="388" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">Flux&lt;User&gt; users = repo.findAll();</text>
+
+<!-- ERROR -->
+<line x1="60" y1="440" x2="900" y2="440" stroke="#888" stroke-width="2" marker-end="url(#m1)"/>
+<g fill="#569cd6">
+<circle cx="180" cy="440" r="16"/><circle cx="300" cy="440" r="16"/>
+</g>
+<g fill="#1e1e1e" font-weight="bold" font-size="12" text-anchor="middle">
+<text x="180" y="446">1</text><text x="300" y="446">2</text>
+</g>
+<g stroke="#f14c4c" stroke-width="4">
+<line x1="404" y1="424" x2="436" y2="456"/><line x1="436" y1="424" x2="404" y2="456"/>
+</g>
+<text x="420" y="478" fill="#f14c4c" text-anchor="middle" font-size="11">onError(ex) — terminal, no more items</text>
+
+<rect x="60" y="492" width="880" height="22" rx="4" fill="#252525"/>
+<text x="76" y="508" fill="#e0e0e0" font-size="12">A stream ends with <tspan fill="#4ec9b0">onComplete</tspan> OR <tspan fill="#f14c4c">onError</tspan> — never both, never more than once.</text>
+</svg>

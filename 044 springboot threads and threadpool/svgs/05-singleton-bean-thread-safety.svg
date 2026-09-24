@@ -1,0 +1,82 @@
+<svg viewBox="0 0 1040 580" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1040" height="580" fill="#1e1e1e" rx="8"/>
+<defs><marker id="s2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f14c4c"/></marker>
+<marker id="s3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#4ec9b0"/></marker></defs>
+
+<text x="520" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">Spring beans are SINGLETONS — every request thread shares the same object</text>
+
+<!-- WRONG -->
+<rect x="30" y="56" width="480" height="240" rx="8" fill="#3a2a2a" stroke="#f14c4c" stroke-width="2"/>
+<text x="270" y="82" fill="#f14c4c" font-size="15" font-weight="bold" text-anchor="middle">WRONG — mutable instance field</text>
+
+<g font-family="Consolas, monospace" font-size="11.5">
+<text x="46" y="106" fill="#dcdcaa">@Service</text>
+<text x="46" y="124" fill="#dcdcaa">public class <tspan fill="#4ec9b0">OrderService</tspan> {</text>
+<text x="66" y="144" fill="#f14c4c">private int counter = 0;      // SHARED!</text>
+<text x="66" y="162" fill="#f14c4c">private User currentUser;     // SHARED!</text>
+<text x="66" y="186" fill="#dcdcaa">public void <tspan fill="#dcdcaa">process</tspan>(User u) {</text>
+<text x="86" y="204" fill="#d4d4d4">this.currentUser = u;   // race</text>
+<text x="86" y="222" fill="#d4d4d4">this.counter++;         // lost updates</text>
+<text x="66" y="240" fill="#dcdcaa">}</text>
+<text x="46" y="258" fill="#dcdcaa">}</text>
+</g>
+
+<g fill="#569cd6">
+<rect x="46" y="272" width="84" height="16" rx="3"/><rect x="140" y="272" width="84" height="16" rx="3"/><rect x="234" y="272" width="84" height="16" rx="3"/>
+</g>
+<text x="330" y="285" fill="#f14c4c" font-size="11.5">3 threads → 1 object</text>
+
+<line x1="200" y1="150" x2="200" y2="150" stroke="#f14c4c"/>
+
+<!-- RIGHT -->
+<rect x="530" y="56" width="480" height="240" rx="8" fill="#234a3e" stroke="#4ec9b0" stroke-width="2"/>
+<text x="770" y="82" fill="#4ec9b0" font-size="15" font-weight="bold" text-anchor="middle">RIGHT — stateless, state lives on the stack</text>
+
+<g font-family="Consolas, monospace" font-size="11.5">
+<text x="546" y="106" fill="#dcdcaa">@Service</text>
+<text x="546" y="124" fill="#dcdcaa">public class <tspan fill="#4ec9b0">OrderService</tspan> {</text>
+<text x="566" y="144" fill="#4ec9b0">private final OrderRepository repo;  // OK</text>
+<text x="566" y="162" fill="#4ec9b0">private final AtomicLong counter</text>
+<text x="586" y="180" fill="#4ec9b0">   = new AtomicLong();          // OK</text>
+<text x="566" y="204" fill="#dcdcaa">public void <tspan fill="#dcdcaa">process</tspan>(User u) {</text>
+<text x="586" y="222" fill="#d4d4d4">counter.incrementAndGet();</text>
+<text x="586" y="240" fill="#6a9955">// u is a local — per thread, safe</text>
+<text x="566" y="258" fill="#dcdcaa">}  }</text>
+</g>
+
+<g fill="#4ec9b0">
+<rect x="546" y="272" width="84" height="16" rx="3"/><rect x="640" y="272" width="84" height="16" rx="3"/><rect x="734" y="272" width="84" height="16" rx="3"/>
+</g>
+<text x="830" y="285" fill="#4ec9b0" font-size="11.5">no shared mutable state</text>
+
+<line x1="30" y1="316" x2="1010" y2="316" stroke="#444"/>
+
+<text x="520" y="346" fill="#e0e0e0" font-size="15" font-weight="bold" text-anchor="middle">What is safe to keep as a field in a singleton bean</text>
+
+<g font-size="12.5">
+<rect x="30" y="366" width="316" height="118" rx="8" fill="#252525" stroke="#4ec9b0"/>
+<text x="188" y="390" fill="#4ec9b0" text-anchor="middle" font-weight="bold">SAFE</text>
+<text x="46" y="414" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">final</tspan> injected dependencies</text>
+<text x="46" y="434" fill="#e0e0e0">• immutable config values</text>
+<text x="46" y="454" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">AtomicInteger/Long</tspan>, <tspan font-family="Consolas, monospace">LongAdder</tspan></text>
+<text x="46" y="474" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">ConcurrentHashMap</tspan></text>
+
+<rect x="362" y="366" width="316" height="118" rx="8" fill="#252525" stroke="#f14c4c"/>
+<text x="520" y="390" fill="#f14c4c" text-anchor="middle" font-weight="bold">UNSAFE</text>
+<text x="378" y="414" fill="#e0e0e0">• plain <tspan font-family="Consolas, monospace">int</tspan> / <tspan font-family="Consolas, monospace">long</tspan> counters</text>
+<text x="378" y="434" fill="#e0e0e0">• per-request objects (User, DTO)</text>
+<text x="378" y="454" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">ArrayList</tspan>, <tspan font-family="Consolas, monospace">HashMap</tspan>, <tspan font-family="Consolas, monospace">StringBuilder</tspan></text>
+<text x="378" y="474" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">SimpleDateFormat</tspan> (classic bug)</text>
+
+<rect x="694" y="366" width="316" height="118" rx="8" fill="#252525" stroke="#d4a017"/>
+<text x="852" y="390" fill="#d4a017" text-anchor="middle" font-weight="bold">IF YOU NEED PER-REQUEST STATE</text>
+<text x="710" y="414" fill="#e0e0e0">• pass it as a method parameter ✅</text>
+<text x="710" y="434" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">@Scope("request")</tspan> bean</text>
+<text x="710" y="454" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">@Scope("prototype")</tspan></text>
+<text x="710" y="474" fill="#e0e0e0">• <tspan font-family="Consolas, monospace">ThreadLocal</tspan> (remember to clear!)</text>
+</g>
+
+<rect x="30" y="500" width="980" height="64" rx="8" fill="#4a3a1a" stroke="#d4a017"/>
+<text x="50" y="524" fill="#f0d68a" font-weight="bold">Why this bites so rarely in dev and so hard in prod</text>
+<text x="50" y="548" fill="#e0e0e0" font-size="12.5">With one user on localhost, two threads never touch the field at the same moment. With 200 concurrent users, they do — constantly.</text>
+</svg>

@@ -1,0 +1,59 @@
+<svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1000" height="520" fill="#1e1e1e" rx="8"/>
+<defs>
+  <marker id="b1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#569cd6"/></marker>
+  <marker id="b2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#d4a017"/></marker>
+</defs>
+
+<text x="500" y="32" fill="#f14c4c" font-size="17" font-weight="bold" text-anchor="middle">WITHOUT backpressure — fast producer drowns slow consumer</text>
+
+<rect x="50" y="56" width="150" height="70" rx="8" fill="#2a3a4a" stroke="#569cd6"/>
+<text x="125" y="82" fill="#9cdcfe" text-anchor="middle" font-weight="bold">Producer</text>
+<text x="125" y="104" fill="#aaa" text-anchor="middle" font-size="12">10,000 rows/s</text>
+
+<g fill="#569cd6">
+<circle cx="240" cy="91" r="9"/><circle cx="272" cy="91" r="9"/><circle cx="304" cy="91" r="9"/>
+<circle cx="336" cy="91" r="9"/><circle cx="368" cy="91" r="9"/><circle cx="400" cy="91" r="9"/>
+<circle cx="432" cy="91" r="9"/><circle cx="464" cy="91" r="9"/>
+</g>
+<line x1="210" y1="91" x2="232" y2="91" stroke="#569cd6" stroke-width="2" marker-end="url(#b1)"/>
+
+<rect x="500" y="46" width="170" height="90" rx="8" fill="#5a2d2d" stroke="#f14c4c" stroke-width="2"/>
+<text x="585" y="72" fill="#ffb3b3" text-anchor="middle" font-weight="bold">Unbounded queue</text>
+<text x="585" y="96" fill="#ffb3b3" text-anchor="middle" font-size="12">grows and grows…</text>
+<text x="585" y="120" fill="#f14c4c" text-anchor="middle" font-size="13" font-weight="bold">OutOfMemoryError</text>
+
+<rect x="730" y="56" width="150" height="70" rx="8" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="805" y="82" fill="#9ae6d0" text-anchor="middle" font-weight="bold">Consumer</text>
+<text x="805" y="104" fill="#aaa" text-anchor="middle" font-size="12">100 rows/s</text>
+<line x1="676" y1="91" x2="726" y2="91" stroke="#569cd6" stroke-width="2" marker-end="url(#b1)"/>
+
+<line x1="40" y1="170" x2="960" y2="170" stroke="#444"/>
+
+<text x="500" y="206" fill="#4ec9b0" font-size="17" font-weight="bold" text-anchor="middle">WITH backpressure — the consumer sets the pace</text>
+
+<rect x="50" y="240" width="150" height="70" rx="8" fill="#2a3a4a" stroke="#569cd6"/>
+<text x="125" y="266" fill="#9cdcfe" text-anchor="middle" font-weight="bold">Publisher</text>
+<text x="125" y="288" fill="#aaa" text-anchor="middle" font-size="12">can produce fast</text>
+
+<rect x="730" y="240" width="150" height="70" rx="8" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="805" y="266" fill="#9ae6d0" text-anchor="middle" font-weight="bold">Subscriber</text>
+<text x="805" y="288" fill="#aaa" text-anchor="middle" font-size="12">slow, but safe</text>
+
+<path d="M726,332 L204,332" stroke="#d4a017" stroke-width="2.5" fill="none" marker-end="url(#b2)"/>
+<text x="465" y="324" fill="#d4a017" text-anchor="middle" font-weight="bold" font-family="Consolas, monospace">request(2)</text>
+<text x="465" y="350" fill="#aaa" text-anchor="middle" font-size="11">"send me only 2 — that is all I can chew"</text>
+
+<g fill="#569cd6">
+<circle cx="300" cy="392" r="10"/><circle cx="340" cy="392" r="10"/>
+</g>
+<line x1="204" y1="392" x2="290" y2="392" stroke="#569cd6" stroke-width="2"/>
+<line x1="352" y1="392" x2="726" y2="392" stroke="#569cd6" stroke-width="2" marker-end="url(#b1)"/>
+<text x="540" y="384" fill="#9cdcfe" text-anchor="middle" font-family="Consolas, monospace">onNext × 2 only</text>
+
+<path d="M726,440 L204,440" stroke="#d4a017" stroke-width="2.5" fill="none" marker-end="url(#b2)"/>
+<text x="465" y="432" fill="#d4a017" text-anchor="middle" font-weight="bold" font-family="Consolas, monospace">request(2)   … and so on</text>
+
+<rect x="50" y="466" width="900" height="42" rx="8" fill="#252525"/>
+<text x="500" y="492" fill="#e0e0e0" text-anchor="middle">Memory stays bounded. This <tspan fill="#4ec9b0" font-weight="bold">pull-based demand</tspan> is what separates Reactive Streams from plain callbacks or Java 8 Streams.</text>
+</svg>

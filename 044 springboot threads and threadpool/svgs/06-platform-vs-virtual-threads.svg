@@ -1,0 +1,81 @@
+<svg viewBox="0 0 1040 600" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1040" height="600" fill="#1e1e1e" rx="8"/>
+<defs><marker id="v1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa3a4"/></marker></defs>
+
+<text x="520" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">Platform threads vs Virtual threads (Java 21+)</text>
+<line x1="520" y1="48" x2="520" y2="404" stroke="#444" stroke-dasharray="6,6"/>
+
+<!-- platform -->
+<text x="265" y="76" fill="#f14c4c" font-size="16" font-weight="bold" text-anchor="middle">Platform thread</text>
+<text x="265" y="96" fill="#aaa" font-size="12" text-anchor="middle">1 Java thread = 1 OS thread</text>
+
+<rect x="40" y="112" width="450" height="54" rx="6" fill="#2a2a2a" stroke="#666"/>
+<text x="265" y="144" fill="#e0e0e0" text-anchor="middle" font-family="Consolas, monospace" font-size="12">new Thread(task)  /  Tomcat exec-N</text>
+
+<g stroke="#9aa3a4" stroke-width="2" marker-end="url(#v1)"><line x1="265" y1="166" x2="265" y2="188"/></g>
+
+<rect x="40" y="192" width="450" height="60" rx="6" fill="#3a2a2a" stroke="#f14c4c"/>
+<text x="265" y="216" fill="#ffb3b3" text-anchor="middle" font-weight="bold">OS kernel thread</text>
+<text x="265" y="238" fill="#e0e0e0" text-anchor="middle" font-size="12">~1 MB stack, kernel scheduled</text>
+
+<g font-size="12.5">
+<text x="56" y="286" fill="#e0e0e0">Cost to create:</text><text x="230" y="286" fill="#f14c4c" font-family="Consolas, monospace">~1 ms, ~1 MB</text>
+<text x="56" y="310" fill="#e0e0e0">Realistic maximum:</text><text x="230" y="310" fill="#f14c4c" font-family="Consolas, monospace">a few thousand</text>
+<text x="56" y="334" fill="#e0e0e0">Blocking I/O:</text><text x="230" y="334" fill="#f14c4c" font-family="Consolas, monospace">parks the OS thread</text>
+<text x="56" y="358" fill="#e0e0e0">Must be pooled?</text><text x="230" y="358" fill="#f14c4c" font-family="Consolas, monospace">YES — too costly to create</text>
+<text x="56" y="382" fill="#e0e0e0">Scheduled by:</text><text x="230" y="382" fill="#f14c4c" font-family="Consolas, monospace">the OS kernel</text>
+</g>
+
+<!-- virtual -->
+<text x="775" y="76" fill="#4ec9b0" font-size="16" font-weight="bold" text-anchor="middle">Virtual thread</text>
+<text x="775" y="96" fill="#aaa" font-size="12" text-anchor="middle">thousands of Java threads share a few OS threads</text>
+
+<rect x="550" y="112" width="460" height="54" rx="6" fill="#2a2a2a" stroke="#666"/>
+<g fill="#4ec9b0">
+<rect x="566" y="126" width="30" height="12" rx="2"/><rect x="602" y="126" width="30" height="12" rx="2"/>
+<rect x="638" y="126" width="30" height="12" rx="2"/><rect x="674" y="126" width="30" height="12" rx="2"/>
+<rect x="710" y="126" width="30" height="12" rx="2"/><rect x="746" y="126" width="30" height="12" rx="2"/>
+<rect x="566" y="144" width="30" height="12" rx="2"/><rect x="602" y="144" width="30" height="12" rx="2"/>
+<rect x="638" y="144" width="30" height="12" rx="2"/><rect x="674" y="144" width="30" height="12" rx="2"/>
+<rect x="710" y="144" width="30" height="12" rx="2"/><rect x="746" y="144" width="30" height="12" rx="2"/>
+</g>
+<text x="880" y="144" fill="#9ae6d0" font-size="12">10,000 virtual threads</text>
+
+<g stroke="#9aa3a4" stroke-width="2" marker-end="url(#v1)"><line x1="775" y1="166" x2="775" y2="188"/></g>
+<text x="800" y="182" fill="#aaa" font-size="11">mounted on demand</text>
+
+<rect x="550" y="192" width="460" height="60" rx="6" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="775" y="214" fill="#9ae6d0" text-anchor="middle" font-weight="bold">Carrier threads — ForkJoinPool, size = CPU cores</text>
+<g fill="#4ec9b0">
+<rect x="680" y="226" width="40" height="16" rx="3"/><rect x="726" y="226" width="40" height="16" rx="3"/>
+<rect x="772" y="226" width="40" height="16" rx="3"/><rect x="818" y="226" width="40" height="16" rx="3"/>
+</g>
+
+<g font-size="12.5">
+<text x="566" y="286" fill="#e0e0e0">Cost to create:</text><text x="740" y="286" fill="#4ec9b0" font-family="Consolas, monospace">~1 µs, a few hundred bytes</text>
+<text x="566" y="310" fill="#e0e0e0">Realistic maximum:</text><text x="740" y="310" fill="#4ec9b0" font-family="Consolas, monospace">millions</text>
+<text x="566" y="334" fill="#e0e0e0">Blocking I/O:</text><text x="740" y="334" fill="#4ec9b0" font-family="Consolas, monospace">unmounts, frees the carrier</text>
+<text x="566" y="358" fill="#e0e0e0">Must be pooled?</text><text x="740" y="358" fill="#4ec9b0" font-family="Consolas, monospace">NO — never pool them</text>
+<text x="566" y="382" fill="#e0e0e0">Scheduled by:</text><text x="740" y="382" fill="#4ec9b0" font-family="Consolas, monospace">the JVM</text>
+</g>
+
+<line x1="40" y1="414" x2="1000" y2="414" stroke="#444"/>
+
+<rect x="40" y="430" width="470" height="150" rx="8" fill="#234a3e" stroke="#4ec9b0" stroke-width="2"/>
+<text x="60" y="456" fill="#9ae6d0" font-weight="bold" font-size="14">Turning it on — Spring Boot 3.2+ / Java 21+</text>
+<rect x="60" y="468" width="430" height="30" rx="5" fill="#1a1a1a"/>
+<text x="74" y="488" fill="#d4a017" font-family="Consolas, monospace" font-size="13">spring.threads.virtual.enabled=true</text>
+<text x="60" y="520" fill="#e0e0e0" font-size="12.5">Tomcat then uses one virtual thread PER REQUEST.</text>
+<text x="60" y="540" fill="#e0e0e0" font-size="12.5">Your blocking JDBC code is unchanged — but a parked</text>
+<text x="60" y="558" fill="#e0e0e0" font-size="12.5">thread no longer holds an OS thread hostage.</text>
+<text x="60" y="576" fill="#4ec9b0" font-size="12">`threads.max` becomes effectively irrelevant.</text>
+
+<rect x="530" y="430" width="470" height="150" rx="8" fill="#4a3a1a" stroke="#d4a017" stroke-width="2"/>
+<text x="550" y="456" fill="#f0d68a" font-weight="bold" font-size="14">Watch out for</text>
+<text x="550" y="480" fill="#e0e0e0" font-size="12.5">• <tspan fill="#f14c4c">Pinning</tspan> — on Java 21–23 a <tspan font-family="Consolas, monospace">synchronized</tspan> block holds</text>
+<text x="566" y="498" fill="#e0e0e0" font-size="12.5">the carrier thread. Use <tspan font-family="Consolas, monospace">ReentrantLock</tspan> instead.</text>
+<text x="566" y="516" fill="#aaa" font-size="11.5">(JDK 24 removed this limitation.)</text>
+<text x="550" y="538" fill="#e0e0e0" font-size="12.5">• No help for CPU-bound work — same cores.</text>
+<text x="550" y="558" fill="#e0e0e0" font-size="12.5">• The DB connection pool is still the real limit.</text>
+<text x="550" y="576" fill="#e0e0e0" font-size="12.5">• No backpressure — that is WebFlux's edge.</text>
+</svg>

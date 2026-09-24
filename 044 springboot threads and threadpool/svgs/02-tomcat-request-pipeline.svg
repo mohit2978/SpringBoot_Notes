@@ -1,0 +1,88 @@
+<svg viewBox="0 0 1040 600" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1040" height="600" fill="#1e1e1e" rx="8"/>
+<defs><marker id="t1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa3a4"/></marker></defs>
+
+<text x="520" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">How a request actually reaches a Tomcat worker thread</text>
+
+<!-- clients -->
+<rect x="24" y="66" width="128" height="120" rx="8" fill="#2a2a2a" stroke="#666"/>
+<text x="88" y="90" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Clients</text>
+<g fill="#569cd6">
+<rect x="40" y="102" width="96" height="14" rx="3"/><rect x="40" y="122" width="96" height="14" rx="3"/>
+<rect x="40" y="142" width="96" height="14" rx="3"/><rect x="40" y="162" width="96" height="14" rx="3"/>
+</g>
+
+<line x1="152" y1="126" x2="184" y2="126" stroke="#9aa3a4" stroke-width="2" marker-end="url(#t1)"/>
+
+<!-- OS accept queue -->
+<rect x="188" y="66" width="168" height="120" rx="8" fill="#3a3020" stroke="#d4a017" stroke-width="2"/>
+<text x="272" y="90" fill="#f0d68a" text-anchor="middle" font-weight="bold">OS accept queue</text>
+<text x="272" y="112" fill="#e0e0e0" text-anchor="middle" font-size="12">TCP connections waiting</text>
+<text x="272" y="132" fill="#e0e0e0" text-anchor="middle" font-size="12">to be accepted</text>
+<text x="272" y="158" fill="#d4a017" text-anchor="middle" font-family="Consolas, monospace" font-size="11.5">accept-count = 100</text>
+<text x="272" y="178" fill="#f14c4c" text-anchor="middle" font-size="11">full ⇒ OS refuses: connection refused</text>
+
+<line x1="356" y1="126" x2="388" y2="126" stroke="#9aa3a4" stroke-width="2" marker-end="url(#t1)"/>
+
+<!-- poller -->
+<rect x="392" y="66" width="188" height="120" rx="8" fill="#2a3a4a" stroke="#569cd6" stroke-width="2"/>
+<text x="486" y="90" fill="#9cdcfe" text-anchor="middle" font-weight="bold">Acceptor + Poller (NIO)</text>
+<text x="486" y="114" fill="#e0e0e0" text-anchor="middle" font-size="12">Accepts sockets and watches</text>
+<text x="486" y="132" fill="#e0e0e0" text-anchor="middle" font-size="12">them for readable data.</text>
+<text x="486" y="158" fill="#d4a017" text-anchor="middle" font-family="Consolas, monospace" font-size="11.5">max-connections = 8192</text>
+<text x="486" y="178" fill="#4ec9b0" text-anchor="middle" font-size="11">idle keep-alive sockets cost NO thread</text>
+
+<line x1="580" y1="126" x2="612" y2="126" stroke="#9aa3a4" stroke-width="2" marker-end="url(#t1)"/>
+
+<!-- worker pool -->
+<rect x="616" y="56" width="200" height="200" rx="8" fill="#234a3e" stroke="#4ec9b0" stroke-width="2"/>
+<text x="716" y="80" fill="#9ae6d0" text-anchor="middle" font-weight="bold">Worker thread pool</text>
+<g font-family="Consolas, monospace" font-size="11">
+<rect x="632" y="92" width="168" height="22" rx="3" fill="#2a3a3a" stroke="#4ec9b0"/><text x="716" y="107" fill="#9ae6d0" text-anchor="middle">exec-1  RUNNING</text>
+<rect x="632" y="118" width="168" height="22" rx="3" fill="#2a3a3a" stroke="#4ec9b0"/><text x="716" y="133" fill="#9ae6d0" text-anchor="middle">exec-2  RUNNING</text>
+<rect x="632" y="144" width="168" height="22" rx="3" fill="#2a3a3a" stroke="#4ec9b0"/><text x="716" y="159" fill="#9ae6d0" text-anchor="middle">exec-3  RUNNING</text>
+<text x="716" y="180" fill="#888" text-anchor="middle">. . .</text>
+<rect x="632" y="188" width="168" height="22" rx="3" fill="#2a3a3a" stroke="#4ec9b0"/><text x="716" y="203" fill="#9ae6d0" text-anchor="middle">exec-200 RUNNING</text>
+</g>
+<text x="716" y="232" fill="#d4a017" text-anchor="middle" font-family="Consolas, monospace" font-size="11.5">threads.max = 200</text>
+<text x="716" y="248" fill="#aaa" text-anchor="middle" font-size="11">min-spare = 10 kept alive when idle</text>
+
+<line x1="816" y1="156" x2="848" y2="156" stroke="#9aa3a4" stroke-width="2" marker-end="url(#t1)"/>
+<rect x="852" y="120" width="164" height="72" rx="8" fill="#2a2a2a" stroke="#666"/>
+<text x="934" y="146" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Your @RestController</text>
+<text x="934" y="168" fill="#aaa" text-anchor="middle" font-size="12">service → repo → DB</text>
+<text x="934" y="186" fill="#f14c4c" text-anchor="middle" font-size="11">thread is held the whole time</text>
+
+<line x1="24" y1="284" x2="1016" y2="284" stroke="#444"/>
+
+<text x="520" y="316" fill="#e0e0e0" font-size="16" font-weight="bold" text-anchor="middle">The three numbers, and what happens when each fills up</text>
+
+<g font-size="12.5">
+<rect x="30" y="336" width="316" height="128" rx="8" fill="#252525" stroke="#569cd6"/>
+<text x="188" y="360" fill="#9cdcfe" text-anchor="middle" font-weight="bold" font-family="Consolas, monospace">max-connections = 8192</text>
+<text x="46" y="384" fill="#e0e0e0">Sockets Tomcat will hold open at once,</text>
+<text x="46" y="402" fill="#e0e0e0">including idle keep-alive ones.</text>
+<text x="46" y="428" fill="#d4a017">Full ⇒ new connections go to the</text>
+<text x="46" y="446" fill="#d4a017">accept queue instead.</text>
+
+<rect x="362" y="336" width="316" height="128" rx="8" fill="#252525" stroke="#d4a017"/>
+<text x="520" y="360" fill="#f0d68a" text-anchor="middle" font-weight="bold" font-family="Consolas, monospace">accept-count = 100</text>
+<text x="378" y="384" fill="#e0e0e0">OS-level backlog for connections that</text>
+<text x="378" y="402" fill="#e0e0e0">Tomcat has not accepted yet.</text>
+<text x="378" y="428" fill="#f14c4c">Full ⇒ the OS rejects the TCP handshake:</text>
+<text x="378" y="446" fill="#f14c4c">"Connection refused" at the client.</text>
+
+<rect x="694" y="336" width="316" height="128" rx="8" fill="#252525" stroke="#4ec9b0"/>
+<text x="852" y="360" fill="#9ae6d0" text-anchor="middle" font-weight="bold" font-family="Consolas, monospace">threads.max = 200</text>
+<text x="710" y="384" fill="#e0e0e0">Requests processed CONCURRENTLY.</text>
+<text x="710" y="402" fill="#e0e0e0">This is your real parallelism limit.</text>
+<text x="710" y="428" fill="#d4a017">Full ⇒ accepted requests simply wait</text>
+<text x="710" y="446" fill="#d4a017">for a free worker (latency climbs).</text>
+</g>
+
+<rect x="30" y="486" width="980" height="96" rx="8" fill="#4a3a1a" stroke="#d4a017"/>
+<text x="50" y="512" fill="#f0d68a" font-weight="bold" font-size="14">Key insight: connections ≠ threads</text>
+<text x="50" y="536" fill="#e0e0e0" font-size="12.5">Tomcat's NIO connector can hold <tspan font-family="Consolas, monospace" fill="#9cdcfe">8192</tspan> open connections with only <tspan font-family="Consolas, monospace" fill="#4ec9b0">200</tspan> threads, because an idle keep-alive socket</text>
+<text x="50" y="556" fill="#e0e0e0" font-size="12.5">is watched by the poller and consumes no worker thread. A thread is borrowed only while a request is actively being processed.</text>
+<text x="50" y="576" fill="#aaa" font-size="12">So 8192 concurrent *users* is fine; 8192 concurrent *in-flight requests* is not.</text>
+</svg>

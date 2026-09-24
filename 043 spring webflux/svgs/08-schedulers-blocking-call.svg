@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1000" height="520" fill="#1e1e1e" rx="8"/>
+<defs><marker id="s1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa3a4"/></marker></defs>
+
+<text x="500" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">Never block the event loop — and what to do when you must</text>
+
+<!-- WRONG -->
+<rect x="30" y="56" width="450" height="200" rx="8" fill="#3a2a2a" stroke="#f14c4c" stroke-width="2"/>
+<text x="255" y="82" fill="#f14c4c" font-size="15" font-weight="bold" text-anchor="middle">WRONG — blocking on a Netty thread</text>
+
+<rect x="56" y="98" width="180" height="34" rx="5" fill="#5a2d2d" stroke="#f14c4c"/>
+<text x="146" y="120" fill="#ffb3b3" text-anchor="middle" font-family="Consolas, monospace" font-size="12">reactor-http-nio-1</text>
+<text x="270" y="120" fill="#ffb3b3" font-size="12">← handling 5,000 requests</text>
+
+<rect x="56" y="146" width="398" height="34" rx="5" fill="#2a2a2a" stroke="#666"/>
+<text x="70" y="168" fill="#e0e0e0" font-family="Consolas, monospace" font-size="12">jdbcRepo.findAll();   // blocks 100 ms</text>
+
+<text x="56" y="204" fill="#f14c4c" font-size="13" font-weight="bold">→ ALL 5,000 requests on that thread stall for 100 ms</text>
+<text x="56" y="226" fill="#e0e0e0" font-size="12">Latency spikes, throughput collapses. This is the #1</text>
+<text x="56" y="244" fill="#e0e0e0" font-size="12">WebFlux production bug.</text>
+
+<!-- RIGHT -->
+<rect x="520" y="56" width="450" height="200" rx="8" fill="#234a3e" stroke="#4ec9b0" stroke-width="2"/>
+<text x="745" y="82" fill="#4ec9b0" font-size="15" font-weight="bold" text-anchor="middle">RIGHT — offload to a dedicated pool</text>
+
+<rect x="546" y="98" width="180" height="34" rx="5" fill="#2a3a3a" stroke="#4ec9b0"/>
+<text x="636" y="120" fill="#9ae6d0" text-anchor="middle" font-family="Consolas, monospace" font-size="12">reactor-http-nio-1</text>
+<text x="760" y="120" fill="#9ae6d0" font-size="12">← stays free</text>
+
+<line x1="636" y1="132" x2="636" y2="150" stroke="#9aa3a4" marker-end="url(#s1)"/>
+<rect x="546" y="152" width="398" height="52" rx="5" fill="#2a2a2a" stroke="#666"/>
+<text x="560" y="172" fill="#e0e0e0" font-family="Consolas, monospace" font-size="11.5">Mono.fromCallable(() -&gt; jdbcRepo.findAll())</text>
+<text x="560" y="194" fill="#d4a017" font-family="Consolas, monospace" font-size="11.5">    .subscribeOn(Schedulers.boundedElastic())</text>
+
+<text x="546" y="228" fill="#4ec9b0" font-size="12" font-weight="bold">→ runs on boundedElastic-N, event loop keeps serving</text>
+<text x="546" y="248" fill="#e0e0e0" font-size="12">Correct, but you are back to thread-per-call for that part.</text>
+
+<line x1="30" y1="280" x2="970" y2="280" stroke="#444"/>
+
+<text x="500" y="312" fill="#e0e0e0" font-size="16" font-weight="bold" text-anchor="middle">The four Reactor Schedulers</text>
+
+<g font-size="12.5">
+<rect x="40" y="332" width="220" height="92" rx="8" fill="#252525" stroke="#666"/>
+<text x="150" y="356" fill="#9cdcfe" text-anchor="middle" font-family="Consolas, monospace" font-weight="bold">parallel()</text>
+<text x="56" y="380" fill="#e0e0e0">Fixed pool = CPU cores.</text>
+<text x="56" y="400" fill="#aaa" font-size="11.5">For CPU-bound work only.</text>
+<text x="56" y="418" fill="#aaa" font-size="11.5">Default for delay/interval.</text>
+
+<rect x="278" y="332" width="220" height="92" rx="8" fill="#252525" stroke="#4ec9b0"/>
+<text x="388" y="356" fill="#4ec9b0" text-anchor="middle" font-family="Consolas, monospace" font-weight="bold">boundedElastic()</text>
+<text x="294" y="380" fill="#e0e0e0">Elastic pool, capped at</text>
+<text x="294" y="400" fill="#e0e0e0">10 × cores by default.</text>
+<text x="294" y="418" fill="#4ec9b0" font-size="11.5">THE one for blocking calls.</text>
+
+<rect x="516" y="332" width="220" height="92" rx="8" fill="#252525" stroke="#666"/>
+<text x="626" y="356" fill="#9cdcfe" text-anchor="middle" font-family="Consolas, monospace" font-weight="bold">single()</text>
+<text x="532" y="380" fill="#e0e0e0">Exactly one reusable</text>
+<text x="532" y="400" fill="#e0e0e0">thread.</text>
+<text x="532" y="418" fill="#aaa" font-size="11.5">For strictly serial tasks.</text>
+
+<rect x="754" y="332" width="206" height="92" rx="8" fill="#252525" stroke="#666"/>
+<text x="857" y="356" fill="#9cdcfe" text-anchor="middle" font-family="Consolas, monospace" font-weight="bold">immediate()</text>
+<text x="770" y="380" fill="#e0e0e0">No switch — runs on the</text>
+<text x="770" y="400" fill="#e0e0e0">calling thread.</text>
+<text x="770" y="418" fill="#aaa" font-size="11.5">Mostly for tests.</text>
+</g>
+
+<rect x="40" y="444" width="920" height="60" rx="8" fill="#252525"/>
+<text x="58" y="468" fill="#e0e0e0" font-size="12"><tspan font-family="Consolas, monospace" fill="#d4a017">subscribeOn(...)</tspan> — chooses the thread for the WHOLE chain from the source; position in the chain does not matter, only the first one wins.</text>
+<text x="58" y="492" fill="#e0e0e0" font-size="12"><tspan font-family="Consolas, monospace" fill="#d4a017">publishOn(...)</tspan> — switches the thread from that point DOWNWARD; you can use several in one chain.</text>
+</svg>

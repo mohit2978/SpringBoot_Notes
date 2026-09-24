@@ -1,0 +1,98 @@
+<svg viewBox="0 0 1040 620" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1040" height="620" fill="#1e1e1e" rx="8"/>
+<defs>
+  <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa3a4"/></marker>
+  <marker id="arg" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#4ec9b0"/></marker>
+</defs>
+
+<line x1="520" y1="20" x2="520" y2="600" stroke="#444" stroke-dasharray="6,6"/>
+
+<!-- LEFT : Spring MVC -->
+<text x="255" y="34" fill="#f14c4c" font-size="17" font-weight="bold" text-anchor="middle">Spring MVC — thread per request (blocking)</text>
+<text x="255" y="56" fill="#aaa" font-size="12" text-anchor="middle">Tomcat, default pool = 200 threads</text>
+
+<rect x="30" y="74" width="120" height="132" rx="8" fill="#2a2a2a" stroke="#555"/>
+<text x="90" y="96" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Requests</text>
+<g fill="#569cd6">
+<rect x="46" y="108" width="88" height="17" rx="3"/><rect x="46" y="130" width="88" height="17" rx="3"/>
+<rect x="46" y="152" width="88" height="17" rx="3"/><rect x="46" y="174" width="88" height="17" rx="3"/>
+</g>
+
+<rect x="190" y="74" width="140" height="290" rx="8" fill="#2a2a2a" stroke="#555"/>
+<text x="260" y="96" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Thread pool</text>
+<g font-size="11" font-family="Consolas, monospace">
+<rect x="204" y="108" width="112" height="26" rx="4" fill="#5a2d2d" stroke="#f14c4c"/><text x="260" y="125" fill="#ffb3b3" text-anchor="middle">thread-1 BLOCKED</text>
+<rect x="204" y="140" width="112" height="26" rx="4" fill="#5a2d2d" stroke="#f14c4c"/><text x="260" y="157" fill="#ffb3b3" text-anchor="middle">thread-2 BLOCKED</text>
+<rect x="204" y="172" width="112" height="26" rx="4" fill="#5a2d2d" stroke="#f14c4c"/><text x="260" y="189" fill="#ffb3b3" text-anchor="middle">thread-3 BLOCKED</text>
+<text x="260" y="212" fill="#888" text-anchor="middle">. . .</text>
+<rect x="204" y="222" width="112" height="26" rx="4" fill="#5a2d2d" stroke="#f14c4c"/><text x="260" y="239" fill="#ffb3b3" text-anchor="middle">thread-200 BLOCKED</text>
+<rect x="204" y="262" width="112" height="26" rx="4" fill="#3a3a3a" stroke="#888" stroke-dasharray="3,3"/><text x="260" y="279" fill="#ccc" text-anchor="middle">req 201 → WAITS</text>
+</g>
+<text x="260" y="312" fill="#f14c4c" font-size="12" text-anchor="middle">1 MB stack each</text>
+<text x="260" y="332" fill="#f14c4c" font-size="12" text-anchor="middle">= 200 MB just to idle</text>
+<text x="260" y="352" fill="#f14c4c" font-size="12" text-anchor="middle">+ context switching</text>
+
+<rect x="370" y="140" width="120" height="86" rx="8" fill="#2a2a2a" stroke="#555"/>
+<text x="430" y="166" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Database</text>
+<text x="430" y="188" fill="#aaa" text-anchor="middle" font-size="12">/ remote API</text>
+<text x="430" y="210" fill="#d4a017" text-anchor="middle" font-size="12">takes 100 ms</text>
+
+<line x1="150" y1="140" x2="188" y2="140" stroke="#9aa3a4" marker-end="url(#ar)"/>
+<line x1="330" y1="150" x2="368" y2="150" stroke="#9aa3a4" marker-end="url(#ar)"/>
+<line x1="368" y1="196" x2="332" y2="196" stroke="#9aa3a4" marker-end="url(#ar)"/>
+
+<rect x="30" y="392" width="460" height="196" rx="8" fill="#252525"/>
+<text x="48" y="416" fill="#f14c4c" font-weight="bold">The thread sits idle doing NOTHING for 100 ms</text>
+<text x="48" y="444" fill="#e0e0e0">The CPU is free, but the thread cannot be reused —</text>
+<text x="48" y="464" fill="#e0e0e0">it is parked inside a blocking socket read.</text>
+<text x="48" y="494" fill="#e0e0e0">Throughput ceiling = pool size / request time</text>
+<text x="48" y="516" fill="#d4a017" font-family="Consolas, monospace" font-size="12">200 threads / 0.1 s  =  ~2000 req/s  (hard limit)</text>
+<text x="48" y="548" fill="#e0e0e0">Beyond that: queueing, timeouts, pool exhaustion.</text>
+<text x="48" y="572" fill="#aaa" font-size="12">Scaling answer = more threads / more servers (costly).</text>
+
+<!-- RIGHT : WebFlux -->
+<text x="785" y="34" fill="#4ec9b0" font-size="17" font-weight="bold" text-anchor="middle">Spring WebFlux — event loop (non-blocking)</text>
+<text x="785" y="56" fill="#aaa" font-size="12" text-anchor="middle">Netty, workers = number of CPU cores</text>
+
+<rect x="548" y="74" width="120" height="132" rx="8" fill="#2a2a2a" stroke="#555"/>
+<text x="608" y="96" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Requests</text>
+<g fill="#569cd6">
+<rect x="564" y="108" width="88" height="17" rx="3"/><rect x="564" y="130" width="88" height="17" rx="3"/>
+<rect x="564" y="152" width="88" height="17" rx="3"/><rect x="564" y="174" width="88" height="17" rx="3"/>
+</g>
+<text x="608" y="220" fill="#aaa" font-size="12" text-anchor="middle">10,000 concurrent</text>
+
+<rect x="706" y="74" width="150" height="180" rx="8" fill="#2a2a2a" stroke="#555"/>
+<text x="781" y="96" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Event loop</text>
+<g font-size="11" font-family="Consolas, monospace">
+<rect x="720" y="108" width="122" height="26" rx="4" fill="#234a3e" stroke="#4ec9b0"/><text x="781" y="125" fill="#9ae6d0" text-anchor="middle">nio-1  RUNNING</text>
+<rect x="720" y="140" width="122" height="26" rx="4" fill="#234a3e" stroke="#4ec9b0"/><text x="781" y="157" fill="#9ae6d0" text-anchor="middle">nio-2  RUNNING</text>
+<rect x="720" y="172" width="122" height="26" rx="4" fill="#234a3e" stroke="#4ec9b0"/><text x="781" y="189" fill="#9ae6d0" text-anchor="middle">nio-3  RUNNING</text>
+<rect x="720" y="204" width="122" height="26" rx="4" fill="#234a3e" stroke="#4ec9b0"/><text x="781" y="221" fill="#9ae6d0" text-anchor="middle">nio-4  RUNNING</text>
+</g>
+<text x="781" y="272" fill="#4ec9b0" font-size="12" text-anchor="middle">only 4 threads total</text>
+
+<rect x="894" y="140" width="118" height="86" rx="8" fill="#2a2a2a" stroke="#555"/>
+<text x="953" y="166" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Database</text>
+<text x="953" y="188" fill="#aaa" text-anchor="middle" font-size="12">(R2DBC)</text>
+<text x="953" y="210" fill="#d4a017" text-anchor="middle" font-size="12">takes 100 ms</text>
+
+<line x1="668" y1="140" x2="704" y2="140" stroke="#4ec9b0" marker-end="url(#arg)"/>
+<line x1="856" y1="150" x2="892" y2="150" stroke="#4ec9b0" marker-end="url(#arg)"/>
+<line x1="892" y1="196" x2="858" y2="196" stroke="#4ec9b0" marker-end="url(#arg)"/>
+<text x="874" y="142" fill="#4ec9b0" font-size="11" text-anchor="middle">register</text>
+<text x="874" y="242" fill="#4ec9b0" font-size="11" text-anchor="middle">callback</text>
+
+<rect x="548" y="300" width="464" height="72" rx="8" fill="#252525"/>
+<text x="566" y="324" fill="#4ec9b0" font-weight="bold">Thread is released the instant I/O is issued</text>
+<text x="566" y="350" fill="#e0e0e0" font-size="12">It immediately picks up request #2, #3, #4 … while #1 is in flight.</text>
+
+<rect x="548" y="392" width="464" height="196" rx="8" fill="#252525"/>
+<text x="566" y="416" fill="#e0e0e0" font-weight="bold">When the DB answers, the event loop is notified</text>
+<text x="566" y="444" fill="#e0e0e0">and resumes request #1 from the callback —</text>
+<text x="566" y="464" fill="#e0e0e0">no thread was held during the wait.</text>
+<text x="566" y="494" fill="#e0e0e0">Throughput is bounded by CPU + I/O, not by threads</text>
+<text x="566" y="516" fill="#d4a017" font-family="Consolas, monospace" font-size="12">4 threads  →  tens of thousands of concurrent req</text>
+<text x="566" y="548" fill="#e0e0e0">Memory stays flat, no context-switch storm.</text>
+<text x="566" y="572" fill="#f14c4c" font-size="12">BUT: one blocking call freezes ALL requests on that thread.</text>
+</svg>

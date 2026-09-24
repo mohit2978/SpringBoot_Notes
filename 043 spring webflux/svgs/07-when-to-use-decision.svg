@@ -1,0 +1,56 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<rect width="1000" height="600" fill="#1e1e1e" rx="8"/>
+<defs><marker id="d1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa3a4"/></marker></defs>
+
+<text x="500" y="32" fill="#d4a017" font-size="18" font-weight="bold" text-anchor="middle">Should I use WebFlux? — decide before you write any code</text>
+
+<rect x="300" y="56" width="400" height="44" rx="8" fill="#2a2a2a" stroke="#888"/>
+<text x="500" y="84" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Is your data layer non-blocking? (R2DBC, Mongo reactive)</text>
+
+<line x1="500" y1="100" x2="500" y2="128" stroke="#9aa3a4" marker-end="url(#d1)"/>
+<rect x="180" y="128" width="130" height="34" rx="8" fill="#5a2d2d" stroke="#f14c4c"/>
+<text x="245" y="151" fill="#ffb3b3" text-anchor="middle" font-weight="bold">NO — it is JPA</text>
+<path d="M500,112 L245,112 L245,126" stroke="#9aa3a4" fill="none" marker-end="url(#d1)"/>
+
+<rect x="30" y="180" width="420" height="72" rx="8" fill="#3a2a2a" stroke="#f14c4c"/>
+<text x="240" y="206" fill="#ffb3b3" text-anchor="middle" font-weight="bold">Stay on Spring MVC.</text>
+<text x="240" y="228" fill="#e0e0e0" text-anchor="middle" font-size="12">WebFlux over JDBC gives you all the complexity</text>
+<text x="240" y="246" fill="#e0e0e0" text-anchor="middle" font-size="12">and none of the scalability.</text>
+
+<rect x="690" y="128" width="130" height="34" rx="8" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="755" y="151" fill="#9ae6d0" text-anchor="middle" font-weight="bold">YES</text>
+<path d="M500,112 L755,112 L755,126" stroke="#9aa3a4" fill="none" marker-end="url(#d1)"/>
+
+<rect x="530" y="184" width="440" height="44" rx="8" fill="#2a2a2a" stroke="#888"/>
+<text x="750" y="212" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Do you have thousands of concurrent, I/O-bound requests?</text>
+<line x1="755" y1="162" x2="755" y2="182" stroke="#9aa3a4" marker-end="url(#d1)"/>
+
+<line x1="600" y1="228" x2="600" y2="262" stroke="#9aa3a4" marker-end="url(#d1)"/>
+<rect x="530" y="262" width="130" height="34" rx="8" fill="#5a2d2d" stroke="#f14c4c"/>
+<text x="595" y="285" fill="#ffb3b3" text-anchor="middle" font-weight="bold">NO</text>
+<rect x="470" y="312" width="250" height="60" rx="8" fill="#3a2a2a" stroke="#f14c4c"/>
+<text x="595" y="336" fill="#ffb3b3" text-anchor="middle" font-size="12">Spring MVC is simpler to write,</text>
+<text x="595" y="356" fill="#ffb3b3" text-anchor="middle" font-size="12">debug and hire for. Use it.</text>
+<line x1="595" y1="296" x2="595" y2="310" stroke="#9aa3a4" marker-end="url(#d1)"/>
+
+<line x1="900" y1="228" x2="900" y2="262" stroke="#9aa3a4" marker-end="url(#d1)"/>
+<rect x="835" y="262" width="130" height="34" rx="8" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="900" y="285" fill="#9ae6d0" text-anchor="middle" font-weight="bold">YES</text>
+
+<rect x="750" y="312" width="230" height="86" rx="8" fill="#234a3e" stroke="#4ec9b0"/>
+<text x="865" y="338" fill="#9ae6d0" text-anchor="middle" font-weight="bold">Use WebFlux</text>
+<text x="865" y="360" fill="#e0e0e0" text-anchor="middle" font-size="12">API gateways, streaming,</text>
+<text x="865" y="378" fill="#e0e0e0" text-anchor="middle" font-size="12">SSE, fan-out aggregators,</text>
+<text x="865" y="394" fill="#e0e0e0" text-anchor="middle" font-size="12">chat, IoT ingestion</text>
+<line x1="900" y1="296" x2="900" y2="310" stroke="#9aa3a4" marker-end="url(#d1)"/>
+
+<rect x="30" y="424" width="940" height="76" rx="8" fill="#4a3a1a" stroke="#d4a017"/>
+<text x="50" y="450" fill="#f0d68a" font-weight="bold">Before choosing, consider virtual threads (Java 21 / Spring Boot 3.2+)</text>
+<text x="50" y="474" fill="#e0e0e0" font-size="12">Setting  <tspan font-family="Consolas, monospace" fill="#9cdcfe">spring.threads.virtual.enabled=true</tspan>  on plain Spring MVC gives you most of the concurrency win</text>
+<text x="50" y="492" fill="#e0e0e0" font-size="12">while keeping ordinary blocking code, stack traces and debuggers. For many teams that is now the better trade.</text>
+
+<rect x="30" y="514" width="940" height="70" rx="8" fill="#252525"/>
+<text x="50" y="538" fill="#e0e0e0" font-size="12"><tspan fill="#4ec9b0" font-weight="bold">WebFlux still wins when:</tspan> you need real streaming/SSE/WebSocket, backpressure over the wire, or a very low</text>
+<text x="50" y="558" fill="#e0e0e0" font-size="12">memory footprint per connection (gateways holding 100k idle sockets). Virtual threads do not give you backpressure.</text>
+<text x="50" y="578" fill="#aaa" font-size="12">Never mix: do not call blocking JDBC inside a WebFlux handler just because "it compiles".</text>
+</svg>
