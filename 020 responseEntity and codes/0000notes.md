@@ -7,7 +7,7 @@ In client-server communication (REST APIs), an HTTP response sent back to the cl
 1. **Status Code:**
    The 3-digit numeric code indicating the outcome of the request (e.g., `200 OK`, `201 CREATED`, `400 BAD_REQUEST`, `500 INTERNAL_SERVER_ERROR`).
 2. **Headers (Optional):**
-   Key-value metadata providing supplementary information about the response (e.g., `Content-Type: application/json`, `Location: /api/v2/users`, custom headers).
+   Key-value metadata providing supplementary information about the response (e.g., `Content-Type: application/json`, `Location: /api/v2/users`, custom headers). *(See [Section 13: Common HTTP Headers](#13-common-http-headers-complete-guide--spring-boot-usage) for the in-depth guide).*
 3. **Body (Payload):**
    The actual response data sent to the client (e.g., JSON representation of a user, plain text, or binary stream). In responses like `204 NO_CONTENT` or redirect responses, the body may be empty (`null`).
 
@@ -293,6 +293,61 @@ Indicates that the client sent an invalid request or triggered a business rule v
 
 ### `405 Method Not Allowed`
 - The endpoint exists, but does not support the received HTTP method (e.g., sending `POST` to an endpoint that only defines `@GetMapping`). In Spring Boot, `DispatcherServlet` throws this before reaching controller logic.
+
+### `409 Conflict`
+Indicates that the request could not be processed because of a **conflict with the current state of the target resource**. The client's request is syntactically valid, but executing it against the current database or server state would result in an inconsistent or illegal state.
+
+#### Real-World Scenarios for `409 Conflict`:
+1. **Unique Constraint / Duplicate Resource Creation:**
+   - Attempting to register an account with an email address or username that already exists in the database.
+   - *Example:* `POST /api/users` with `{"email": "alex@example.com"}` when that email is already registered.
+2. **Concurrency & Optimistic Locking (`@Version` in Spring Data JPA):**
+   - Two users (User A & User B) load the same record (Version 1).
+   - User A updates and saves the record &#x27A4; DB version increments to 2.
+   - User B attempts to save their edits with stale Version 1 &#x27A4; Hibernate detects the version mismatch and throws `OptimisticLockingFailureException`. The server responds with `409 Conflict`.
+3. **State Machine / Workflow Transition Incompatibility:**
+   - Performing an action disallowed by the resource's current business lifecycle state.
+   - *Example:* Sending `POST /api/orders/101/cancel` when the order status is already `SHIPPED` or `DELIVERED`.
+
+#### Comparison: `409 Conflict` vs `400 Bad Request` vs `422 Unprocessable Entity`
+| Status Code | Error Layer | The Core Question | Concrete Example |
+| :--- | :--- | :--- | :--- |
+| **`400 Bad Request`** | **Syntax / Transport** | *"Can the server even parse this payload?"* | Malformed JSON, missing mandatory parameter, type mismatch (passing `"abc"` for `Integer id`). |
+| **`422 Unprocessable Entity`** | **Semantic / Payload Validation** | *"Is the data invalid on its own, regardless of DB state?"* | Start Date is after End Date; age is negative; invalid email format syntax. |
+| **`409 Conflict`** | **State / Consistency** | *"Does this valid request collide with the current resource state?"* | Email already taken in DB; stale JPA `@Version` concurrency clash; order already closed. |
+
+#### Spring Boot Implementation Example:
+In production, handle database unique constraint violations and optimistic locking conflicts inside a `@RestControllerAdvice`:
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    // 1. Handling Duplicate Database Unique Constraints (e.g. unique email/username)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", HttpStatus.CONFLICT.value());
+        error.put("error", "Conflict");
+        error.put("message", "A resource with this unique identifier (e.g. email/username) already exists.");
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    // 2. Handling JPA Concurrency Conflicts (Optimistic Locking)
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<Map<String, Object>> handleOptimisticLocking(OptimisticLockingFailureException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", HttpStatus.CONFLICT.value());
+        error.put("error", "Conflict");
+        error.put("message", "The resource was modified by another transaction. Please refresh and try again.");
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+}
+```
 
 ### `422 Unprocessable Entity`
 - The request syntax is 100% valid JSON, but it violates a **domain business rule**.
@@ -709,9 +764,378 @@ Content-Type: application/json
 | **`403`** | `Forbidden` | Authorization failure | Authenticated, but role disallowed. |
 | **`404`** | `Not Found` | Missing resource / Bad URL | Resource not found in DB, or View missing. |
 | **`405`** | `Method Not Allowed`| Wrong HTTP verb | e.g. `POST` sent to `@GetMapping`. |
+| **`409`** | `Conflict` | State / Concurrency clash | Duplicate unique key, stale JPA `@Version`, or invalid state transition. |
 | **`422`** | `Unprocessable Entity`| Business rule failure | Valid JSON, but domain logic rejected it. |
 | **`429`** | `Too Many Requests`| Rate limiting | Exceeded API rate limits per time window. |
 | **`500`** | `Internal Server Error`| Server-side unhandled exception| Uncaught NPE, DB down, server code bug. |
 | **`501`** | `Not Implemented` | Unsupported feature | API endpoint planned for future release. |
 | **`502`** | `Bad Gateway` | Reverse proxy failure | Nginx upstream connection refused. |
 | **`504`** | `Gateway Timeout` | Upstream timeout | Microservice took too long to reply to Gateway. |
+
+---
+
+## 13. Common HTTP Headers: Complete Guide & Spring Boot Usage
+
+HTTP headers are **colon-separated key-value pairs** passed between the client and server in every HTTP request and response. They transmit vital operational metadata about the request, the client, the response, caching behavior, security policies, and payload representations.
+
+```http
+Header-Name: Header-Value
+```
+
+> **RFC Standard Rule:** HTTP header names are **case-insensitive** (e.g., `content-type` is identical to `Content-Type`). In HTTP/2 and HTTP/3, header names are transmitted entirely in lowercase.
+
+---
+
+### 1. Header Categories Overview
+
+HTTP headers can be divided into four core protocol scopes:
+1. **Request Headers:** Sent by the client to describe itself, request preferences, or auth credentials (e.g., `Accept`, `Authorization`, `User-Agent`).
+2. **Response Headers:** Sent by the server to provide context about the server, response state, or cookies (e.g., `Server`, `Set-Cookie`, `Location`).
+3. **Representation / Entity Headers:** Describe the payload body in either direction (e.g., `Content-Type`, `Content-Length`, `Content-Encoding`).
+4. **General Headers:** Apply to the overall transport connection (e.g., `Connection`, `Date`, `Cache-Control`).
+
+---
+
+### 2. In-Depth Breakdown by Functional Area
+
+#### A. Content Representation & Negotiation Headers
+
+These headers negotiate and describe how the body payload is encoded, serialized, and formatted.
+
+##### 1. `Content-Type` (Request & Response)
+- **What it does:** Specifies the MIME media type of the transmitted body data.
+- **Common Values:**
+  - `application/json`: Standard REST payload format.
+  - `application/x-www-form-urlencoded`: HTML form submissions (`key=value&key2=val`).
+  - `multipart/form-data`: Binary file uploads alongside form text.
+  - `text/html; charset=UTF-8`: Webpage content.
+  - `application/pdf`, `image/png`: Binary media streaming.
+- **Spring Boot Usage:**
+  ```java
+  @PostMapping(value = "/upload", 
+               consumes = MediaType.MULTIPART_FORM_DATA_VALUE, 
+               produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UploadResponse> uploadFile(@RequestParam("file") MultipartFile file) { ... }
+  ```
+
+##### 2. `Accept` (Request Header)
+- **What it does:** The client informs the server which media types it can understand and process.
+- **Example:** `Accept: application/json, text/plain, */*`
+- **What happens on mismatch?** If a client requests `Accept: application/xml`, but Spring Boot only has Jackson JSON configured and cannot produce XML, the server automatically returns **`406 Not Acceptable`**.
+
+##### 3. `Content-Length` (Request & Response)
+- **What it does:** Indicates the exact size of the payload body in decimal bytes (8-bit octets).
+- **Example:** `Content-Length: 1048`
+- **Why it matters:** On persistent HTTP/1.1 connections (`Keep-Alive`), the receiving party uses `Content-Length` to know where one request/response ends and the next begins.
+
+##### 4. `Content-Encoding` & `Accept-Encoding` (Compression)
+- **What they do:** Enables HTTP compression to save network bandwidth.
+- **Client sends:** `Accept-Encoding: gzip, deflate, br` (Brotli).
+- **Server responds with compressed body + header:** `Content-Encoding: gzip`.
+- In Spring Boot, enable gzip with:
+  ```properties
+  server.compression.enabled=true
+  server.compression.mime-types=application/json,application/xml,text/html,text/plain
+  server.compression.min-response-size=2048
+  ```
+
+---
+
+#### B. Authentication & Security Headers
+
+##### 1. `Authorization` (Request Header)
+- **What it does:** Carries client credentials to authenticate with the server.
+- **Common Schemes:**
+  - **Bearer Token (JWT / OAuth2 / OIDC):**
+    ```http
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    ```
+  - **Basic Authentication:**
+    ```http
+    Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l
+    ```
+    *(Base64 encoding of `username:password` — vulnerable without HTTPS).*
+  - **Custom API Key:**
+    ```http
+    Authorization: ApiKey 9a8b7c6d5e4f3a2b1
+    ```
+    *(Alternatively passed as custom headers like `X-API-KEY: 9a8b...`).*
+
+##### 2. `WWW-Authenticate` (Response Header)
+- **What it does:** Sent by the server when returning **`401 Unauthorized`**. It tells the unauthenticated client which authentication scheme and realm are required.
+- **Example:**
+  ```http
+  HTTP/1.1 401 Unauthorized
+  WWW-Authenticate: Bearer realm="api.example.com", error="invalid_token"
+  ```
+
+---
+
+#### C. Caching & Conditional Headers
+
+HTTP caching prevents redundant network trips, saves database queries, and slashes latency.
+
+##### 1. `Cache-Control` (Request & Response)
+- **What it does:** Defines caching directives for browsers, CDNs (Cloudflare), and forward/reverse proxies.
+- **Common Directives:**
+  - `no-store`: **Never store in cache.** Required for sensitive, financial, or personal data.
+  - `no-cache`: Cache can store the copy, but **must validate with origin server** (using ETag or timestamp) before serving it.
+  - `public, max-age=86400`: Can be cached by anyone (browsers & CDNs) for 24 hours (86400 seconds).
+  - `private, max-age=3600`: Can **only** be cached by the end-user's browser, not shared CDNs.
+  - `must-revalidate`: Once the cache item expires (`max-age` elapsed), stale copies cannot be served without server revalidation.
+
+##### 2. `ETag` & `If-None-Match` (Fingerprint Validation)
+- **How it works:**
+  1. Server generates a hash or version token for the resource and returns:
+     ```http
+     ETag: "w/33a64df5"
+     ```
+  2. On the next request, client sends the cached token:
+     ```http
+     If-None-Match: "w/33a64df5"
+     ```
+  3. Server checks if data changed. If identical, server replies with **`304 Not Modified` (empty body)**, saving network bandwidth.
+
+##### 3. `Last-Modified` & `If-Modified-Since` (Timestamp Validation)
+- Companion to ETag using HTTP timestamps instead of entity hashes:
+  - Response: `Last-Modified: Wed, 21 Oct 2025 07:28:00 GMT`
+  - Subsequent Request: `If-Modified-Since: Wed, 21 Oct 2025 07:28:00 GMT`
+
+---
+
+#### D. Navigation, Redirection & Resource Location
+
+##### 1. `Location` (Response Header)
+- **What it does:** Directs the client where to go next.
+- **Used in two primary situations:**
+  1. **Redirection (`301`, `302`, `307`, `308`):** Points to the new target URI:
+     ```http
+     HTTP/1.1 308 Permanent Redirect
+     Location: https://api.example.com/api/v2/orders
+     ```
+  2. **Resource Creation (`201 Created`):** Points to the URI of the newly created entity:
+     ```http
+     HTTP/1.1 201 Created
+     Location: /api/users/42
+     ```
+
+##### 2. `Host` (Request Header - Mandatory in HTTP/1.1)
+- **What it does:** Specifies the domain name of the server being accessed.
+- **Example:** `Host: api.example.com:443`
+- **Why it matters:** Enables **Virtual Hosting** on web servers. A single physical server with one IP address can host multiple different domains (`example.com`, `shop.com`) by routing requests based on the `Host` header.
+
+---
+
+#### E. Modern Web Security Headers (OWASP Hardening)
+
+These headers protect web applications and REST APIs against injection, clickjacking, and man-in-the-middle attacks.
+
+##### 1. `Strict-Transport-Security` (HSTS)
+- **What it does:** Enforces that browsers **must only connect over HTTPS**; attempts to connect via HTTP are converted to HTTPS locally before sending.
+- **Example:**
+  ```http
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  ```
+
+##### 2. `Content-Security-Policy` (CSP)
+- **What it does:** Mitigates Cross-Site Scripting (XSS) and data injection attacks by restricting which sources can load scripts, styles, images, and fonts.
+- **Example:**
+  ```http
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://trustedscripts.com
+  ```
+
+##### 3. `X-Content-Type-Options`
+- **What it does:** Prevents MIME-type sniffing.
+- **Standard Value:** `X-Content-Type-Options: nosniff`
+- **Why it matters:** Prevents malicious attackers from uploading a script disguised as a `.jpg` image and tricking browsers into executing it.
+
+##### 4. `X-Frame-Options`
+- **What it does:** Prevents Clickjacking attacks by forbidding pages from being embedded in `<iframe>` tags.
+- **Values:** `DENY` or `SAMEORIGIN`.
+
+##### 5. `Referrer-Policy`
+- **What it does:** Controls how much URL referrer information is exposed when a user navigates from your site to an external link.
+- **Common Value:** `Referrer-Policy: strict-origin-when-cross-origin`.
+
+---
+
+#### F. CORS (Cross-Origin Resource Sharing) Headers
+
+CORS headers allow browsers to safely make HTTP requests to a domain different from the one hosting the frontend app (e.g., React on `http://localhost:3000` calling Spring Boot on `http://localhost:8080`).
+
+##### Request Headers:
+- **`Origin`**: Sent automatically by the browser to declare where the request came from (e.g., `Origin: https://myfrontend.com`).
+- **`Access-Control-Request-Method`**: Used in CORS preflight `OPTIONS` requests to ask if a method is allowed (e.g., `PUT`).
+- **`Access-Control-Request-Headers`**: Used in preflight to ask if custom headers are allowed (e.g., `Authorization, X-Request-ID`).
+
+##### Server Response Headers:
+- **`Access-Control-Allow-Origin`**: Explicitly permits allowed origins (e.g., `https://myfrontend.com` or `*`).
+- **`Access-Control-Allow-Methods`**: Allowed verbs (e.g., `GET, POST, PUT, DELETE, OPTIONS`).
+- **`Access-Control-Allow-Headers`**: Allowed request headers (e.g., `Content-Type, Authorization, Idempotency-Key`).
+- **`Access-Control-Allow-Credentials`**: If set to `true`, permits browser cookies and Authorization headers on cross-origin requests.
+- **`Access-Control-Max-Age`**: How long (in seconds) browser can cache the preflight `OPTIONS` response before sending another one (e.g., `3600`).
+
+---
+
+#### G. Client State & Cookie Management
+
+##### 1. `Set-Cookie` (Response Header)
+- **What it does:** Sent by server to store cookies on the client browser.
+- **Production Security Attributes:**
+  ```http
+  Set-Cookie: SESSIONID=9f4a8b2c; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=3600
+  ```
+  - **`HttpOnly`**: JavaScript cannot access `document.cookie` (crucial protection against XSS token theft).
+  - **`Secure`**: Cookie is only transmitted over encrypted HTTPS connections.
+  - **`SameSite=Strict` / `Lax`**: Prevents Cross-Site Request Forgery (CSRF) by preventing cookie inclusion on third-party links.
+
+##### 2. `Cookie` (Request Header)
+- **What it does:** Sent by client on subsequent requests to deliver stored cookies back to the server:
+  ```http
+  Cookie: SESSIONID=9f4a8b2c; theme=dark
+  ```
+
+---
+
+#### H. Reverse Proxies & Microservices Tracing
+
+In modern cloud environments (AWS, Kubernetes, Nginx, Spring Cloud Gateway), requests pass through reverse proxies and load balancers.
+
+##### 1. `X-Forwarded-For` & `X-Forwarded-Proto`
+- **What they do:** Preserve original client connection information lost during reverse proxying.
+  - `X-Forwarded-For: 203.0.113.195, 198.51.100.1` (Chain of client IP and intermediary proxy IPs).
+  - `X-Forwarded-Proto: https` (Preserves whether client originally connected via HTTP or HTTPS before SSL termination at load balancer).
+
+##### 2. `X-Request-ID` / `Traceparent` (Distributed Tracing)
+- **What it does:** A correlation identifier passed across microservices.
+- **Why it matters:** When a single user action touches 5 microservices, having the same `X-Request-ID` or W3C `Traceparent` in every log allows developers to trace the entire distributed execution flow in tools like Zipkin, Datadog, or Grafana Tempo.
+
+##### 3. `Idempotency-Key`
+- **What it does:** Custom header sent on `POST` requests to deduplicate retries and prevent double charges/inserts. *(Detailed in Section 11).*
+
+---
+
+### 3. How to Work with Headers in Spring Boot
+
+#### Pattern 1: Reading Request Headers in Controller
+```java
+@RestController
+@RequestMapping("/api/orders")
+public class OrderController {
+
+    // 1. Reading a specific required header
+    @GetMapping("/secure")
+    public ResponseEntity<String> getSecureData(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
+        return ResponseEntity.ok("Token received: " + authHeader);
+    }
+
+    // 2. Reading an optional header with fallback default value
+    @GetMapping("/versioned")
+    public ResponseEntity<String> getVersionedData(
+            @RequestHeader(value = "X-Api-Version", defaultValue = "v1") String apiVersion) {
+        return ResponseEntity.ok("Handling request for API version: " + apiVersion);
+    }
+
+    // 3. Reading ALL headers simultaneously into a Map or HttpHeaders object
+    @GetMapping("/debug")
+    public ResponseEntity<Map<String, String>> getAllHeaders(
+            @RequestHeader Map<String, String> allHeaders) {
+        return ResponseEntity.ok(allHeaders);
+    }
+}
+```
+
+---
+
+#### Pattern 2: Setting Response Headers via `ResponseEntity`
+Spring Boot offers clean ways to attach headers to a response:
+
+##### Method A: Using the `.header()` Fluent Builder (Recommended for 1-2 headers)
+```java
+@PostMapping("/users")
+public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
+    UserResponse createdUser = userService.create(request);
+    URI location = URI.create("/api/users/" + createdUser.id());
+
+    return ResponseEntity
+            .created(location) // Sets HTTP 201 + Location header automatically
+            .header("X-Custom-Processing-Time", "14ms")
+            .header(HttpHeaders.CACHE_CONTROL, "no-store")
+            .body(createdUser);
+}
+```
+
+##### Method B: Using `HttpHeaders` Object (Recommended for multiple headers)
+```java
+@GetMapping("/download")
+public ResponseEntity<byte[]> downloadFile() {
+    byte[] fileData = fileService.generatePdfReport();
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_PDF);
+    headers.setContentLength(fileData.length);
+    headers.setContentDisposition(ContentDisposition.attachment().filename("report.pdf").build());
+    headers.setCacheControl(CacheControl.noCache().mustRevalidate());
+
+    return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
+}
+```
+
+---
+
+#### Pattern 3: Adding Global Headers via Spring Boot Filter
+To attach security or tracing headers to **every single response** across the application, use a `OncePerRequestFilter`:
+
+```java
+@Component
+public class CustomSecurityAndTracingFilter extends OncePerRequestFilter {
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+
+        // 1. Extract or generate Correlation ID for tracing
+        String requestId = request.getHeader("X-Request-ID");
+        if (requestId == null || requestId.isBlank()) {
+            requestId = UUID.randomUUID().toString();
+        }
+
+        // 2. Attach headers to response
+        response.setHeader("X-Request-ID", requestId);
+        response.setHeader("X-Content-Type-Options", "nosniff");
+        response.setHeader("X-Frame-Options", "DENY");
+
+        filterChain.doFilter(request, response);
+    }
+}
+```
+
+---
+
+### 4. HTTP Headers Master Cheat Sheet
+
+| Header Name | Type | Primary Purpose | Standard Example |
+| :--- | :--- | :--- | :--- |
+| **`Content-Type`** | Entity | MIME type of body payload | `application/json; charset=UTF-8` |
+| **`Accept`** | Request | Formats client can accept | `application/json, text/plain` |
+| **`Content-Length`** | Entity | Size of body in bytes | `3482` |
+| **`Content-Encoding`** | Entity | Body compression format | `gzip`, `br` |
+| **`Authorization`** | Request | Client credentials / Bearer token | `Bearer eyJhbGci...` |
+| **`WWW-Authenticate`** | Response | Defines required auth scheme on 401 | `Bearer realm="api.app.com"` |
+| **`Cache-Control`** | General | Caching directives for browser/CDN | `no-cache`, `no-store`, `max-age=3600` |
+| **`ETag`** | Response | Resource version hash for caching | `"68b329da9893e34099c7d8ad5cb9c940"` |
+| **`If-None-Match`** | Request | Conditional check on cached ETag | `"68b329da9893e34099c7d8ad5cb9c940"` |
+| **`Location`** | Response | Target URL for redirect (3xx) or 201 | `/api/v2/users/42` |
+| **`Host`** | Request | Target domain (enables virtual hosting)| `api.example.com` |
+| **`Set-Cookie`** | Response | Stores cookie on browser | `SESSION=abc; Secure; HttpOnly; SameSite=Strict` |
+| **`Cookie`** | Request | Returns stored cookies to server | `SESSION=abc` |
+| **`Origin`** | Request | Domain of caller in CORS | `https://myfrontend.com` |
+| **`Access-Control-Allow-Origin`** | Response | Allowed origin in CORS | `https://myfrontend.com` or `*` |
+| **`Strict-Transport-Security`** | Response | Forces HTTPS connections (HSTS) | `max-age=31536000; includeSubDomains` |
+| **`X-Content-Type-Options`** | Response | Prevents MIME-sniffing | `nosniff` |
+| **`X-Frame-Options`** | Response | Prevents clickjacking in iframes | `DENY` or `SAMEORIGIN` |
+| **`X-Forwarded-For`** | Request | Client IP behind reverse proxy | `203.0.113.195` |
+| **`X-Request-ID`** | Both | Distributed tracing request ID | `c4b1-4f9e-9762-7e04f0d6` |
+| **`Idempotency-Key`** | Request | Deduplicates repeated POST calls | `9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d` |
