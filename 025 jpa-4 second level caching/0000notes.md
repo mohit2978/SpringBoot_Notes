@@ -74,7 +74,7 @@ Now between PersistanceContext and DB we have **Another layer** called as **2nd 
 ┌─────────────────────────────────────────────────────────────┐
 │                      Service Layer                          │
 │                                                             │
-│   ⭐ 1. SPRING BOOT CACHE (@Cacheable)                       │
+│   ⭐ 1. SPRING BOOT CACHE (@Cacheable)                      │
 │      - Intercepts Java method execution via Spring AOP      │
 │      - Caches ANY method return value (DTO, String, List)   │
 │      - Skips service method entirely on cache HIT           │
@@ -87,7 +87,7 @@ Now between PersistanceContext and DB we have **Another layer** called as **2nd 
 │      - Transaction-scoped (lives & dies with transaction)   │
 │                              │                              │
 │                              ▼                              │
-│   ⭐ 3. HIBERNATE L2 CACHE (SessionFactory / Process-wide)   │
+│   ⭐ 3. HIBERNATE L2 CACHE (SessionFactory / Process-wide)  │
 │      - Shared across ALL Persistence Contexts               │
 │      - Caches dehydrated entity data (raw column values)    │
 │      - Only skips the SQL query to DB, NOT service code     │
@@ -184,6 +184,426 @@ Now between PersistanceContext and DB we have **Another layer** called as **2nd 
 | **Cache Invalidation** | **Manual** (must use `@CacheEvict` or `@CachePut`) | **Automatic** (Hibernate tracks entity changes on commit) |
 | **Default Provider** | Spring provides a simple default (`ConcurrentMapCacheManager`) | **None** (must explicitly configure Ehcache, Hazelcast, Infinispan, etc.) |
 | **Best Used For** | Caching DTOs, external REST API responses, heavy business calculations | Caching frequently read, infrequently updated JPA Entities across multiple sessions |
+
+---
+
+## **Deep Dive: Spring Boot Default Cache (Spring Cache Abstraction)**
+
+Before tracing Hibernate L2 Cache, let's understand **Spring Boot's default cache mechanism** in detail — its dependencies, how it works under the hood, and every caching annotation with practical examples.
+
+---
+
+### **1. What is the Spring Boot Default Cache?**
+
+Spring Framework does not write its own custom in-memory caching engine. Instead, it provides a unified **Cache Abstraction Layer** (via the `org.springframework.cache` package).
+
+When you enable caching in Spring Boot without declaring an external cache provider (such as Redis, Caffeine, Ehcache, or Hazelcast), Spring Boot automatically auto-configures the **Default Cache Provider**:
+👉 **`ConcurrentMapCacheManager`** (often referred to as the **Simple Cache**).
+
+#### **How the Default Cache Works Under the Hood:**
+* It is backed by standard Java **`ConcurrentHashMap<Object, Object>`** instances in JVM heap memory.
+* For each named cache (e.g., `"products"`, `"users"`), Spring initializes an underlying `ConcurrentHashMap`.
+* Keys (e.g. `Long id`) and values (e.g. `ProductDTO`) are stored as raw Java object references in memory.
+* **Scope:** Local to the single running JVM process (not shared across instances or servers).
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                         JVM Memory Heap                                │
+│                                                                        │
+│   org.springframework.cache.concurrent.ConcurrentMapCacheManager       │
+│                                                                        │
+│   ┌───────────────────────────────┐  ┌───────────────────────────────┐ │
+│   │ Cache Name: "products"        │  │ Cache Name: "users"           │ │
+│   │ ConcurrentHashMap<Key, Value> │  │ ConcurrentHashMap<Key, Value> │ │
+│   │  Key: 101 -> ProductDTO(...)  │  │  Key: 501 -> UserProfile(...) │ │
+│   │  Key: 102 -> ProductDTO(...)  │  │  Key: 502 -> UserProfile(...) │ │
+│   └───────────────────────────────┘  └───────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+> [!WARNING]
+> **Limitations of the Default Cache in Production:**
+> 1. **No Eviction Policy (TTL / Expiry):** Entries stay in memory indefinitely until manually evicted via `@CacheEvict`.
+> 2. **No Max-Size / Memory Bounds:** High request traffic with unique keys will cause unbounded memory growth and trigger `OutOfMemoryError (OOM)`.
+> 3. **Not Distributed:** In a horizontally-scaled microservice architecture (multiple pods/instances), each pod has its own `ConcurrentHashMap`, leading to data inconsistencies across pods.
+>
+> 💡 *Takeaway: The default cache is ideal for prototyping, testing, or small static lookup tables (e.g. country codes, roles). For production workloads, switch to **Caffeine** (single-instance with TTL/LRU) or **Redis** (distributed across all pods).*
+
+---
+
+### **2. Dependencies Required**
+
+To enable Spring Boot's caching abstraction, add the starter dependency to your project:
+
+#### **Maven (`pom.xml`):**
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-cache</artifactId>
+</dependency>
+```
+
+#### **Gradle (`build.gradle`):**
+```groovy
+implementation 'org.springframework.boot:spring-boot-starter-cache'
+```
+
+#### **What does `spring-boot-starter-cache` do?**
+1. Brings in `spring-context-support`, containing the core caching interfaces (`Cache`, `CacheManager`, etc.).
+2. Triggers Spring Boot's `CacheAutoConfiguration`.
+3. If no other provider dependency (e.g. Caffeine, Redis, Hazelcast) is found on the classpath, Spring Boot defaults to `spring.cache.type=simple` (`ConcurrentMapCacheManager`).
+
+---
+
+### **3. How Spring Cache Works Internally (AOP Proxy Architecture)**
+
+Spring Caching is implemented entirely via **Spring AOP (Aspect-Oriented Programming)** proxies (`CacheInterceptor`).
+
+```
+ Client HTTP Request
+       │
+       ▼
+ ┌──────────────┐
+ │  Controller  │
+ └──────┬───────┘
+        │
+        ▼
+ ┌─────────────────────────────────────────────────────────────┐
+ │                     Spring AOP Proxy                        │
+ │                                                             │
+ │  1. Intercepts method call with @Cacheable                  │
+ │  2. Computes the Cache Key (e.g. from method arguments)     │
+ │  3. Checks CacheManager (ConcurrentHashMap)                 │
+ └──────────────┬──────────────────────────────┬───────────────┘
+                │                              │
+          Cache HIT?                      Cache MISS?
+                │                              │
+                ▼                              ▼
+     Return cached value             ┌─────────────────────┐
+     (Method body SKIPPED! ⚡)       │  Target Service     │
+                                     │  Executes actual    │
+                                     │  business logic /   │
+                                     │  database query     │
+                                     └─────────┬───────────┘
+                                               │
+                                               ▼
+                                     Store result in Cache
+                                               │
+                                               ▼
+                                         Return result
+```
+
+---
+
+### **4. All Spring Boot Caching Annotations**
+
+Spring provides 6 core caching annotations under the package `org.springframework.cache.annotation`:
+
+| Annotation | Target | Purpose |
+|---|---|---|
+| **`@EnableCaching`** | Class (Config / Main) | Enables Spring's annotation-driven cache management |
+| **`@Cacheable`** | Method / Class | Populates cache on miss; skips method on hit |
+| **`@CachePut`** | Method | Always runs method & updates the cache with result |
+| **`@CacheEvict`** | Method | Removes entry/entries from cache (eviction) |
+| **`@Caching`** | Method | Groups multiple cache operations (e.g. multi-evict) |
+| **`@CacheConfig`** | Class | Defines shared cache configurations across methods |
+
+---
+
+#### 1️⃣ `@EnableCaching`
+Activates Spring’s annotation-driven cache management. Without this annotation, all caching annotations (`@Cacheable`, `@CacheEvict`, etc.) are **completely ignored**!
+
+```java
+@SpringBootApplication
+@EnableCaching // 👈 Activates Spring AOP caching infrastructure
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+
+* **Attributes:**
+  * `proxyTargetClass`: Forces CGLIB class-based proxies instead of standard JDK interface proxies (`true` by default in Spring Boot).
+  * `mode`: Advice mode (`AdviceMode.PROXY` by default, or `AdviceMode.ASPECTJ` for compile-time/load-time weaving).
+
+---
+
+#### 2️⃣ `@Cacheable`
+Applied to methods. When invoked:
+1. Spring generates a cache key from method parameters.
+2. If the key exists in the cache, the **method body is not executed**; the cached value is returned immediately.
+3. If the key does not exist, the method runs, and its return value is stored in the cache.
+
+```java
+@Service
+public class ProductService {
+
+    @Cacheable(value = "products", key = "#id")
+    public ProductDTO getProductById(Long id) {
+        // Simulating slow database call or computation
+        System.out.println("Fetching from Database for ID: " + id);
+        return productRepository.findById(id)
+                .map(ProductDTO::new)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+    }
+}
+```
+
+##### **Key Attributes of `@Cacheable`:**
+
+| Attribute | Type | Description & Example |
+|---|---|---|
+| `value` / `cacheNames` | `String[]` | Name of the cache region (e.g. `value = "products"`). |
+| `key` | `String` (SpEL) | Dynamic key via SpEL (e.g. `key = "#id"`, `key = "#user.email"`). If omitted, uses default `SimpleKeyGenerator` (hashes all parameters). |
+| `keyGenerator` | `String` | Bean name of custom `KeyGenerator` implementation. Mutually exclusive with `key`. |
+| `condition` | `String` (SpEL) | Evaluated **BEFORE** method runs. If `false`, caching is bypassed (method runs normally without checking or updating cache). Example: `condition = "#id > 10"`. |
+| `unless` | `String` (SpEL) | Evaluated **AFTER** method runs. Can inspect `#result`. If `true`, the result is **NOT** cached. Example: `unless = "#result == null"`, `unless = "#result.price > 1000"`. |
+| `sync` | `boolean` | If `true`, synchronizes access to prevent the **Cache Stampede / Dog-piling effect** (multiple concurrent threads requesting the same missing key). Only 1 thread executes the method while others wait for the cached result. Default `false`. |
+| `cacheManager` | `String` | Bean name of specific `CacheManager` to use if multiple managers exist. |
+
+##### **Example using `condition`, `unless`, and `sync`:**
+```java
+@Cacheable(
+    value = "products",
+    key = "#id",
+    condition = "#id > 0",              // Only cache if ID is positive
+    unless = "#result == null",         // Do NOT cache null returns
+    sync = true                         // Thread-safe lock against cache stampede
+)
+public ProductDTO getProduct(Long id) {
+    return productRepository.findById(id).map(ProductDTO::new).orElse(null);
+}
+```
+
+---
+
+#### 3️⃣ `@CachePut`
+Always **executes the method body**, and then updates the cache with the returned result.
+
+> [!IMPORTANT]
+> **Difference between `@Cacheable` and `@CachePut`:**
+> * `@Cacheable`: Skips method execution if cache entry already exists.
+> * `@CachePut`: **ALWAYS executes** the method and updates the cache with the fresh result.
+> Use `@CachePut` for **update / save** methods!
+
+```java
+@CachePut(value = "products", key = "#productDTO.id")
+public ProductDTO updateProduct(ProductDTO productDTO) {
+    // Method ALWAYS executes to update DB:
+    Product entity = productRepository.findById(productDTO.getId()).orElseThrow();
+    entity.setName(productDTO.getName());
+    entity.setPrice(productDTO.getPrice());
+    productRepository.save(entity);
+    
+    // The updated ProductDTO is placed into the "products" cache with key #productDTO.id
+    return new ProductDTO(entity);
+}
+```
+
+---
+
+#### 4️⃣ `@CacheEvict`
+Removes stale or deleted data from the cache.
+
+```java
+// Evict a single entry by ID
+@CacheEvict(value = "products", key = "#id")
+public void deleteProduct(Long id) {
+    productRepository.deleteById(id);
+}
+
+// Clear the ENTIRE cache (all entries)
+@CacheEvict(value = "products", allEntries = true)
+public void clearAllProductsCache() {
+    System.out.println("Cleared entire products cache!");
+}
+```
+
+##### **Key Attributes of `@CacheEvict`:**
+
+| Attribute | Type | Description |
+|---|---|---|
+| `key` | `String` (SpEL) | Specific key to evict (e.g. `key = "#id"`). |
+| `allEntries` | `boolean` | If `true`, clears **all keys** inside that cache name. Default `false`. |
+| `beforeInvocation` | `boolean` | Determines when eviction happens: <br>• `false` (default): Evicts **AFTER** method successfully completes. If method throws an exception, cache is **NOT** evicted. <br>• `true`: Evicts **BEFORE** method executes. Cache is cleared even if method subsequently fails. |
+
+##### **Example with `beforeInvocation = true`:**
+```java
+// Guarantees cache is cleared even if an exception occurs during batch DB wipe:
+@CacheEvict(value = "products", allEntries = true, beforeInvocation = true)
+public void reloadAllProducts() {
+    productRepository.deleteAll();
+    externalVendorService.fetchAndSaveFreshProducts();
+}
+```
+
+---
+
+#### 5️⃣ `@Caching`
+Used when a single method needs **multiple cache operations** at the same time (e.g. updating one cache while evicting another, or evicting across multiple cache regions).
+
+```java
+@Caching(
+    put = {
+        @CachePut(value = "products", key = "#result.id")
+    },
+    evict = {
+        @CacheEvict(value = "productSummaries", key = "#result.id"),
+        @CacheEvict(value = "featuredProducts", allEntries = true)
+    }
+)
+public ProductDTO saveAndRefresh(ProductCreateRequest request) {
+    Product product = productRepository.save(new Product(request));
+    return new ProductDTO(product);
+}
+```
+
+---
+
+#### 6️⃣ `@CacheConfig`
+Class-level annotation that declares shared cache settings (like `cacheNames`, `keyGenerator`, or `cacheManager`) in one place instead of repeating them across every method in the class.
+
+```java
+@Service
+@CacheConfig(cacheNames = "users") // 👈 All methods default to "users" cache
+public class UserService {
+
+    @Cacheable(key = "#id") // Automatically uses "users" cache
+    public UserDTO getUserById(Long id) {
+        return userRepository.findById(id).map(UserDTO::new).orElseThrow();
+    }
+
+    @CachePut(key = "#user.id") // Automatically uses "users" cache
+    public UserDTO updateUser(UserDTO user) {
+        // ...
+        return user;
+    }
+
+    @CacheEvict(key = "#id") // Automatically uses "users" cache
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+}
+```
+
+---
+
+### **5. SpEL (Spring Expression Language) Cheat Sheet for Caching**
+
+Spring Cache provides rich contextual variables that can be used in `key`, `condition`, and `unless` expressions:
+
+| SpEL Variable | Description | Example Usage |
+|---|---|---|
+| `#root.method` | The method object being called | `#root.method.name` |
+| `#root.target` | The target service object | `#root.targetClass` |
+| `#root.caches[0]` | The cache being used | `#root.caches[0].name` |
+| `#root.args[0]` or `[0]` | Argument by index | `key = "#root.args[0]"` |
+| `#paramName` | Argument by parameter name | `key = "#id"` or `key = "#user.email"` |
+| `#result` | The returned value from method *(Available in `unless` & `@CachePut`)* | `unless = "#result == null"`, `unless = "#result.active == false"` |
+
+---
+
+### **6. End-to-End Service Example (All Annotations in Action)**
+
+```java
+package com.example.service;
+
+import com.example.dto.ProductDTO;
+import com.example.entity.Product;
+import com.example.repository.ProductRepository;
+import org.springframework.cache.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@CacheConfig(cacheNames = "products") // Shared cache name for this class
+public class ProductService {
+
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    // 1. CACHEABLE: Checks cache first. If hit -> returns cached. If miss -> runs DB query & caches.
+    @Cacheable(key = "#id", unless = "#result == null")
+    public ProductDTO getProductById(Long id) {
+        System.out.println("--> [DB QUERY] Fetching product from DB for ID: " + id);
+        return productRepository.findById(id)
+                .map(ProductDTO::new)
+                .orElse(null);
+    }
+
+    // 2. CACHE PUT: Always executes DB update, then updates the cache entry for this ID
+    @Transactional
+    @CachePut(key = "#productDTO.id")
+    public ProductDTO updateProduct(ProductDTO productDTO) {
+        System.out.println("--> [DB UPDATE] Updating product in DB for ID: " + productDTO.getId());
+        Product product = productRepository.findById(productDTO.getId()).orElseThrow();
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        productRepository.save(product);
+        return new ProductDTO(product);
+    }
+
+    // 3. CACHE EVICT: Removes the specific item from cache when deleted
+    @Transactional
+    @CacheEvict(key = "#id")
+    public void deleteProduct(Long id) {
+        System.out.println("--> [DB DELETE] Removing product for ID: " + id);
+        productRepository.deleteById(id);
+    }
+
+    // 4. CACHING: Complex eviction across multiple caches simultaneously
+    @Caching(evict = {
+        @CacheEvict(key = "#id"),                           // Evicts from "products"
+        @CacheEvict(cacheNames = "productCatalog", allEntries = true) // Evicts catalog list
+    })
+    public void archiveProduct(Long id) {
+        productRepository.archiveById(id);
+    }
+
+    // 5. CACHE EVICT ALL: Clears the entire "products" cache
+    @CacheEvict(allEntries = true)
+    public void clearProductCache() {
+        System.out.println("--> [CACHE CLEAR] All entries in 'products' cache evicted.");
+    }
+}
+```
+
+---
+
+### **7. Critical Pitfalls & Gotchas of Spring Cache**
+
+#### ⚠️ **Gotcha 1: The Self-Invocation Trap (Calling Methods Within the Same Class)**
+Because Spring caching works via **Spring AOP proxies**, calls must pass through the proxy for caching to activate.
+If method `A()` calls `@Cacheable` method `B()` **within the same class**:
+```java
+@Service
+public class OrderService {
+
+    public void processOrder(Long id) {
+        // ❌ DIRECT THIS CALL: Bypasses the Spring AOP Proxy!
+        // getOrderDetails(id) runs WITHOUT checking the cache!
+        OrderDetails details = getOrderDetails(id);
+    }
+
+    @Cacheable(value = "orders", key = "#id")
+    public OrderDetails getOrderDetails(Long id) {
+        return orderRepo.findById(id);
+    }
+}
+```
+* **Fix:** Call `getOrderDetails()` from a different Spring Bean (e.g. Controller or another Service), or inject `self` (`@Autowired private OrderService self;`).
+
+#### ⚠️ **Gotcha 2: Returning Mutable Objects with Default Cache**
+Because `ConcurrentMapCacheManager` stores the **exact Java object reference** in memory:
+* If thread A receives `ProductDTO` from cache and modifies a field (`product.setPrice(0)`), thread B calling the cache next will see the modified price!
+* **Fix:** Either treat cached objects as immutable (records/DTOs without setters) or switch to a provider with serialization (like Redis).
+
+#### ⚠️ **Gotcha 3: `@CachePut` and `@Cacheable` on the Same Method**
+Do **not** place both `@Cacheable` and `@CachePut` on the same method. Their execution behaviors conflict: `@Cacheable` attempts to skip method execution on a hit, while `@CachePut` forces method execution.
 
 ---
 
@@ -615,14 +1035,37 @@ See above entities we have put Cache on both!! We can give any name to Region!! 
 
 ![CacheConcurrencyStrategy Types](svg/img14_cache_concurrency_strategy.svg)
 
-Let us see Concurrency Strategy!! We have **4 types**!! Which one to use depends on business to business!! This tells how insert, update, delete impact cache data so that they can run in parallel!! In some applications we want strict concurrency so no stale data!!
+### **Why Do We Need Cache Concurrency Strategies?**
 
-| S.No. | Strategy |
-|---|---|
-| 1. | READ_ONLY |
-| 2. | READ_WRITE |
-| 3. | NONSTRICT_READ_WRITE |
-| 4. | TRANSACTIONAL |
+When multiple concurrent database transactions (HTTP threads) read and write to the same database tables at the same time, Hibernate's Second-Level (L2) Cache sits in the middle.
+
+Without a concurrency strategy, you face classic concurrency nightmares:
+* **Dirty Reads:** Transaction A reads uncommitted changes cached by Transaction B that later rolls back.
+* **Stale Reads:** Transaction A updates the DB, but Transaction B reads old data cached in memory.
+* **Lost Updates:** Two threads update the same cached entity concurrently, overwriting each other's data.
+
+Hibernate provides **4 Cache Concurrency Strategies** (configured via `@Cache(usage = CacheConcurrencyStrategy.XYZ)`). Which one you choose depends on:
+1. **How frequently data is updated** (read-heavy vs write-heavy).
+2. **Whether business rules tolerate temporary stale data**.
+3. **The transaction isolation environment** (non-JTA vs JTA/XA distributed transactions).
+
+---
+
+### **Master Comparison Matrix: The 4 Strategies at a Glance**
+
+| Feature | `READ_ONLY` | `READ_WRITE` | `NONSTRICT_READ_WRITE` | `TRANSACTIONAL` |
+|---|---|---|---|---|
+| **Can Data Be Updated?** | ❌ **Strictly NO** (throws runtime exception) | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Locking on Read** | None | None | None | Shared Read Lock (under JTA) |
+| **Locking on Update** | None (updates forbidden) | **Soft Lock** (exclusive marker on cache) | None (**Lock-free**) | **True Distributed Write Lock** |
+| **What Happens on Update?** | Throws `UnsupportedOperationException` | Soft-locks cache ➔ DB update ➔ Evicts/Refreshes on commit | DB update ➔ Asynchronously invalidates cache after commit | XA Two-Phase Commit (2PC) across DB & Cache |
+| **Concurrent Read During Update** | Reads cache freely (data never mutates) | **Bypasses cache ➔ reads directly from DB** (guarantees fresh data) | **Reads old cached data** (can get stale data!) | Waits in lock queue or reads under XA isolation |
+| **Stale Reads Possible?** | ❌ No (data is immutable) | ❌ **No** | ⚠️ **Yes** (during concurrent write window) | ❌ **No** |
+| **Rollback Handling** | N/A | Releases soft lock; invalidates cache entry | Cache remains unchanged or invalidated | Full distributed rollback (both DB & Cache revert) |
+| **Requires `@Version`?** | No | **Highly Recommended / Mandatory** | Optional | Optional |
+| **Cache Provider Support** | All (Ehcache, Caffeine, Redis, Hazelcast, Infinispan) | Most (Ehcache, Hazelcast, Infinispan, Redisson) | All (Ehcache, Caffeine, Hazelcast, Infinispan) | **Only JTA-capable** (Infinispan, Hazelcast JTA, JCache) |
+| **Throughput / Performance** | ⚡⚡⚡ **Fastest** | ⚡⚡ High | ⚡⚡⚡ Very High | 🐢 Slower (2PC lock overhead) |
+| **Primary Use Case** | Reference tables (Countries, Currencies, Zipcodes, Tax Rates) | Core domain entities (Users, Accounts, Orders, Products) | Read-heavy catalogs, blog posts, FAQs, article content | Financial ledgers, banking, high-stakes XA transactions |
 
 ---
 
@@ -805,29 +1248,241 @@ After 1st cache miss we get, We get the L2 cache so now on 2nd call we get no DB
 
 ---
 
-## Strategy 3: NONSTRICT_READ_WRITE & Strategy 4: TRANSACTIONAL
+---
+
+## Strategy 3: NONSTRICT_READ_WRITE
 
 ![NONSTRICT_READ_WRITE and TRANSACTIONAL](svg/img23_nonstrict_transactional.svg)
 
-### 3. NONSTRICT_READ_WRITE
+### **What is `NONSTRICT_READ_WRITE`?**
+`NONSTRICT_READ_WRITE` is a **lock-free, eventual-consistency caching strategy**. It is designed for applications where **reads vastly outnumber writes (e.g. 99% reads, 1% writes)** and where the business **can tolerate reading slightly stale data for a few milliseconds** during concurrent updates.
 
-- During Read, **No Lock** is acquired at all.
-- During Update, after txn commit successful, Cache is mark **Invalidated** and not updated with Fresh data.
-- Good for **Heavy Read** application.
-- So if Update and Read happens in parallel, its a chance that read operation gets the **stale data**.
+---
 
-### 4. TRANSACTIONAL
+### **How `NONSTRICT_READ_WRITE` Works Under the Hood:**
+1. **Zero Locks on Read:** When a thread reads data, no lock of any kind is acquired. Cache lookups are instant and completely non-blocking.
+2. **Zero Locks on Update:** Unlike `READ_WRITE`, Hibernate does **NOT** place a soft lock on the cache entry during an update transaction.
+3. **Invalidation Happens AFTER Commit:** 
+   - The transaction updates the row in the database.
+   - When the transaction successfully commits, Hibernate dispatches an **asynchronous eviction (invalidate) command** to remove that entity from the L2 cache.
+   - The cache is **not updated with new data** immediately; it is simply evicted so that the subsequent read will reload fresh data from the DB.
 
-- Acquire **READ lock** and Also **WRITE lock**.
-- Updates the cache too, after txn commit successfully.
-- Any other READ operation during cache lock, goes directly to **DB**.
-- Any other WRITE operation during cache lock, **waits in queue**.
+---
 
-Transactional is more strict!!
+### **Entity Configuration Example:**
 
-If lock on read then Will read from DB!!
+```java
+@Entity
+@Table(name = "blog_posts")
+@Cacheable
+@org.hibernate.annotations.Cache(
+    usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, 
+    region = "blogPostCache"
+)
+public class BlogPost {
 
-If on lock write operation comes it has to wait!!
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    private String author;
+
+    // getters and setters...
+}
+```
+
+---
+
+### **⚠️ Why Can Stale Reads Happen in `NONSTRICT_READ_WRITE`? (The Race Condition)**
+
+Because there is **no lock** during an update, look at what happens when Thread 1 updates while Thread 2 reads concurrently:
+
+```
+Timeline: Concurrent Read & Write in NONSTRICT_READ_WRITE
+═════════════════════════════════════════════════════════════════════════════════
+
+   Thread 1 (Writer: Updates Title)             Thread 2 (Reader: Gets Post)
+─────────────────────────────────────       ─────────────────────────────────────
+T1: BEGIN Transaction
+T2: Updates DB: Title = "Spring 3.4"
+    (Database row updated, but NOT committed yet)
+                                            T3: Calls findById(1)
+                                            T4: Checks L2 Cache ➔ HIT!
+                                                👉 Returns OLD title: "Spring 3.0"
+                                                ⚠️ (STALE READ OCCURRED!)
+T5: Transaction COMMITS!
+T6: Hibernate evicts L2 cache entry
+    for BlogPost#1
+                                            T7: Subsequent read calls findById(1)
+                                                Cache MISS ➔ Loads "Spring 3.4" from DB!
+═════════════════════════════════════════════════════════════════════════════════
+```
+
+> [!NOTE]
+> **Why use it if stale reads can happen?**
+> Because it is **significantly faster than `READ_WRITE`**!
+> * There is **zero lock contention**.
+> * Threads never have to wait in queues or bypass the cache to hit the DB during an update.
+> * If a blog post, article FAQ, or product description changes once a month, reading the old title for 50 milliseconds while the author clicks "Save" has zero negative business impact!
+
+---
+
+## Strategy 4: TRANSACTIONAL
+
+### **What is `TRANSACTIONAL`?**
+`TRANSACTIONAL` is the **most strict, heavyweight concurrency strategy**. It is designed specifically for enterprise environments that use **JTA (Java Transaction API)** with **Distributed Transactions (XA Two-Phase Commit / 2PC)** across both the database and the cache.
+
+---
+
+### **How `TRANSACTIONAL` Works Under the Hood:**
+1. **Cache Acts as an XA Resource:**
+   In this mode, the L2 Cache is registered directly with the **JTA Transaction Manager** as a distributed transaction participant (alongside the JDBC DataSource).
+2. **True Distributed Locking:**
+   - When a transaction updates an entity, it acquires a **true distributed exclusive write lock** across all cluster nodes.
+   - Concurrent reads during the lock either block or read under strict repeatable-read / serializable transaction isolation.
+3. **Atomic Two-Phase Commit (2PC):**
+   - **Phase 1 (Prepare):** The JTA Transaction Manager asks both the Database and the Cache: *"Are you both ready to commit?"*
+   - **Phase 2 (Commit / Rollback):** If both say YES, both update atomically. If either the database commit OR the cache update fails, **both roll back atomically**!
+
+```
+                    ┌───────────────────────────────┐
+                    │    JTA Transaction Manager    │
+                    │   (Atomikos / Narayana / JTA) │
+                    └───────┬───────────────┬───────┘
+                            │               │
+                 Phase 1    │               │ Phase 1
+                 Prepare    ▼               ▼ Prepare
+                   ┌────────────────┐   ┌────────────────┐
+                   │    Database    │   │  L2 Cache Node │
+                   │   (Postgres)   │   │  (Infinispan)  │
+                   └───────┬────────┘   └───────┬────────┘
+                           │                    │
+                 Phase 2   │                    │ Phase 2
+                 Commit    ▼                    ▼ Commit
+                      [COMMITTED]          [COMMITTED]
+```
+
+---
+
+### **Entity Configuration Example:**
+
+```java
+@Entity
+@Table(name = "bank_accounts")
+@Cacheable
+@org.hibernate.annotations.Cache(
+    usage = CacheConcurrencyStrategy.TRANSACTIONAL, 
+    region = "bankAccountCache"
+)
+public class BankAccount {
+
+    @Id
+    private Long accountNumber;
+
+    private BigDecimal balance;
+
+    private String currency;
+
+    // getters and setters...
+}
+```
+
+---
+
+### **⚠️ Critical Provider Requirement for `TRANSACTIONAL`:**
+> [!IMPORTANT]
+> **Standard standalone Ehcache does NOT support `TRANSACTIONAL`!**
+> If you configure `CacheConcurrencyStrategy.TRANSACTIONAL` with a basic cache provider, Hibernate will throw:
+> ```
+> org.hibernate.cache.CacheException: Transactional access not supported by provider!
+> ```
+> To use `TRANSACTIONAL`, your underlying cache provider **MUST support JTA transactions** (such as **JBoss Infinispan**, **Hazelcast in Transactional Mode**, or an enterprise JCache implementation).
+
+---
+
+### **Trade-offs of `TRANSACTIONAL`:**
+* **Pros:** Absolute data consistency, zero risk of phantom or stale reads, full atomic rollback across cache and DB.
+* **Cons:** High network latency overhead due to distributed 2-Phase Commit (2PC) coordination; lower overall throughput.
+
+---
+
+## 🔍 **Why Are They Different & What Differently Do They Do?**
+
+### **A Head-to-Head Concurrency Scenario Walkthrough**
+
+To truly understand what each strategy does differently, let's observe a concrete scenario:
+
+> **Scenario:**
+> At `T=0`, Entity `User#1` has `balance = 100` stored in both DB and L2 Cache.
+> At `T=1`, **Transaction 1 (Writer)** updates `balance = 200`.
+> At `T=2`, **Transaction 2 (Reader)** executes `userRepository.findById(1)`.
+> At `T=3`, **Transaction 1** successfully commits.
+
+Here is exactly how all 4 strategies handle this situation differently:
+
+```
+┌──────────────────────────────┬────────────────────────────────────────────────────────────────────────┐
+│ Concurrency Strategy         │ What Happens at T=2 (Concurrent Read During Update)                    │
+├──────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ 1. READ_ONLY                 │ ❌ T1 throws UnsupportedOperationException! Updates are impossible!   │
+│                              │    T2 continues reading the immutable balance = 100.                   │
+├──────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ 2. READ_WRITE                │ 🔒 T1 placed a Soft Lock on User#1 in L2 Cache.                        │
+│                              │    T2 checks cache, sees the Soft Lock!                                │
+│                              │    👉 T2 BYPASSES L2 cache and queries DB directly (sees committed 100).│
+│                              │    ❌ Stale cache read is PREVENTED!                                   │
+│                              │    At T=3, T1 commits, updates/invalidates cache, releases soft lock.  │
+├──────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ 3. NONSTRICT_READ_WRITE      │ ⚡ Zero locks placed!                                                  │
+│                              │    T2 checks L2 cache ➔ Cache HIT!                                      │
+│                              │    👉 T2 reads OLD balance = 100 from cache (STALE READ!).              │
+│                              │    At T=3, T1 commits and sends an invalidation to evict User#1.       │
+│                              │    Only subsequent reads after T=3 will reload 200 from DB.            │
+├──────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ 4. TRANSACTIONAL             │ 🛡️ T1 acquired a distributed XA Write Lock on both DB and Cache.       │
+│                              │    T2 WAITS in queue until T1 completes Phase 2 Commit,                │
+│                              │    OR reads under strict XA repeatable-read isolation.                 │
+│                              │    Both DB and Cache update atomically via Two-Phase Commit.           │
+└──────────────────────────────┴────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🎯 **Decision Guide: Which Strategy Should You Choose?**
+
+Use this simple decision flowchart for technical interviews and production system design:
+
+```
+                              Is the Entity EVER updated?
+                                     │
+                    ┌────────────────┴────────────────┐
+                    │ NO                              │ YES
+                    ▼                                 ▼
+           Use [READ_ONLY]                  Can the business tolerate
+        (Highest performance,              a few milliseconds of STALE
+         zero lock overhead)                data during updates?
+                                                      │
+                                     ┌────────────────┴────────────────┐
+                                     │ YES                             │ NO
+                                     ▼                                 ▼
+                         Use [NONSTRICT_READ_WRITE]            Do you have a JTA / XA
+                          (Lock-free, fast eviction,           distributed transaction
+                           great for read-heavy blogs)         environment (2PC)?
+                                                                       │
+                                                      ┌────────────────┴────────────────┐
+                                                      │ YES                             │ NO (Standard Spring Boot)
+                                                      ▼                                 ▼
+                                             Use [TRANSACTIONAL]                Use [READ_WRITE]
+                                            (Requires Infinispan/              ⭐ MOST COMMON CHOICE!
+                                             Hazelcast JTA provider)            (Soft-locks cache,
+                                                                                 guarantees fresh reads,
+                                                                                 safe for mutable entities)
+```
 
 ---
 
