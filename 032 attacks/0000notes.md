@@ -70,23 +70,12 @@ Once logged in, server sets a session cookie:
 **Step2: send some malicious link to this user, who is authenticated**
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSRF Attack Demo</title>
-</head>
-<body>
-
-<h2>Click Below to Claim Your Reward!</h2>
-
-<a href="http://localhost:8080/transfer?amount=1000&to=attacker">
-<button>Claim My Money</button>
-</a>
-
-</body>
-</html>
+<body onload="document.csrf.submit()">
+ 
+<form action="http://abcbank.com/transfer" method="POST" name="csrf">
+    <input type="hidden" name="amount" value="500">
+    <input type="hidden" name="account" value="attacker">
+</form>
 ```
 
 ![alt text](032-csrf-step2-malicious-link-page.png)
@@ -99,7 +88,8 @@ As soon as user clicked on "claim my Money" button, an unwanted operation is exe
 
 By using CSRF Token, this ensures that request originates from the legitimate source. As authenticate forms or website only append the CSRF token in the request. Which server can used to validate with the token created at the time of HTTP Session creation.
 
-![alt text](032Attacks_250716_003028_6.jpg)
+
+
 ### 2. XSS (Cross-Site Scripting)
 
 - It allows attacker to put malicious script into web page viewed by other users.
