@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="660" viewBox="0 0 1020 660">
+  <defs>
+    <style>
+      @keyframes travelToL2 {
+        from { stroke-dashoffset: 40; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      .line-travel {
+        stroke-dasharray: 8 6;
+        animation: travelToL2 1.5s linear infinite;
+      }
+      .pulse-indicator {
+        animation: pulseGlow 2s ease-in-out infinite;
+      }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 800; fill: #f8fafc; }
+      .text-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .text-bold { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 700; }
+      .text-normal { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 12px; fill: #cbd5e1; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; }
+    </style>
+
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="l2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="sessionGradA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="dbGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+
+    <marker id="arrIndigo" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#818cf8" />
+    </marker>
+    <marker id="arrGreen2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#34d399" />
+    </marker>
+    <marker id="arrRed2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#f87171" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1020" height="660" rx="16" fill="url(#bgGrad2)" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 32)">
+    <circle cx="12" cy="12" r="10" fill="#818cf8" opacity="0.2"/>
+    <circle cx="12" cy="12" r="5" fill="#818cf8"/>
+    <text x="32" y="18" class="text-title" font-size="20">Level 2 (L2) Cache: SessionFactory / Application-Wide Scope</text>
+    <text x="32" y="38" class="text-sub">Optional • Configurable provider (Ehcache, Infinispan, Redis) • Shared across ALL concurrent Sessions &amp; Threads</text>
+  </g>
+
+  <!-- Outer SessionFactory Scope Boundary -->
+  <g transform="translate(40, 85)">
+    <rect width="940" height="425" rx="16" fill="#0b1329" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <rect x="0" y="0" width="940" height="32" rx="16" fill="#1e3a8a" opacity="0.3"/>
+    <text x="18" y="22" class="text-bold" font-size="13" fill="#93c5fd">SESSION FACTORY (Application Runtime Context / JVM Boundary)</text>
+    <rect x="760" y="7" width="165" height="18" rx="9" fill="#1d4ed8" opacity="0.4"/>
+    <text x="770" y="20" class="text-code" font-size="11" fill="#bfdbfe">Cross-Session Shared</text>
+
+    <!-- ==================== THREE INDEPENDENT SESSIONS ==================== -->
+    <!-- Session 1 -->
+    <g transform="translate(25, 48)">
+      <rect width="280" height="150" rx="12" fill="url(#sessionGradA)" stroke="#38bdf8" stroke-width="1.5"/>
+      <rect x="0" y="0" width="280" height="28" rx="12" fill="#0284c7" opacity="0.2"/>
+      <text x="14" y="19" class="text-bold" font-size="12" fill="#38bdf8">SESSION 1 (Request A / User 1)</text>
+
+      <rect x="14" y="38" width="252" height="40" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="22" y="56" class="text-code" font-size="11" fill="#f8fafc">session1.get(User.class, 101)</text>
+      <text x="22" y="70" class="text-normal" font-size="10" fill="#f87171">L1 Cache MISS → Check L2</text>
+
+      <rect x="14" y="86" width="252" height="52" rx="6" fill="#064e3b" opacity="0.3" stroke="#059669" stroke-width="1"/>
+      <text x="22" y="104" class="text-bold" font-size="11" fill="#6ee7b7">L1 Persistence Context (Empty)</text>
+      <text x="22" y="122" class="text-normal" font-size="10" fill="#a7f3d0">Hydrates entity when L2/DB returns</text>
+    </g>
+
+    <!-- Session 2 (Gets L2 HIT!) -->
+    <g transform="translate(330, 48)">
+      <rect width="280" height="150" rx="12" fill="url(#sessionGradA)" stroke="#10b981" stroke-width="2"/>
+      <rect x="0" y="0" width="280" height="28" rx="12" fill="#059669" opacity="0.25"/>
+      <text x="14" y="19" class="text-bold" font-size="12" fill="#34d399">SESSION 2 (Request B / User 2)</text>
+
+      <rect x="14" y="38" width="252" height="40" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="22" y="56" class="text-code" font-size="11" fill="#f8fafc">session2.get(User.class, 101)</text>
+      <text x="22" y="70" class="text-normal" font-size="10" fill="#34d399">L1 MISS → Queries L2 → L2 HIT! 🎉</text>
+
+      <rect x="14" y="86" width="252" height="52" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+      <text x="22" y="104" class="text-bold" font-size="11" fill="#34d399">L1 Persistence Context</text>
+      <text x="22" y="122" class="text-normal" font-size="10" fill="#a7f3d0">Receives entity directly from L2! ⚡</text>
+    </g>
+
+    <!-- Session 3 -->
+    <g transform="translate(635, 48)">
+      <rect width="280" height="150" rx="12" fill="url(#sessionGradA)" stroke="#64748b" stroke-width="1.5"/>
+      <rect x="0" y="0" width="280" height="28" rx="12" fill="#475569" opacity="0.2"/>
+      <text x="14" y="19" class="text-bold" font-size="12" fill="#cbd5e1">SESSION 3 (Request C / User 3)</text>
+
+      <rect x="14" y="38" width="252" height="40" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="22" y="56" class="text-code" font-size="11" fill="#f8fafc">session3.get(User.class, 101)</text>
+      <text x="22" y="70" class="text-normal" font-size="10" fill="#34d399">Instant L2 HIT (Zero DB queries)</text>
+
+      <rect x="14" y="86" width="252" height="52" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="22" y="104" class="text-bold" font-size="11" fill="#94a3b8">L1 Persistence Context</text>
+      <text x="22" y="122" class="text-normal" font-size="10" fill="#cbd5e1">Hydrated instance: user_sess3</text>
+    </g>
+
+    <!-- ==================== LEVEL 2 CACHE REGION ==================== -->
+    <g transform="translate(25, 230)">
+      <rect width="890" height="170" rx="14" fill="url(#l2Grad)" stroke="#6366f1" stroke-width="2.5"/>
+      
+      <!-- Glowing pulse border on L2 -->
+      <rect width="890" height="170" rx="14" fill="none" stroke="#818cf8" stroke-width="2" class="pulse-indicator"/>
+
+      <rect x="0" y="0" width="890" height="34" rx="14" fill="#4338ca" opacity="0.3"/>
+      <text x="20" y="23" class="text-bold" font-size="14" fill="#a5b4fc">LEVEL 2 (L2) CACHE REGION (Ehcache / Infinispan / Hazelcast / Redis)</text>
+      <text x="640" y="23" class="text-code" font-size="12" fill="#c7d2fe">@Cacheable &amp; @Cache</text>
+
+      <!-- Dehydrated Storage Visual -->
+      <g transform="translate(20, 48)">
+        <rect width="460" height="106" rx="8" fill="#0f172a" stroke="#4f46e5" stroke-width="1.2"/>
+        <text x="14" y="24" class="text-bold" font-size="12" fill="#c7d2fe">Entity Region Cache Entry: `com.example.User#101`</text>
+        <line x1="14" y1="34" x2="446" y2="34" stroke="#312e81" stroke-width="1"/>
+        <text x="14" y="54" class="text-code" fill="#fcd34d">Stored as Deconstructed Raw State (Tuple):</text>
+        <rect x="14" y="62" width="432" height="28" rx="4" fill="#1e1b4b"/>
+        <text x="24" y="81" class="text-code" font-size="11" fill="#a5b4fc">[id: 101, name: "Alice", email: "alice@demo.com", version: 1]</text>
+        <text x="14" y="102" class="text-normal" font-size="10" fill="#94a3b8">Why raw tuple? Prevents shared mutable state corruption across threads!</text>
+      </g>
+
+      <!-- L2 Features Summary -->
+      <g transform="translate(500, 48)">
+        <rect width="370" height="106" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+        <text x="16" y="24" class="text-bold" font-size="12" fill="#f43f5e">Concurrency Strategy Modes:</text>
+        <text x="16" y="44" class="text-normal" fill="#e4e4e7">• <tspan fill="#60a5fa" class="text-bold">READ_ONLY:</tspan> Fast, immutable lookup tables</text>
+        <text x="16" y="62" class="text-normal" fill="#e4e4e7">• <tspan fill="#34d399" class="text-bold">READ_WRITE:</tspan> Read-committed soft locks on update</text>
+        <text x="16" y="80" class="text-normal" fill="#fbbf24">• <tspan class="text-bold">NONSTRICT_READ_WRITE / TRANSACTIONAL</tspan></text>
+        <text x="16" y="98" class="text-normal" fill="#a1a1aa">Eviction via TTL, LFU, LRU or explicit evict()</text>
+      </g>
+    </g>
+
+    <!-- Connectors: Sessions down to L2 -->
+    <!-- Session 1 miss down to L2 -->
+    <path d="M 165 198 L 165 230" stroke="#f87171" stroke-width="2.5" marker-end="url(#arrRed2)" class="line-travel">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Session 2 hit down and back up -->
+    <path d="M 470 198 L 470 230" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrGreen2)" class="line-travel">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+    <path d="M 490 230 L 490 198" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrGreen2)" class="line-travel">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Session 3 hit -->
+    <path d="M 775 198 L 775 230" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrGreen2)" class="line-travel">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- ==================== DATABASE & ARROWS ==================== -->
+  <g transform="translate(40, 525)">
+    <rect width="940" height="110" rx="14" fill="url(#dbGrad2)" stroke="#4338ca" stroke-width="1.8"/>
+    <rect x="0" y="0" width="940" height="28" rx="14" fill="#312e81" opacity="0.4"/>
+    <text x="20" y="19" class="text-bold" font-size="13" fill="#c7d2fe">RELATIONAL DATABASE (Only reached on initial L2 Cache Miss)</text>
+
+    <!-- Database Info -->
+    <g transform="translate(20, 38)">
+      <text x="0" y="20" class="text-code" font-size="12" fill="#f87171">Session 1 (Miss #1): SELECT * FROM users WHERE id = 101;</text>
+      <text x="0" y="42" class="text-normal" font-size="11" fill="#94a3b8">→ Fetches 1 row from disk, stores dehydrated state into L2 Cache region.</text>
+      <text x="0" y="60" class="text-bold" font-size="12" fill="#34d399">Sessions 2, 3, 4... N: NEVER TOUCH THE DATABASE! (100% Served from L2)</text>
+    </g>
+
+    <!-- Avoided Badge -->
+    <g transform="translate(680, 42)">
+      <rect width="230" height="48" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="16" cy="24" r="5" fill="#34d399">
+        <animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <text x="30" y="24" class="text-bold" font-size="12" fill="#34d399">⚡ 99% DB Round-trips Avoided</text>
+      <text x="30" y="40" class="text-normal" font-size="10" fill="#a7f3d0">Protects DB connection pool from exhaustion</text>
+    </g>
+  </g>
+
+  <!-- Line connecting L2 to DB on Miss #1 -->
+  <path d="M 205 488 L 205 525" stroke="#f87171" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrRed2)"/>
+  <rect x="140" y="498" width="130" height="18" rx="4" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="146" y="511" class="text-bold" font-size="10" fill="#fca5a5">Initial L2 Miss → Fetch DB</text>
+
+  <!-- Line populating L2 from DB -->
+  <path d="M 260 525 L 260 488" stroke="#818cf8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrIndigo)"/>
+</svg>

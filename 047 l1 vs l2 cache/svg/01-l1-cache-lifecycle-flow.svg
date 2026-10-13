@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640">
+  <defs>
+    <style>
+      @keyframes flowAnimation {
+        from { stroke-dashoffset: 40; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      .flow-line {
+        stroke-dasharray: 8 6;
+        animation: flowAnimation 1.6s linear infinite;
+      }
+      .pulse-item {
+        animation: pulseGlow 2s ease-in-out infinite;
+      }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 800; fill: #f8fafc; }
+      .text-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .text-bold { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 700; }
+      .text-normal { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 12px; fill: #cbd5e1; }
+      .text-code { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; }
+    </style>
+
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="session1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="session2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="l1CacheGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+
+    <marker id="arrowCyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#34d399" />
+    </marker>
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#f87171" />
+    </marker>
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#fbbf24" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="640" rx="16" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 36)">
+    <circle cx="12" cy="12" r="10" fill="#38bdf8" opacity="0.2"/>
+    <circle cx="12" cy="12" r="5" fill="#38bdf8"/>
+    <text x="32" y="18" class="text-title" font-size="20">Level 1 (L1) Cache: Session / Persistence Context Scope</text>
+    <text x="32" y="38" class="text-sub">Mandatory • Enabled by default • Bound strictly to single Session/EntityManager lifecycle</text>
+  </g>
+
+  <!-- ==================== SESSION 1 (THREAD A) ==================== -->
+  <g transform="translate(40, 95)">
+    <!-- Session Box Outer -->
+    <rect width="580" height="250" rx="14" fill="url(#session1Grad)" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect x="0" y="0" width="580" height="34" rx="14" fill="#0369a1" opacity="0.25"/>
+    <text x="18" y="23" class="text-bold" font-size="14" fill="#38bdf8">SESSION 1 (EntityManager 1) — Thread A / Request 1</text>
+    <rect x="440" y="8" width="125" height="18" rx="9" fill="#0284c7" opacity="0.3"/>
+    <text x="450" y="21" class="text-code" font-size="11" fill="#7dd3fc">Isolated Context</text>
+
+    <!-- Query 1 Line -->
+    <g transform="translate(20, 52)">
+      <rect width="180" height="52" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="10" y="20" class="text-code" fill="#f1f5f9">① session.get(101)</text>
+      <text x="10" y="38" class="text-normal" fill="#94a3b8">First lookup in session</text>
+    </g>
+
+    <!-- Query 2 Line -->
+    <g transform="translate(20, 150)">
+      <rect width="180" height="52" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="10" y="20" class="text-code" fill="#f1f5f9">② session.get(101)</text>
+      <text x="10" y="38" class="text-normal" fill="#94a3b8">Second identical lookup</text>
+    </g>
+
+    <!-- L1 Cache Container inside Session 1 -->
+    <g transform="translate(245, 52)">
+      <rect width="315" height="175" rx="10" fill="url(#l1CacheGrad)" stroke="#10b981" stroke-width="1.5"/>
+      <text x="16" y="26" class="text-bold" font-size="13" fill="#6ee7b7">L1 Persistence Context (HashMap)</text>
+      <line x1="16" y1="36" x2="295" y2="36" stroke="#047857" stroke-width="1"/>
+
+      <!-- Map entry table -->
+      <rect x="16" y="48" width="283" height="34" rx="6" fill="#065f46" opacity="0.6"/>
+      <text x="24" y="68" class="text-code" fill="#a7f3d0">Key: EntityKey(User#101)</text>
+      <text x="200" y="68" class="text-code" fill="#6ee7b7">→ User@0x4a1f</text>
+
+      <!-- Status indicator -->
+      <rect x="16" y="94" width="283" height="66" rx="6" fill="#022c22" stroke="#065f46" stroke-width="1"/>
+      <text x="24" y="114" class="text-normal" fill="#cbd5e1">• Memory Address preserved (<tspan fill="#34d399">user1 == user2 is TRUE</tspan>)</text>
+      <text x="24" y="132" class="text-normal" fill="#cbd5e1">• Destroyed when <tspan class="text-code" fill="#f87171">session.close()</tspan> called</text>
+      <text x="24" y="148" class="text-normal" fill="#94a3b8">• Zero SQL generated on repeated call</text>
+    </g>
+
+    <!-- Arrow Query 1 to L1 (Miss) -->
+    <path d="M 200 78 L 243 78" stroke="#f87171" stroke-width="2.5" marker-end="url(#arrowRed)" class="flow-line">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Arrow Query 2 to L1 (Hit) -->
+    <path d="M 200 176 L 243 176" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)" class="flow-line">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- ==================== DATABASE ==================== -->
+  <g transform="translate(730, 95)">
+    <rect width="230" height="495" rx="14" fill="url(#dbGrad)" stroke="#6366f1" stroke-width="1.8"/>
+    <rect x="0" y="0" width="230" height="34" rx="14" fill="#4338ca" opacity="0.3"/>
+    <text x="45" y="23" class="text-bold" font-size="14" fill="#a5b4fc">DATABASE (Disk / RDBMS)</text>
+
+    <!-- DB Cylinders / Visual -->
+    <ellipse cx="115" cy="70" rx="75" ry="16" fill="#4338ca" stroke="#818cf8" stroke-width="1.5"/>
+    <path d="M 40 70 V 120 A 75 16 0 0 0 190 120 V 70 Z" fill="#312e81" stroke="#818cf8" stroke-width="1.5"/>
+    <ellipse cx="115" cy="120" rx="75" ry="16" fill="#4338ca" stroke="#818cf8" stroke-width="1.5"/>
+    <text x="65" y="105" class="text-bold" font-size="13" fill="#e0e7ff">users TABLE</text>
+
+    <!-- SQL Log Output Box inside DB -->
+    <g transform="translate(18, 160)">
+      <rect width="194" height="310" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="24" class="text-bold" font-size="12" fill="#94a3b8">HIBERNATE SQL LOG:</text>
+      
+      <!-- Query 1 Log (Triggered) -->
+      <rect x="8" y="36" width="178" height="65" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="0.8"/>
+      <text x="14" y="54" class="text-code" font-size="11" fill="#f87171">[MISS #1] Executed SQL:</text>
+      <text x="14" y="70" class="text-code" font-size="10" fill="#cbd5e1">SELECT * FROM users</text>
+      <text x="14" y="86" class="text-code" font-size="10" fill="#cbd5e1">WHERE id = 101;</text>
+
+      <!-- Query 2 Log (Suppressed) -->
+      <rect x="8" y="112" width="178" height="52" rx="5" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+      <text x="14" y="130" class="text-code" font-size="11" fill="#34d399">[HIT #2] 0 SQL Issued!</text>
+      <text x="14" y="148" class="text-normal" font-size="10" fill="#a7f3d0">Returned from L1 cache (0ms)</text>
+
+      <!-- Session 2 Query Log (Triggered again!) -->
+      <rect x="8" y="180" width="178" height="65" rx="5" fill="#1e1b4b" stroke="#f59e0b" stroke-width="0.8"/>
+      <text x="14" y="198" class="text-code" font-size="11" fill="#fbbf24">[MISS #3 - Session 2]:</text>
+      <text x="14" y="214" class="text-code" font-size="10" fill="#cbd5e1">SELECT * FROM users</text>
+      <text x="14" y="230" class="text-code" font-size="10" fill="#cbd5e1">WHERE id = 101; (Again!)</text>
+
+      <!-- Note -->
+      <text x="12" y="270" class="text-normal" font-size="11" fill="#94a3b8">Why 2nd SQL? Session 2</text>
+      <text x="12" y="286" class="text-normal" font-size="11" fill="#f87171">CANNOT see Session 1's L1!</text>
+    </g>
+  </g>
+
+  <!-- Path from Session 1 to Database (Miss #1) -->
+  <path d="M 620 173 L 728 173" stroke="#f87171" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#arrowRed)" class="flow-line">
+    <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+  </path>
+  <rect x="635" y="152" width="80" height="18" rx="4" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="642" y="165" class="text-bold" font-size="10" fill="#fca5a5">MISS → DB I/O</text>
+
+  <!-- ==================== SESSION 2 (THREAD B) ==================== -->
+  <g transform="translate(40, 370)">
+    <rect width="580" height="220" rx="14" fill="url(#session2Grad)" stroke="#f59e0b" stroke-width="1.8"/>
+    <rect x="0" y="0" width="580" height="34" rx="14" fill="#b45309" opacity="0.25"/>
+    <text x="18" y="23" class="text-bold" font-size="14" fill="#fbbf24">SESSION 2 (EntityManager 2) — Thread B / Request 2</text>
+    <rect x="420" y="8" width="145" height="18" rx="9" fill="#d97706" opacity="0.3"/>
+    <text x="430" y="21" class="text-code" font-size="11" fill="#fde68a">Separate Heap Space</text>
+
+    <!-- Query in Session 2 -->
+    <g transform="translate(20, 60)">
+      <rect width="180" height="52" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+      <text x="10" y="20" class="text-code" fill="#f1f5f9">③ session2.get(101)</text>
+      <text x="10" y="38" class="text-normal" fill="#fbbf24">Identical Entity ID 101</text>
+    </g>
+
+    <!-- L1 Cache Container inside Session 2 (EMPTY!) -->
+    <g transform="translate(245, 50)">
+      <rect width="315" height="145" rx="10" fill="#18181b" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="16" y="26" class="text-bold" font-size="13" fill="#fde047">Session 2's L1 Cache (Initially EMPTY)</text>
+      <line x1="16" y1="36" x2="295" y2="36" stroke="#78350f" stroke-width="1"/>
+
+      <!-- Empty status -->
+      <rect x="16" y="50" width="283" height="42" rx="6" fill="#27272a"/>
+      <text x="24" y="72" class="text-code" fill="#fca5a5">Key: EntityKey(User#101) → NOT FOUND!</text>
+      <text x="24" y="84" class="text-normal" font-size="10" fill="#a1a1aa">(L1 has ZERO awareness of Session 1)</text>
+
+      <text x="24" y="112" class="text-normal" fill="#e2e8f0">• Must fetch from DB again</text>
+      <text x="24" y="128" class="text-normal" fill="#fca5a5">• Demonstrates L1 lack of cross-request sharing</text>
+    </g>
+
+    <!-- Arrow Query 3 to Session 2 L1 -->
+    <path d="M 200 86 L 243 86" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber)" class="flow-line">
+      <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- Path from Session 2 to Database -->
+  <path d="M 620 460 L 728 460" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#arrowAmber)" class="flow-line">
+    <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite" />
+  </path>
+  <rect x="635" y="440" width="80" height="18" rx="4" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+  <text x="642" y="453" class="text-bold" font-size="10" fill="#fde68a">MISS → DB I/O</text>
+
+  <!-- Badges -->
+  <g>
+    <rect x="360" y="134" width="60" height="22" rx="6" fill="#ef4444"/>
+    <text x="372" y="149" class="text-bold" font-size="11" fill="#ffffff">MISS</text>
+  </g>
+
+  <g>
+    <rect x="360" y="214" width="60" height="22" rx="6" fill="#10b981"/>
+    <text x="376" y="229" class="text-bold" font-size="11" fill="#ffffff">HIT!</text>
+  </g>
+</svg>
