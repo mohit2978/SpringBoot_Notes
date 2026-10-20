@@ -1,6 +1,6 @@
 # 🍃 Spring Boot — Deep Dive Notes
 
-Personal study notes covering **46 Spring Boot topics** with hands-on code examples.
+Personal study notes covering **49 Spring Boot topics** with hands-on code examples.
 Built while working as a Software Engineer at Samsung SDS to strengthen core framework internals.
 
 ---
@@ -35,6 +35,7 @@ Built while working as a Software Engineer at Samsung SDS to strengthen core fra
 | 012 | [Transactional — Part 1](./012%20transactional-1) |
 | 013 | [Transactional — Part 2 (Propagation)](./013%20transactional-2%20propogation) |
 | 014 | [Transactional — Part 3 (Isolation Levels)](./014%20transactional-3%20isolation%20levels) |
+| 048 | [TransactionTemplate vs @Transactional (Programmatic vs Declarative)](./048%20transaction-4%20transactionTemplate) |
 
 ### 🌐 REST & Web
 | # | Topic |
@@ -46,7 +47,7 @@ Built while working as a Software Engineer at Samsung SDS to strengthen core fra
 | 021 | [Exception Handling](./021%20exceptionHandling) |
 | 046 | [REST APIs, Validations & Request Lifecycle](./046%20rest%20apis%20and%20validations) |
 
-### 🗄️ JPA & Database (11 Parts)
+### 🗄️ JPA & Database (13 Parts)
 | # | Topic |
 |---|-------|
 | 022 | [JPA — Part 1 Basic Definitions & Flows](./022%20jpa-1%20basic%20definitions%20and%20flows) |
@@ -60,6 +61,8 @@ Built while working as a Software Engineer at Samsung SDS to strengthen core fra
 | 030 | [JPA — Part 9 & 10 Native Query, Specification & Criteria API](./030%20jpa-9%20native%20query%20specification%20and%20criteria%20api) |
 | 041 | [JPA — Basic Terms & Database Communication Internals](./041%20jpa%20basic%20terms) |
 | 042 | [JPA — N+1 Problem with Practical Examples & Solutions](./042%20N+1%20problem%20with%20example) |
+| 047 | [Hibernate Caching Demystified — Level 1 (L1) vs Level 2 (L2) Cache](./047%20l1%20vs%20l2%20cache) |
+| 049 | [Spring Data JPA Repositories, Pagination & Sorting](./049%20spring%20jpa%20Repository%20pagination) |
 
 ### 📊 Monitoring
 | # | Topic |
