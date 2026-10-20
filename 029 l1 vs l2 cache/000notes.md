@@ -1,23 +1,5 @@
 # 🚀 Hibernate Caching Demystified: Level 1 (L1) vs Level 2 (L2) Cache
 
-> 📖 **Reference:** Inspired by and based on [*Hibernate Caching Demystified: Level 1 vs Level 2 Cache Explained* by akcoding](https://akcoding.medium.com/hibernate-caching-demystified-level-1-vs-level-2-cache-explained-5ccd389a1d5d).
->
-> 💡 **Core Philosophy:** Hibernate caching bridges the object-relational impedance mismatch by eliminating redundant database round-trips, conserving database connection pools, and slashing application read latencies from milliseconds down to nanoseconds.
-
----
-
-## 📑 Table of Contents
-1. [Overview & Why Caching Matters](#1-overview--why-caching-matters)
-2. [Level 1 (L1) Cache: Session / Persistence Context Scope](#2-level-1-l1-cache-session--persistence-context-scope)
-3. [Level 2 (L2) Cache: SessionFactory / Application Scope](#3-level-2-l2-cache-sessionfactory--application-scope)
-4. [Step-by-Step Lookup Decision Lifecycle](#4-step-by-step-lookup-decision-lifecycle)
-5. [Under the Hood: How Data Is Stored in Memory](#5-under-the-hood-how-data-is-stored-in-memory)
-6. [L1 vs L2: Comprehensive Comparison Matrix](#6-l1-vs-l2-comprehensive-comparison-matrix)
-7. [The Hibernate Query Cache (L2 Companion)](#7-the-hibernate-query-cache-l2-companion)
-8. [Hands-On Spring Boot Configuration & Code Example](#8-hands-on-spring-boot-configuration--code-example)
-9. [Production Best Practices, Traps & Eviction Strategies](#9-production-best-practices-traps--eviction-strategies)
-10. [Top Interview Questions & Rapid Answers](#10-top-interview-questions--rapid-answers)
-
 ---
 
 ## 1. Overview & Why Caching Matters
