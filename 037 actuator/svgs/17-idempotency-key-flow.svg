@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" width="1000" height="640">
+  <rect width="1000" height="640" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Idempotency key: safe retries for POST /charge</text>
+  <rect x="35" y="80" width="150" height="45" rx="10" fill="#a5d8ff"/>
+  <path d="M44.6,79.3 Q110.5,78.7 175.1,79.7 Q184.1,80.0 184.1,89.9 Q183.7,101.3 184.8,115.7 Q184.2,124.4 175.3,125.9 Q110.2,124.7 46.0,124.1 Q35.7,124.6 34.3,114.2 Q34.4,103.4 34.4,90.2 Q35.3,79.7 48.1,79.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M43.6,79.1 Q110.9,79.7 174.4,80.3 Q184.9,79.4 185.9,90.6 Q183.8,102.9 185.1,116.2 Q185.7,124.3 176.5,123.8 Q109.6,126.2 43.9,125.0 Q33.5,125.5 35.8,115.2 Q36.8,101.6 35.6,90.3 Q35.3,79.9 49.1,81.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="110.0" y="108.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Client</text>
+  <path d="M110.0,127.2 Q108.9,359.0 110.2,590.6" fill="none" stroke="#868e96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M110.8,126.5 Q109.5,359.3 108.9,589.9" fill="none" stroke="#868e96" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <rect x="305" y="80" width="150" height="45" rx="10" fill="#a5d8ff"/>
+  <path d="M314.3,79.2 Q378.7,80.8 444.3,79.5 Q454.8,80.7 454.2,89.9 Q455.1,103.7 455.6,115.7 Q454.6,124.8 444.7,125.8 Q381.4,124.0 314.4,124.5 Q304.5,125.0 305.2,114.5 Q303.5,102.3 304.7,90.1 Q305.9,80.4 318.0,80.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M315.6,78.6 Q381.9,81.3 446.2,81.0 Q454.7,79.7 453.7,90.4 Q452.9,100.4 454.1,113.9 Q454.5,123.6 443.4,123.9 Q378.1,124.3 313.5,126.2 Q305.4,123.9 304.2,114.5 Q304.3,100.7 306.1,91.6 Q304.9,79.9 316.7,78.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380.0" y="108.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">API</text>
+  <path d="M379.8,126.7 Q380.8,357.7 379.4,590.5" fill="none" stroke="#868e96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M380.1,126.2 Q380.2,356.2 380.1,591.1" fill="none" stroke="#868e96" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <rect x="565" y="80" width="150" height="45" rx="10" fill="#ffc9c9"/>
+  <path d="M575.7,80.4 Q639.3,79.6 704.3,80.5 Q715.1,80.6 714.7,89.4 Q715.9,104.0 715.7,115.6 Q715.6,125.5 704.5,125.0 Q639.6,123.6 574.1,124.6 Q564.5,125.4 565.9,114.9 Q566.3,104.0 565.9,89.7 Q564.4,79.5 577.4,79.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M575.4,81.3 Q641.6,79.9 705.5,81.0 Q713.7,80.5 716.3,90.9 Q716.2,102.4 714.0,115.9 Q714.5,126.0 706.5,124.7 Q639.5,127.1 575.7,123.9 Q563.8,123.9 566.3,116.0 Q563.3,104.1 566.5,90.5 Q564.5,80.2 576.8,78.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="640.0" y="108.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Redis</text>
+  <path d="M640.6,127.2 Q640.1,359.5 639.9,590.4" fill="none" stroke="#868e96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M640.8,126.3 Q638.8,357.5 639.4,590.2" fill="none" stroke="#868e96" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <rect x="805" y="80" width="150" height="45" rx="10" fill="#a5d8ff"/>
+  <path d="M814.5,79.8 Q878.9,81.2 944.7,79.9 Q955.2,80.8 954.8,90.8 Q955.0,102.6 955.0,114.0 Q954.9,124.4 944.0,125.6 Q879.0,124.9 815.5,125.1 Q804.7,125.0 805.1,115.6 Q803.8,102.7 804.5,89.6 Q805.5,80.0 818.1,80.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M816.3,79.8 Q880.5,80.0 945.0,80.6 Q954.8,80.1 954.9,91.4 Q956.0,104.3 956.4,114.2 Q955.2,126.4 946.1,123.8 Q878.2,124.7 813.6,124.2 Q803.6,125.5 805.9,116.3 Q803.3,103.5 805.5,88.9 Q806.2,81.5 817.1,81.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="880.0" y="108.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Payment</text>
+  <path d="M879.9,127.0 Q881.2,359.3 879.6,589.9" fill="none" stroke="#868e96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M880.0,126.6 Q878.5,357.6 880.5,588.8" fill="none" stroke="#868e96" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M114.1,159.9 Q243.8,159.6 376.1,160.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M113.0,161.2 Q246.4,162.3 375.1,159.4" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M363.4,153.9 L376.0,160.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M363.4,166.1 L376.0,160.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="245.0" y="152.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">POST /charge   Idempotency-Key: K</text>
+  <path d="M383.4,200.3 Q509.4,199.1 635.9,200.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M384.8,199.4 Q508.3,202.0 636.2,200.5" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M623.4,193.9 L636.0,200.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M623.4,206.1 L636.0,200.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="192.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">SET idemp:K PROCESSING NX EX 120</text>
+  <path d="M635.5,239.5 Q510.5,239.8 383.5,240.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M636.3,240.7 Q508.0,241.7 383.0,240.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M396.6,246.1 L384.0,240.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M396.6,233.9 L384.0,240.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="232.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">OK (first time)</text>
+  <path d="M383.9,279.8 Q630.1,281.0 875.7,279.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M384.1,279.4 Q628.1,278.4 874.9,279.3" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M863.4,273.9 L876.0,280.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M863.4,286.1 L876.0,280.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="630.0" y="272.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">charge card</text>
+  <path d="M875.8,319.8 Q630.6,319.5 384.0,319.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M875.6,318.8 Q628.8,317.7 384.6,320.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M396.6,326.1 L384.0,320.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M396.6,313.9 L384.0,320.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="630.0" y="312.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">result</text>
+  <path d="M383.6,360.0 Q511.0,359.1 636.4,359.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M384.0,360.8 Q509.5,360.0 636.5,361.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M623.4,353.9 L636.0,360.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M623.4,366.1 L636.0,360.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="352.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">SET idemp:res:K result (24 h)</text>
+  <path d="M375.8,400.4 Q245.5,400.3 113.9,399.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M374.9,399.1 Q242.9,401.2 113.4,399.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M126.6,406.1 L114.0,400.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M126.6,393.9 L114.0,400.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="245.0" y="392.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">200 OK</text>
+  <path d="M113.5,480.4 Q245.9,480.4 375.7,479.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M113.5,479.9 Q243.4,479.7 375.4,481.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M363.4,473.9 L376.0,480.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M363.4,486.1 L376.0,480.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="245.0" y="472.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">POST /charge   Idempotency-Key: K</text>
+  <path d="M384.6,520.1 Q509.4,521.1 635.8,519.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M382.8,519.7 Q509.9,520.0 635.3,520.0" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M623.4,513.9 L636.0,520.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M623.4,526.1 L636.0,520.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="512.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">SET NX fails → GET idemp:res:K</text>
+  <path d="M375.4,559.7 Q244.0,559.8 113.5,559.4" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M375.5,559.4 Q245.4,560.1 114.6,560.4" fill="none" stroke="#2f9e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M126.6,566.1 L114.0,560.0" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M126.6,553.9 L114.0,560.0" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="245.0" y="552.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#2f9e44" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">same 200 OK — no double charge</text>
+  <text x="500.0" y="445.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#868e96" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">— network timeout: client RETRIES with the same key —</text>
+  <text x="500.0" y="620.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#e03131" text-anchor="middle" font-weight="normal" xml:space="preserve">Key exists but still PROCESSING (no result yet) → 409 Conflict</text>
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="1000" height="540">
+  <rect width="1000" height="540" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">L2 cache in action — shared across requests</text>
+  <text x="30.0" y="98.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#e8590c" text-anchor="start" font-weight="bold" xml:space="preserve">Request A (first time)</text>
+  <rect x="30" y="110" width="165" height="70" rx="10" fill="#a5d8ff"/>
+  <path d="M39.6,109.3 Q113.0,108.7 185.1,109.7 Q194.1,110.0 194.1,119.9 Q193.7,143.8 194.8,170.7 Q194.2,179.4 185.3,180.9 Q112.7,179.7 41.0,179.1 Q30.7,179.6 29.3,169.2 Q29.4,145.9 29.4,120.2 Q30.3,109.7 43.1,109.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,109.1 Q113.4,109.7 184.4,110.3 Q194.9,109.4 195.9,120.6 Q193.8,145.4 195.1,171.2 Q195.7,179.3 186.5,178.8 Q112.1,181.2 38.9,180.0 Q28.5,180.5 30.8,170.2 Q31.8,144.1 30.6,120.3 Q30.3,109.9 44.1,111.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="112.5" y="150.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">findById(101)</text>
+  <path d="M197.0,145.2 Q207.9,145.5 221.2,145.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M197.8,144.5 Q208.5,145.8 219.9,144.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208.4,138.9 L221.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208.4,151.1 L221.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="223" y="110" width="165" height="70" rx="10" fill="#ffc9c9"/>
+  <path d="M232.3,109.2 Q304.2,110.8 377.3,109.5 Q387.8,110.7 387.2,119.9 Q388.1,146.2 388.6,170.7 Q387.6,179.8 377.7,180.8 Q306.9,179.0 232.4,179.5 Q222.5,180.0 223.2,169.5 Q221.5,144.8 222.7,120.1 Q223.9,110.4 236.0,110.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M233.6,108.6 Q307.4,111.3 379.2,111.0 Q387.7,109.7 386.7,120.4 Q385.9,142.9 387.1,168.9 Q387.5,178.6 376.4,178.9 Q303.6,179.3 231.5,181.2 Q223.4,178.9 222.2,169.5 Q222.3,143.2 224.1,121.6 Q222.9,109.9 234.7,108.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="305.5" y="150.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">L1 (A): miss</text>
+  <path d="M389.8,144.7 Q402.8,144.2 413.4,145.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M390.1,144.2 Q402.2,142.7 414.1,146.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M401.4,138.9 L414.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M401.4,151.1 L414.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="416" y="110" width="165" height="70" rx="10" fill="#ffc9c9"/>
+  <path d="M426.7,110.4 Q497.8,109.6 570.3,110.5 Q581.1,110.6 580.7,119.4 Q581.9,146.5 581.7,170.6 Q581.6,180.5 570.5,180.0 Q498.1,178.6 425.1,179.6 Q415.5,180.4 416.9,169.9 Q417.3,146.5 416.9,119.7 Q415.4,109.5 428.4,109.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M426.4,111.3 Q500.1,109.9 571.5,111.0 Q579.7,110.5 582.3,120.9 Q582.2,144.9 580.0,170.9 Q580.5,181.0 572.5,179.7 Q498.0,182.1 426.7,178.9 Q414.8,178.9 417.3,171.0 Q414.3,146.6 417.5,120.5 Q415.5,110.2 427.8,108.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="498.5" y="150.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">L2: miss</text>
+  <path d="M583.6,145.2 Q595.1,146.0 606.9,145.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M583.8,144.3 Q593.8,144.0 606.4,145.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M594.4,138.9 L607.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M594.4,151.1 L607.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="609" y="110" width="165" height="70" rx="10" fill="#e9ecef"/>
+  <path d="M618.5,109.8 Q690.4,111.2 763.7,109.9 Q774.2,110.8 773.8,120.8 Q774.0,145.1 774.0,169.0 Q773.9,179.4 763.0,180.6 Q690.5,179.9 619.5,180.1 Q608.7,180.0 609.1,170.6 Q607.8,145.2 608.5,119.6 Q609.5,110.0 622.1,110.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M620.3,109.8 Q692.0,110.0 764.0,110.6 Q773.8,110.1 773.9,121.4 Q775.0,146.8 775.4,169.2 Q774.2,181.4 765.1,178.8 Q689.7,179.7 617.6,179.2 Q607.6,180.5 609.9,171.3 Q607.3,146.0 609.5,118.9 Q610.2,111.5 621.1,111.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="691.5" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">DB: SELECT</text>
+  <text x="691.5" y="160.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">... id = 101</text>
+  <path d="M775.9,145.0 Q789.2,145.8 799.6,144.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M776.0,144.6 Q786.5,144.1 800.5,143.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M787.4,138.9 L800.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M787.4,151.1 L800.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="802" y="110" width="165" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M812.1,109.9 Q883.1,109.5 957.2,110.0 Q966.1,111.0 967.6,120.9 Q965.8,144.3 966.1,170.6 Q966.5,179.3 956.8,180.8 Q885.5,179.3 811.3,180.8 Q802.1,180.4 801.2,169.1 Q802.6,144.8 801.1,120.9 Q802.3,110.6 814.2,110.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M810.6,111.2 Q884.3,109.2 957.2,111.4 Q966.3,108.8 967.1,119.2 Q965.1,143.4 965.6,169.0 Q966.4,179.4 957.8,179.3 Q884.5,178.5 811.5,178.5 Q801.2,178.4 802.7,170.2 Q800.5,144.9 803.4,118.7 Q803.0,109.8 815.0,111.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="884.5" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">store in</text>
+  <text x="884.5" y="160.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">L2 + L1 (A)</text>
+  <text x="30.0" y="268.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#2f9e44" text-anchor="start" font-weight="bold" xml:space="preserve">Request B (later, another user)</text>
+  <rect x="30" y="280" width="165" height="70" rx="10" fill="#a5d8ff"/>
+  <path d="M39.8,280.0 Q113.1,281.4 184.7,280.7 Q195.4,280.3 194.8,289.7 Q193.7,313.9 194.1,340.5 Q194.5,349.3 184.2,350.7 Q113.6,350.5 39.6,349.5 Q29.6,349.9 29.3,339.9 Q29.3,316.4 30.9,290.1 Q29.5,280.9 42.6,279.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.4,279.6 Q112.4,280.0 184.0,280.0 Q193.4,279.2 193.7,289.7 Q192.8,312.7 194.4,339.1 Q195.3,350.1 185.8,350.5 Q113.5,351.8 39.6,349.4 Q31.6,348.9 30.7,340.5 Q27.8,316.6 31.3,290.4 Q30.7,281.0 41.8,280.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="112.5" y="320.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">findById(101)</text>
+  <path d="M197.0,315.4 Q209.7,315.8 221.1,315.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M197.4,315.5 Q207.7,312.7 220.1,314.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208.4,308.9 L221.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208.4,321.1 L221.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="223" y="280" width="165" height="70" rx="10" fill="#ffc9c9"/>
+  <path d="M232.2,280.7 Q305.7,280.4 378.3,280.4 Q388.0,279.0 388.6,290.5 Q388.0,315.1 388.3,339.1 Q388.5,349.5 377.1,349.5 Q306.2,349.1 233.5,351.0 Q223.0,349.8 223.0,340.4 Q223.8,315.4 223.3,289.2 Q222.3,279.5 236.5,279.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M233.2,278.4 Q303.4,278.9 378.6,280.6 Q388.6,279.3 388.1,289.9 Q387.8,313.2 389.3,339.0 Q389.5,351.4 376.5,349.9 Q307.0,352.2 232.8,349.3 Q222.1,351.4 222.1,340.3 Q221.3,315.1 224.4,288.8 Q224.0,280.0 237.2,280.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="305.5" y="320.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">L1 (B): miss</text>
+  <path d="M389.7,315.5 Q402.0,313.9 413.4,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M389.9,314.5 Q400.3,314.3 413.6,315.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M401.4,308.9 L414.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M401.4,321.1 L414.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="416" y="280" width="165" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M425.0,280.5 Q499.5,278.9 571.9,280.4 Q581.8,279.6 580.7,289.8 Q582.5,315.3 580.7,339.9 Q580.6,349.1 570.2,350.7 Q497.9,351.3 425.5,349.5 Q416.0,349.4 415.7,340.9 Q417.2,315.9 416.3,290.8 Q416.9,280.1 429.4,279.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M426.7,279.8 Q499.7,280.7 570.3,278.6 Q582.4,278.8 580.9,289.5 Q580.0,316.1 582.5,339.2 Q581.5,349.4 571.2,349.7 Q496.9,348.4 425.1,351.3 Q416.0,349.1 417.3,341.6 Q415.8,313.3 415.0,288.7 Q415.5,278.7 428.2,279.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="498.5" y="320.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">L2: HIT</text>
+  <path d="M583.1,315.5 Q595.6,314.8 606.9,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M582.7,314.6 Q592.9,313.9 608.1,314.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M594.4,308.9 L607.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M594.4,321.1 L607.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="609" y="280" width="165" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M619.0,280.3 Q692.6,279.1 763.5,279.5 Q773.8,279.9 774.9,290.7 Q775.1,313.6 773.1,340.4 Q774.8,349.9 764.2,349.0 Q691.2,351.3 619.7,350.7 Q609.9,349.5 608.2,339.3 Q609.1,315.5 609.9,290.4 Q609.3,280.5 621.9,280.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M617.5,280.9 Q690.2,282.0 764.5,279.4 Q772.8,279.2 774.4,290.6 Q772.1,312.9 774.1,340.3 Q773.6,349.1 764.3,348.4 Q690.5,349.8 620.5,350.5 Q610.2,349.9 608.2,339.2 Q611.2,316.0 608.4,288.5 Q609.0,280.6 621.7,279.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="691.5" y="310.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">build new object</text>
+  <text x="691.5" y="330.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">put in L1 (B)</text>
+  <path d="M776.2,315.5 Q787.3,313.9 799.8,314.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M776.4,314.3 Q789.4,316.1 800.0,314.3" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M787.4,308.9 L800.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M787.4,321.1 L800.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="802" y="280" width="165" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M812.9,279.6 Q885.5,279.2 956.4,280.5 Q966.6,280.9 967.0,289.4 Q966.2,314.8 967.3,340.9 Q966.3,349.8 956.4,350.9 Q883.4,348.7 811.1,349.8 Q802.8,350.8 802.5,341.0 Q803.3,314.5 801.4,290.9 Q802.5,279.1 815.3,279.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M811.6,279.5 Q882.9,277.6 956.3,279.5 Q968.5,278.8 968.5,289.1 Q966.3,316.5 968.0,339.8 Q965.6,349.9 956.6,351.3 Q883.0,349.3 813.3,348.5 Q801.7,351.0 802.9,338.5 Q799.8,312.9 803.3,289.2 Q802.8,281.3 814.5,279.3" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="884.5" y="320.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">0 SQL</text>
+  <rect x="30" y="400" width="940" height="115" rx="10" fill="#ffec99"/>
+  <path d="M40.9,400.2 Q499.3,400.6 959.6,399.6 Q969.0,400.5 970.8,410.3 Q971.3,456.1 969.5,505.0 Q970.9,515.9 959.8,514.5 Q499.8,515.0 40.9,514.4 Q30.6,515.5 30.6,505.5 Q30.3,457.0 29.6,409.7 Q30.6,399.2 42.4,400.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.2,398.6 Q497.8,400.3 959.4,401.5 Q971.2,401.6 969.2,408.7 Q968.1,457.5 970.7,504.8 Q969.1,514.7 960.4,515.6 Q501.2,516.7 40.5,513.8 Q31.1,514.3 30.2,504.6 Q31.1,456.1 29.2,409.2 Q28.9,401.2 43.3,399.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="50.0" y="430.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">L2 needs:  a provider (Ehcache / Infinispan / Redisson)  +  use_second_level_cache=true  +  @Cacheable on the entity</text>
+  <text x="50.0" y="448.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">L2 is used for lookups BY ID: findById, lazy loading, loading associations.</text>
+  <text x="50.0" y="466.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">A JPQL query (findAll, findByName ...) always goes to the DB — unless the query cache is also enabled.</text>
+</svg>

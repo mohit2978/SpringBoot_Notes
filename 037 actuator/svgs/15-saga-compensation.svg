@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="1000" height="540">
+  <rect width="1000" height="540" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Saga: local transactions + compensating actions</text>
+  <text x="30.0" y="100.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#2f9e44" text-anchor="start" font-weight="bold" xml:space="preserve">Happy path</text>
+  <rect x="30" y="115" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M39.6,114.3 Q130.5,113.7 220.1,114.7 Q229.1,115.0 229.1,124.9 Q228.7,143.8 229.8,165.7 Q229.2,174.4 220.3,175.9 Q130.2,174.7 41.0,174.1 Q30.7,174.6 29.3,164.2 Q29.4,145.9 29.4,125.2 Q30.3,114.7 43.1,114.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,114.1 Q130.9,114.7 219.4,115.3 Q229.9,114.4 230.9,125.6 Q228.8,145.4 230.1,166.2 Q230.7,174.3 221.5,173.8 Q129.6,176.2 38.9,175.0 Q28.5,175.5 30.8,165.2 Q31.8,144.1 30.6,125.3 Q30.3,114.9 44.1,116.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130.0" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">1. Create</text>
+  <text x="130.0" y="160.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">PENDING order</text>
+  <path d="M232.0,145.2 Q251.4,145.5 273.2,145.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M232.8,144.5 Q252.0,145.8 271.9,144.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.4,138.9 L273.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.4,151.1 L273.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="275" y="115" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M284.3,114.2 Q373.7,115.8 464.3,114.5 Q474.8,115.7 474.2,124.9 Q475.1,146.2 475.6,165.7 Q474.6,174.8 464.7,175.8 Q376.4,174.0 284.4,174.5 Q274.5,175.0 275.2,164.5 Q273.5,144.8 274.7,125.1 Q275.9,115.4 288.0,115.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285.6,113.6 Q376.9,116.3 466.2,116.0 Q474.7,114.7 473.7,125.4 Q472.9,142.9 474.1,163.9 Q474.5,173.6 463.4,173.9 Q373.1,174.3 283.5,176.2 Q275.4,173.9 274.2,164.5 Q274.3,143.2 276.1,126.6 Q274.9,114.9 286.7,113.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="375.0" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">2. Reserve</text>
+  <text x="375.0" y="160.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">payment</text>
+  <path d="M476.8,144.7 Q498.3,144.2 517.4,145.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M477.1,144.2 Q497.7,142.7 518.1,146.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M505.4,138.9 L518.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M505.4,151.1 L518.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="520" y="115" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M530.7,115.4 Q619.3,114.6 709.3,115.5 Q720.1,115.6 719.7,124.4 Q720.9,146.5 720.7,165.6 Q720.6,175.5 709.5,175.0 Q619.6,173.6 529.1,174.6 Q519.5,175.4 520.9,164.9 Q521.3,146.5 520.9,124.7 Q519.4,114.5 532.4,114.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M530.4,116.3 Q621.6,114.9 710.5,116.0 Q718.7,115.5 721.3,125.9 Q721.2,144.9 719.0,165.9 Q719.5,176.0 711.5,174.7 Q619.5,177.1 530.7,173.9 Q518.8,173.9 521.3,166.0 Q518.3,146.6 521.5,125.5 Q519.5,115.2 531.8,113.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="620.0" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">3. Reserve</text>
+  <text x="620.0" y="160.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">inventory</text>
+  <path d="M722.6,145.2 Q742.6,146.0 762.9,145.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M722.8,144.3 Q741.3,144.0 762.4,145.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M750.4,138.9 L763.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M750.4,151.1 L763.0,145.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="765" y="115" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M774.5,114.8 Q863.9,116.2 954.7,114.9 Q965.2,115.8 964.8,125.8 Q965.0,145.1 965.0,164.0 Q964.9,174.4 954.0,175.6 Q864.0,174.9 775.5,175.1 Q764.7,175.0 765.1,165.6 Q763.8,145.2 764.5,124.6 Q765.5,115.0 778.1,115.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M776.3,114.8 Q865.5,115.0 955.0,115.6 Q964.8,115.1 964.9,126.4 Q966.0,146.8 966.4,164.2 Q965.2,176.4 956.1,173.8 Q863.2,174.7 773.6,174.2 Q763.6,175.5 765.9,166.3 Q763.3,146.0 765.5,123.9 Q766.2,116.5 777.1,116.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="865.0" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">4. CONFIRM</text>
+  <text x="865.0" y="160.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">order</text>
+  <text x="30.0" y="250.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#e03131" text-anchor="start" font-weight="bold" xml:space="preserve">Failure path (inventory out of stock)</text>
+  <rect x="30" y="265" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M39.8,265.0 Q131.5,266.0 219.3,264.9 Q230.0,264.7 229.4,274.6 Q230.7,293.6 230.1,314.9 Q229.0,324.7 220.2,325.0 Q128.7,326.5 40.6,325.9 Q29.2,324.5 29.1,315.6 Q29.3,293.9 29.8,275.8 Q30.6,264.5 42.3,265.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40.2,265.6 Q128.0,262.9 220.6,264.8 Q228.6,266.4 230.4,276.0 Q228.0,296.7 228.6,316.2 Q229.9,324.5 220.2,326.4 Q128.9,323.2 40.1,324.2 Q28.8,323.9 28.6,314.0 Q29.1,294.1 30.8,274.3 Q30.0,264.0 42.5,263.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130.0" y="290.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">1. Create</text>
+  <text x="130.0" y="310.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">PENDING order</text>
+  <path d="M231.7,294.4 Q253.1,295.1 272.6,295.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M233.0,294.1 Q254.0,294.7 273.0,295.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.4,288.9 L273.0,295.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.4,301.1 L273.0,295.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="275" y="265" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M284.8,265.0 Q375.6,266.4 464.7,265.7 Q475.4,265.3 474.8,274.7 Q473.7,293.9 474.1,315.5 Q474.5,324.3 464.2,325.7 Q376.1,325.5 284.6,324.5 Q274.6,324.9 274.3,314.9 Q274.3,296.4 275.9,275.1 Q274.5,265.9 287.6,264.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M283.4,264.6 Q374.9,265.0 464.0,265.0 Q473.4,264.2 473.7,274.7 Q472.8,292.7 474.4,314.1 Q475.3,325.1 465.8,325.5 Q376.0,326.8 284.6,324.4 Q276.6,323.9 275.7,315.5 Q272.8,296.6 276.3,275.4 Q275.7,266.0 286.8,265.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="375.0" y="290.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">2. Reserve</text>
+  <text x="375.0" y="310.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">payment</text>
+  <path d="M477.0,295.4 Q498.2,295.8 518.1,295.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M477.4,295.5 Q496.2,292.7 517.1,294.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M505.4,288.9 L518.0,295.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M505.4,301.1 L518.0,295.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="520" y="265" width="200" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M529.2,265.7 Q620.2,265.4 710.3,265.4 Q720.0,264.0 720.6,275.5 Q720.0,295.1 720.3,314.1 Q720.5,324.5 709.1,324.5 Q620.7,324.1 530.5,326.0 Q520.0,324.8 520.0,315.4 Q520.8,295.4 520.3,274.2 Q519.3,264.5 533.5,264.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M530.2,263.4 Q617.9,263.9 710.6,265.6 Q720.6,264.3 720.1,274.9 Q719.8,293.2 721.3,314.0 Q721.5,326.4 708.5,324.9 Q621.5,327.2 529.8,324.3 Q519.1,326.4 519.1,315.3 Q518.3,295.1 521.4,273.8 Q521.0,265.0 534.2,265.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="620.0" y="290.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">3. Reserve inventory</text>
+  <text x="620.0" y="310.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">FAILS</text>
+  <rect x="275" y="385" width="200" height="60" rx="10" fill="#ffd8a8"/>
+  <path d="M284.5,385.8 Q375.0,383.6 464.0,385.0 Q474.9,384.6 474.3,394.7 Q474.4,416.0 474.0,435.5 Q475.7,444.2 465.9,445.4 Q376.2,444.4 284.7,444.8 Q276.0,445.2 274.7,434.9 Q274.3,413.6 274.2,395.7 Q274.6,385.9 287.5,384.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285.0,384.0 Q374.4,387.2 466.2,386.0 Q475.4,386.3 476.4,395.2 Q476.1,412.8 475.7,434.8 Q475.8,445.5 464.3,443.6 Q377.0,443.2 284.9,444.5 Q274.4,445.8 276.5,434.2 Q275.7,414.0 275.2,394.7 Q273.9,383.9 287.1,386.3" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="375.0" y="410.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Refund / cancel</text>
+  <text x="375.0" y="430.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">payment</text>
+  <rect x="30" y="385" width="200" height="60" rx="10" fill="#ffd8a8"/>
+  <path d="M40.0,384.4 Q131.2,386.5 219.9,384.3 Q229.4,384.2 229.7,394.2 Q229.2,414.3 230.1,435.8 Q230.5,444.8 219.8,445.0 Q129.6,444.5 39.1,444.6 Q30.9,444.3 30.0,435.3 Q31.1,414.1 29.5,394.5 Q29.8,384.9 43.9,385.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41.2,383.5 Q127.8,386.0 221.3,384.9 Q230.3,383.4 229.7,396.4 Q231.6,416.7 231.5,434.2 Q228.7,443.9 220.1,445.6 Q132.1,446.1 40.5,445.8 Q29.9,445.2 28.5,435.9 Q28.7,417.0 30.5,394.4 Q28.8,384.2 43.4,385.6" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130.0" y="410.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Mark order</text>
+  <text x="130.0" y="430.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">CANCELLED</text>
+  <path d="M619.5,326.5 Q558.6,386.0 476.9,409.7" fill="none" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M620.2,325.8 Q557.6,385.6 478.1,410.3" fill="none" stroke="#e8590c" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M490.8,412.3 L477.0,410.0" fill="none" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M487.4,400.6 L477.0,410.0" fill="none" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="583.5" y="387.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#e8590c" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">compensate</text>
+  <path d="M273.5,415.0 Q251.9,414.4 232.6,415.2" fill="none" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M272.5,413.9 Q252.5,415.8 231.8,414.4" fill="none" stroke="#e8590c" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M244.6,421.1 L232.0,415.0" fill="none" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M244.6,408.9 L232.0,415.0" fill="none" stroke="#e8590c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="765" y="265" width="205" height="180" rx="10" fill="#e9ecef"/>
+  <path d="M775.3,265.9 Q866.7,263.6 959.7,264.8 Q970.4,264.4 970.6,275.5 Q970.0,354.1 970.9,434.6 Q970.6,444.5 959.4,445.5 Q866.9,446.4 775.0,444.4 Q764.4,444.8 765.3,435.9 Q763.9,354.7 764.4,275.9 Q764.3,264.1 777.1,264.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M776.3,266.2 Q868.6,267.4 961.4,264.5 Q969.0,266.4 970.8,273.5 Q970.8,354.4 969.6,434.5 Q968.9,443.4 959.3,444.5 Q869.7,443.2 776.5,444.1 Q764.5,446.0 766.0,434.8 Q762.8,354.9 764.6,276.3 Q764.0,264.6 779.3,263.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="867.5" y="308.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Choreography:</text>
+  <text x="867.5" y="325.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">services react to</text>
+  <text x="867.5" y="342.7" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">events (Kafka)</text>
+  <text x="867.5" y="359.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve"></text>
+  <text x="867.5" y="376.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Orchestration:</text>
+  <text x="867.5" y="393.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">central state machine</text>
+  <text x="867.5" y="410.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(Temporal, Camunda)</text>
+  <text x="500.0" y="500.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">No @Transactional across services — 2PC / XA is slow and breaks on network partitions</text>
+</svg>

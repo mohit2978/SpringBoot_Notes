@@ -1,6 +1,6 @@
 # JPA @OneToOne Mapping
 
-![alt text](image-31.png)
+
 
 ## Unidirectional Mapping
 
