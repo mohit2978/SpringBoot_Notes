@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="1000" height="540">
+  <rect width="1000" height="540" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">ProviderManager: try each provider that supports the token</text>
+  <rect x="380" y="75" width="240" height="50" rx="10" fill="#a5d8ff"/>
+  <path d="M389.6,74.3 Q500.5,73.7 610.1,74.7 Q619.1,75.0 619.1,84.9 Q618.7,98.8 619.8,115.7 Q619.2,124.4 610.3,125.9 Q500.2,124.7 391.0,124.1 Q380.7,124.6 379.3,114.2 Q379.4,100.9 379.4,85.2 Q380.3,74.7 393.1,74.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M388.6,74.1 Q500.9,74.7 609.4,75.3 Q619.9,74.4 620.9,85.6 Q618.8,100.4 620.1,116.2 Q620.7,124.3 611.5,123.8 Q499.6,126.2 388.9,125.0 Q378.5,125.5 380.8,115.2 Q381.8,99.1 380.6,85.3 Q380.3,74.9 394.1,76.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="105.2" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">authenticate(token)</text>
+  <path d="M500.0,127.2 Q498.9,133.0 500.2,138.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M500.8,126.5 Q499.5,133.3 498.9,137.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M506.1,125.4 L500.0,138.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M493.9,125.4 L500.0,138.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="500,140.0 650.0,185 500,230.0 350.0,185" fill="#ffffff"/>
+  <path d="M499.3,139.2 Q573.7,163.3 649.3,184.5 Q574.7,208.6 499.2,229.9 Q425.1,208.7 350.6,185.7 Q424.3,162.2 499.7,140.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M501.6,138.7 Q573.3,161.1 649.0,184.9 Q575.5,206.2 498.2,229.7 Q424.3,207.9 351.6,185.7 Q425.1,163.1 500.6,138.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="180.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">next provider</text>
+  <text x="500.0" y="199.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">supports(token type)?</text>
+  <rect x="720" y="160" width="250" height="50" rx="10" fill="#e9ecef"/>
+  <path d="M730.8,160.6 Q846.1,160.9 959.8,159.8 Q969.2,160.3 969.1,169.1 Q969.1,184.0 969.7,199.1 Q969.0,209.3 959.2,209.7 Q843.6,211.1 730.2,209.3 Q719.5,209.7 719.7,199.2 Q721.0,186.5 719.9,170.0 Q719.2,159.2 732.7,159.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M731.1,158.9 Q842.7,162.2 960.1,158.9 Q970.1,158.5 970.1,171.5 Q971.7,185.9 969.2,199.6 Q968.9,210.9 960.1,210.9 Q844.2,208.7 731.0,211.6 Q721.1,211.0 721.0,200.8 Q718.7,185.1 719.5,168.5 Q718.5,159.3 732.2,160.6" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="845.0" y="189.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">no → skip, try the next one</text>
+  <path d="M652.5,184.9 Q686.0,186.2 718.5,184.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M651.3,184.3 Q683.5,183.6 718.3,186.0" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M705.4,178.9 L718.0,185.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M705.4,191.1 L718.0,185.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M500.4,232.0 Q500.4,250.7 499.5,268.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M501.0,232.7 Q501.2,249.9 499.2,268.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M506.1,255.4 L500.0,268.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M493.9,255.4 L500.0,268.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="520.0" y="254.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">yes</text>
+  <rect x="370" y="270" width="260" height="55" rx="10" fill="#ffec99"/>
+  <path d="M379.7,270.6 Q501.4,269.7 619.8,270.9 Q630.4,269.3 629.3,279.3 Q631.2,298.4 629.3,315.7 Q631.0,325.3 619.7,325.1 Q498.9,323.5 380.9,325.3 Q370.1,325.9 369.9,315.7 Q371.0,296.6 369.5,279.6 Q369.5,270.2 382.5,269.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M378.8,271.3 Q499.3,269.8 620.3,271.3 Q629.7,271.3 630.0,280.1 Q630.1,295.2 629.8,314.0 Q628.4,326.0 619.0,324.9 Q501.1,325.3 379.4,325.1 Q370.2,325.9 368.7,315.2 Q368.8,296.4 370.9,280.0 Q370.2,270.8 384.3,269.8" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="302.4" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">provider.authenticate(token)</text>
+  <rect x="30" y="380" width="280" height="85" rx="10" fill="#b2f2bb"/>
+  <path d="M40.2,380.0 Q170.0,380.6 299.9,380.1 Q310.0,380.9 310.4,390.8 Q311.3,421.8 310.1,455.9 Q310.7,464.3 299.2,464.9 Q168.7,464.2 39.1,465.3 Q30.6,465.8 29.3,455.4 Q30.5,421.4 30.8,390.9 Q29.4,380.9 42.8,380.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41.6,381.1 Q168.4,379.7 300.0,379.5 Q309.0,379.4 310.7,388.5 Q310.3,422.2 308.5,454.5 Q310.4,465.0 298.6,466.6 Q171.4,467.3 38.7,464.2 Q28.5,465.9 29.3,453.8 Q29.6,424.5 31.0,389.2 Q28.9,381.3 43.2,380.6" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170.0" y="418.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">returns Authentication</text>
+  <text x="170.0" y="435.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ SUCCESS, stop looping</text>
+  <path d="M499.5,326.5 Q335.5,352.3 169.5,378.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M500.3,327.7 Q333.0,354.2 169.0,378.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M183.4,382.1 L170.0,378.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M181.5,370.1 L170.0,378.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="360" y="380" width="280" height="85" rx="10" fill="#e9ecef"/>
+  <path d="M369.9,379.7 Q500.2,381.3 629.5,379.3 Q640.1,379.5 639.2,389.3 Q638.7,421.6 639.6,454.6 Q640.5,464.6 630.0,464.4 Q499.5,463.6 369.5,464.0 Q360.5,465.1 359.4,454.9 Q361.3,421.3 360.6,389.9 Q360.0,380.7 372.8,380.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M370.6,381.5 Q499.2,381.6 630.7,380.4 Q639.7,379.5 638.6,388.8 Q637.9,423.7 639.2,453.9 Q638.7,466.1 631.2,465.5 Q499.0,463.8 369.3,464.9 Q358.9,464.8 359.2,456.5 Q362.3,422.7 359.2,391.5 Q359.4,379.5 371.4,379.6" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="418.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">returns null</text>
+  <text x="500.0" y="435.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ &quot;not mine&quot;, try next</text>
+  <path d="M500.0,327.0 Q499.3,352.5 499.4,377.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M499.0,326.8 Q497.8,350.2 499.5,377.4" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M506.1,365.4 L500.0,378.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M493.9,365.4 L500.0,378.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="690" y="380" width="280" height="85" rx="10" fill="#ffc9c9"/>
+  <path d="M700.2,380.1 Q830.8,380.5 960.4,380.8 Q969.8,379.7 971.0,389.3 Q970.7,422.9 969.1,455.7 Q970.8,465.3 960.5,465.6 Q828.9,465.1 700.0,465.7 Q690.6,465.7 690.2,455.8 Q690.5,423.1 689.5,389.1 Q689.3,379.7 702.2,380.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M700.2,380.4 Q830.6,380.9 960.0,378.4 Q971.0,380.8 970.0,390.1 Q970.8,420.4 970.8,454.2 Q968.6,464.2 960.7,464.1 Q831.2,467.3 700.0,464.6 Q689.9,465.6 690.9,455.4 Q690.7,420.5 688.9,389.2 Q690.8,379.4 703.2,378.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="830.0" y="410.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">throws AuthenticationException</text>
+  <text x="830.0" y="427.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ try next; rethrown at the</text>
+  <text x="830.0" y="444.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">end if nobody succeeds</text>
+  <path d="M499.5,326.7 Q665.4,353.0 830.2,377.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M500.0,326.9 Q664.8,350.7 830.9,377.3" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M818.5,370.1 L830.0,378.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M816.6,382.1 L830.0,378.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="500.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">Locked / disabled account (AccountStatusException) stops immediately · no provider supports it → ProviderNotFoundException</text>
+  <text x="500.0" y="522.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">On success the password is erased from the result (eraseCredentials).</text>
+</svg>

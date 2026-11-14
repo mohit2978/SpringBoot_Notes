@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560">
+  <rect width="1000" height="560" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Stored XSS: how the attack happens</text>
+  <rect x="30" y="90" width="210" height="75" rx="10" fill="#ffc9c9"/>
+  <path d="M39.6,89.3 Q135.5,88.7 230.1,89.7 Q239.1,90.0 239.1,99.9 Q238.7,126.3 239.8,155.7 Q239.2,164.4 230.3,165.9 Q135.2,164.7 41.0,164.1 Q30.7,164.6 29.3,154.2 Q29.4,128.4 29.4,100.2 Q30.3,89.7 43.1,89.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,89.1 Q135.9,89.7 229.4,90.3 Q239.9,89.4 240.9,100.6 Q238.8,127.9 240.1,156.2 Q240.7,164.3 231.5,163.8 Q134.6,166.2 38.9,165.0 Q28.5,165.5 30.8,155.2 Q31.8,126.6 30.6,100.3 Q30.3,89.9 44.1,91.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="135.0" y="123.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Attacker posts a comment:</text>
+  <text x="135.0" y="140.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">&lt;script&gt;…&lt;/script&gt;</text>
+  <rect x="300" y="90" width="200" height="75" rx="10" fill="#b2f2bb"/>
+  <path d="M309.9,90.3 Q398.7,90.6 490.3,91.0 Q500.6,89.6 499.8,100.3 Q498.6,127.4 499.3,154.2 Q499.1,165.5 489.3,164.5 Q399.7,166.1 309.2,164.9 Q300.1,165.8 300.6,155.7 Q299.3,127.2 299.7,100.8 Q300.9,89.3 312.4,89.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M309.1,90.0 Q400.4,88.9 488.4,89.7 Q499.6,90.2 501.4,100.6 Q500.1,128.1 500.6,153.6 Q501.3,165.9 491.2,166.0 Q399.5,164.5 308.7,165.4 Q298.6,163.6 299.1,153.9 Q299.2,125.4 298.4,98.9 Q298.7,89.6 311.5,91.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400.0" y="123.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">POST /comment</text>
+  <text x="400.0" y="141.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">no validation</text>
+  <rect x="570" y="90" width="180" height="75" rx="10" fill="#e9ecef"/>
+  <path d="M580.2,89.3 Q659.3,89.5 739.7,89.2 Q750.7,91.0 749.9,100.0 Q748.8,126.3 749.7,154.5 Q750.7,164.3 739.0,165.9 Q660.1,163.9 580.1,164.1 Q570.1,166.0 570.7,155.4 Q569.3,127.1 569.3,100.5 Q570.1,90.6 582.7,89.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M581.0,91.6 Q661.7,91.5 741.0,90.8 Q749.1,90.1 749.5,98.5 Q747.7,126.4 749.2,155.6 Q751.5,164.8 741.4,166.6 Q662.2,164.4 579.1,164.1 Q569.0,164.1 570.4,156.3 Q571.6,127.4 570.5,101.0 Q568.7,90.5 584.3,90.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="660.0" y="123.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">DB stores it</text>
+  <text x="660.0" y="141.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">as-is</text>
+  <path d="M242.3,127.0 Q269.2,127.7 297.8,127.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M243.1,126.8 Q269.5,129.1 298.5,126.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285.4,120.9 L298.0,127.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285.4,133.1 L298.0,127.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M501.6,126.6 Q536.0,127.7 567.6,127.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M503.2,127.4 Q534.3,127.2 567.1,125.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M555.4,120.9 L568.0,127.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M555.4,133.1 L568.0,127.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="260" width="210" height="75" rx="10" fill="#a5d8ff"/>
+  <path d="M40.9,260.3 Q135.1,261.3 229.9,260.7 Q240.7,259.4 239.5,269.6 Q239.2,297.8 239.5,324.8 Q239.3,335.8 229.7,334.9 Q135.3,336.2 39.8,335.8 Q30.0,335.1 30.0,324.0 Q29.8,296.5 29.0,270.6 Q29.3,259.9 43.5,260.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.4,260.1 Q135.3,261.4 228.7,260.2 Q239.2,259.3 240.9,270.0 Q240.3,298.7 241.3,324.8 Q240.4,335.0 230.0,335.6 Q134.8,335.2 39.9,336.4 Q30.6,336.2 31.4,324.2 Q30.3,299.6 31.1,268.8 Q28.8,259.8 41.6,259.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="135.0" y="293.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Victim opens</text>
+  <text x="135.0" y="311.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">GET /xss</text>
+  <rect x="300" y="260" width="200" height="75" rx="10" fill="#b2f2bb"/>
+  <path d="M309.1,260.3 Q400.9,261.2 489.3,260.4 Q500.3,259.3 500.8,270.9 Q499.2,298.9 499.8,325.0 Q501.0,335.7 489.3,334.9 Q400.0,334.5 309.4,334.6 Q300.4,334.0 300.1,324.9 Q298.6,297.0 300.2,270.0 Q299.1,261.0 313.6,260.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M308.7,259.2 Q397.8,261.3 489.3,258.8 Q499.8,261.3 501.0,269.2 Q498.3,299.5 500.2,325.6 Q498.7,333.6 490.6,334.8 Q397.9,337.1 310.4,336.0 Q298.7,336.1 298.6,326.2 Q299.8,296.7 300.2,271.4 Q299.3,258.8 313.1,259.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400.0" y="293.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">th:utext renders</text>
+  <text x="400.0" y="311.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">the raw HTML</text>
+  <rect x="570" y="250" width="180" height="95" rx="10" fill="#ffd8a8"/>
+  <path d="M579.2,249.3 Q658.7,249.1 739.6,249.6 Q750.5,249.6 750.0,259.4 Q749.5,296.1 749.5,334.0 Q750.5,345.1 739.4,344.9 Q661.3,343.8 580.6,344.9 Q570.0,345.7 569.8,335.0 Q570.6,298.9 569.7,260.7 Q570.4,250.3 582.8,249.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M578.6,248.8 Q657.9,251.2 739.2,248.9 Q748.7,251.1 751.2,260.5 Q749.0,296.3 749.3,334.9 Q748.9,344.8 739.2,346.5 Q662.3,345.2 579.2,346.5 Q569.4,344.5 568.4,334.6 Q569.9,297.5 569.0,260.0 Q568.4,249.2 581.7,249.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="660.0" y="276.7" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">victim&#x27;s browser</text>
+  <text x="660.0" y="293.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">parses HTML,</text>
+  <text x="660.0" y="310.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">finds &lt;script&gt;,</text>
+  <text x="660.0" y="327.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">RUNS it</text>
+  <path d="M241.5,296.4 Q269.5,296.4 298.1,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M242.6,297.4 Q271.0,298.8 297.7,296.6" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285.4,290.9 L298.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M285.4,303.1 L298.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M502.6,296.6 Q535.5,297.3 567.5,297.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M502.9,297.3 Q536.1,298.5 567.1,297.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M555.4,290.9 L568.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M555.4,303.1 L568.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M650.0,167.4 Q550.7,213.3 450.1,258.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M650.4,167.5 Q548.7,210.2 449.1,257.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M464.0,258.3 L450.0,258.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M459.0,247.2 L450.0,258.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="590.0" y="210.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">loads comments</text>
+  <rect x="800" y="190" width="170" height="62" rx="10" fill="#ffc9c9"/>
+  <path d="M809.2,190.7 Q885.2,190.4 960.3,190.4 Q970.0,189.0 970.6,200.5 Q970.0,221.1 970.3,241.1 Q970.5,251.5 959.1,251.5 Q885.7,251.1 810.5,253.0 Q800.0,251.8 800.0,242.4 Q800.8,221.4 800.3,199.2 Q799.3,189.5 813.5,189.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M810.2,188.4 Q882.9,188.9 960.6,190.6 Q970.6,189.3 970.1,199.9 Q969.8,219.2 971.3,241.0 Q971.5,253.4 958.5,251.9 Q886.5,254.2 809.8,251.3 Q799.1,253.4 799.1,242.3 Q798.3,221.1 801.4,198.8 Q801.0,190.0 814.2,190.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="885.0" y="217.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">steal readable</text>
+  <text x="885.0" y="234.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">cookies / tokens</text>
+  <path d="M751.7,297.5 Q775.0,257.9 797.4,221.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M751.9,296.5 Q773.3,258.3 797.6,221.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M786.3,228.6 L798.0,221.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M796.7,234.9 L798.0,221.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="270" width="170" height="62" rx="10" fill="#ffc9c9"/>
+  <path d="M809.0,270.5 Q886.0,268.9 960.9,270.4 Q970.8,269.6 969.7,279.8 Q971.5,301.3 969.7,321.9 Q969.6,331.1 959.2,332.7 Q884.4,333.3 809.5,331.5 Q800.0,331.4 799.7,322.9 Q801.2,301.9 800.3,280.8 Q800.9,270.1 813.4,269.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M810.7,269.8 Q886.2,270.7 959.3,268.6 Q971.4,268.8 969.9,279.5 Q969.0,302.1 971.5,321.2 Q970.5,331.4 960.2,331.7 Q883.4,330.4 809.1,333.3 Q800.0,331.1 801.3,323.6 Q799.8,299.3 799.0,278.7 Q799.5,268.7 812.2,269.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="885.0" y="297.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">act as the user</text>
+  <text x="885.0" y="314.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(same-origin fetch)</text>
+  <path d="M752.1,297.5 Q775.6,298.8 797.9,301.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M751.7,296.6 Q772.9,297.9 799.1,300.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M786.0,293.8 L798.0,301.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M784.9,306.0 L798.0,301.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="350" width="170" height="62" rx="10" fill="#ffc9c9"/>
+  <path d="M810.0,350.3 Q886.1,349.1 959.5,349.5 Q969.8,349.9 970.9,360.7 Q971.1,379.6 969.1,402.4 Q970.8,411.9 960.2,411.0 Q884.7,413.3 810.7,412.7 Q800.9,411.5 799.2,401.3 Q800.1,381.5 800.9,360.4 Q800.3,350.5 812.9,350.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M808.5,350.9 Q883.7,352.0 960.5,349.4 Q968.8,349.2 970.4,360.6 Q968.1,378.9 970.1,402.3 Q969.6,411.1 960.3,410.4 Q884.0,411.8 811.5,412.5 Q801.2,411.9 799.2,401.2 Q802.2,382.0 799.4,358.5 Q800.0,350.6 812.7,349.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="885.0" y="377.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">deface the page /</text>
+  <text x="885.0" y="394.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">fake login form</text>
+  <path d="M752.2,297.5 Q774.3,337.9 797.8,380.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M752.4,296.3 Q776.4,340.1 798.0,380.3" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M797.3,367.0 L798.0,381.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M786.6,372.9 L798.0,381.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="440" width="455" height="90" rx="10" fill="#ffc9c9"/>
+  <path d="M40.9,439.6 Q258.5,439.2 474.4,440.5 Q484.6,440.9 485.0,449.4 Q484.2,484.8 485.3,520.9 Q484.3,529.8 474.4,530.9 Q256.4,528.7 39.1,529.8 Q30.8,530.8 30.5,521.0 Q31.3,484.5 29.4,450.9 Q30.5,439.1 43.3,439.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.6,439.5 Q255.9,437.6 474.3,439.5 Q486.5,438.8 486.5,449.1 Q484.3,486.5 486.0,519.8 Q483.6,529.9 474.6,531.3 Q256.0,529.3 41.3,528.5 Q29.7,531.0 30.9,518.5 Q27.8,482.9 31.3,449.2 Q30.8,441.3 42.5,439.3" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="257.5" y="481.1" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">&lt;li th:utext=&quot;${comment}&quot;&gt;</text>
+  <text x="257.5" y="498.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">raw HTML → the script runs</text>
+  <rect x="515" y="440" width="455" height="90" rx="10" fill="#b2f2bb"/>
+  <path d="M525.9,440.2 Q741.8,440.6 959.6,439.6 Q969.0,440.5 970.8,450.3 Q971.3,483.6 969.5,520.0 Q970.9,530.9 959.8,529.5 Q742.3,530.0 525.9,529.4 Q515.6,530.5 515.6,520.5 Q515.3,484.5 514.6,449.7 Q515.6,439.2 527.4,440.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M524.2,438.6 Q740.3,440.3 959.4,441.5 Q971.2,441.6 969.2,448.7 Q968.1,485.0 970.7,519.8 Q969.1,529.7 960.4,530.6 Q743.7,531.7 525.5,528.8 Q516.1,529.3 515.2,519.6 Q516.1,483.6 514.2,449.2 Q513.9,441.2 528.3,439.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="742.5" y="481.1" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">&lt;li th:text=&quot;${comment}&quot;&gt;</text>
+  <text x="742.5" y="498.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">escaped → &amp;lt;script&amp;gt; shown as text</text>
+</svg>

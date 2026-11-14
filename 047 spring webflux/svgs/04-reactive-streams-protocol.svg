@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560">
+  <rect width="1000" height="560" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Reactive Streams: the subscribe → request → onNext handshake</text>
+  <rect x="110" y="78" width="180" height="45" rx="10" fill="#a5d8ff"/>
+  <path d="M119.6,77.3 Q200.5,76.7 280.1,77.7 Q289.1,78.0 289.1,87.9 Q288.7,99.3 289.8,113.7 Q289.2,122.4 280.3,123.9 Q200.2,122.7 121.0,122.1 Q110.7,122.6 109.3,112.2 Q109.4,101.4 109.4,88.2 Q110.3,77.7 123.1,77.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M118.6,77.1 Q200.9,77.7 279.4,78.3 Q289.9,77.4 290.9,88.6 Q288.8,100.9 290.1,114.2 Q290.7,122.3 281.5,121.8 Q199.6,124.2 118.9,123.0 Q108.5,123.5 110.8,113.2 Q111.8,99.6 110.6,88.3 Q110.3,77.9 124.1,79.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="200.0" y="105.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Subscriber</text>
+  <rect x="690" y="78" width="180" height="45" rx="10" fill="#ffd8a8"/>
+  <path d="M699.9,78.3 Q778.7,78.6 860.3,79.0 Q870.6,77.6 869.8,88.3 Q868.6,100.4 869.3,112.2 Q869.1,123.5 859.3,122.5 Q779.7,124.1 699.2,122.9 Q690.1,123.8 690.6,113.7 Q689.3,100.2 689.7,88.8 Q690.9,77.3 702.4,77.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M699.1,78.0 Q780.4,76.9 858.4,77.7 Q869.6,78.2 871.4,88.6 Q870.1,101.1 870.6,111.6 Q871.3,123.9 861.2,124.0 Q779.5,122.5 698.7,123.4 Q688.6,121.6 689.1,111.9 Q689.2,98.4 688.4,86.9 Q688.7,77.6 701.5,79.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="780.0" y="105.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Publisher</text>
+  <path d="M200.1,124.6 Q199.4,302.1 199.8,479.5" fill="none" stroke="#868e96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M200.8,126.2 Q199.8,302.4 199.0,479.0" fill="none" stroke="#868e96" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M779.8,124.7 Q780.8,301.7 779.4,480.5" fill="none" stroke="#868e96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M780.1,124.2 Q780.2,300.2 780.1,481.1" fill="none" stroke="#868e96" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M204.4,155.2 Q489.4,154.7 775.6,155.3" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M204.1,155.7 Q489.2,153.7 776.7,156.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M763.4,148.9 L776.0,155.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M763.4,161.1 L776.0,155.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="147.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">subscribe(subscriber)</text>
+  <path d="M776.4,195.4 Q490.8,195.6 203.7,195.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M775.7,193.9 Q487.7,193.9 203.4,195.5" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M216.6,201.1 L204.0,195.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M216.6,188.9 L204.0,195.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="187.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">onSubscribe(subscription)</text>
+  <path d="M204.5,239.9 Q491.0,241.2 776.5,239.8" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M203.3,239.3 Q488.5,238.6 776.3,241.0" fill="none" stroke="#2f9e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M763.4,233.9 L776.0,240.0" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M763.4,246.1 L776.0,240.0" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="232.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#2f9e44" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">subscription.request(2)   ← demand</text>
+  <path d="M776.4,280.0 Q490.4,280.7 203.5,280.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M777.0,280.7 Q491.2,279.9 203.2,280.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M216.6,286.1 L204.0,280.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M216.6,273.9 L204.0,280.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="272.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">onNext(item 1)</text>
+  <path d="M775.8,315.4 Q491.1,314.8 203.9,315.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M776.5,314.2 Q488.2,313.3 205.0,315.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M216.6,321.1 L204.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M216.6,308.9 L204.0,315.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="307.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">onNext(item 2)</text>
+  <path d="M203.6,360.4 Q491.2,360.4 775.8,360.1" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M203.1,358.8 Q492.3,360.7 776.1,361.0" fill="none" stroke="#2f9e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M763.4,353.9 L776.0,360.0" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M763.4,366.1 L776.0,360.0" fill="none" stroke="#2f9e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="352.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#2f9e44" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">request(2)</text>
+  <path d="M775.9,400.4 Q490.8,399.3 203.7,399.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M775.4,400.2 Q488.8,399.6 203.1,401.0" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M216.6,406.1 L204.0,400.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M216.6,393.9 L204.0,400.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="392.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">onNext(item 3)</text>
+  <path d="M775.8,444.9 Q490.2,446.0 203.9,445.5" fill="none" stroke="#1971c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M776.0,445.1 Q490.1,442.7 203.9,444.2" fill="none" stroke="#1971c2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M216.6,451.1 L204.0,445.0" fill="none" stroke="#1971c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M216.6,438.9 L204.0,445.0" fill="none" stroke="#1971c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="490.0" y="437.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1971c2" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">onComplete()   (or onError(e))</text>
+  <rect x="30" y="495" width="940" height="45" rx="10" fill="#ffec99"/>
+  <path d="M39.0,495.6 Q499.0,494.9 960.5,495.1 Q969.7,495.0 970.1,505.6 Q968.8,517.7 969.5,529.6 Q970.5,540.0 960.1,540.5 Q501.2,539.8 40.2,540.0 Q30.0,540.4 29.9,530.1 Q29.9,518.8 30.4,505.8 Q30.9,494.5 43.1,495.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41.1,493.8 Q498.2,494.7 958.6,494.2 Q968.6,495.5 970.9,506.3 Q968.3,518.5 970.5,528.9 Q971.2,541.5 959.1,541.4 Q499.5,539.9 41.6,541.1 Q28.9,539.8 30.0,529.5 Q28.5,516.6 30.7,503.5 Q30.2,494.8 41.5,494.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="522.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">The Subscriber sets the pace: the Publisher may never send more items than were requested.</text>
+</svg>
