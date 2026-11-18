@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <rect width="1000" height="600" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">What happens when the app starts</text>
+  <rect x="30" y="85" width="210" height="95" rx="10" fill="#ffec99"/>
+  <path d="M39.6,84.3 Q135.5,83.7 230.1,84.7 Q239.1,85.0 239.1,94.9 Q238.7,131.3 239.8,170.7 Q239.2,179.4 230.3,180.9 Q135.2,179.7 41.0,179.1 Q30.7,179.6 29.3,169.2 Q29.4,133.4 29.4,95.2 Q30.3,84.7 43.1,84.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,84.1 Q135.9,84.7 229.4,85.3 Q239.9,84.4 240.9,95.6 Q238.8,132.9 240.1,171.2 Q240.7,179.3 231.5,178.8 Q134.6,181.2 38.9,180.0 Q28.5,180.5 30.8,170.2 Q31.8,131.6 30.6,95.3 Q30.3,84.9 44.1,86.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="135.0" y="128.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">1) main() →</text>
+  <text x="135.0" y="145.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">SpringApplication.run()</text>
+  <rect x="275" y="85" width="210" height="95" rx="10" fill="#e9ecef"/>
+  <path d="M284.9,85.3 Q378.7,85.6 475.3,86.0 Q485.6,84.6 484.8,95.3 Q483.6,132.4 484.3,169.2 Q484.1,180.5 474.3,179.5 Q379.7,181.1 284.2,179.9 Q275.1,180.8 275.6,170.7 Q274.3,132.2 274.7,95.8 Q275.9,84.3 287.4,84.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M284.1,85.0 Q380.4,83.9 473.4,84.7 Q484.6,85.2 486.4,95.6 Q485.1,133.1 485.6,168.6 Q486.3,180.9 476.2,181.0 Q379.5,179.5 283.7,180.4 Q273.6,178.6 274.1,168.9 Q274.2,130.4 273.4,93.9 Q273.7,84.6 286.5,86.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380.0" y="120.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">2) prepare Environment</text>
+  <text x="380.0" y="137.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(application.properties,</text>
+  <text x="380.0" y="153.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">profiles, env vars)</text>
+  <rect x="520" y="85" width="210" height="95" rx="10" fill="#a5d8ff"/>
+  <path d="M530.2,84.3 Q624.3,84.5 719.7,84.2 Q730.7,86.0 729.9,95.0 Q728.8,131.3 729.7,169.5 Q730.7,179.3 719.0,180.9 Q625.1,178.9 530.1,179.1 Q520.1,181.0 520.7,170.4 Q519.3,132.1 519.3,95.5 Q520.1,85.6 532.7,84.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M531.0,86.6 Q626.7,86.5 721.0,85.8 Q729.1,85.1 729.5,93.5 Q727.7,131.4 729.2,170.6 Q731.5,179.8 721.4,181.6 Q627.2,179.4 529.1,179.1 Q519.0,179.1 520.4,171.3 Q521.6,132.4 520.5,96.0 Q518.7,85.5 534.3,85.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="625.0" y="120.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">3) create the</text>
+  <text x="625.0" y="137.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">ApplicationContext</text>
+  <text x="625.0" y="153.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(IoC container)</text>
+  <rect x="765" y="85" width="210" height="95" rx="10" fill="#d0bfff"/>
+  <path d="M775.5,85.0 Q869.0,85.9 964.7,85.6 Q975.9,84.8 974.8,95.9 Q975.7,131.5 974.3,169.3 Q975.8,180.6 964.3,180.7 Q871.4,180.5 774.7,180.1 Q764.3,179.0 765.9,170.3 Q765.1,133.8 764.9,95.7 Q765.7,84.4 777.5,84.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M774.2,85.3 Q868.8,84.6 963.8,86.3 Q974.5,84.9 975.3,96.3 Q974.6,134.5 975.0,170.1 Q975.1,178.5 964.8,179.0 Q867.6,181.4 774.0,179.9 Q765.7,180.2 764.4,170.1 Q765.3,133.9 763.7,95.2 Q764.2,84.3 778.9,85.0" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="870.0" y="128.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">4) @ComponentScan:</text>
+  <text x="870.0" y="145.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">register YOUR beans</text>
+  <rect x="765" y="250" width="210" height="95" rx="10" fill="#b2f2bb"/>
+  <path d="M775.1,250.5 Q871.2,249.8 965.2,250.0 Q975.0,250.4 974.9,260.1 Q974.9,298.8 975.4,335.8 Q975.9,344.5 965.1,345.9 Q871.0,343.9 774.2,344.9 Q764.1,344.5 764.1,335.3 Q765.9,298.7 764.3,260.4 Q765.3,249.3 778.8,250.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M774.1,251.4 Q869.5,249.9 966.6,251.1 Q973.9,249.8 975.0,259.5 Q973.5,296.6 975.7,333.5 Q975.2,344.8 963.5,344.5 Q870.6,345.1 773.6,346.6 Q765.9,346.5 763.7,334.2 Q762.8,298.8 764.3,258.8 Q764.8,251.3 779.0,249.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="870.0" y="293.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">5) auto-configuration:</text>
+  <text x="870.0" y="310.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">@Conditional checks</text>
+  <rect x="520" y="250" width="210" height="95" rx="10" fill="#a5d8ff"/>
+  <path d="M529.3,250.8 Q625.2,250.6 719.2,249.1 Q730.4,249.9 729.1,260.9 Q730.4,298.4 729.2,335.7 Q729.1,345.7 719.9,344.7 Q625.2,346.3 529.5,344.3 Q520.1,344.5 519.2,334.3 Q518.7,296.6 519.6,259.6 Q520.5,249.6 533.0,249.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M529.5,248.5 Q623.8,247.7 720.7,250.2 Q729.0,249.9 731.4,258.7 Q731.5,297.2 730.0,336.1 Q729.7,345.0 720.6,346.5 Q624.2,346.6 530.7,345.4 Q519.7,344.5 518.6,333.8 Q517.9,298.7 519.2,258.9 Q518.7,251.1 534.2,250.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="625.0" y="293.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">6) create &amp; wire beans</text>
+  <text x="625.0" y="310.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(singletons, DI)</text>
+  <rect x="275" y="250" width="210" height="95" rx="10" fill="#b2f2bb"/>
+  <path d="M284.6,249.5 Q379.4,249.9 474.3,249.9 Q484.5,250.9 485.9,260.1 Q484.2,298.9 484.6,334.7 Q484.0,344.8 474.9,345.0 Q379.1,345.0 284.0,344.5 Q274.2,344.8 274.1,334.0 Q274.4,296.7 275.2,260.1 Q275.5,250.3 288.4,250.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M284.6,249.4 Q382.3,248.3 475.7,250.5 Q483.5,251.1 486.3,260.4 Q486.1,299.0 483.8,335.1 Q485.0,346.1 476.0,346.0 Q380.4,346.9 285.6,345.6 Q274.1,343.5 273.8,334.6 Q273.1,299.1 275.2,260.4 Q275.4,250.6 288.0,248.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380.0" y="293.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">7) start embedded Tomcat</text>
+  <text x="380.0" y="310.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">:8080 → ready for requests</text>
+  <path d="M242.4,132.3 Q257.5,132.1 273.2,131.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M242.6,131.4 Q255.5,130.9 273.6,131.3" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.4,125.9 L273.0,132.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.4,138.1 L273.0,132.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M487.3,132.6 Q502.5,131.7 518.0,132.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M487.6,132.3 Q503.2,130.0 517.2,131.4" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M505.4,125.9 L518.0,132.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M505.4,138.1 L518.0,132.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M732.3,131.8 Q747.7,130.8 762.5,131.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M732.4,132.5 Q748.3,131.0 763.0,131.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M750.4,125.9 L763.0,132.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M750.4,138.1 L763.0,132.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M870.0,181.5 Q870.9,214.3 870.6,248.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M868.8,181.9 Q871.5,217.2 869.9,247.4" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M876.1,235.4 L870.0,248.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M863.9,235.4 L870.0,248.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M762.7,297.5 Q746.8,297.2 731.6,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M764.1,296.1 Q749.0,297.0 732.9,297.5" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M744.6,303.1 L732.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M744.6,290.9 L732.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M517.7,297.5 Q502.5,295.9 486.4,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M517.9,296.5 Q500.8,296.3 486.6,297.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M499.6,303.1 L487.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M499.6,290.9 L487.0,297.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="400" width="940" height="175" rx="10" fill="#e9ecef"/>
+  <path d="M39.0,400.5 Q501.0,398.9 960.9,400.4 Q970.8,399.6 969.7,409.8 Q971.5,487.8 969.7,564.9 Q969.6,574.1 959.2,575.7 Q499.4,576.3 39.5,574.5 Q30.0,574.4 29.7,565.9 Q31.2,488.4 30.3,410.8 Q30.9,400.1 43.4,399.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40.7,399.8 Q501.2,400.7 959.3,398.6 Q971.4,398.8 969.9,409.5 Q969.0,488.6 971.5,564.2 Q970.5,574.4 960.2,574.7 Q498.4,573.4 39.1,576.3 Q30.0,574.1 31.3,566.6 Q29.8,485.8 29.0,408.7 Q29.5,398.7 42.2,399.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="50.0" y="428.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">Starting DemoApplication using Java 17 with PID 4321</text>
+  <text x="50.0" y="453.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">No active profile set, falling back to 1 default profile: &quot;default&quot;</text>
+  <text x="50.0" y="478.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">Tomcat initialized with port 8080 (http)</text>
+  <text x="50.0" y="503.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">Root WebApplicationContext: initialization completed in 812 ms</text>
+  <text x="50.0" y="528.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">Tomcat started on port 8080 (http) with context path &#x27;&#x27;</text>
+  <text x="50.0" y="553.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">Started DemoApplication in 1.9 seconds (process running for 2.3)</text>
+</svg>

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <rect width="1000" height="700" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">How an API request travels through Spring Boot</text>
+  <rect x="30" y="80" width="600" height="52" rx="8" fill="#e9ecef"/>
+  <path d="M37.6,79.3 Q330.5,78.7 622.1,79.7 Q629.1,80.0 629.1,87.9 Q628.7,104.8 629.8,124.7 Q629.2,131.4 622.3,132.9 Q330.2,131.7 39.0,131.1 Q30.7,131.6 29.3,123.2 Q29.4,106.9 29.4,88.2 Q30.3,79.7 41.1,79.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M36.6,79.1 Q330.9,79.7 621.4,80.3 Q629.9,79.4 630.9,88.6 Q628.8,106.4 630.1,125.2 Q630.7,131.3 623.5,130.8 Q329.6,133.2 36.9,132.0 Q28.5,132.5 30.8,124.2 Q31.8,105.1 30.6,88.3 Q30.3,79.9 42.1,81.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="110.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Tomcat: socket → HttpServletRequest (http-nio-8080-exec-N thread)</text>
+  <path d="M330.0,134.2 Q328.9,140.5 330.2,146.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330.8,133.5 Q329.5,140.8 328.9,145.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,133.4 L330.0,146.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,133.4 L330.0,146.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="148" width="600" height="52" rx="8" fill="#ffd8a8"/>
+  <path d="M37.3,147.2 Q328.7,148.8 621.3,147.5 Q629.8,148.7 629.2,155.9 Q630.1,175.2 630.6,192.7 Q629.6,199.8 621.7,200.8 Q331.4,199.0 37.4,199.5 Q29.5,200.0 30.2,191.5 Q28.5,173.8 29.7,156.1 Q30.9,148.4 41.0,148.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,146.6 Q331.9,149.3 623.2,149.0 Q629.7,147.7 628.7,156.4 Q627.9,171.9 629.1,190.9 Q629.5,198.6 620.4,198.9 Q328.1,199.3 36.5,201.2 Q30.4,198.9 29.2,191.5 Q29.3,172.2 31.1,157.6 Q29.9,147.9 39.7,146.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="178.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Filter chain: correlation id (MDC), CORS, Spring Security</text>
+  <path d="M329.8,201.7 Q330.8,207.2 329.4,214.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330.1,201.2 Q330.2,205.7 330.1,215.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,201.4 L330.0,214.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,201.4 L330.0,214.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="700" y="144" width="270" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M710.7,144.4 Q834.3,143.6 959.3,144.5 Q970.1,144.6 969.7,153.4 Q970.9,175.5 970.7,194.6 Q970.6,204.5 959.5,204.0 Q834.6,202.6 709.1,203.6 Q699.5,204.4 700.9,193.9 Q701.3,175.5 700.9,153.7 Q699.4,143.5 712.4,143.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M710.4,145.3 Q836.6,143.9 960.5,145.0 Q968.7,144.5 971.3,154.9 Q971.2,173.9 969.0,194.9 Q969.5,205.0 961.5,203.7 Q834.5,206.1 710.7,202.9 Q698.8,202.9 701.3,195.0 Q698.3,175.6 701.5,154.5 Q699.5,144.2 711.8,142.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="835.0" y="178.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">401 / 403 (not logged in / not allowed)</text>
+  <path d="M632.6,174.2 Q665.1,175.0 697.9,174.4" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M632.8,173.3 Q663.8,173.0 697.4,174.2" fill="none" stroke="#e03131" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,167.9 L698.0,174.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,180.1 L698.0,174.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="216" width="600" height="52" rx="8" fill="#d0bfff"/>
+  <path d="M37.5,215.8 Q328.9,217.2 621.7,215.9 Q630.2,216.8 629.8,224.8 Q630.0,242.1 630.0,259.0 Q629.9,267.4 621.0,268.6 Q329.0,267.9 38.5,268.1 Q29.7,268.0 30.1,260.6 Q28.8,242.2 29.5,223.6 Q30.5,216.0 41.1,216.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.3,215.8 Q330.5,216.0 622.0,216.6 Q629.8,216.1 629.9,225.4 Q631.0,243.8 631.4,259.2 Q630.2,269.4 623.1,266.8 Q328.2,267.7 36.6,267.2 Q28.6,268.5 30.9,261.3 Q28.3,243.0 30.5,222.9 Q31.2,217.5 40.1,217.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="246.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">DispatcherServlet → HandlerMapping finds the controller method</text>
+  <path d="M329.9,270.0 Q331.2,276.8 329.6,281.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330.0,269.6 Q328.5,275.1 330.5,280.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,269.4 L330.0,282.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,269.4 L330.0,282.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="284" width="600" height="52" rx="8" fill="#b2f2bb"/>
+  <path d="M38.1,283.9 Q328.6,283.5 622.2,284.0 Q629.1,285.0 630.6,292.9 Q628.8,309.3 629.1,328.6 Q629.5,335.3 621.8,336.8 Q331.0,335.3 37.3,336.8 Q30.1,336.4 29.2,327.1 Q30.6,309.8 29.1,292.9 Q30.3,284.6 40.2,284.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M36.6,285.2 Q329.8,283.2 622.2,285.4 Q629.3,282.8 630.1,291.2 Q628.1,308.4 628.6,327.0 Q629.4,335.4 622.8,335.3 Q330.0,334.5 37.5,334.5 Q29.2,334.4 30.7,328.2 Q28.5,309.9 31.4,290.7 Q31.0,283.8 41.0,285.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="314.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">HandlerInterceptor.preHandle()</text>
+  <path d="M329.9,338.0 Q330.5,345.2 329.8,350.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330.5,338.3 Q329.5,343.3 328.9,349.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,337.4 L330.0,350.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,337.4 L330.0,350.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="700" y="280" width="270" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M709.1,280.5 Q834.3,279.0 959.2,280.7 Q970.7,280.3 969.6,289.5 Q969.4,309.9 969.3,329.9 Q969.5,340.9 960.9,340.1 Q834.2,341.4 709.6,339.7 Q699.0,339.8 699.9,330.0 Q699.1,310.0 699.0,289.5 Q699.2,279.8 712.1,279.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M709.4,279.1 Q835.4,280.1 960.8,280.5 Q970.7,281.2 969.6,289.4 Q972.3,308.3 970.7,330.5 Q968.5,341.1 961.3,340.4 Q836.1,341.5 708.8,340.1 Q700.0,341.1 701.0,331.0 Q700.4,311.9 700.6,290.6 Q699.1,278.5 711.8,279.6" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="835.0" y="314.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">preHandle false → aborted</text>
+  <path d="M631.5,310.4 Q665.1,310.3 698.2,310.2" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M632.0,308.8 Q666.4,311.2 698.0,310.1" fill="none" stroke="#e03131" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,303.9 L698.0,310.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,316.1 L698.0,310.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="352" width="600" height="52" rx="8" fill="#a5d8ff"/>
+  <path d="M38.3,351.1 Q330.7,351.3 621.1,351.5 Q630.5,351.4 630.5,361.0 Q630.0,377.6 630.0,396.4 Q630.5,404.2 622.3,403.2 Q328.9,403.3 38.5,403.6 Q30.1,403.0 29.1,395.5 Q30.5,378.6 30.4,359.6 Q30.0,351.9 40.9,351.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.3,351.0 Q332.3,354.1 620.5,351.9 Q631.0,353.5 629.8,359.3 Q628.6,380.1 629.1,396.3 Q628.9,404.1 623.4,402.8 Q331.5,404.0 39.2,404.7 Q29.1,405.3 30.0,394.5 Q27.6,378.0 29.8,359.4 Q28.9,351.5 40.4,353.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="382.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Argument resolvers + Jackson: JSON → DTO</text>
+  <path d="M329.4,406.3 Q330.8,411.1 330.5,418.3" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M331.0,405.5 Q329.4,411.5 331.2,418.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,405.4 L330.0,418.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,405.4 L330.0,418.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="420" width="600" height="52" rx="8" fill="#ffec99"/>
+  <path d="M37.7,419.9 Q329.3,418.6 621.2,420.7 Q629.6,420.9 629.5,427.5 Q630.0,445.1 629.7,464.9 Q630.8,472.6 622.3,472.8 Q331.3,472.1 38.4,471.1 Q30.5,471.9 30.5,464.3 Q29.4,444.6 30.9,427.3 Q29.9,419.7 40.6,420.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.5,419.2 Q330.7,419.0 622.2,419.7 Q628.9,418.9 629.1,429.3 Q630.0,444.7 631.3,465.6 Q629.8,470.8 621.0,470.7 Q329.2,470.0 37.2,471.2 Q30.2,473.2 30.8,463.7 Q29.6,446.1 29.6,427.5 Q28.6,419.3 42.5,418.8" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="450.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Bean Validation (@Valid): check every constraint</text>
+  <path d="M330.0,474.2 Q330.9,479.3 329.7,485.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M329.8,473.9 Q332.2,481.7 330.9,484.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,473.4 L330.0,486.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,473.4 L330.0,486.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="700" y="416" width="270" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M709.1,416.4 Q836.2,415.9 960.2,415.0 Q969.8,416.9 970.7,426.7 Q971.4,445.2 969.2,465.3 Q970.0,476.4 960.9,476.4 Q835.4,476.8 709.9,476.1 Q699.1,476.6 699.5,466.8 Q700.4,445.4 699.3,425.5 Q700.3,416.4 712.2,415.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M710.1,416.3 Q834.5,414.7 960.3,414.4 Q969.4,415.9 971.5,426.5 Q971.8,445.9 969.2,465.2 Q971.5,476.7 959.4,474.5 Q835.0,476.8 709.7,475.2 Q700.5,477.4 699.1,464.5 Q699.2,445.6 700.6,425.0 Q701.0,416.8 713.0,415.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="835.0" y="442.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">400 MethodArgumentNotValidException</text>
+  <text x="835.0" y="458.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ @RestControllerAdvice</text>
+  <path d="M632.6,445.8 Q665.8,445.4 697.7,446.3" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M631.5,447.1 Q665.0,444.5 697.3,445.8" fill="none" stroke="#e03131" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,439.9 L698.0,446.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,452.1 L698.0,446.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="488" width="600" height="52" rx="8" fill="#99e9f2"/>
+  <path d="M38.3,488.9 Q328.9,487.7 621.4,488.9 Q629.3,487.1 629.1,495.8 Q631.2,515.2 630.5,533.0 Q630.9,539.7 621.4,540.9 Q330.7,538.6 38.3,539.8 Q29.7,539.7 29.3,531.0 Q29.3,513.6 30.9,495.2 Q30.9,487.4 40.7,488.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.0,487.8 Q327.8,487.9 621.6,489.3 Q629.0,487.6 631.3,494.5 Q629.6,515.5 630.9,530.5 Q628.5,538.6 623.3,539.2 Q331.2,541.9 37.5,539.3 Q31.5,540.4 29.2,532.7 Q29.1,512.9 28.4,496.8 Q31.3,488.4 42.4,486.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="518.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">@RestController → @Service (@Transactional) → @Repository → DB</text>
+  <path d="M329.7,542.0 Q331.1,549.1 329.9,553.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M329.8,542.0 Q332.1,546.5 330.7,554.6" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,541.4 L330.0,554.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,541.4 L330.0,554.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="700" y="484" width="270" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M710.6,484.5 Q835.3,483.5 959.6,483.7 Q970.6,483.2 969.4,494.5 Q969.2,512.7 969.1,534.1 Q969.7,545.0 960.8,545.0 Q834.3,542.8 709.2,544.0 Q700.4,543.9 699.5,533.8 Q700.4,514.5 700.5,494.7 Q700.3,483.2 713.7,483.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M710.2,483.6 Q836.1,482.6 959.2,483.2 Q968.9,485.2 970.3,493.4 Q969.5,516.4 970.0,533.1 Q971.0,544.5 961.6,542.7 Q834.9,545.5 711.1,545.3 Q698.5,543.3 698.8,533.0 Q702.3,514.4 701.4,493.6 Q701.2,483.8 712.2,484.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="835.0" y="510.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">exception → @ExceptionHandler</text>
+  <text x="835.0" y="526.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">404 / 409 / 500</text>
+  <path d="M632.5,513.5 Q665.2,514.3 697.7,513.8" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M631.1,513.3 Q663.8,514.5 698.4,513.3" fill="none" stroke="#e03131" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,507.9 L698.0,514.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M685.4,520.1 L698.0,514.0" fill="none" stroke="#e03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="556" width="600" height="52" rx="8" fill="#a5d8ff"/>
+  <path d="M37.0,555.7 Q330.5,555.1 621.6,555.4 Q630.6,556.1 629.1,563.2 Q629.7,582.2 630.3,599.2 Q629.3,608.4 621.8,607.6 Q329.4,609.4 37.6,608.1 Q29.7,607.8 30.7,601.0 Q29.6,581.1 30.5,563.4 Q29.0,556.8 40.8,556.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M37.7,557.2 Q329.8,554.4 620.4,556.2 Q630.5,557.3 628.7,564.4 Q629.4,582.0 628.9,599.3 Q630.1,609.4 620.7,608.0 Q331.5,610.2 37.0,606.8 Q31.4,609.5 29.9,598.6 Q32.0,581.5 31.3,564.4 Q31.0,554.9 41.9,555.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="586.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Jackson: DTO → JSON · postHandle / afterCompletion · filters (reverse)</text>
+  <path d="M329.9,610.4 Q330.8,615.2 329.7,621.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M330.0,609.7 Q328.2,614.8 330.5,623.0" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.1,609.4 L330.0,622.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M323.9,609.4 L330.0,622.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="624" width="600" height="52" rx="8" fill="#b2f2bb"/>
+  <path d="M37.1,624.1 Q330.8,622.6 622.7,623.2 Q630.2,624.1 630.3,631.6 Q629.8,650.2 629.9,668.3 Q629.9,675.9 621.0,676.2 Q330.0,675.2 38.5,676.6 Q29.9,675.4 29.9,667.2 Q28.9,649.8 29.2,631.9 Q30.0,623.1 41.3,623.2" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.7,624.9 Q330.1,621.9 622.0,623.6 Q631.4,622.8 631.1,633.6 Q631.1,651.5 629.0,669.5 Q630.0,677.5 623.3,674.9 Q331.4,678.1 36.6,675.5 Q30.8,674.9 31.3,667.3 Q31.5,648.3 30.0,633.3 Q29.1,623.2 41.0,623.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="330.0" y="654.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">201 Created + JSON body back to the client</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470">
+  <rect width="1000" height="470" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Validation groups: same DTO, different rules</text>
+  <rect x="330" y="80" width="340" height="140" rx="10" fill="#e9ecef"/>
+  <path d="M339.6,79.3 Q500.5,78.7 660.1,79.7 Q669.1,80.0 669.1,89.9 Q668.7,148.8 669.8,210.7 Q669.2,219.4 660.3,220.9 Q500.2,219.7 341.0,219.1 Q330.7,219.6 329.3,209.2 Q329.4,150.9 329.4,90.2 Q330.3,79.7 343.1,79.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M338.6,79.1 Q500.9,79.7 659.4,80.3 Q669.9,79.4 670.9,90.6 Q668.8,150.4 670.1,211.2 Q670.7,219.3 661.5,218.8 Q499.6,221.2 338.9,220.0 Q328.5,220.5 330.8,210.2 Q331.8,149.1 330.6,90.3 Q330.3,79.9 344.1,81.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="345.0" y="108.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="11" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">UserDto</text>
+  <text x="345.0" y="136.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="11" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">  id        @Null(OnCreate) @NotNull(OnUpdate)</text>
+  <text x="345.0" y="164.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="11" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">  name      @NotBlank(OnCreate, OnUpdate)</text>
+  <text x="345.0" y="192.0" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="11" fill="#1e1e1e" text-anchor="start" font-weight="normal" xml:space="preserve">  password  @NotBlank(OnCreate) @Null(OnUpdate)</text>
+  <rect x="30" y="280" width="440" height="40" rx="10" fill="#ffec99"/>
+  <path d="M39.9,280.3 Q248.7,280.6 460.3,281.0 Q470.6,279.6 469.8,290.3 Q468.6,299.9 469.3,309.2 Q469.1,320.5 459.3,319.5 Q249.7,321.1 39.2,319.9 Q30.1,320.8 30.6,310.7 Q29.3,299.7 29.7,290.8 Q30.9,279.3 42.4,279.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39.1,280.0 Q250.4,278.9 458.4,279.7 Q469.6,280.2 471.4,290.6 Q470.1,300.6 470.6,308.6 Q471.3,320.9 461.2,321.0 Q249.5,319.5 38.7,320.4 Q28.6,318.6 29.1,308.9 Q29.2,297.9 28.4,288.9 Q28.7,279.6 41.5,281.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="250.0" y="304.6" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">POST  @Validated(OnCreate.class)</text>
+  <rect x="30" y="330" width="440" height="115" rx="10" fill="#b2f2bb"/>
+  <path d="M40.2,329.3 Q249.3,329.5 459.7,329.2 Q470.7,331.0 469.9,340.0 Q468.8,386.3 469.7,434.5 Q470.7,444.3 459.0,445.9 Q250.1,443.9 40.1,444.1 Q30.1,446.0 30.7,435.4 Q29.3,387.1 29.3,340.5 Q30.1,330.6 42.7,329.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41.0,331.6 Q251.7,331.5 461.0,330.8 Q469.1,330.1 469.5,338.5 Q467.7,386.4 469.2,435.6 Q471.5,444.8 461.4,446.6 Q252.2,444.4 39.1,444.1 Q29.0,444.1 30.4,436.3 Q31.6,387.4 30.5,341.0 Q28.7,330.5 44.3,330.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="250.0" y="374.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">id must be null (server generates it)</text>
+  <text x="250.0" y="392.4" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">name required</text>
+  <text x="250.0" y="410.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">password required</text>
+  <rect x="530" y="280" width="440" height="40" rx="10" fill="#ffec99"/>
+  <path d="M540.5,280.0 Q749.0,280.9 959.7,280.6 Q970.9,279.8 969.8,290.9 Q970.7,299.0 969.3,309.3 Q970.8,320.6 959.3,320.7 Q751.4,320.5 539.7,320.1 Q529.3,319.0 530.9,310.3 Q530.1,301.3 529.9,290.7 Q530.7,279.4 542.5,279.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M539.2,280.3 Q748.8,279.6 958.8,281.3 Q969.5,279.9 970.3,291.3 Q969.6,302.0 970.0,310.1 Q970.1,318.5 959.8,319.0 Q747.6,321.4 539.0,319.9 Q530.7,320.2 529.4,310.1 Q530.3,301.4 528.7,290.2 Q529.2,279.3 543.9,280.0" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="750.0" y="304.6" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">PUT  @Validated(OnUpdate.class)</text>
+  <rect x="530" y="330" width="440" height="115" rx="10" fill="#a5d8ff"/>
+  <path d="M540.1,330.5 Q751.2,329.8 960.2,330.0 Q970.0,330.4 969.9,340.1 Q969.9,388.8 970.4,435.8 Q970.9,444.5 960.1,445.9 Q751.0,443.9 539.2,444.9 Q529.1,444.5 529.1,435.3 Q530.9,388.7 529.3,340.4 Q530.3,329.3 543.8,330.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M539.1,331.4 Q749.5,329.9 961.6,331.1 Q968.9,329.8 970.0,339.5 Q968.5,386.6 970.7,433.5 Q970.2,444.8 958.5,444.5 Q750.6,445.1 538.6,446.6 Q530.9,446.5 528.7,434.2 Q527.8,388.8 529.3,338.8 Q529.8,331.3 544.0,329.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="750.0" y="365.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">id required</text>
+  <text x="750.0" y="383.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">name required</text>
+  <text x="750.0" y="401.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">password must be null</text>
+  <text x="750.0" y="419.7" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(separate endpoint to change it)</text>
+  <path d="M419.6,222.5 Q335.2,250.5 249.5,277.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M420.5,221.8 Q332.9,252.1 250.3,278.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M263.9,279.8 L250.0,278.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260.1,268.3 L250.0,278.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M579.5,222.4 Q664.0,250.9 749.9,277.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M580.1,223.0 Q663.9,248.2 750.1,277.4" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M739.9,268.3 L750.0,278.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M736.1,279.8 L750.0,278.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

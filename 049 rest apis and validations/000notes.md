@@ -1,5 +1,18 @@
 # REST APIs, Validations & Request Lifecycle in Spring Boot
 
+## Table of Contents
+
+1. [Validations in Spring Boot](#1-validations-in-spring-boot)
+2. [Why aren't frontend validations enough?](#2-why-arent-frontend-validations-enough)
+3. [How an API request travels through Spring Boot](#3-how-an-api-request-travels-through-spring-boot-complete-lifecycle)
+4. [What makes an API "production-ready"?](#4-what-makes-an-api-production-ready)
+5. [Complete production-ready implementation](#5-complete-production-ready-spring-boot-implementation)
+6. [How APIs are tested before production](#6-how-apis-are-tested-before-production)
+7. [How to test an API for a specific user](#7-how-to-test-an-api-for-a-specific-user)
+8. [How to load test an API](#8-how-to-load-test-an-api)
+9. [How API testing is done in production](#9-how-api-testing-is-done-in-production)
+10. [Interview Questions](#10-interview-questions)
+
 ---
 
 ## 1. Validations in Spring Boot
@@ -43,6 +56,8 @@ Spring Boot provides validation through the **Jakarta Bean Validation (JSR-380)*
 
 #### Interview Gold: `@NotNull` vs `@NotEmpty` vs `@NotBlank`
 
+![svg](<svgs/02-notnull-notempty-notblank.svg>)
+
 | Input Value | `@NotNull` | `@NotEmpty` | `@NotBlank` |
 |---|:---:|:---:|:---:|
 | `null` | ❌ Invalid | ❌ Invalid | ❌ Invalid |
@@ -74,7 +89,9 @@ public class UserController {
 ```
 
 #### 2. Validating Path Variables and Query Parameters (`@Validated`)
-For validating parameters directly on controller methods (`@PathVariable`, `@RequestParam`), annotate the **controller class** with `@Validated`. If a parameter fails validation, Spring throws `ConstraintViolationException`:
+For validating parameters directly on controller methods (`@PathVariable`, `@RequestParam`), annotate the **controller class** with `@Validated`. If a parameter fails validation, Spring throws `ConstraintViolationException`.
+
+> **Spring Framework 6.1+ / Spring Boot 3.2+:** Spring MVC has **built-in method validation**. If a controller method has constraint annotations directly on its parameters (`@Min`, `@NotBlank`…), they're validated even **without** class-level `@Validated`, and a failure throws **`HandlerMethodValidationException`** (→ 400). With class-level `@Validated`, the older AOP-proxy validation runs instead and throws `ConstraintViolationException`. Whichever style you use, handle the matching exception in your `@RestControllerAdvice` (see 5.5).
 
 ```java
 @RestController
@@ -126,13 +143,16 @@ public class OrderRequest {
 | **Origin** | Standard Java / Jakarta (`jakarta.validation.Valid`) | Spring Framework (`org.springframework.validation.annotation.Validated`) |
 | **Scope** | Can be placed on fields, methods, constructors, parameters | Can be placed on classes, methods, parameters |
 | **Validation Groups** | Does **NOT** support groups | **Supports validation groups** (`@Validated(OnCreate.class)`) |
-| **Method Parameter Validation** | Does not trigger AOP validation on `@PathVariable` / `@RequestParam` | Triggers AOP validation on method arguments when on `@RestController` |
+| **Method Parameter Validation** | Does not trigger AOP validation on `@PathVariable` / `@RequestParam` (Spring 6.1+ validates constrained parameters natively anyway) | Triggers AOP validation on method arguments when on the class (`ConstraintViolationException`) |
+| **Cascading** | Marks nested fields / list elements for validation (`@Valid private Address address;`) | Not used for cascading |
 
 ---
 
 ### 1.5 Validation Groups
 
 Validation Groups allow applying different validation rules to the same DTO depending on the operation (e.g. creating vs updating).
+
+![svg](<svgs/05-validation-groups.svg>)
 
 **1. Define Marker Interfaces:**
 ```java
@@ -226,6 +246,8 @@ public class RegisterRequest {
 A common question in engineering interviews and design reviews:
 > *"If the React/Angular/Vue frontend already checks email format, password length, and empty fields, why do we need backend validations?"*
 
+![svg](<svgs/01-why-backend-validation.svg>)
+
 ### 1. Zero Trust & Total Client Bypass
 The frontend executes on the user's client machine (browser, mobile device). Anyone can bypass client-side validation completely in seconds:
 - **cURL / Postman / Insomnia:** Direct HTTP requests can be crafted without touching the frontend UI.
@@ -279,6 +301,11 @@ The database is the system of record. If invalid data slips through:
 When a client sends an HTTP request (e.g., `POST /api/v1/orders`), it travels through a well-defined sequence of architectural layers before reaching business code and returning.
 
 ### 3.1 Architectural Flow Diagram
+
+![svg](<svgs/03-api-request-lifecycle.svg>)
+
+<details>
+<summary>Detailed sequence diagram (Mermaid)</summary>
 
 ```mermaid
 sequenceDiagram
@@ -335,6 +362,8 @@ sequenceDiagram
     end
 ```
 
+</details>
+
 ---
 
 ### 3.2 Step-by-Step Breakdown of Every Layer
@@ -344,7 +373,7 @@ sequenceDiagram
 2. The web server's acceptor thread accepts the connection and hands it to a worker thread (`http-nio-8080-exec-*`).
 3. The server parses raw HTTP bytes (method, URI, headers, body) into standard Servlet API objects: `HttpServletRequest` and `HttpServletResponse`.
 
-#### Layer 2: Servlet Filter Chain (`javax.servlet.Filter` / `OncePerRequestFilter`)
+#### Layer 2: Servlet Filter Chain (`jakarta.servlet.Filter` / `OncePerRequestFilter`)
 Before reaching Spring MVC, the request passes through the **Servlet Filter Chain**:
 - **Logging / Tracing Filter:** Generates a unique `X-Correlation-ID` or `traceId` and puts it into SLF4J's `MDC` (Mapped Diagnostic Context).
 - **CORS Filter:** Checks `Origin` headers against allowed origins.
@@ -401,6 +430,11 @@ Before reaching Spring MVC, the request passes through the **Servlet Filter Chai
 
 ### 3.3 What Happens When an Exception Occurs?
 
+![svg](<svgs/04-exception-resolution-flow.svg>)
+
+<details>
+<summary>Flowchart (Mermaid)</summary>
+
 ```mermaid
 flowchart TD
     A[Exception Thrown in Controller / Service / DB / Validation] --> B[DispatcherServlet catches Throwable]
@@ -416,13 +450,21 @@ flowchart TD
     K --> L[Spring Standard Error Response via /error]
 ```
 
+</details>
+
 1. **Detection:** Any uncaught exception thrown in the Controller, Service, Repository, or Validation layer bubbles up to `DispatcherServlet.doDispatch()`.
 2. **Delegation:** `DispatcherServlet` invokes `HandlerExceptionResolverComposite`.
 3. **`ExceptionHandlerExceptionResolver`:**
    - Scans for beans annotated with `@ControllerAdvice` or `@RestControllerAdvice`.
    - Matches the thrown exception type against methods annotated with `@ExceptionHandler(SpecificException.class)`.
 4. **Execution:** The matching handler method executes, formats a custom error response object (e.g. `ApiErrorResponse`), and specifies the HTTP status (e.g., `400 Bad Request`, `404 Not Found`, `409 Conflict`).
-5. **No Stack Traces Leaked:** The internal stack trace is logged to server logs (with MDC trace ID) for engineers, but a safe, standardized error payload is sent to the client.
+5. **Fallbacks:** if no `@ExceptionHandler` matches, `ResponseStatusExceptionResolver` applies a `@ResponseStatus` on the exception class, and `DefaultHandlerExceptionResolver` maps Spring's own exceptions (missing parameter → 400, wrong method → 405, unsupported media type → 415…). Anything still unresolved goes to the servlet container, which forwards to Spring Boot's `/error` endpoint (`BasicErrorController`) → 500.
+6. **No Stack Traces Leaked:** The internal stack trace is logged to server logs (with MDC trace ID) for engineers, but a safe, standardized error payload is sent to the client.
+
+> **Standard error format (RFC 9457, formerly RFC 7807):** Spring 6 has `ProblemDetail`. Return it from your handlers, or set `spring.mvc.problemdetails.enabled=true` so Spring's built-in errors use it too:
+> ```json
+> { "type": "about:blank", "title": "Bad Request", "status": 400, "detail": "Invalid request content.", "instance": "/api/v1/users" }
+> ```
 
 ---
 
@@ -688,6 +730,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import jakarta.validation.ConstraintViolationException;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -743,7 +787,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    // 3. Fallback for unhandled 500 errors (never leak stack trace to client!)
+    // 3. @PathVariable / @RequestParam validation failures (HTTP 400)
+    //    HandlerMethodValidationException → Spring 6.1+ built-in method validation
+    //    ConstraintViolationException     → class-level @Validated (AOP) validation
+    @ExceptionHandler({HandlerMethodValidationException.class, ConstraintViolationException.class})
+    public ResponseEntity<ApiErrorResponse> handleParameterValidation(
+            Exception ex, HttpServletRequest request) {
+
+        log.warn("Parameter validation failed for path [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = ApiErrorResponse.builder()
+                .success(false)
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message("Invalid request parameters")
+                .path(request.getRequestURI())
+                .traceId(MDC.get("traceId"))
+                .timestamp(Instant.now())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    // 4. Fallback for unhandled 500 errors (never leak stack trace to client!)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleGlobalException(
             Exception ex, HttpServletRequest request) {
@@ -866,3 +932,355 @@ Content-Type: application/json
   }
 }
 ```
+
+---
+
+## 6. How APIs Are Tested Before Production
+
+![svg](<svgs/06-testing-pyramid.svg>)
+
+| Level | What it checks | Spring Boot tools | Speed |
+|---|---|---|---|
+| **Unit** | One class in isolation (service logic, validators) | JUnit 5, Mockito, AssertJ | ms |
+| **Slice** | One layer with real Spring wiring: controller + validation + JSON, or repository + DB | `@WebMvcTest` + `MockMvc`, `@DataJpaTest` | ~1 s |
+| **Integration** | The whole app with real infrastructure | `@SpringBootTest(webEnvironment = RANDOM_PORT)`, `TestRestTemplate` / `WebTestClient`, **Testcontainers** (real Postgres/Kafka in Docker) | seconds |
+| **Contract** | Producer and consumer agree on the API shape | Spring Cloud Contract, Pact | seconds |
+| **End-to-end** | A real user journey across services/UI | Postman/Newman, Playwright, REST Assured against staging | minutes |
+
+### 6.1 Testing the validation of this API with MockMvc
+
+```java
+@WebMvcTest(UserController.class)
+class UserControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockitoBean                     // Spring Boot 3.4+ (older versions: @MockBean)
+    private UserService userService;
+
+    @Test
+    @WithMockUser                    // needed if Spring Security is on the classpath
+    void createUser_withInvalidBody_returns400WithFieldErrors() throws Exception {
+        String body = """
+            { "username": "a", "email": "not-an-email", "password": "secret",
+              "confirmPassword": "mismatch", "age": 15 }
+            """;
+
+        mockMvc.perform(post("/api/v1/users")
+                        .with(csrf())                         // POST with Spring Security's CSRF on
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.validationErrors.email").value("Email must be a valid email address"))
+                .andExpect(jsonPath("$.validationErrors.age").value("User must be at least 18 years old"));
+
+        verifyNoInteractions(userService);    // controller logic was never reached
+    }
+}
+```
+
+### 6.2 Integration test against a real database (Testcontainers)
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Testcontainers
+class UserApiIntegrationTest {
+
+    @Container
+    @ServiceConnection                                  // Boot 3.1+: wires spring.datasource.* automatically
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16");
+
+    @Autowired
+    private TestRestTemplate rest;
+
+    @Test
+    void createAndFetchUser() {
+        var request = Map.of("username", "mohit", "email", "mohit@example.com",
+                "password", "Secret@123", "confirmPassword", "Secret@123", "age", 30);
+
+        ResponseEntity<String> created = rest.postForEntity("/api/v1/users", request, String.class);
+
+        assertThat(created.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    }
+}
+```
+
+---
+
+## 7. How to Test an API for a Specific User
+
+"Test for a specific user" usually means one of three things:
+1. **Authorization:** does user A get *their own* data, and get 403 for user B's data?
+2. **Reproducing a bug** that only one user reports.
+3. **Rolling out** a change to one user (or a few) first.
+
+![svg](<svgs/07-test-api-as-a-specific-user.svg>)
+
+### 7.1 In automated tests (spring-security-test)
+
+```xml
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-test</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+```java
+// a) Fake logged-in user with given roles (no real login needed)
+@Test
+@WithMockUser(username = "user-42", roles = "USER")
+void userSeesOwnOrders() throws Exception {
+    mockMvc.perform(get("/api/v1/orders/mine"))
+           .andExpect(status().isOk());
+}
+
+// b) Load a REAL user from your UserDetailsService (their real roles/authorities)
+@Test
+@WithUserDetails("mohit@example.com")
+void adminCanListAllUsers() throws Exception {
+    mockMvc.perform(get("/api/v1/users")).andExpect(status().isOk());
+}
+
+// c) JWT-secured API: build a token for a specific subject + authorities
+@Test
+void userCannotReadSomeoneElsesOrder() throws Exception {
+    mockMvc.perform(get("/api/v1/orders/7")                        // order 7 belongs to user-99
+                    .with(jwt().jwt(j -> j.subject("user-42"))
+                               .authorities(new SimpleGrantedAuthority("ROLE_USER"))))
+           .andExpect(status().isForbidden());                     // ownership check must reject it
+}
+```
+
+> Test (c) is the most important one: **IDOR (Insecure Direct Object Reference)** bugs, where changing an id in the URL returns another user's data, are among the most common API vulnerabilities. Always test "user A asks for user B's resource → 403/404".
+
+### 7.2 Manually, on dev / staging
+
+Log in as a **test user**, take its token, and call the API with it:
+
+```bash
+TOKEN=$(curl -s -X POST https://staging.example.com/auth/login \
+          -H "Content-Type: application/json" \
+          -d '{"username":"test-user-42","password":"<test-password>"}' | jq -r .accessToken)
+
+curl -s https://staging.example.com/api/v1/orders/mine \
+     -H "Authorization: Bearer $TOKEN" | jq
+```
+
+- In **Postman**, create an **environment per test user** (`user42`, `admin`) holding its credentials. A pre-request script or the collection's auth settings fetches the token, so switching users is one dropdown.
+- Keep a few seeded test users per role (`USER`, `ADMIN`, `SUPPORT`), plus users with edge-case data (no orders, 10k orders, suspended account).
+
+### 7.3 In production (safely)
+
+You **never** log in with a real customer's password. Instead:
+
+- **Find their requests in logs and traces:** put the user id into the MDC after authentication, so every log line carries it:
+  ```java
+  @Component
+  public class UserIdMdcFilter extends OncePerRequestFilter {
+      @Override
+      protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+              throws ServletException, IOException {
+          Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+          if (auth != null && auth.isAuthenticated()) {
+              MDC.put("userId", auth.getName());
+          }
+          try {
+              chain.doFilter(req, res);
+          } finally {
+              MDC.remove("userId");
+          }
+      }
+  }
+  ```
+  (Register it **after** the Spring Security filter chain so the user is known, e.g. with `http.addFilterAfter(new UserIdMdcFilter(), AuthorizationFilter.class)` instead of `@Component`.) Then search `userId:42 AND status:500` in Kibana/Loki and open the `traceId` in Zipkin/Tempo to see exactly what happened.
+- **Feature flag targeted at a user id:** enable the new code path only for that user, an internal staff account, or a beta group:
+  ```java
+  if (featureFlags.isEnabled("new-checkout", userId)) { return newCheckout(cart); }
+  return oldCheckout(cart);
+  ```
+- **Impersonation ("act as user")** for support staff: an admin-only, fully **audited** feature (Spring Security's `SwitchUserFilter` exists for this). It shows what the user sees without knowing their password.
+- **Dedicated production test accounts:** flagged (`is_test_account = true`) so they're excluded from billing, emails and analytics.
+
+---
+
+## 8. How to Load Test an API
+
+A **load test** answers: *how many requests per second can this API handle, at what latency, before errors or slowdowns start?*
+
+![svg](<svgs/08-load-test-types.svg>)
+
+| Type | Load pattern | Question it answers |
+|---|---|---|
+| **Load test** | Ramp up to the expected peak, hold | Do we meet our SLO (e.g. p95 < 300 ms, errors < 1%) at normal peak? |
+| **Stress test** | Keep increasing until it breaks | What's the breaking point, and how does it fail (slowly or crash)? |
+| **Spike test** | Sudden jump (10× in seconds) | Does it survive a flash sale / viral moment, and recover afterwards? |
+| **Soak (endurance) test** | Normal load for hours | Memory leaks, connection-pool leaks, disk filling up over time? |
+
+### 8.1 Step by step
+
+1. **Define the goal / SLO:** e.g. "500 req/s on `GET /api/v1/users`, p95 < 300 ms, error rate < 1%".
+2. **Use a prod-like environment** (staging with the same instance sizes, DB size and config). Load-testing a laptop tells you little.
+3. **Use realistic data and traffic:** many different users (not one token for everything, because caches would make it unrealistically fast), a realistic mix of endpoints, and think time between calls.
+4. **Warm up first:** the JVM's JIT compiler and the caches need a minute or two before numbers are meaningful.
+5. **Ramp up gradually** while **watching the metrics** (Grafana: latency, errors, CPU, heap, GC, Hikari/Tomcat pools, DB CPU).
+6. **Find the bottleneck** when latency or errors rise: thread pool exhausted? DB connections pending? slow query? GC pauses? CPU at 100%? (See the *037 actuator* notes for how to read these.)
+7. **Fix, re-run, compare.** Keep the script in Git and run it in CI before big releases to catch regressions.
+
+![svg](<svgs/09-load-test-setup.svg>)
+
+### 8.2 Example with k6
+
+```javascript
+// load-test.js   →   k6 run -e TOKEN=$TOKEN load-test.js
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export const options = {
+  stages: [
+    { duration: '2m', target: 100 },   // ramp up to 100 virtual users
+    { duration: '5m', target: 100 },   // hold
+    { duration: '1m', target: 0 },     // ramp down
+  ],
+  thresholds: {
+    http_req_duration: ['p(95)<300', 'p(99)<800'],   // ms, the test FAILS if exceeded
+    http_req_failed: ['rate<0.01'],                  // < 1% errors
+  },
+};
+
+export default function () {
+  const res = http.get('https://staging.example.com/api/v1/users?page=0&size=20', {
+    headers: { Authorization: `Bearer ${__ENV.TOKEN}` },
+  });
+  check(res, { 'status is 200': (r) => r.status === 200 });
+  sleep(1);                                            // think time
+}
+```
+
+k6 prints a summary at the end. The lines to read are request rate, latency percentiles, error rate, and whether the thresholds passed:
+
+```text
+     http_req_duration..............: avg=84ms  min=12ms med=61ms max=1.2s p(90)=160ms p(95)=210ms
+     http_req_failed................: 0.12%  ✓ 41   ✗ 33871
+     http_reqs......................: 33912  94.2/s
+     ✓ http_req_duration p(95)<300   ✓ http_req_failed rate<0.01
+```
+
+**Other tools:** **Gatling** (Java/Scala DSL, great HTML reports), **JMeter** (GUI, widely used), **Locust** (Python). For a quick check on one endpoint:
+
+```bash
+hey -n 10000 -c 100 http://localhost:8080/api/v1/users/1      # 10k requests, 100 concurrent
+```
+
+### 8.3 Reading the results
+
+- **Throughput flattens while latency climbs** → you've hit a bottleneck (pool, DB, CPU).
+- **Errors appear suddenly** → timeouts, pool exhaustion (`HikariPool - Connection is not available`), or rate limits.
+- **Latency slowly grows during a soak test** → memory or connection leak.
+- **Little's law** for sizing: `concurrent requests = throughput × latency`. 500 req/s × 0.2 s = 100 requests in flight, so pools and threads need at least that headroom.
+
+> Don't load-test **production** without a plan: it competes with real users and can trigger alerts, autoscaling costs or rate limits at third parties. If you must (e.g. before a big sale), do it in a scheduled window, against isolated test data, with everyone informed.
+
+---
+
+## 9. How API Testing Is Done in Production
+
+Pre-production tests can't catch everything (real traffic, real data, real infrastructure). Production testing focuses on **releasing safely and detecting problems fast**, without hurting real users.
+
+![svg](<svgs/10-testing-in-production.svg>)
+
+### 9.1 Smoke tests right after a deploy
+
+A small script of **read-only** checks against the new version:
+
+```bash
+#!/usr/bin/env bash
+set -e
+BASE=https://api.example.com
+curl -fsS $BASE/actuator/health | grep -q '"status":"UP"'
+curl -fsS -H "Authorization: Bearer $SMOKE_TEST_TOKEN" "$BASE/api/v1/users/me" > /dev/null
+curl -fsS "$BASE/api/v1/products?page=0&size=1" > /dev/null
+echo "smoke tests passed"
+```
+
+If it fails, the pipeline rolls back automatically.
+
+### 9.2 Canary releases and blue-green deployments
+
+- **Canary:** send 1–5% of real traffic to the new version (Kubernetes + Argo Rollouts / Flagger, or the load balancer). Compare its error rate and p99 latency with the old version. Promote step by step (5% → 25% → 100%) or roll back automatically.
+- **Blue-green:** run the new version ("green") next to the old one ("blue"), test green, then switch the load balancer. Switching back is instant.
+
+### 9.3 Feature flags (dark launches)
+
+Deploy the code switched **off**, then enable it for staff, a beta group, one user id, or 1% of users, all **without a new deploy**. If something breaks, flip it off. Tools: Unleash, LaunchDarkly, Togglz, Flagsmith (or a simple DB-backed flag).
+
+### 9.4 Synthetic monitoring
+
+Scripted "robot users" call key endpoints every minute **from outside** (Datadog Synthetics, Checkly, Grafana k6 Cloud, UptimeRobot): health, login, search, place a test order with a test account. They alert you before customers notice, including at night when there's no real traffic.
+
+### 9.5 Shadow (mirrored) traffic
+
+Copy real production requests to the new version (Istio / Envoy / nginx `mirror`), compare its responses with the current version, and **throw its responses away**. Great for rewrites and migrations. Make sure mirrored requests can't cause side effects (no emails, no payments, separate DB writes).
+
+### 9.6 Observability and alerting
+
+Production testing only works if you can *see* problems: RED metrics (Rate, Errors, Duration) per endpoint, logs with `traceId`/`userId`, distributed traces, and alerts on error rate and p99 latency (see the *037 actuator* notes and the monitoring section of *003 maven*).
+
+### 9.7 Chaos engineering
+
+Deliberately inject failures (kill a pod, add latency to the DB, drop a dependency) with tools like Chaos Monkey for Spring Boot, Chaos Mesh, or AWS FIS. This checks that timeouts, retries, circuit breakers and autoscaling really work. Start in staging, then move to production in small, controlled experiments.
+
+### 9.8 Rules for testing in production
+
+- Use **dedicated test accounts / test tenants**, flagged and excluded from billing, emails and analytics.
+- Prefer **read-only** checks. Write tests must be **idempotent** and **clean up** after themselves.
+- **Never** use or modify real customer data, and never use a real user's credentials.
+- Rate-limit your own probes, and tell the on-call team about planned tests.
+- Always have a **fast rollback** (canary auto-rollback, blue-green switch, feature flag off).
+
+---
+
+## 10. Interview Questions
+
+**Q1. `@NotNull` vs `@NotEmpty` vs `@NotBlank`?**
+`@NotNull` rejects only `null`. `@NotEmpty` also rejects empty strings/collections. `@NotBlank` (strings only) also rejects whitespace-only strings.
+
+**Q2. `@Valid` vs `@Validated`?**
+`@Valid` is standard Jakarta: it triggers validation of a `@RequestBody` and cascades into nested objects/lists. `@Validated` is Spring's: it supports validation groups and, on a class, enables method-level validation of parameters via AOP.
+
+**Q3. Which exceptions are thrown when validation fails?**
+`@Valid @RequestBody` → `MethodArgumentNotValidException`. Constrained `@PathVariable`/`@RequestParam` → `HandlerMethodValidationException` (Spring 6.1+ built-in) or `ConstraintViolationException` (class-level `@Validated`). All should become 400 in a `@RestControllerAdvice`.
+
+**Q4. How do you validate nested objects and lists?**
+Put `@Valid` on the nested field (`@Valid private Address address;`, `@Valid private List<Item> items;`).
+
+**Q5. How do you write a custom validator, and a cross-field one?**
+Create an annotation with `@Constraint(validatedBy = X.class)` and implement `ConstraintValidator<Ann, Type>`. For cross-field checks (password == confirmPassword), put the annotation on the class and validate the whole object.
+
+**Q6. Why is frontend validation not enough?**
+Clients can be bypassed (curl, Postman, proxies), there are many clients (web, mobile, partners), old mobile versions linger, and only the backend can protect data integrity. Frontend validation is for UX, backend validation is for security.
+
+**Q7. Walk through the lifecycle of a request in Spring Boot.**
+Tomcat thread → filters (security, CORS, logging) → `DispatcherServlet` → `HandlerMapping` → interceptors `preHandle` → argument resolvers + Jackson → validation → controller → service → repository → Jackson serializes the response → interceptors → filters → client. Exceptions go to `HandlerExceptionResolver`s / `@RestControllerAdvice`.
+
+**Q8. What makes an API production-ready?**
+Validation, a consistent error contract (no stack traces), security, observability (trace ids, metrics), pagination, correct HTTP semantics, versioning, docs (OpenAPI), resilience (timeouts, circuit breakers), and graceful shutdown.
+
+**Q9. How do you test a controller's validation without starting the whole app?**
+`@WebMvcTest(Controller.class)` with `MockMvc` and a mocked service. Send an invalid body, assert 400 and the field errors, and verify the service was never called.
+
+**Q10. How do you test an API as a specific user?**
+In tests: `@WithMockUser`, `@WithUserDetails`, or `.with(jwt().jwt(j -> j.subject("user-42")))`, including negative tests that user A can't read user B's data (IDOR). Manually: log in as a test user and call the API with its token (Postman environment per user). In production: find the user's requests by `userId`/`traceId` in logs and traces, use feature flags targeted at that user, or audited impersonation. Never use the customer's credentials.
+
+**Q11. How do you load test an API? What do you measure?**
+Define an SLO, script realistic traffic with k6/Gatling/JMeter against a prod-like environment, warm up, ramp up, and watch throughput, p95/p99 latency, error rate, CPU, heap/GC and pool usage. Find the bottleneck, fix it, re-run.
+
+**Q12. Load vs stress vs spike vs soak test?**
+Load = expected peak (meets SLO?). Stress = beyond the limit (where/how does it break?). Spike = sudden burst (survive and recover?). Soak = long duration (leaks?).
+
+**Q13. How is API testing done in production?**
+Smoke tests after deploy, canary or blue-green releases with automatic rollback, feature flags for gradual rollout, synthetic monitoring, shadow traffic, strong observability and alerting, and chaos experiments, always with test accounts and without touching real customer data.
+
+**Q14. What's a canary release?**
+Sending a small percentage of real traffic to the new version, comparing its error rate and latency with the old one, then gradually increasing the share or rolling back automatically.

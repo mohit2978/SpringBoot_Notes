@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <rect width="1000" height="600" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">How @ConditionalOnProperty decides</text>
+  <rect x="30" y="80" width="940" height="60" rx="10" fill="#e9ecef"/>
+  <path d="M39.6,79.3 Q500.5,78.7 960.1,79.7 Q969.1,80.0 969.1,89.9 Q968.7,108.8 969.8,130.7 Q969.2,139.4 960.3,140.9 Q500.2,139.7 41.0,139.1 Q30.7,139.6 29.3,129.2 Q29.4,110.9 29.4,90.2 Q30.3,79.7 43.1,79.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,79.1 Q500.9,79.7 959.4,80.3 Q969.9,79.4 970.9,90.6 Q968.8,110.4 970.1,131.2 Q970.7,139.3 961.5,138.8 Q499.6,141.2 38.9,140.0 Q28.5,140.5 30.8,130.2 Q31.8,109.1 30.6,90.3 Q30.3,79.9 44.1,81.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="114.5" font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">@ConditionalOnProperty(prefix = &quot;sqlconnection&quot;, value = &quot;enabled&quot;, havingValue = &quot;true&quot;, matchIfMissing = false)</text>
+  <text x="500.0" y="172.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Spring builds the key  prefix + &quot;.&quot; + value  =  sqlconnection.enabled  and looks it up</text>
+  <polygon points="500,200.0 680.0,250 500,300.0 320.0,250" fill="#ffffff"/>
+  <path d="M499.9,200.3 Q588.7,225.6 680.3,251.0 Q591.0,274.4 499.8,300.3 Q408.6,274.9 319.3,249.2 Q408.7,225.8 499.3,199.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M499.6,201.3 Q587.7,224.7 680.2,251.4 Q591.7,277.0 499.2,299.7 Q409.2,277.1 321.6,248.7 Q408.3,223.6 499.0,199.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="245.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">is sqlconnection.enabled</text>
+  <text x="500.0" y="264.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">in application.properties?</text>
+  <polygon points="250,360.0 415.0,410 250,460.0 85.0,410" fill="#ffffff"/>
+  <path d="M250.2,359.5 Q331.0,384.8 414.7,410.1 Q333.9,435.6 250.0,460.2 Q168.0,433.7 85.8,410.6 Q168.6,385.9 249.8,359.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M248.6,360.5 Q330.1,382.7 414.0,408.8 Q331.6,432.6 248.2,458.7 Q165.3,434.3 83.3,411.3 Q168.1,383.1 249.1,359.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="250.0" y="405.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">value equals</text>
+  <text x="250.0" y="424.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">havingValue (&quot;true&quot;)?</text>
+  <polygon points="750,360.0 915.0,410 750,460.0 585.0,410" fill="#ffffff"/>
+  <path d="M749.7,359.2 Q833.5,386.5 914.9,410.0 Q831.3,433.8 749.7,459.5 Q668.5,434.0 584.0,410.9 Q667.6,383.9 750.1,359.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M750.1,361.7 Q834.5,386.1 914.1,409.5 Q830.7,436.5 750.1,461.0 Q666.6,433.5 586.1,411.7 Q669.4,386.7 751.1,360.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="750.0" y="414.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">matchIfMissing?</text>
+  <path d="M379.7,290.0 Q339.7,322.9 299.4,357.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M379.4,290.5 Q342.2,323.7 301.0,359.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M313.5,354.5 L300.0,358.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M305.7,345.2 L300.0,358.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="310.0" y="320.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">present</text>
+  <path d="M620.5,289.8 Q659.3,323.3 699.6,357.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M620.3,291.0 Q661.6,323.9 700.4,358.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M694.3,345.2 L700.0,358.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M686.5,354.5 L700.0,358.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="690.0" y="320.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">missing</text>
+  <rect x="30" y="500" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M39.2,500.3 Q131.2,500.8 220.5,500.0 Q229.4,500.6 229.7,510.6 Q231.4,529.7 229.8,550.9 Q230.4,559.3 219.3,559.3 Q131.2,560.9 39.3,560.7 Q31.0,560.3 29.7,550.1 Q28.9,528.5 30.9,510.3 Q30.1,500.9 42.9,500.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M41.0,499.1 Q128.8,499.0 219.2,500.3 Q229.2,499.7 228.8,511.3 Q229.3,529.8 230.3,551.3 Q229.7,561.3 220.0,560.1 Q130.1,557.7 39.8,559.0 Q28.4,561.0 29.0,549.9 Q31.1,530.3 29.4,510.1 Q30.2,500.9 41.7,500.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130.0" y="535.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">✔ bean CREATED</text>
+  <rect x="270" y="500" width="200" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M279.5,499.6 Q370.8,500.0 460.1,500.5 Q470.8,499.9 470.2,510.0 Q470.0,530.6 469.9,550.1 Q470.0,560.9 460.4,560.8 Q371.3,559.3 280.1,560.9 Q270.7,559.3 269.2,549.9 Q268.7,529.2 269.1,510.3 Q270.6,500.8 282.3,500.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M280.5,498.9 Q371.8,502.2 459.1,501.4 Q469.7,500.0 471.6,511.1 Q468.4,529.7 470.0,549.5 Q469.0,559.4 460.7,558.5 Q370.3,559.7 278.5,559.5 Q270.4,560.0 268.6,551.6 Q271.4,532.3 268.7,509.2 Q268.5,500.9 282.3,498.8" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="370.0" y="535.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">✘ bean SKIPPED</text>
+  <rect x="530" y="500" width="200" height="60" rx="10" fill="#b2f2bb"/>
+  <path d="M539.8,500.8 Q631.0,499.3 719.3,500.8 Q730.1,500.4 729.2,509.1 Q730.6,529.8 729.1,550.9 Q730.3,560.6 719.2,560.7 Q628.7,561.1 539.9,559.7 Q530.1,560.9 529.5,549.3 Q530.1,529.2 529.2,509.3 Q529.1,499.4 542.6,499.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M540.8,499.3 Q630.0,498.5 719.5,498.5 Q729.2,498.4 730.7,510.2 Q728.5,529.9 731.4,548.7 Q731.0,559.8 720.0,561.1 Q629.5,560.0 540.6,561.5 Q529.5,561.1 530.7,550.4 Q529.5,529.3 528.6,508.8 Q528.6,500.8 542.2,498.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="630.0" y="535.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">true → CREATED</text>
+  <rect x="770" y="500" width="200" height="60" rx="10" fill="#ffc9c9"/>
+  <path d="M779.2,500.7 Q871.1,500.5 959.6,499.5 Q969.6,499.9 969.3,509.9 Q969.3,531.4 970.9,550.1 Q969.5,560.9 959.6,559.7 Q868.5,559.6 779.9,560.0 Q769.4,560.0 769.0,549.5 Q768.8,529.7 769.1,509.0 Q769.6,499.5 783.2,500.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M780.8,500.5 Q871.0,501.8 959.6,499.4 Q971.6,498.9 970.7,510.5 Q967.8,531.6 971.3,550.4 Q970.7,561.0 958.8,560.1 Q870.0,561.6 781.0,561.0 Q770.3,561.3 770.6,550.6 Q768.7,527.7 768.8,509.6 Q768.7,501.1 783.2,500.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="870.0" y="535.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="15" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">false → SKIPPED</text>
+  <path d="M200.2,460.2 Q170.0,477.8 140.4,498.3" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M200.0,460.1 Q170.8,476.9 140.6,497.4" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M153.9,496.4 L140.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M147.4,486.1 L140.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="156.0" y="479.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">yes</text>
+  <path d="M299.5,459.7 Q330.6,478.3 360.3,498.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M300.0,459.7 Q329.9,479.9 360.6,498.3" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M352.6,486.1 L360.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M346.1,496.4 L360.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="344.0" y="479.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">no</text>
+  <path d="M700.2,459.5 Q669.2,478.4 640.3,497.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M700.2,458.8 Q667.9,477.9 640.4,498.5" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M653.9,496.4 L640.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M647.4,486.1 L640.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M800.2,459.7 Q830.0,478.9 860.0,497.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M800.9,459.3 Q832.3,481.1 858.8,497.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M852.6,486.1 L860.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M846.1,496.4 L860.0,498.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

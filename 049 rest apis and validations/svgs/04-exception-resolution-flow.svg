@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560">
+  <rect width="1000" height="560" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">What happens when an exception is thrown</text>
+  <rect x="30" y="85" width="300" height="70" rx="10" fill="#ffc9c9"/>
+  <path d="M39.6,84.3 Q180.5,83.7 320.1,84.7 Q329.1,85.0 329.1,94.9 Q328.7,118.8 329.8,145.7 Q329.2,154.4 320.3,155.9 Q180.2,154.7 41.0,154.1 Q30.7,154.6 29.3,144.2 Q29.4,120.9 29.4,95.2 Q30.3,84.7 43.1,84.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,84.1 Q180.9,84.7 319.4,85.3 Q329.9,84.4 330.9,95.6 Q328.8,120.4 330.1,146.2 Q330.7,154.3 321.5,153.8 Q179.6,156.2 38.9,155.0 Q28.5,155.5 30.8,145.2 Q31.8,119.1 30.6,95.3 Q30.3,84.9 44.1,86.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="180.0" y="116.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">exception in controller /</text>
+  <text x="180.0" y="133.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">service / repository / validation</text>
+  <rect x="380" y="85" width="260" height="70" rx="10" fill="#d0bfff"/>
+  <path d="M389.9,85.3 Q508.7,85.6 630.3,86.0 Q640.6,84.6 639.8,95.3 Q638.6,119.9 639.3,144.2 Q639.1,155.5 629.3,154.5 Q509.7,156.1 389.2,154.9 Q380.1,155.8 380.6,145.7 Q379.3,119.7 379.7,95.8 Q380.9,84.3 392.4,84.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M389.1,85.0 Q510.4,83.9 628.4,84.7 Q639.6,85.2 641.4,95.6 Q640.1,120.6 640.6,143.6 Q641.3,155.9 631.2,156.0 Q509.5,154.5 388.7,155.4 Q378.6,153.6 379.1,143.9 Q379.2,117.9 378.4,93.9 Q378.7,84.6 391.5,86.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="115.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">DispatcherServlet</text>
+  <text x="510.0" y="134.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">catches it</text>
+  <path d="M332.1,119.6 Q354.4,119.6 377.8,119.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M332.8,121.2 Q354.8,119.9 377.0,119.0" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M365.4,113.9 L378.0,120.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M365.4,126.1 L378.0,120.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="510,195.0 700.0,245 510,295.0 320.0,245" fill="#ffffff"/>
+  <path d="M509.7,194.5 Q606.0,219.0 699.0,245.9 Q605.1,268.9 510.1,294.1 Q415.1,271.4 320.7,245.4 Q414.3,219.6 509.3,195.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M510.1,196.0 Q604.1,218.5 701.1,246.7 Q606.9,271.7 511.1,295.9 Q413.5,270.1 319.5,243.3 Q412.5,218.8 509.1,195.7" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="241.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">matching @ExceptionHandler</text>
+  <text x="510.0" y="258.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">in @RestControllerAdvice?</text>
+  <path d="M510.5,156.9 Q511.0,176.2 510.5,192.8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M509.3,156.3 Q508.5,173.6 510.3,194.0" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M516.1,180.4 L510.0,193.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M503.9,180.4 L510.0,193.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="700" y="210" width="270" height="75" rx="10" fill="#b2f2bb"/>
+  <path d="M710.7,210.0 Q835.5,210.9 959.2,210.3 Q970.8,210.6 970.5,220.0 Q969.0,248.4 969.7,275.6 Q970.9,284.8 959.8,285.9 Q835.7,284.0 709.3,284.3 Q700.8,285.6 699.3,275.7 Q701.4,248.0 699.7,220.1 Q699.3,209.0 713.9,210.3" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M710.1,211.4 Q834.7,211.8 961.0,209.1 Q969.2,209.3 969.2,220.3 Q968.8,247.1 968.8,276.3 Q969.5,284.9 960.3,286.3 Q834.6,287.0 710.0,285.1 Q700.1,283.5 699.8,274.0 Q697.6,248.9 699.0,219.9 Q700.7,210.2 712.4,210.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="835.0" y="243.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">run handler → your error DTO</text>
+  <text x="835.0" y="260.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">+ status (400/404/409/500)</text>
+  <text x="688.0" y="236.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="end" font-weight="normal" xml:space="preserve">yes</text>
+  <polygon points="510,335.0 700.0,380 510,425.0 320.0,380" fill="#ffffff"/>
+  <path d="M510.1,335.6 Q603.8,357.7 699.5,379.6 Q605.8,402.5 510.1,425.5 Q416.2,402.3 320.2,380.0 Q415.0,358.1 509.9,335.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M509.9,336.6 Q606.1,359.5 701.6,379.1 Q605.3,404.9 511.2,423.7 Q413.0,402.2 318.5,379.1 Q412.7,358.4 511.0,336.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="376.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">@ResponseStatus on the</text>
+  <text x="510.0" y="393.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">exception class?</text>
+  <path d="M509.6,297.3 Q510.4,314.1 510.5,333.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M509.3,298.1 Q509.5,314.9 511.2,333.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M516.1,320.4 L510.0,333.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M503.9,320.4 L510.0,333.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="528.0" y="319.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">no</text>
+  <rect x="700" y="350" width="270" height="60" rx="10" fill="#ffec99"/>
+  <path d="M709.3,349.9 Q835.0,349.5 959.4,349.6 Q970.4,349.0 970.1,359.9 Q968.6,379.5 970.2,400.0 Q969.1,411.0 960.6,410.9 Q833.8,409.3 709.1,410.6 Q699.5,409.3 699.8,400.8 Q701.0,379.3 699.3,360.8 Q700.1,350.4 712.2,349.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M710.6,349.8 Q832.9,352.1 960.4,351.0 Q968.7,351.1 968.6,361.2 Q969.8,379.2 970.2,401.4 Q969.3,408.8 960.1,409.2 Q833.1,408.4 708.6,409.0 Q699.4,409.4 700.8,399.3 Q700.0,378.5 699.5,358.5 Q699.2,348.4 713.7,350.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="835.0" y="384.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">that status code</text>
+  <text x="688.0" y="371.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="end" font-weight="normal" xml:space="preserve">yes</text>
+  <rect x="260" y="470" width="500" height="70" rx="10" fill="#e9ecef"/>
+  <path d="M269.4,469.9 Q511.3,468.8 750.6,469.9 Q760.0,470.7 759.8,480.0 Q760.6,506.4 759.7,530.7 Q760.4,540.3 749.8,539.7 Q508.7,538.9 269.1,540.5 Q259.5,539.3 259.2,530.7 Q261.1,505.5 259.6,479.5 Q259.6,469.9 272.3,469.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M269.2,471.5 Q512.3,470.2 749.2,471.5 Q759.4,469.5 758.4,479.6 Q759.9,505.0 759.0,530.0 Q758.4,539.2 748.7,539.7 Q507.8,537.7 269.4,539.1 Q260.3,540.1 260.8,530.5 Q261.0,506.8 259.6,479.4 Q261.6,468.9 273.7,470.5" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="501.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">DefaultHandlerExceptionResolver (Spring&#x27;s own: 400/405/415 …)</text>
+  <text x="510.0" y="518.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">else → container → /error (BasicErrorController) → 500</text>
+  <path d="M509.5,427.4 Q510.9,447.8 510.3,468.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M509.1,427.1 Q510.0,449.1 510.7,468.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M516.1,455.4 L510.0,468.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M503.9,455.4 L510.0,468.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="528.0" y="451.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" xml:space="preserve">no</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560">
+  <rect width="1000" height="560" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">A load test setup</text>
+  <rect x="30" y="200" width="200" height="120" rx="10" fill="#d0bfff"/>
+  <path d="M39.6,199.3 Q130.5,198.7 220.1,199.7 Q229.1,200.0 229.1,209.9 Q228.7,258.8 229.8,310.7 Q229.2,319.4 220.3,320.9 Q130.2,319.7 41.0,319.1 Q30.7,319.6 29.3,309.2 Q29.4,260.9 29.4,210.2 Q30.3,199.7 43.1,199.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,199.1 Q130.9,199.7 219.4,200.3 Q229.9,199.4 230.9,210.6 Q228.8,260.4 230.1,311.2 Q230.7,319.3 221.5,318.8 Q129.6,321.2 38.9,320.0 Q28.5,320.5 30.8,310.2 Q31.8,259.1 30.6,210.3 Q30.3,199.9 44.1,201.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130.0" y="246.7" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">k6 / Gatling</text>
+  <text x="130.0" y="264.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">virtual users</text>
+  <text x="130.0" y="283.1" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(separate machine)</text>
+  <rect x="290" y="220" width="150" height="80" rx="10" fill="#e9ecef"/>
+  <path d="M299.9,220.3 Q363.7,220.6 430.3,221.0 Q440.6,219.6 439.8,230.3 Q438.6,259.9 439.3,289.2 Q439.1,300.5 429.3,299.5 Q364.7,301.1 299.2,299.9 Q290.1,300.8 290.6,290.7 Q289.3,259.7 289.7,230.8 Q290.9,219.3 302.4,219.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M299.1,220.0 Q365.4,218.9 428.4,219.7 Q439.6,220.2 441.4,230.6 Q440.1,260.6 440.6,288.6 Q441.3,300.9 431.2,301.0 Q364.5,299.5 298.7,300.4 Q288.6,298.6 289.1,288.9 Q289.2,257.9 288.4,228.9 Q288.7,219.6 301.5,221.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="365.0" y="264.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">load balancer</text>
+  <rect x="500" y="120" width="200" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M510.2,119.3 Q599.3,119.5 689.7,119.2 Q700.7,121.0 699.9,130.0 Q698.8,153.8 699.7,179.5 Q700.7,189.3 689.0,190.9 Q600.1,188.9 510.1,189.1 Q500.1,191.0 500.7,180.4 Q499.3,154.6 499.3,130.5 Q500.1,120.6 512.7,119.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M511.0,121.6 Q601.7,121.5 691.0,120.8 Q699.1,120.1 699.5,128.5 Q697.7,153.9 699.2,180.6 Q701.5,189.8 691.4,191.6 Q602.2,189.4 509.1,189.1 Q499.0,189.1 500.4,181.3 Q501.6,154.9 500.5,131.0 Q498.7,120.5 514.3,120.9" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600.0" y="159.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">app instance 1</text>
+  <path d="M442.3,260.0 Q469.2,208.2 497.8,155.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M443.1,259.8 Q469.5,209.6 498.5,154.2" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M486.7,163.3 L498.0,155.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M497.4,169.0 L498.0,155.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M701.6,154.6 Q751.0,208.2 797.6,260.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M703.2,155.4 Q749.3,207.7 797.1,258.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M794.0,246.6 L798.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M785.0,254.8 L798.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="500" y="220" width="200" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M510.9,220.3 Q600.1,221.3 689.9,220.7 Q700.7,219.4 699.5,229.6 Q699.2,255.3 699.5,279.8 Q699.3,290.8 689.7,289.9 Q600.3,291.2 509.8,290.8 Q500.0,290.1 500.0,279.0 Q499.8,254.0 499.0,230.6 Q499.3,219.9 513.5,220.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M509.4,220.1 Q600.3,221.4 688.7,220.2 Q699.2,219.3 700.9,230.0 Q700.3,256.2 701.3,279.8 Q700.4,290.0 690.0,290.6 Q599.8,290.2 509.9,291.4 Q500.6,291.2 501.4,279.2 Q500.3,257.1 501.1,228.8 Q498.8,219.8 511.6,219.2" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600.0" y="259.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">app instance 2</text>
+  <path d="M441.5,260.2 Q470.7,258.5 497.6,255.3" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M442.4,259.1 Q471.8,259.7 497.3,256.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M484.9,250.1 L498.0,255.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M486.0,262.2 L498.0,255.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M701.9,255.0 Q751.2,258.3 797.6,259.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M702.0,254.6 Q748.5,256.6 798.5,258.8" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M785.7,253.3 L798.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M785.1,265.4 L798.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="500" y="320" width="200" height="70" rx="10" fill="#b2f2bb"/>
+  <path d="M510.1,319.9 Q598.6,319.5 690.2,320.0 Q699.1,321.0 700.6,330.9 Q698.8,354.3 699.1,380.6 Q699.5,389.3 689.8,390.8 Q601.0,389.3 509.3,390.8 Q500.1,390.4 499.2,379.1 Q500.6,354.8 499.1,330.9 Q500.3,320.6 512.2,320.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M508.6,321.2 Q599.8,319.2 690.2,321.4 Q699.3,318.8 700.1,329.2 Q698.1,353.4 698.6,379.0 Q699.4,389.4 690.8,389.3 Q600.0,388.5 509.5,388.5 Q499.2,388.4 500.7,380.2 Q498.5,354.9 501.4,328.7 Q501.0,319.8 513.0,321.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600.0" y="359.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">app instance 3</text>
+  <path d="M441.9,260.0 Q470.5,308.7 497.8,355.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M442.5,260.3 Q469.5,306.8 496.9,354.1" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M496.8,341.0 L498.0,355.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M486.4,347.2 L498.0,355.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M701.5,355.3 Q749.4,306.7 797.5,260.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M702.9,355.4 Q749.0,306.3 797.5,259.9" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M784.8,264.5 L798.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M793.3,273.2 L798.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="800" y="220" width="170" height="80" rx="10" fill="#a5d8ff"/>
+  <path d="M809.3,219.9 Q884.3,221.4 960.9,220.1 Q969.5,220.9 969.6,229.7 Q968.5,259.6 969.9,290.0 Q969.4,300.0 959.0,299.5 Q883.8,299.7 809.1,299.0 Q799.6,299.5 800.2,290.1 Q800.8,260.5 800.4,230.8 Q799.8,219.7 814.0,219.3" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M810.7,220.5 Q882.8,221.6 961.3,220.4 Q970.7,221.0 968.8,230.1 Q970.0,261.6 971.0,291.0 Q970.3,301.3 960.6,300.6 Q883.7,297.7 808.8,299.6 Q798.7,301.1 800.2,290.4 Q800.6,260.9 800.0,228.4 Q801.0,220.8 813.0,220.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="885.0" y="255.8" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">DB / cache</text>
+  <text x="885.0" y="274.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">(prod-like data)</text>
+  <path d="M232.2,259.5 Q260.6,259.4 287.5,259.7" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M232.6,259.3 Q261.2,262.3 288.0,259.7" fill="none" stroke="#1e1e1e" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M275.4,253.9 L288.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M275.4,266.1 L288.0,260.0" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="290" y="430" width="410" height="95" rx="10" fill="#ffec99"/>
+  <path d="M300.0,430.4 Q495.8,430.4 690.3,429.2 Q699.3,429.5 700.5,439.6 Q700.2,476.0 699.1,514.5 Q700.3,525.4 690.4,524.6 Q495.0,524.9 299.9,524.2 Q290.8,524.4 291.0,515.9 Q288.6,477.4 290.6,440.9 Q289.9,429.5 302.4,430.9" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M299.1,430.3 Q493.3,430.1 691.4,428.8 Q701.0,430.0 701.2,440.7 Q698.7,479.4 700.0,513.5 Q698.4,525.0 689.8,524.4 Q493.3,524.3 299.4,526.1 Q288.4,525.8 291.1,513.8 Q292.0,478.5 291.3,439.3 Q289.6,429.7 304.6,430.3" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="495.0" y="473.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Grafana / Prometheus during the test:</text>
+  <text x="495.0" y="491.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">latency, errors, CPU, heap, GC, pools</text>
+  <path d="M599.8,391.9 Q579.5,408.9 559.5,428.4" fill="none" stroke="#868e96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M599.5,393.0 Q578.8,408.9 560.0,427.3" fill="none" stroke="#868e96" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6"/>
+  <path d="M573.4,424.1 L560.0,428.0" fill="none" stroke="#868e96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M565.3,415.0 L560.0,428.0" fill="none" stroke="#868e96" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="130.0" y="360.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">ramp up slowly,</text>
+  <text x="130.0" y="375.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">think time between calls,</text>
+  <text x="130.0" y="391.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">realistic mix of endpoints</text>
+  <text x="870.0" y="360.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">staging sized like prod,</text>
+  <text x="870.0" y="375.6" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">NOT the real production</text>
+  <text x="870.0" y="391.2" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="12" fill="#868e96" text-anchor="middle" font-weight="normal" xml:space="preserve">(unless planned)</text>
+</svg>

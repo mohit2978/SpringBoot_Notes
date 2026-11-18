@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560">
+  <rect width="1000" height="560" fill="#ffffff"/>
+  <text x="500.0" y="44.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="26" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Four kinds of performance tests (users over time)</text>
+  <rect x="30" y="80" width="220" height="330" rx="10" fill="#b2f2bb"/>
+  <path d="M39.6,79.3 Q140.5,78.7 240.1,79.7 Q249.1,80.0 249.1,89.9 Q248.7,243.8 249.8,400.7 Q249.2,409.4 240.3,410.9 Q140.2,409.7 41.0,409.1 Q30.7,409.6 29.3,399.2 Q29.4,245.9 29.4,90.2 Q30.3,79.7 43.1,79.1" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.6,79.1 Q140.9,79.7 239.4,80.3 Q249.9,79.4 250.9,90.6 Q248.8,245.4 250.1,401.2 Q250.7,409.3 241.5,408.8 Q139.6,411.2 38.9,410.0 Q28.5,410.5 30.8,400.2 Q31.8,244.1 30.6,90.3 Q30.3,79.9 44.1,81.4" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="140.0" y="108.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Load test</text>
+  <path d="M55.0,300.2 Q141.4,300.5 230.2,300.6" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.8,299.5 Q142.0,300.8 228.9,299.9" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M54.6,299.5 Q53.9,223.1 54.6,144.7" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M54.7,300.9 Q53.0,222.3 55.1,145.9" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.4,300.4 Q71.5,247.3 88.8,195.5" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M56.1,299.2 Q70.4,246.2 88.4,195.0" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M89.1,194.7 Q138.8,194.8 190.8,195.1" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M90.1,195.5 Q140.1,195.6 191.4,193.9" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M191.5,195.3 Q208.9,248.2 224.9,299.9" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M190.0,195.3 Q205.9,245.4 224.3,299.2" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="140.0" y="340.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">expected peak traffic</text>
+  <text x="140.0" y="356.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ meets latency SLO?</text>
+  <rect x="270" y="80" width="220" height="330" rx="10" fill="#ffc9c9"/>
+  <path d="M279.7,79.1 Q378.5,79.0 479.2,79.7 Q489.1,80.7 490.2,89.3 Q489.3,244.5 489.7,399.2 Q490.7,411.0 479.9,410.0 Q378.8,408.8 279.7,409.5 Q270.7,409.3 269.0,400.9 Q270.1,243.9 270.1,89.1 Q270.1,81.0 283.7,80.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M279.2,79.6 Q378.4,81.3 480.1,80.9 Q489.5,79.1 491.0,91.6 Q491.7,246.5 491.0,400.8 Q489.1,410.1 479.5,408.5 Q377.7,408.9 279.2,410.6 Q271.5,409.8 271.4,401.6 Q272.2,244.4 269.1,89.1 Q269.0,79.1 283.4,81.3" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380.0" y="108.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Stress test</text>
+  <path d="M295.4,300.0 Q382.9,300.7 469.5,300.2" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M296.0,300.7 Q383.7,299.9 469.2,300.7" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M294.8,300.4 Q296.1,222.3 294.9,145.5" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M295.5,299.2 Q293.2,220.8 296.0,145.7" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M294.6,300.4 Q317.4,281.6 337.3,262.6" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M294.1,298.8 Q318.5,282.0 337.6,263.5" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M337.4,262.9 Q359.5,243.1 379.7,224.8" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M336.9,262.7 Q357.6,243.4 379.1,226.0" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M379.8,224.9 Q401.5,203.5 422.4,180.5" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M380.0,225.1 Q401.4,200.2 422.4,179.2" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M421.9,180.4 Q443.0,164.9 465.3,150.1" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M422.1,180.0 Q444.0,166.4 464.1,150.1" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="380.0" y="340.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">keep increasing</text>
+  <text x="380.0" y="356.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ where does it break?</text>
+  <rect x="510" y="80" width="220" height="330" rx="10" fill="#ffd8a8"/>
+  <path d="M519.5,79.6 Q620.8,80.0 720.1,80.5 Q730.8,79.9 730.2,90.0 Q730.0,245.6 729.9,400.1 Q730.0,410.9 720.4,410.8 Q621.3,409.3 520.1,410.9 Q510.7,409.3 509.2,399.9 Q508.7,244.2 509.1,90.3 Q510.6,80.8 522.3,80.4" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M520.5,78.9 Q621.8,82.2 719.1,81.4 Q729.7,80.0 731.6,91.1 Q728.4,244.7 730.0,399.5 Q729.0,409.4 720.7,408.5 Q620.3,409.7 518.5,409.5 Q510.4,410.0 508.6,401.6 Q511.4,247.3 508.7,89.2 Q508.5,80.9 522.3,78.8" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="620.0" y="108.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Spike test</text>
+  <path d="M534.9,300.5 Q623.3,299.4 709.6,300.5" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M535.2,300.5 Q620.5,297.9 710.5,299.8" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M534.5,300.5 Q535.3,223.2 534.5,145.4" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M534.0,300.9 Q534.8,221.7 535.1,146.0" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M534.7,277.1 Q569.1,276.9 602.5,277.1" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M533.9,276.8 Q568.1,276.6 603.6,277.0" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M603.0,277.1 Q606.9,212.6 611.2,149.4" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M603.6,277.6 Q605.8,213.6 612.5,149.1" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M611.9,149.9 Q624.2,150.8 636.9,150.0" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M612.0,151.2 Q623.5,151.6 637.5,150.3" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M636.9,149.8 Q640.2,212.9 645.0,277.8" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M636.4,149.2 Q639.3,215.4 646.4,277.9" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M645.2,277.2 Q674.8,277.4 704.6,277.4" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M644.9,278.6 Q677.5,277.7 704.4,278.6" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="620.0" y="340.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">sudden burst (sale, viral)</text>
+  <text x="620.0" y="356.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ survives &amp; recovers?</text>
+  <rect x="750" y="80" width="220" height="330" rx="10" fill="#a5d8ff"/>
+  <path d="M759.6,79.7 Q858.5,79.6 959.9,80.0 Q969.4,80.0 969.0,89.5 Q968.8,244.7 969.1,399.0 Q969.6,409.5 960.2,410.1 Q860.8,410.5 760.4,410.8 Q749.8,409.7 751.0,399.3 Q750.7,245.4 749.1,90.7 Q750.8,80.3 763.5,80.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M758.8,80.1 Q860.0,81.6 961.0,81.0 Q970.3,81.3 970.6,90.6 Q968.7,242.7 968.8,399.6 Q968.7,411.1 960.2,410.4 Q860.6,410.9 760.0,408.4 Q751.0,410.8 750.0,400.1 Q750.8,242.9 750.8,89.2 Q748.6,79.2 763.7,79.1" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="860.0" y="108.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="16" fill="#1e1e1e" text-anchor="middle" font-weight="bold" xml:space="preserve">Soak test</text>
+  <path d="M775.3,300.6 Q862.5,299.7 950.0,300.2" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M775.6,300.3 Q863.2,298.0 949.2,299.4" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M775.3,299.8 Q775.2,221.3 774.5,144.7" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M775.4,300.5 Q775.8,221.5 775.0,144.9" fill="none" stroke="#1e1e1e" stroke-width="0.8250000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M775.0,299.5 Q782.7,258.0 789.2,218.0" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M773.8,299.9 Q783.3,261.0 788.5,216.9" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M788.3,218.0 Q866.1,217.7 944.6,217.5" fill="none" stroke="#6741d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M789.7,216.6 Q868.3,217.5 945.9,218.0" fill="none" stroke="#6741d9" stroke-width="1.6500000000000001" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="860.0" y="340.0" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">normal load for hours</text>
+  <text x="860.0" y="356.9" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="13" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">→ memory leaks, pool leaks?</text>
+  <rect x="30" y="440" width="940" height="95" rx="10" fill="#e9ecef"/>
+  <path d="M39.5,440.8 Q500.0,438.6 959.0,440.0 Q969.9,439.6 969.3,449.7 Q969.4,488.5 969.0,525.5 Q970.7,534.2 960.9,535.4 Q501.2,534.4 39.7,534.8 Q31.0,535.2 29.7,524.9 Q29.3,486.1 29.2,450.7 Q29.6,440.9 42.5,439.5" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40.0,439.0 Q499.4,442.2 961.2,441.0 Q970.4,441.3 971.4,450.2 Q971.1,485.3 970.7,524.8 Q970.8,535.5 959.3,533.6 Q502.0,533.2 39.9,534.5 Q29.4,535.8 31.5,524.2 Q30.7,486.5 30.2,449.7 Q28.9,438.9 42.1,441.3" fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="500.0" y="483.3" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Measure: throughput (req/s) · latency p95 / p99 · error rate · CPU, heap, GC · Hikari &amp; Tomcat pools</text>
+  <text x="500.0" y="501.5" font-family="Virgil, Excalifont, 'Comic Sans MS', 'Segoe Print', 'Chalkboard SE', cursive" font-size="14" fill="#1e1e1e" text-anchor="middle" font-weight="normal" xml:space="preserve">Tools: k6 · Gatling · JMeter · Locust · quick checks with hey / wrk</text>
+</svg>
